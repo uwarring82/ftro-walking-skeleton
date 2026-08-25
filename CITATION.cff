@@ -1,0 +1,45 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Federated Time-Reference Observatory — Walking Skeleton (FTRO-WS-001)"
+abstract: >-
+  A federated catalogue and bitemporal reference-ancestry graph for public
+  time-referenced measurements across pulsar timing, VLBI, GNSS and optical
+  clock metrology. The observatory records identifiers, manifests, evidence,
+  provenance and rights without taking custody of provider data. This
+  repository implements the walking skeleton specified by task card
+  FTRO-WS-001 v0.3.
+type: dataset
+authors:
+  - family-names: Warring
+    given-names: Ulrich
+    role: "Decision authority"
+license: CC-BY-4.0
+license-url: "https://creativecommons.org/licenses/by/4.0/"
+repository-code: "https://github.com/uwarring82/ftro-walking-skeleton"
+version: "0.1.0-phase0"
+date-released: "2026-08-25"
+keywords:
+  - time metrology
+  - reference ancestry
+  - provenance
+  - bitemporal graph
+  - RO-Crate
+  - FAIR
+  - pulsar timing
+  - VLBI
+  - GNSS
+  - optical clocks
+  - federation
+references:
+  - type: data
+    title: 'Dataset for "Coordinated international comparisons between optical clocks connected via fiber and satellite links"'
+    doi: "10.5281/zenodo.17107693"
+    license: CC-BY-4.0
+  - type: data
+    title: "Parkes Pulsar Timing Array Third Data Release (part 1 of 2)"
+    doi: "10.25919/j4xr-wp05"
+    license: CC-BY-SA-4.0
+  - type: data
+    title: "Parkes Pulsar Timing Array Third Data Release (part 2 of 2)"
+    doi: "10.25919/axvw-qa43"
+    license: CC-BY-SA-4.0

@@ -1,0 +1,227 @@
+{
+  "generator": "src/ftro/compute_overlap.py",
+  "note": "Optical support is the union of contiguous flag-in-{1,2} runs computed from actual samples; VLBI support is the scheduled session interval from the IVS session listing, not a per-observation support.",
+  "sessions": [
+    {
+      "session": "R11040",
+      "type": "IVS-R1",
+      "start_utc": "2022-02-28T17:00",
+      "mjd_start": 59638.708333,
+      "mjd_end": 59639.708333,
+      "n_optical_comparisons_overlapping": 7,
+      "total_optical_overlap_hours": 91.946,
+      "per_comparison": [
+        {
+          "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 700,
+          "overlap_seconds": 73190.045,
+          "overlap_hours": 20.331,
+          "first_overlap_mjd": 59638.708333,
+          "last_overlap_mjd": 59639.708333
+        },
+        {
+          "comparison": "PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten",
+          "n_runs_overlapping": 27,
+          "overlap_seconds": 67529.808,
+          "overlap_hours": 18.758,
+          "first_overlap_mjd": 59638.708333,
+          "last_overlap_mjd": 59639.708333
+        },
+        {
+          "comparison": "INRIM_ITYb1-SYRTE_Sr2",
+          "n_runs_overlapping": 1077,
+          "overlap_seconds": 52045.805,
+          "overlap_hours": 14.457,
+          "first_overlap_mjd": 59638.801389,
+          "last_overlap_mjd": 59639.676713
+        },
+        {
+          "comparison": "INRIM_ITYb1-PTB_Sr3_CombKnoten",
+          "n_runs_overlapping": 337,
+          "overlap_seconds": 36448.531,
+          "overlap_hours": 10.125,
+          "first_overlap_mjd": 59638.801389,
+          "last_overlap_mjd": 59639.33515
+        },
+        {
+          "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+          "n_runs_overlapping": 322,
+          "overlap_seconds": 35816.429,
+          "overlap_hours": 9.949,
+          "first_overlap_mjd": 59638.801389,
+          "last_overlap_mjd": 59639.280787
+        },
+        {
+          "comparison": "PTB_Sr3_CombKnoten-SYRTE_Sr2",
+          "n_runs_overlapping": 565,
+          "overlap_seconds": 33255.792,
+          "overlap_hours": 9.238,
+          "first_overlap_mjd": 59638.712905,
+          "last_overlap_mjd": 59639.33515
+        },
+        {
+          "comparison": "PTB_Yb_CombKnoten-SYRTE_Sr2",
+          "n_runs_overlapping": 552,
+          "overlap_seconds": 32716.742,
+          "overlap_hours": 9.088,
+          "first_overlap_mjd": 59638.712905,
+          "last_overlap_mjd": 59639.280787
+        }
+      ]
+    },
+    {
+      "session": "AUA085",
+      "type": "AUSTRAL",
+      "start_utc": "2022-02-22T17:30",
+      "mjd_start": 59632.729167,
+      "mjd_end": 59633.729167,
+      "n_optical_comparisons_overlapping": 3,
+      "total_optical_overlap_hours": 26.376,
+      "per_comparison": [
+        {
+          "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 109,
+          "overlap_seconds": 52804.915,
+          "overlap_hours": 14.668,
+          "first_overlap_mjd": 59632.729167,
+          "last_overlap_mjd": 59633.353588
+        },
+        {
+          "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+          "n_runs_overlapping": 223,
+          "overlap_seconds": 41529.802,
+          "overlap_hours": 11.536,
+          "first_overlap_mjd": 59632.762986,
+          "last_overlap_mjd": 59633.351817
+        },
+        {
+          "comparison": "PTB_In_CombKnoten-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 1,
+          "overlap_seconds": 620.006,
+          "overlap_hours": 0.172,
+          "first_overlap_mjd": 59633.721991,
+          "last_overlap_mjd": 59633.729167
+        }
+      ]
+    },
+    {
+      "session": "AOV068",
+      "type": "AOV",
+      "start_utc": "2022-02-23T18:00",
+      "mjd_start": 59633.75,
+      "mjd_end": 59634.75,
+      "n_optical_comparisons_overlapping": 2,
+      "total_optical_overlap_hours": 24.465,
+      "per_comparison": [
+        {
+          "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 115,
+          "overlap_seconds": 50589.706,
+          "overlap_hours": 14.053,
+          "first_overlap_mjd": 59633.75,
+          "last_overlap_mjd": 59634.344792
+        },
+        {
+          "comparison": "PTB_In_CombKnoten-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 7,
+          "overlap_seconds": 37482.912,
+          "overlap_hours": 10.412,
+          "first_overlap_mjd": 59633.75,
+          "last_overlap_mjd": 59634.344907
+        }
+      ]
+    },
+    {
+      "session": "R11039",
+      "type": "IVS-R1",
+      "start_utc": "2022-02-21T17:00",
+      "mjd_start": 59631.708333,
+      "mjd_end": 59632.708333,
+      "n_optical_comparisons_overlapping": 2,
+      "total_optical_overlap_hours": 13.264,
+      "per_comparison": [
+        {
+          "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 35,
+          "overlap_seconds": 27464.918,
+          "overlap_hours": 7.629,
+          "first_overlap_mjd": 59632.371875,
+          "last_overlap_mjd": 59632.708333
+        },
+        {
+          "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+          "n_runs_overlapping": 48,
+          "overlap_seconds": 20286.202,
+          "overlap_hours": 5.635,
+          "first_overlap_mjd": 59631.788542,
+          "last_overlap_mjd": 59632.562928
+        }
+      ]
+    },
+    {
+      "session": "UH007R",
+      "type": "USNO-CRF",
+      "start_utc": "2022-02-21T14:00",
+      "mjd_start": 59631.583333,
+      "mjd_end": 59632.583333,
+      "n_optical_comparisons_overlapping": 2,
+      "total_optical_overlap_hours": 10.661,
+      "per_comparison": [
+        {
+          "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+          "n_runs_overlapping": 48,
+          "overlap_seconds": 20286.202,
+          "overlap_hours": 5.635,
+          "first_overlap_mjd": 59631.788542,
+          "last_overlap_mjd": 59632.562928
+        },
+        {
+          "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 21,
+          "overlap_seconds": 18093.802,
+          "overlap_hours": 5.026,
+          "first_overlap_mjd": 59632.371875,
+          "last_overlap_mjd": 59632.583333
+        }
+      ]
+    },
+    {
+      "session": "R41039",
+      "type": "IVS-R4",
+      "start_utc": "2022-02-24T18:30",
+      "mjd_start": 59634.770833,
+      "mjd_end": 59635.770833,
+      "n_optical_comparisons_overlapping": 1,
+      "total_optical_overlap_hours": 16.508,
+      "per_comparison": [
+        {
+          "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 97,
+          "overlap_seconds": 59430.24,
+          "overlap_hours": 16.508,
+          "first_overlap_mjd": 59634.770833,
+          "last_overlap_mjd": 59635.770833
+        }
+      ]
+    },
+    {
+      "session": "VO2055",
+      "type": "VGOS-OPS",
+      "start_utc": "2022-02-24T18:00",
+      "mjd_start": 59634.75,
+      "mjd_end": 59635.75,
+      "n_optical_comparisons_overlapping": 1,
+      "total_optical_overlap_hours": 16.122,
+      "per_comparison": [
+        {
+          "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+          "n_runs_overlapping": 96,
+          "overlap_seconds": 58040.237,
+          "overlap_hours": 16.122,
+          "first_overlap_mjd": 59634.766319,
+          "last_overlap_mjd": 59635.75
+        }
+      ]
+    }
+  ]
+}

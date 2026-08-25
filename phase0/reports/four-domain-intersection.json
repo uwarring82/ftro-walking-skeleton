@@ -1,0 +1,209 @@
+{
+  "generator": "src/ftro/four_domain_intersection.py",
+  "candidate_window_mjd": [
+    59630.0,
+    59640.0
+  ],
+  "method_note": "Optical support uses per-comparison envelopes of flag-in-{1,2} runs, an UPPER BOUND: real support is fragmented. VLBI uses scheduled session intervals, not per-observation supports. Pulsar uses scan start plus -tobs. GNSS uses IGS Final daily product validity. A null under an upper bound is therefore a strong null.",
+  "domain_support": {
+    "optical": {
+      "intervals": [
+        [
+          59631.788542,
+          59640.0
+        ]
+      ],
+      "total_hours": 197.075
+    },
+    "pulsar": {
+      "intervals": [
+        [
+          59630.445127314815,
+          59630.48960763889
+        ]
+      ],
+      "total_hours": 1.0675
+    },
+    "vlbi": {
+      "intervals": [
+        [
+          59631.583333,
+          59632.708333
+        ],
+        [
+          59632.729167,
+          59633.729167
+        ],
+        [
+          59633.75,
+          59635.770833
+        ],
+        [
+          59638.708333,
+          59639.708333
+        ]
+      ],
+      "total_hours": 123.5
+    },
+    "gnss": {
+      "intervals": [
+        [
+          59630.0,
+          59640.0
+        ]
+      ],
+      "total_hours": 240.0
+    }
+  },
+  "pulsar_toa_mjd_range": [
+    59630.467530701,
+    59630.467530762
+  ],
+  "pairwise": {
+    "gnss|optical": {
+      "intervals": [
+        [
+          59631.788542,
+          59640.0
+        ]
+      ],
+      "total_hours": 197.075,
+      "status": "overlap"
+    },
+    "gnss|pulsar": {
+      "intervals": [
+        [
+          59630.445127314815,
+          59630.48960763889
+        ]
+      ],
+      "total_hours": 1.0675,
+      "status": "overlap"
+    },
+    "gnss|vlbi": {
+      "intervals": [
+        [
+          59631.583333,
+          59632.708333
+        ],
+        [
+          59632.729167,
+          59633.729167
+        ],
+        [
+          59633.75,
+          59635.770833
+        ],
+        [
+          59638.708333,
+          59639.708333
+        ]
+      ],
+      "total_hours": 123.5,
+      "status": "overlap"
+    },
+    "optical|pulsar": {
+      "intervals": [],
+      "total_hours": 0,
+      "status": "no_common_support"
+    },
+    "optical|vlbi": {
+      "intervals": [
+        [
+          59631.788542,
+          59632.708333
+        ],
+        [
+          59632.729167,
+          59633.729167
+        ],
+        [
+          59633.75,
+          59635.770833
+        ],
+        [
+          59638.708333,
+          59639.708333
+        ]
+      ],
+      "total_hours": 118.575,
+      "status": "overlap"
+    },
+    "pulsar|vlbi": {
+      "intervals": [],
+      "total_hours": 0,
+      "status": "no_common_support"
+    }
+  },
+  "three_domain": {
+    "without_gnss": {
+      "domains": [
+        "optical",
+        "pulsar",
+        "vlbi"
+      ],
+      "intervals": [],
+      "total_hours": 0,
+      "status": "no_common_support"
+    },
+    "without_optical": {
+      "domains": [
+        "gnss",
+        "pulsar",
+        "vlbi"
+      ],
+      "intervals": [],
+      "total_hours": 0,
+      "status": "no_common_support"
+    },
+    "without_pulsar": {
+      "domains": [
+        "gnss",
+        "optical",
+        "vlbi"
+      ],
+      "intervals": [
+        [
+          59631.788542,
+          59632.708333
+        ],
+        [
+          59632.729167,
+          59633.729167
+        ],
+        [
+          59633.75,
+          59635.770833
+        ],
+        [
+          59638.708333,
+          59639.708333
+        ]
+      ],
+      "total_hours": 118.575,
+      "status": "overlap"
+    },
+    "without_vlbi": {
+      "domains": [
+        "gnss",
+        "optical",
+        "pulsar"
+      ],
+      "intervals": [],
+      "total_hours": 0,
+      "status": "no_common_support"
+    }
+  },
+  "four_domain": {
+    "intervals": [],
+    "total_hours": 0,
+    "status": "no_common_support"
+  },
+  "pulsar_optical_gap": {
+    "pulsar_support_end_mjd": 59630.48960763889,
+    "optical_support_start_mjd": 59631.788542,
+    "gap_days": 1.298934,
+    "gap_hours": 31.174
+  },
+  "alignment_certificate_status": "no_common_support"
+}

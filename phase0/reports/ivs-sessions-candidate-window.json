@@ -1,0 +1,9 @@
+[
+ {"code":"UH007R","type":"USNO-CRF","start_utc":"2022-02-21T14:00","mjd_start":59631.583333,"mjd_end":59632.583333},
+ {"code":"R11039","type":"IVS-R1","start_utc":"2022-02-21T17:00","mjd_start":59631.708333,"mjd_end":59632.708333},
+ {"code":"AUA085","type":"AUSTRAL","start_utc":"2022-02-22T17:30","mjd_start":59632.729167,"mjd_end":59633.729167},
+ {"code":"AOV068","type":"AOV","start_utc":"2022-02-23T18:00","mjd_start":59633.750000,"mjd_end":59634.750000},
+ {"code":"VO2055","type":"VGOS-OPS","start_utc":"2022-02-24T18:00","mjd_start":59634.750000,"mjd_end":59635.750000},
+ {"code":"R41039","type":"IVS-R4","start_utc":"2022-02-24T18:30","mjd_start":59634.770833,"mjd_end":59635.770833},
+ {"code":"R11040","type":"IVS-R1","start_utc":"2022-02-28T17:00","mjd_start":59638.708333,"mjd_end":59639.708333}
+]

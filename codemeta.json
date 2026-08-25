@@ -1,0 +1,27 @@
+{
+  "@context": "https://doi.org/10.5063/schema/codemeta-2.0",
+  "@type": "SoftwareSourceCode",
+  "name": "FTRO Walking Skeleton",
+  "description": "Retrieval, analysis and verification tooling for the Federated Time-Reference Observatory walking skeleton (task card FTRO-WS-001 v0.3). Pins and checksums public time-referenced datasets, computes actual observational support from records and validity masks, and runs named versioned verification procedures over clock-correction artifacts.",
+  "identifier": "FTRO-WS-001",
+  "codeRepository": "https://github.com/uwarring82/ftro-walking-skeleton",
+  "programmingLanguage": [{"@type": "ComputerLanguage", "name": "Python", "version": "3.13"}],
+  "runtimePlatform": "Python 3.13",
+  "license": "https://spdx.org/licenses/Apache-2.0",
+  "version": "0.1.0-phase0",
+  "dateCreated": "2026-08-25",
+  "datePublished": "2026-08-25",
+  "developmentStatus": "wip",
+  "softwareRequirements": ["Python 3.13 standard library only; no third-party dependencies"],
+  "keywords": ["time metrology", "reference ancestry", "provenance", "bitemporal graph", "RO-Crate", "FAIR", "pulsar timing", "VLBI", "GNSS", "optical clocks", "federation"],
+  "author": [{"@type": "Person", "familyName": "Warring", "givenName": "Ulrich"}],
+  "maintainer": [{"@type": "Person", "familyName": "Warring", "givenName": "Ulrich"}],
+  "readme": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/README.md",
+  "issueTracker": "https://github.com/uwarring82/ftro-walking-skeleton/issues",
+  "relatedLink": [
+    "https://doi.org/10.5281/zenodo.17107693",
+    "https://doi.org/10.25919/j4xr-wp05",
+    "https://doi.org/10.25919/axvw-qa43",
+    "https://w3id.org/ro/crate/1.3"
+  ]
+}

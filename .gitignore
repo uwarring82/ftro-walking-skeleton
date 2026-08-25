@@ -1,0 +1,10 @@
+# Retrieved provider artifacts are NEVER redistributed by this repository.
+# Federation stores identifiers, checksums, manifests and evidence -- not source bytes.
+data/raw/**/*.zip
+data/raw/**/extracted/
+data/work/
+.DS_Store
+__pycache__/
+*.pyc
+.venv/
+data/raw/

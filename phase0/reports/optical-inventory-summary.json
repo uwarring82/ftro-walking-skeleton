@@ -1,0 +1,3010 @@
+{
+  "generator": "src/ftro/analyse_optical.py",
+  "source_record": "https://doi.org/10.5281/zenodo.17107693",
+  "candidate_window_mjd": [
+    59630.0,
+    59640.0
+  ],
+  "documented_flag_vocabulary": {
+    "0": "invalid",
+    "1": "valid but experimental",
+    "2": "valid"
+  },
+  "gap_tolerance_s": 1.5,
+  "nominal_sampling_s": 1.0,
+  "global_flag_histogram": {
+    "1": 9018290
+  },
+  "global_undocumented_flag_values": [],
+  "sample_spacing_histogram_s": {
+    "1.0368": 5139806,
+    "0.9504": 3813549,
+    "3.024": 7274,
+    "1.9872": 6235,
+    "8.9856": 4263,
+    "6.9984": 3865,
+    "5.0112": 3143,
+    "8.0352": 3068,
+    "2.9376": 2872,
+    "12.0096": 2256,
+    "13.9968": 2220,
+    "15.984": 2183,
+    "7.9488": 1935,
+    "15.0336": 1745,
+    "14.9472": 1221,
+    "2.0736": 1041,
+    "9.072": 880,
+    "12.96": 833,
+    "10.0224": 799,
+    "13.0464": 786
+  },
+  "n_comparisons": 12,
+  "note": "Summary of the full inventory; per-sample uncertainty-column value sets and individual run boundaries are omitted. Regenerate the full inventory with src/ftro/analyse_optical.py.",
+  "comparisons": [
+    {
+      "comparison": "INRIM_ITYb1-PTB_Sr3_CombKnoten",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "nu0B",
+        "grsB",
+        "uB_sys"
+      ],
+      "yaml_values": {
+        "name": "INRIM_ITYb1-PTB_Sr3_CombKnoten",
+        "numrhoBA": "518295836590863.6000000000002",
+        "denrhoBA": "429228004229873",
+        "sB": "518295836590863.6",
+        "nu0A": "429228004229873",
+        "nu0B": "518295836590863.6",
+        "grsB": "0.0",
+        "uB_sys": "2.2e-17"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:03:46+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 17,
+      "mjd_first": 59638.801389,
+      "mjd_last": 59670.718484,
+      "flag_histogram": {
+        "1": 375561
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 22914,
+          "column_value_min": "2.7365600000000004e-18",
+          "column_value_max": "1.13805e-17",
+          "identical_to_yaml": null
+        },
+        "uB_sys": {
+          "yaml_value": "2.2e-17",
+          "n_distinct_column_values": 5,
+          "column_value_min": "2e-17",
+          "column_value_max": "2.8000000000000005e-17",
+          "identical_to_yaml": false
+        }
+      },
+      "n_valid_runs_in_candidate_window": 552,
+      "n_valid_samples_in_window": 55186,
+      "valid_support_seconds_in_window": 54634.003,
+      "window_support_envelope_mjd": [
+        59638.801389,
+        59639.975891
+      ],
+      "files": [
+        {
+          "file": "2022-02-28_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 16056,
+          "mjd_first": 59638.801389,
+          "mjd_last": 59638.998113,
+          "flag_histogram": {
+            "1": 16056
+          }
+        },
+        {
+          "file": "2022-03-01_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 39130,
+          "mjd_first": 59639.000023,
+          "mjd_last": 59639.975891,
+          "flag_histogram": {
+            "1": 39130
+          }
+        },
+        {
+          "file": "2022-03-02_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 29239,
+          "mjd_first": 59640.000023,
+          "mjd_last": 59640.817442,
+          "flag_histogram": {
+            "1": 29239
+          }
+        },
+        {
+          "file": "2022-03-03_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 22711,
+          "mjd_first": 59641.574097,
+          "mjd_last": 59641.975891,
+          "flag_histogram": {
+            "1": 22711
+          }
+        },
+        {
+          "file": "2022-03-04_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 56082,
+          "mjd_first": 59642.00456,
+          "mjd_last": 59642.975891,
+          "flag_histogram": {
+            "1": 56082
+          }
+        },
+        {
+          "file": "2022-03-05_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 11346,
+          "mjd_first": 59643.000023,
+          "mjd_last": 59643.133762,
+          "flag_histogram": {
+            "1": 11346
+          }
+        },
+        {
+          "file": "2022-03-07_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 22908,
+          "mjd_first": 59645.479942,
+          "mjd_last": 59645.973345,
+          "flag_histogram": {
+            "1": 22908
+          }
+        },
+        {
+          "file": "2022-03-08_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 1517,
+          "mjd_first": 59646.958345,
+          "mjd_last": 59646.975891,
+          "flag_histogram": {
+            "1": 1517
+          }
+        },
+        {
+          "file": "2022-03-09_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 7585,
+          "mjd_first": 59647.000023,
+          "mjd_last": 59647.088681,
+          "flag_histogram": {
+            "1": 7585
+          }
+        },
+        {
+          "file": "2022-03-10_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 42517,
+          "mjd_first": 59648.000023,
+          "mjd_last": 59648.998113,
+          "flag_histogram": {
+            "1": 42517
+          }
+        },
+        {
+          "file": "2022-03-11_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 28547,
+          "mjd_first": 59649.000046,
+          "mjd_last": 59649.812894,
+          "flag_histogram": {
+            "1": 28547
+          }
+        },
+        {
+          "file": "2022-03-12_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 15586,
+          "mjd_first": 59650.239028,
+          "mjd_last": 59650.510394,
+          "flag_histogram": {
+            "1": 15586
+          }
+        },
+        {
+          "file": "2022-03-14_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 6068,
+          "mjd_first": 59652.526563,
+          "mjd_last": 59652.684468,
+          "flag_histogram": {
+            "1": 6068
+          }
+        },
+        {
+          "file": "2022-03-15_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 29267,
+          "mjd_first": 59653.431516,
+          "mjd_last": 59653.947951,
+          "flag_histogram": {
+            "1": 29267
+          }
+        },
+        {
+          "file": "2022-03-17_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 2768,
+          "mjd_first": 59655.01838,
+          "mjd_last": 59655.771817,
+          "flag_histogram": {
+            "1": 2768
+          }
+        },
+        {
+          "file": "2022-03-31_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 34373,
+          "mjd_first": 59669.357338,
+          "mjd_last": 59669.926875,
+          "flag_histogram": {
+            "1": 34373
+          }
+        },
+        {
+          "file": "2022-04-01_INRIM_ITYb1-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 9861,
+          "mjd_first": 59670.38081,
+          "mjd_last": 59670.718484,
+          "flag_histogram": {
+            "1": 9861
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "INRIM_ITYb1-SYRTE_Sr2",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "grsA",
+        "uA_sys",
+        "nu0B",
+        "grsB",
+        "uB_sys"
+      ],
+      "yaml_values": {
+        "name": "INRIM_ITYb1-SYRTE_Sr2",
+        "numrhoBA": "518295836590863.6000000000002",
+        "denrhoBA": "429228004229873",
+        "sB": "518295836590863.6",
+        "nu0A": "429228004229873",
+        "grsA": "6.086e-15",
+        "uA_sys": "1.7e-17",
+        "nu0B": "518295836590863.6",
+        "grsB": "0.0",
+        "uB_sys": "2.2e-17"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:03:56+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 25,
+      "mjd_first": 59638.801389,
+      "mjd_last": 59670.999988,
+      "flag_histogram": {
+        "1": 593270
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": "1.7e-17",
+          "n_distinct_column_values": 1,
+          "column_value_min": "1.7e-17",
+          "column_value_max": "1.7e-17",
+          "identical_to_yaml": true
+        },
+        "uB_sys": {
+          "yaml_value": "2.2e-17",
+          "n_distinct_column_values": 5,
+          "column_value_min": "2e-17",
+          "column_value_max": "2.8000000000000005e-17",
+          "identical_to_yaml": false
+        }
+      },
+      "n_valid_runs_in_candidate_window": 1686,
+      "n_valid_samples_in_window": 72526,
+      "valid_support_seconds_in_window": 70838.055,
+      "window_support_envelope_mjd": [
+        59638.801389,
+        59640.0
+      ],
+      "files": [
+        {
+          "file": "2022-02-28_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 13298,
+          "mjd_first": 59638.801389,
+          "mjd_last": 59638.999977,
+          "flag_histogram": {
+            "1": 13298
+          }
+        },
+        {
+          "file": "2022-03-01_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 59227,
+          "mjd_first": 59639.0,
+          "mjd_last": 59639.999988,
+          "flag_histogram": {
+            "1": 59227
+          }
+        },
+        {
+          "file": "2022-03-02_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 43954,
+          "mjd_first": 59640.0,
+          "mjd_last": 59640.999988,
+          "flag_histogram": {
+            "1": 43954
+          }
+        },
+        {
+          "file": "2022-03-03_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 55399,
+          "mjd_first": 59641.000023,
+          "mjd_last": 59641.985093,
+          "flag_histogram": {
+            "1": 55399
+          }
+        },
+        {
+          "file": "2022-03-04_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 55038,
+          "mjd_first": 59642.004699,
+          "mjd_last": 59642.999734,
+          "flag_histogram": {
+            "1": 55038
+          }
+        },
+        {
+          "file": "2022-03-05_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 9298,
+          "mjd_first": 59643.000197,
+          "mjd_last": 59643.133762,
+          "flag_histogram": {
+            "1": 9298
+          }
+        },
+        {
+          "file": "2022-03-07_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 25380,
+          "mjd_first": 59645.420891,
+          "mjd_last": 59645.995417,
+          "flag_histogram": {
+            "1": 25380
+          }
+        },
+        {
+          "file": "2022-03-08_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 2989,
+          "mjd_first": 59646.958345,
+          "mjd_last": 59646.999988,
+          "flag_histogram": {
+            "1": 2989
+          }
+        },
+        {
+          "file": "2022-03-09_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 6105,
+          "mjd_first": 59647.0,
+          "mjd_last": 59647.088681,
+          "flag_histogram": {
+            "1": 6105
+          }
+        },
+        {
+          "file": "2022-03-10_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 21511,
+          "mjd_first": 59648.0,
+          "mjd_last": 59648.734792,
+          "flag_histogram": {
+            "1": 21511
+          }
+        },
+        {
+          "file": "2022-03-11_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 1466,
+          "mjd_first": 59649.680266,
+          "mjd_last": 59649.732928,
+          "flag_histogram": {
+            "1": 1466
+          }
+        },
+        {
+          "file": "2022-03-12_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 8946,
+          "mjd_first": 59650.239028,
+          "mjd_last": 59650.427118,
+          "flag_histogram": {
+            "1": 8946
+          }
+        },
+        {
+          "file": "2022-03-14_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 17828,
+          "mjd_first": 59652.521076,
+          "mjd_last": 59652.999988,
+          "flag_histogram": {
+            "1": 17828
+          }
+        },
+        {
+          "file": "2022-03-15_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 32455,
+          "mjd_first": 59653.000023,
+          "mjd_last": 59653.947951,
+          "flag_histogram": {
+            "1": 32455
+          }
+        },
+        {
+          "file": "2022-03-16_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 20408,
+          "mjd_first": 59654.054711,
+          "mjd_last": 59654.357095,
+          "flag_histogram": {
+            "1": 20408
+          }
+        },
+        {
+          "file": "2022-03-17_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 44034,
+          "mjd_first": 59655.01838,
+          "mjd_last": 59655.801169,
+          "flag_histogram": {
+            "1": 44034
+          }
+        },
+        {
+          "file": "2022-03-21_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 10562,
+          "mjd_first": 59659.727512,
+          "mjd_last": 59659.890891,
+          "flag_histogram": {
+            "1": 10562
+          }
+        },
+        {
+          "file": "2022-03-22_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 16414,
+          "mjd_first": 59660.488611,
+          "mjd_last": 59660.999977,
+          "flag_histogram": {
+            "1": 16414
+          }
+        },
+        {
+          "file": "2022-03-23_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 2587,
+          "mjd_first": 59661.958345,
+          "mjd_last": 59661.999988,
+          "flag_histogram": {
+            "1": 2587
+          }
+        },
+        {
+          "file": "2022-03-24_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 17090,
+          "mjd_first": 59662.0,
+          "mjd_last": 59662.752303,
+          "flag_histogram": {
+            "1": 17090
+          }
+        },
+        {
+          "file": "2022-03-25_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 13427,
+          "mjd_first": 59663.002743,
+          "mjd_last": 59663.87765,
+          "flag_histogram": {
+            "1": 13427
+          }
+        },
+        {
+          "file": "2022-03-29_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 13429,
+          "mjd_first": 59667.708426,
+          "mjd_last": 59667.999988,
+          "flag_histogram": {
+            "1": 13429
+          }
+        },
+        {
+          "file": "2022-03-30_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 23691,
+          "mjd_first": 59668.0,
+          "mjd_last": 59668.640289,
+          "flag_histogram": {
+            "1": 23691
+          }
+        },
+        {
+          "file": "2022-03-31_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 37308,
+          "mjd_first": 59669.357338,
+          "mjd_last": 59669.926875,
+          "flag_histogram": {
+            "1": 37308
+          }
+        },
+        {
+          "file": "2022-04-01_INRIM_ITYb1-SYRTE_Sr2.dat",
+          "n_samples": 41426,
+          "mjd_first": 59670.37022,
+          "mjd_last": 59670.999988,
+          "flag_histogram": {
+            "1": 41426
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "NPL-Yb+(E3)-NPL-Sr1",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "grsA",
+        "uA_sys",
+        "nu0B",
+        "grsB",
+        "uB_sys"
+      ],
+      "yaml_values": {
+        "name": "NPL-Yb+(E3)-NPL-Sr1",
+        "numrhoBA": "642121496772645.1199999999999",
+        "denrhoBA": "429228004229872.99",
+        "sB": "642121496772645.1",
+        "nu0A": "429228004229872.99",
+        "grsA": "1.215e-15",
+        "uA_sys": "2.23e-17",
+        "nu0B": "642121496772645.12",
+        "grsB": "1.1869e-15",
+        "uB_sys": "3.2e-18"
+      },
+      "generation_headers": [
+        "# File generated on: 2024-04-22T14:53:18+02:00",
+        "# With the script: convert-to-rocit.py"
+      ],
+      "n_dat_files": 20,
+      "mjd_first": 59647.726586,
+      "mjd_last": 59670.347188,
+      "flag_histogram": {
+        "1": 715032
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": "2.23e-17",
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.23e-17",
+          "column_value_max": "2.23e-17",
+          "identical_to_yaml": true
+        },
+        "uB_sys": {
+          "yaml_value": "3.2e-18",
+          "n_distinct_column_values": 1,
+          "column_value_min": "3.2e-18",
+          "column_value_max": "3.2e-18",
+          "identical_to_yaml": true
+        }
+      },
+      "n_valid_runs_in_candidate_window": 0,
+      "n_valid_samples_in_window": 0,
+      "valid_support_seconds_in_window": 0,
+      "window_support_envelope_mjd": null,
+      "files": [
+        {
+          "file": "2022-03-09_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 18796,
+          "mjd_first": 59647.726586,
+          "mjd_last": 59647.999815,
+          "flag_histogram": {
+            "1": 18796
+          }
+        },
+        {
+          "file": "2022-03-10_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 36006,
+          "mjd_first": 59648.000127,
+          "mjd_last": 59648.998403,
+          "flag_histogram": {
+            "1": 36006
+          }
+        },
+        {
+          "file": "2022-03-11_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 20129,
+          "mjd_first": 59649.479201,
+          "mjd_last": 59649.999861,
+          "flag_histogram": {
+            "1": 20129
+          }
+        },
+        {
+          "file": "2022-03-12_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 34283,
+          "mjd_first": 59650.00765,
+          "mjd_last": 59650.869537,
+          "flag_histogram": {
+            "1": 34283
+          }
+        },
+        {
+          "file": "2022-03-13_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 76067,
+          "mjd_first": 59651.009259,
+          "mjd_last": 59651.999815,
+          "flag_histogram": {
+            "1": 76067
+          }
+        },
+        {
+          "file": "2022-03-14_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 15333,
+          "mjd_first": 59652.000162,
+          "mjd_last": 59652.672049,
+          "flag_histogram": {
+            "1": 15333
+          }
+        },
+        {
+          "file": "2022-03-19_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 20997,
+          "mjd_first": 59657.123229,
+          "mjd_last": 59657.565579,
+          "flag_histogram": {
+            "1": 20997
+          }
+        },
+        {
+          "file": "2022-03-20_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 705,
+          "mjd_first": 59658.577882,
+          "mjd_last": 59658.586262,
+          "flag_histogram": {
+            "1": 705
+          }
+        },
+        {
+          "file": "2022-03-21_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 28061,
+          "mjd_first": 59659.647269,
+          "mjd_last": 59659.999919,
+          "flag_histogram": {
+            "1": 28061
+          }
+        },
+        {
+          "file": "2022-03-22_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 39307,
+          "mjd_first": 59660.000243,
+          "mjd_last": 59660.98059,
+          "flag_histogram": {
+            "1": 39307
+          }
+        },
+        {
+          "file": "2022-03-23_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 29389,
+          "mjd_first": 59661.049977,
+          "mjd_last": 59661.999896,
+          "flag_histogram": {
+            "1": 29389
+          }
+        },
+        {
+          "file": "2022-03-24_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 70215,
+          "mjd_first": 59662.000208,
+          "mjd_last": 59662.999942,
+          "flag_histogram": {
+            "1": 70215
+          }
+        },
+        {
+          "file": "2022-03-25_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 53194,
+          "mjd_first": 59663.000255,
+          "mjd_last": 59663.999884,
+          "flag_histogram": {
+            "1": 53194
+          }
+        },
+        {
+          "file": "2022-03-26_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 69640,
+          "mjd_first": 59664.000197,
+          "mjd_last": 59664.999919,
+          "flag_histogram": {
+            "1": 69640
+          }
+        },
+        {
+          "file": "2022-03-27_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 2776,
+          "mjd_first": 59665.000243,
+          "mjd_last": 59665.033299,
+          "flag_histogram": {
+            "1": 2776
+          }
+        },
+        {
+          "file": "2022-03-28_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 44308,
+          "mjd_first": 59666.433808,
+          "mjd_last": 59666.999884,
+          "flag_histogram": {
+            "1": 44308
+          }
+        },
+        {
+          "file": "2022-03-29_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 32861,
+          "mjd_first": 59667.403021,
+          "mjd_last": 59667.792164,
+          "flag_histogram": {
+            "1": 32861
+          }
+        },
+        {
+          "file": "2022-03-30_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 40833,
+          "mjd_first": 59668.418252,
+          "mjd_last": 59668.999954,
+          "flag_histogram": {
+            "1": 40833
+          }
+        },
+        {
+          "file": "2022-03-31_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 55750,
+          "mjd_first": 59669.000266,
+          "mjd_last": 59669.999826,
+          "flag_histogram": {
+            "1": 55750
+          }
+        },
+        {
+          "file": "2022-04-01_NPL-Yb+(E3)-NPL-Sr1.dat",
+          "n_samples": 26382,
+          "mjd_first": 59670.00015,
+          "mjd_last": 59670.347188,
+          "flag_histogram": {
+            "1": 26382
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_In_CombKnoten-INRIM_ITYb1",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "grsA",
+        "uA_sys",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_In_CombKnoten-INRIM_ITYb1",
+        "numrhoBA": "1267402452901050",
+        "denrhoBA": "518295836590863.6",
+        "sB": "1267402452901050.0",
+        "nu0A": "518295836590863.6",
+        "grsA": "0.0",
+        "uA_sys": "2.2e-17",
+        "nu0B": "1267402452901050"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:01:57+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 8,
+      "mjd_first": 59639.737431,
+      "mjd_last": 59650.498171,
+      "flag_histogram": {
+        "1": 146188
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": "2.2e-17",
+          "n_distinct_column_values": 3,
+          "column_value_min": "2e-17",
+          "column_value_max": "2.3e-17",
+          "identical_to_yaml": false
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.52485e-18",
+          "column_value_max": "2.52485e-18",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 123,
+      "n_valid_samples_in_window": 15976,
+      "valid_support_seconds_in_window": 15853.618,
+      "window_support_envelope_mjd": [
+        59639.737431,
+        59639.975891
+      ],
+      "files": [
+        {
+          "file": "2022-03-01_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 15976,
+          "mjd_first": 59639.737431,
+          "mjd_last": 59639.975891,
+          "flag_histogram": {
+            "1": 15976
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 20177,
+          "mjd_first": 59640.000023,
+          "mjd_last": 59640.286111,
+          "flag_histogram": {
+            "1": 20177
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 22786,
+          "mjd_first": 59642.462836,
+          "mjd_last": 59642.968368,
+          "flag_histogram": {
+            "1": 22786
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 11346,
+          "mjd_first": 59643.000023,
+          "mjd_last": 59643.133762,
+          "flag_histogram": {
+            "1": 11346
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 17343,
+          "mjd_first": 59645.73831,
+          "mjd_last": 59645.973345,
+          "flag_histogram": {
+            "1": 17343
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 22527,
+          "mjd_first": 59648.000023,
+          "mjd_last": 59648.998113,
+          "flag_histogram": {
+            "1": 22527
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 23398,
+          "mjd_first": 59649.000046,
+          "mjd_last": 59649.812894,
+          "flag_histogram": {
+            "1": 23398
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_In_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 12635,
+          "mjd_first": 59650.239028,
+          "mjd_last": 59650.498171,
+          "flag_histogram": {
+            "1": 12635
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_In_CombKnoten-PTB_Sr3_CombKnoten",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_In_CombKnoten-PTB_Sr3_CombKnoten",
+        "numrhoBA": "1267402452901050",
+        "denrhoBA": "429228004229873",
+        "sB": "1267402452901050.0",
+        "nu0A": "429228004229873",
+        "nu0B": "1267402452901050"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:02:03+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 14,
+      "mjd_first": 59639.737431,
+      "mjd_last": 59652.166667,
+      "flag_histogram": {
+        "1": 455585
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 22755,
+          "column_value_min": "2.82372e-18",
+          "column_value_max": "3.7992300000000005e-18",
+          "identical_to_yaml": null
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.52485e-18",
+          "column_value_max": "2.52485e-18",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 9,
+      "n_valid_samples_in_window": 21703,
+      "valid_support_seconds_in_window": 21693.917,
+      "window_support_envelope_mjd": [
+        59639.737431,
+        59640.0
+      ],
+      "files": [
+        {
+          "file": "2022-03-01_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 21702,
+          "mjd_first": 59639.737431,
+          "mjd_last": 59639.999988,
+          "flag_histogram": {
+            "1": 21702
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 32668,
+          "mjd_first": 59640.0,
+          "mjd_last": 59640.999988,
+          "flag_histogram": {
+            "1": 32668
+          }
+        },
+        {
+          "file": "2022-03-03_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 16579,
+          "mjd_first": 59641.0,
+          "mjd_last": 59641.425162,
+          "flag_histogram": {
+            "1": 16579
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 25262,
+          "mjd_first": 59642.462836,
+          "mjd_last": 59642.999988,
+          "flag_histogram": {
+            "1": 25262
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 54450,
+          "mjd_first": 59643.0,
+          "mjd_last": 59643.931956,
+          "flag_histogram": {
+            "1": 54450
+          }
+        },
+        {
+          "file": "2022-03-06_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 35819,
+          "mjd_first": 59644.517234,
+          "mjd_last": 59644.999988,
+          "flag_histogram": {
+            "1": 35819
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 22804,
+          "mjd_first": 59645.0,
+          "mjd_last": 59645.999988,
+          "flag_histogram": {
+            "1": 22804
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 39851,
+          "mjd_first": 59646.0,
+          "mjd_last": 59646.84985,
+          "flag_histogram": {
+            "1": 39851
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 9550,
+          "mjd_first": 59647.834213,
+          "mjd_last": 59647.999988,
+          "flag_histogram": {
+            "1": 9550
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 32944,
+          "mjd_first": 59648.0,
+          "mjd_last": 59648.999988,
+          "flag_histogram": {
+            "1": 32944
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 50458,
+          "mjd_first": 59649.0,
+          "mjd_last": 59649.999988,
+          "flag_histogram": {
+            "1": 50458
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 61646,
+          "mjd_first": 59650.0,
+          "mjd_last": 59650.883981,
+          "flag_histogram": {
+            "1": 61646
+          }
+        },
+        {
+          "file": "2022-03-13_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 37553,
+          "mjd_first": 59651.429051,
+          "mjd_last": 59651.999988,
+          "flag_histogram": {
+            "1": 37553
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_In_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 14299,
+          "mjd_first": 59652.0,
+          "mjd_last": 59652.166667,
+          "flag_histogram": {
+            "1": 14299
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_In_CombKnoten-PTB_Yb_CombKnoten",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_In_CombKnoten-PTB_Yb_CombKnoten",
+        "numrhoBA": "1267402452901050",
+        "denrhoBA": "642121496772645",
+        "sB": "1267402452901050.0",
+        "nu0A": "642121496772645",
+        "nu0B": "1267402452901050"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:01:50+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 16,
+      "mjd_first": 59633.721991,
+      "mjd_last": 59652.166667,
+      "flag_histogram": {
+        "1": 599696
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.7e-18",
+          "column_value_max": "2.7e-18",
+          "identical_to_yaml": null
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.52485e-18",
+          "column_value_max": "2.52485e-18",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 16,
+      "n_valid_samples_in_window": 60820,
+      "valid_support_seconds_in_window": 60803.74,
+      "window_support_envelope_mjd": [
+        59633.721991,
+        59640.0
+      ],
+      "files": [
+        {
+          "file": "2022-02-23_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 22741,
+          "mjd_first": 59633.721991,
+          "mjd_last": 59633.999988,
+          "flag_histogram": {
+            "1": 22741
+          }
+        },
+        {
+          "file": "2022-02-24_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 16378,
+          "mjd_first": 59634.0,
+          "mjd_last": 59634.344907,
+          "flag_histogram": {
+            "1": 16378
+          }
+        },
+        {
+          "file": "2022-03-01_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 21700,
+          "mjd_first": 59639.737431,
+          "mjd_last": 59639.999988,
+          "flag_histogram": {
+            "1": 21700
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 36560,
+          "mjd_first": 59640.0,
+          "mjd_last": 59640.999988,
+          "flag_histogram": {
+            "1": 36560
+          }
+        },
+        {
+          "file": "2022-03-03_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 16263,
+          "mjd_first": 59641.0,
+          "mjd_last": 59641.421644,
+          "flag_histogram": {
+            "1": 16263
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 25984,
+          "mjd_first": 59642.462836,
+          "mjd_last": 59642.999988,
+          "flag_histogram": {
+            "1": 25984
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 74471,
+          "mjd_first": 59643.0,
+          "mjd_last": 59643.999988,
+          "flag_histogram": {
+            "1": 74471
+          }
+        },
+        {
+          "file": "2022-03-06_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 53387,
+          "mjd_first": 59644.0,
+          "mjd_last": 59644.766204,
+          "flag_histogram": {
+            "1": 53387
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 20555,
+          "mjd_first": 59645.73831,
+          "mjd_last": 59645.999988,
+          "flag_histogram": {
+            "1": 20555
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 39876,
+          "mjd_first": 59646.0,
+          "mjd_last": 59646.84985,
+          "flag_histogram": {
+            "1": 39876
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 10280,
+          "mjd_first": 59647.834213,
+          "mjd_last": 59647.999988,
+          "flag_histogram": {
+            "1": 10280
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 43150,
+          "mjd_first": 59648.0,
+          "mjd_last": 59648.999988,
+          "flag_histogram": {
+            "1": 43150
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 52534,
+          "mjd_first": 59649.0,
+          "mjd_last": 59649.999988,
+          "flag_histogram": {
+            "1": 52534
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 71485,
+          "mjd_first": 59650.0,
+          "mjd_last": 59650.999988,
+          "flag_histogram": {
+            "1": 71485
+          }
+        },
+        {
+          "file": "2022-03-13_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 80033,
+          "mjd_first": 59651.0,
+          "mjd_last": 59651.999988,
+          "flag_histogram": {
+            "1": 80033
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_In_CombKnoten-PTB_Yb_CombKnoten.dat",
+          "n_samples": 14299,
+          "mjd_first": 59652.0,
+          "mjd_last": 59652.166667,
+          "flag_histogram": {
+            "1": 14299
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_In_CombKnoten-SYRTE_Sr2",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "grsA",
+        "uA_sys",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_In_CombKnoten-SYRTE_Sr2",
+        "numrhoBA": "1267402452901050",
+        "denrhoBA": "429228004229873",
+        "sB": "1267402452901050.0",
+        "nu0A": "429228004229873",
+        "grsA": "6.086e-15",
+        "uA_sys": "1.7e-17",
+        "nu0B": "1267402452901050"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:02:11+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 13,
+      "mjd_first": 59639.737431,
+      "mjd_last": 59652.166667,
+      "flag_histogram": {
+        "1": 313806
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": "1.7e-17",
+          "n_distinct_column_values": 1,
+          "column_value_min": "1.7e-17",
+          "column_value_max": "1.7e-17",
+          "identical_to_yaml": true
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.52485e-18",
+          "column_value_max": "2.52485e-18",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 257,
+      "n_valid_samples_in_window": 13992,
+      "valid_support_seconds_in_window": 13735.35,
+      "window_support_envelope_mjd": [
+        59639.737431,
+        59639.975891
+      ],
+      "files": [
+        {
+          "file": "2022-03-01_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 13992,
+          "mjd_first": 59639.737431,
+          "mjd_last": 59639.975891,
+          "flag_histogram": {
+            "1": 13992
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 8316,
+          "mjd_first": 59640.000023,
+          "mjd_last": 59640.12206,
+          "flag_histogram": {
+            "1": 8316
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 19691,
+          "mjd_first": 59642.462836,
+          "mjd_last": 59642.968322,
+          "flag_histogram": {
+            "1": 19691
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 49889,
+          "mjd_first": 59643.000197,
+          "mjd_last": 59643.975891,
+          "flag_histogram": {
+            "1": 49889
+          }
+        },
+        {
+          "file": "2022-03-06_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 42858,
+          "mjd_first": 59644.000023,
+          "mjd_last": 59644.712894,
+          "flag_histogram": {
+            "1": 42858
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 12989,
+          "mjd_first": 59645.738704,
+          "mjd_last": 59645.975856,
+          "flag_histogram": {
+            "1": 12989
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 19969,
+          "mjd_first": 59646.000023,
+          "mjd_last": 59646.849769,
+          "flag_histogram": {
+            "1": 19969
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 7116,
+          "mjd_first": 59647.834352,
+          "mjd_last": 59647.975891,
+          "flag_histogram": {
+            "1": 7116
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 26676,
+          "mjd_first": 59648.000023,
+          "mjd_last": 59648.530104,
+          "flag_histogram": {
+            "1": 26676
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 9512,
+          "mjd_first": 59649.680266,
+          "mjd_last": 59649.975891,
+          "flag_histogram": {
+            "1": 9512
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 36019,
+          "mjd_first": 59650.215116,
+          "mjd_last": 59650.975891,
+          "flag_histogram": {
+            "1": 36019
+          }
+        },
+        {
+          "file": "2022-03-13_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 55460,
+          "mjd_first": 59651.000023,
+          "mjd_last": 59651.975845,
+          "flag_histogram": {
+            "1": 55460
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_In_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 11319,
+          "mjd_first": 59652.003322,
+          "mjd_last": 59652.166667,
+          "flag_histogram": {
+            "1": 11319
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_Sr3_CombKnoten-SYRTE_Sr2",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "grsA",
+        "uA_sys",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_Sr3_CombKnoten-SYRTE_Sr2",
+        "numrhoBA": "429228004229873",
+        "denrhoBA": "429228004229873",
+        "sB": "429228004229873.0",
+        "nu0A": "429228004229873",
+        "grsA": "6.086e-15",
+        "uA_sys": "1.7e-17",
+        "nu0B": "429228004229873"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:04:07+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 21,
+      "mjd_first": 59638.540162,
+      "mjd_last": 59670.718484,
+      "flag_histogram": {
+        "1": 570490
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": "1.7e-17",
+          "n_distinct_column_values": 1,
+          "column_value_min": "1.7e-17",
+          "column_value_max": "1.7e-17",
+          "identical_to_yaml": true
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 31538,
+          "column_value_min": "2.7365600000000004e-18",
+          "column_value_max": "1.13805e-17",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 970,
+      "n_valid_samples_in_window": 53671,
+      "valid_support_seconds_in_window": 52699.841,
+      "window_support_envelope_mjd": [
+        59638.540162,
+        59639.975891
+      ],
+      "files": [
+        {
+          "file": "2022-02-28_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 19249,
+          "mjd_first": 59638.540162,
+          "mjd_last": 59638.998113,
+          "flag_histogram": {
+            "1": 19249
+          }
+        },
+        {
+          "file": "2022-03-01_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 34422,
+          "mjd_first": 59639.000023,
+          "mjd_last": 59639.975891,
+          "flag_histogram": {
+            "1": 34422
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 19033,
+          "mjd_first": 59640.000023,
+          "mjd_last": 59640.817338,
+          "flag_histogram": {
+            "1": 19033
+          }
+        },
+        {
+          "file": "2022-03-03_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 24210,
+          "mjd_first": 59641.574097,
+          "mjd_last": 59641.975891,
+          "flag_histogram": {
+            "1": 24210
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 49987,
+          "mjd_first": 59642.000208,
+          "mjd_last": 59642.975891,
+          "flag_histogram": {
+            "1": 49987
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 48699,
+          "mjd_first": 59643.000197,
+          "mjd_last": 59643.931852,
+          "flag_histogram": {
+            "1": 48699
+          }
+        },
+        {
+          "file": "2022-03-06_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 11766,
+          "mjd_first": 59644.517234,
+          "mjd_last": 59644.712894,
+          "flag_histogram": {
+            "1": 11766
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 24433,
+          "mjd_first": 59645.240023,
+          "mjd_last": 59645.975856,
+          "flag_histogram": {
+            "1": 24433
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 40584,
+          "mjd_first": 59646.000023,
+          "mjd_last": 59646.975891,
+          "flag_histogram": {
+            "1": 40584
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 31503,
+          "mjd_first": 59647.000023,
+          "mjd_last": 59647.975891,
+          "flag_histogram": {
+            "1": 31503
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 24514,
+          "mjd_first": 59648.000023,
+          "mjd_last": 59648.734792,
+          "flag_histogram": {
+            "1": 24514
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 11436,
+          "mjd_first": 59649.716424,
+          "mjd_last": 59649.975891,
+          "flag_histogram": {
+            "1": 11436
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 31526,
+          "mjd_first": 59650.215116,
+          "mjd_last": 59650.883368,
+          "flag_histogram": {
+            "1": 31526
+          }
+        },
+        {
+          "file": "2022-03-13_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 25916,
+          "mjd_first": 59651.429051,
+          "mjd_last": 59651.975845,
+          "flag_histogram": {
+            "1": 25916
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 29608,
+          "mjd_first": 59652.003322,
+          "mjd_last": 59652.615312,
+          "flag_histogram": {
+            "1": 29608
+          }
+        },
+        {
+          "file": "2022-03-15_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 14851,
+          "mjd_first": 59653.379653,
+          "mjd_last": 59653.975891,
+          "flag_histogram": {
+            "1": 14851
+          }
+        },
+        {
+          "file": "2022-03-16_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 20329,
+          "mjd_first": 59654.000023,
+          "mjd_last": 59654.975891,
+          "flag_histogram": {
+            "1": 20329
+          }
+        },
+        {
+          "file": "2022-03-17_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 3980,
+          "mjd_first": 59655.000023,
+          "mjd_last": 59655.771817,
+          "flag_histogram": {
+            "1": 3980
+          }
+        },
+        {
+          "file": "2022-03-30_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 21675,
+          "mjd_first": 59668.676887,
+          "mjd_last": 59668.975891,
+          "flag_histogram": {
+            "1": 21675
+          }
+        },
+        {
+          "file": "2022-03-31_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 62636,
+          "mjd_first": 59669.000023,
+          "mjd_last": 59669.998113,
+          "flag_histogram": {
+            "1": 62636
+          }
+        },
+        {
+          "file": "2022-04-01_PTB_Sr3_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 20133,
+          "mjd_first": 59670.000023,
+          "mjd_last": 59670.718484,
+          "flag_histogram": {
+            "1": 20133
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten",
+        "numrhoBA": "688358979309308.2399999999998",
+        "denrhoBA": "642121496772645",
+        "sB": "688358979309308.2",
+        "nu0A": "642121496772645",
+        "nu0B": "688358979309308.24"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:02:39+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 34,
+      "mjd_first": 59632.371875,
+      "mjd_last": 59674.958218,
+      "flag_histogram": {
+        "1": 2324201
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.7e-18",
+          "column_value_max": "2.7e-18",
+          "identical_to_yaml": null
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.6e-17",
+          "column_value_max": "2.6e-17",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 1934,
+      "n_valid_samples_in_window": 446524,
+      "valid_support_seconds_in_window": 444588.739,
+      "window_support_envelope_mjd": [
+        59632.371875,
+        59640.0
+      ],
+      "files": [
+        {
+          "file": "2022-02-22_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 51990,
+          "mjd_first": 59632.371875,
+          "mjd_last": 59632.999988,
+          "flag_histogram": {
+            "1": 51990
+          }
+        },
+        {
+          "file": "2022-02-23_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 53331,
+          "mjd_first": 59633.0,
+          "mjd_last": 59633.999988,
+          "flag_histogram": {
+            "1": 53331
+          }
+        },
+        {
+          "file": "2022-02-24_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 49324,
+          "mjd_first": 59634.0,
+          "mjd_last": 59634.999988,
+          "flag_histogram": {
+            "1": 49324
+          }
+        },
+        {
+          "file": "2022-02-25_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 58831,
+          "mjd_first": 59635.0,
+          "mjd_last": 59635.999988,
+          "flag_histogram": {
+            "1": 58831
+          }
+        },
+        {
+          "file": "2022-02-26_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 83667,
+          "mjd_first": 59636.0,
+          "mjd_last": 59636.999988,
+          "flag_histogram": {
+            "1": 83667
+          }
+        },
+        {
+          "file": "2022-02-27_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 24778,
+          "mjd_first": 59637.0,
+          "mjd_last": 59637.291551,
+          "flag_histogram": {
+            "1": 24778
+          }
+        },
+        {
+          "file": "2022-02-28_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 50474,
+          "mjd_first": 59638.352315,
+          "mjd_last": 59638.999988,
+          "flag_histogram": {
+            "1": 50474
+          }
+        },
+        {
+          "file": "2022-03-01_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 74128,
+          "mjd_first": 59639.0,
+          "mjd_last": 59639.999988,
+          "flag_histogram": {
+            "1": 74128
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 86036,
+          "mjd_first": 59640.0,
+          "mjd_last": 59640.999988,
+          "flag_histogram": {
+            "1": 86036
+          }
+        },
+        {
+          "file": "2022-03-03_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 81926,
+          "mjd_first": 59641.0,
+          "mjd_last": 59641.999988,
+          "flag_histogram": {
+            "1": 81926
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 83204,
+          "mjd_first": 59642.0,
+          "mjd_last": 59642.999988,
+          "flag_histogram": {
+            "1": 83204
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 36508,
+          "mjd_first": 59643.0,
+          "mjd_last": 59643.436296,
+          "flag_histogram": {
+            "1": 36508
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 55270,
+          "mjd_first": 59646.305671,
+          "mjd_last": 59646.999988,
+          "flag_histogram": {
+            "1": 55270
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 85523,
+          "mjd_first": 59647.0,
+          "mjd_last": 59647.999988,
+          "flag_histogram": {
+            "1": 85523
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 85545,
+          "mjd_first": 59648.0,
+          "mjd_last": 59648.999988,
+          "flag_histogram": {
+            "1": 85545
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 81679,
+          "mjd_first": 59649.0,
+          "mjd_last": 59649.999988,
+          "flag_histogram": {
+            "1": 81679
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 85785,
+          "mjd_first": 59650.0,
+          "mjd_last": 59650.999988,
+          "flag_histogram": {
+            "1": 85785
+          }
+        },
+        {
+          "file": "2022-03-13_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 84787,
+          "mjd_first": 59651.0,
+          "mjd_last": 59651.999988,
+          "flag_histogram": {
+            "1": 84787
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 82653,
+          "mjd_first": 59652.0,
+          "mjd_last": 59652.999988,
+          "flag_histogram": {
+            "1": 82653
+          }
+        },
+        {
+          "file": "2022-03-15_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 85315,
+          "mjd_first": 59653.0,
+          "mjd_last": 59653.999988,
+          "flag_histogram": {
+            "1": 85315
+          }
+        },
+        {
+          "file": "2022-03-16_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 36999,
+          "mjd_first": 59654.0,
+          "mjd_last": 59654.429988,
+          "flag_histogram": {
+            "1": 36999
+          }
+        },
+        {
+          "file": "2022-03-22_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 15624,
+          "mjd_first": 59660.816088,
+          "mjd_last": 59660.999988,
+          "flag_histogram": {
+            "1": 15624
+          }
+        },
+        {
+          "file": "2022-03-23_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 77424,
+          "mjd_first": 59661.0,
+          "mjd_last": 59661.999988,
+          "flag_histogram": {
+            "1": 77424
+          }
+        },
+        {
+          "file": "2022-03-24_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 69744,
+          "mjd_first": 59662.0,
+          "mjd_last": 59662.999965,
+          "flag_histogram": {
+            "1": 69744
+          }
+        },
+        {
+          "file": "2022-03-25_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 85166,
+          "mjd_first": 59663.000012,
+          "mjd_last": 59663.999988,
+          "flag_histogram": {
+            "1": 85166
+          }
+        },
+        {
+          "file": "2022-03-26_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 86007,
+          "mjd_first": 59664.0,
+          "mjd_last": 59664.999988,
+          "flag_histogram": {
+            "1": 86007
+          }
+        },
+        {
+          "file": "2022-03-27_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 85859,
+          "mjd_first": 59665.0,
+          "mjd_last": 59665.999988,
+          "flag_histogram": {
+            "1": 85859
+          }
+        },
+        {
+          "file": "2022-03-28_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 84114,
+          "mjd_first": 59666.0,
+          "mjd_last": 59666.999988,
+          "flag_histogram": {
+            "1": 84114
+          }
+        },
+        {
+          "file": "2022-03-29_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 55217,
+          "mjd_first": 59667.0,
+          "mjd_last": 59667.645718,
+          "flag_histogram": {
+            "1": 55217
+          }
+        },
+        {
+          "file": "2022-04-01_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 60607,
+          "mjd_first": 59670.291782,
+          "mjd_last": 59670.999988,
+          "flag_histogram": {
+            "1": 60607
+          }
+        },
+        {
+          "file": "2022-04-02_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 83618,
+          "mjd_first": 59671.0,
+          "mjd_last": 59671.975787,
+          "flag_histogram": {
+            "1": 83618
+          }
+        },
+        {
+          "file": "2022-04-03_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 40323,
+          "mjd_first": 59672.53125,
+          "mjd_last": 59672.999988,
+          "flag_histogram": {
+            "1": 40323
+          }
+        },
+        {
+          "file": "2022-04-04_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 80116,
+          "mjd_first": 59673.0,
+          "mjd_last": 59673.999988,
+          "flag_histogram": {
+            "1": 80116
+          }
+        },
+        {
+          "file": "2022-04-05_PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten.dat",
+          "n_samples": 82629,
+          "mjd_first": 59674.0,
+          "mjd_last": 59674.958218,
+          "flag_histogram": {
+            "1": 82629
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "grsA",
+        "uA_sys",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+        "numrhoBA": "642121496772644.9999999999999",
+        "denrhoBA": "518295836590863.6",
+        "sB": "642121496772645.0",
+        "nu0A": "518295836590863.6",
+        "grsA": "0.0",
+        "uA_sys": "2.2e-17",
+        "nu0B": "642121496772645"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:02:58+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 29,
+      "mjd_first": 59631.788542,
+      "mjd_last": 59670.718484,
+      "flag_histogram": {
+        "1": 653875
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": "2.2e-17",
+          "n_distinct_column_values": 5,
+          "column_value_min": "2e-17",
+          "column_value_max": "2.8000000000000005e-17",
+          "identical_to_yaml": false
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.7e-18",
+          "column_value_max": "2.7e-18",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 811,
+      "n_valid_samples_in_window": 116633,
+      "valid_support_seconds_in_window": 115821.873,
+      "window_support_envelope_mjd": [
+        59631.788542,
+        59639.975891
+      ],
+      "files": [
+        {
+          "file": "2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 16106,
+          "mjd_first": 59631.788542,
+          "mjd_last": 59631.975891,
+          "flag_histogram": {
+            "1": 16106
+          }
+        },
+        {
+          "file": "2022-02-22_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 21183,
+          "mjd_first": 59632.0,
+          "mjd_last": 59632.975891,
+          "flag_histogram": {
+            "1": 21183
+          }
+        },
+        {
+          "file": "2022-02-23_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 24804,
+          "mjd_first": 59633.000046,
+          "mjd_last": 59633.351817,
+          "flag_histogram": {
+            "1": 24804
+          }
+        },
+        {
+          "file": "2022-02-28_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 16062,
+          "mjd_first": 59638.801389,
+          "mjd_last": 59638.998113,
+          "flag_histogram": {
+            "1": 16062
+          }
+        },
+        {
+          "file": "2022-03-01_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 38478,
+          "mjd_first": 59639.000023,
+          "mjd_last": 59639.975891,
+          "flag_histogram": {
+            "1": 38478
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 32948,
+          "mjd_first": 59640.000023,
+          "mjd_last": 59640.817442,
+          "flag_histogram": {
+            "1": 32948
+          }
+        },
+        {
+          "file": "2022-03-03_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 23174,
+          "mjd_first": 59641.553194,
+          "mjd_last": 59641.975891,
+          "flag_histogram": {
+            "1": 23174
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 58552,
+          "mjd_first": 59642.00456,
+          "mjd_last": 59642.975891,
+          "flag_histogram": {
+            "1": 58552
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 11346,
+          "mjd_first": 59643.000023,
+          "mjd_last": 59643.133762,
+          "flag_histogram": {
+            "1": 11346
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 26823,
+          "mjd_first": 59645.422245,
+          "mjd_last": 59645.973345,
+          "flag_histogram": {
+            "1": 26823
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 1517,
+          "mjd_first": 59646.958345,
+          "mjd_last": 59646.975891,
+          "flag_histogram": {
+            "1": 1517
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 7586,
+          "mjd_first": 59647.000023,
+          "mjd_last": 59647.088681,
+          "flag_histogram": {
+            "1": 7586
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 47205,
+          "mjd_first": 59648.000023,
+          "mjd_last": 59648.998113,
+          "flag_histogram": {
+            "1": 47205
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 31006,
+          "mjd_first": 59649.000046,
+          "mjd_last": 59649.812894,
+          "flag_histogram": {
+            "1": 31006
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 15586,
+          "mjd_first": 59650.239028,
+          "mjd_last": 59650.510394,
+          "flag_histogram": {
+            "1": 15586
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 24443,
+          "mjd_first": 59652.526563,
+          "mjd_last": 59652.975891,
+          "flag_histogram": {
+            "1": 24443
+          }
+        },
+        {
+          "file": "2022-03-15_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 56500,
+          "mjd_first": 59653.000023,
+          "mjd_last": 59653.947951,
+          "flag_histogram": {
+            "1": 56500
+          }
+        },
+        {
+          "file": "2022-03-16_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 25864,
+          "mjd_first": 59654.054711,
+          "mjd_last": 59654.525127,
+          "flag_histogram": {
+            "1": 25864
+          }
+        },
+        {
+          "file": "2022-03-17_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 13679,
+          "mjd_first": 59655.571181,
+          "mjd_last": 59655.801169,
+          "flag_histogram": {
+            "1": 13679
+          }
+        },
+        {
+          "file": "2022-03-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 3911,
+          "mjd_first": 59659.815972,
+          "mjd_last": 59659.890417,
+          "flag_histogram": {
+            "1": 3911
+          }
+        },
+        {
+          "file": "2022-03-22_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 3564,
+          "mjd_first": 59660.833264,
+          "mjd_last": 59660.998785,
+          "flag_histogram": {
+            "1": 3564
+          }
+        },
+        {
+          "file": "2022-03-23_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 2006,
+          "mjd_first": 59661.958345,
+          "mjd_last": 59661.999988,
+          "flag_histogram": {
+            "1": 2006
+          }
+        },
+        {
+          "file": "2022-03-24_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 14147,
+          "mjd_first": 59662.0,
+          "mjd_last": 59662.752303,
+          "flag_histogram": {
+            "1": 14147
+          }
+        },
+        {
+          "file": "2022-03-25_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 13719,
+          "mjd_first": 59663.72,
+          "mjd_last": 59663.910255,
+          "flag_histogram": {
+            "1": 13719
+          }
+        },
+        {
+          "file": "2022-03-28_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 26710,
+          "mjd_first": 59666.63706,
+          "mjd_last": 59666.999988,
+          "flag_histogram": {
+            "1": 26710
+          }
+        },
+        {
+          "file": "2022-03-29_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 34561,
+          "mjd_first": 59667.0,
+          "mjd_last": 59667.975891,
+          "flag_histogram": {
+            "1": 34561
+          }
+        },
+        {
+          "file": "2022-03-30_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 11023,
+          "mjd_first": 59668.000023,
+          "mjd_last": 59668.640289,
+          "flag_histogram": {
+            "1": 11023
+          }
+        },
+        {
+          "file": "2022-03-31_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 34426,
+          "mjd_first": 59669.357338,
+          "mjd_last": 59669.926875,
+          "flag_histogram": {
+            "1": 34426
+          }
+        },
+        {
+          "file": "2022-04-01_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 16946,
+          "mjd_first": 59670.37022,
+          "mjd_last": 59670.718484,
+          "flag_histogram": {
+            "1": 16946
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten",
+        "numrhoBA": "642121496772645.0000000000002",
+        "denrhoBA": "429228004229873",
+        "sB": "642121496772645.0",
+        "nu0A": "429228004229873",
+        "nu0B": "642121496772645"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:03:15+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 24,
+      "mjd_first": 59638.33537,
+      "mjd_last": 59674.999988,
+      "flag_histogram": {
+        "1": 1231173
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 38662,
+          "column_value_min": "2.7365600000000004e-18",
+          "column_value_max": "1.40975e-17",
+          "identical_to_yaml": null
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.7e-18",
+          "column_value_max": "2.7e-18",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 58,
+      "n_valid_samples_in_window": 112441,
+      "valid_support_seconds_in_window": 112382.639,
+      "window_support_envelope_mjd": [
+        59638.33537,
+        59640.0
+      ],
+      "files": [
+        {
+          "file": "2022-02-28_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 44874,
+          "mjd_first": 59638.33537,
+          "mjd_last": 59638.999988,
+          "flag_histogram": {
+            "1": 44874
+          }
+        },
+        {
+          "file": "2022-03-01_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 67566,
+          "mjd_first": 59639.0,
+          "mjd_last": 59639.999988,
+          "flag_histogram": {
+            "1": 67566
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 73942,
+          "mjd_first": 59640.0,
+          "mjd_last": 59640.999988,
+          "flag_histogram": {
+            "1": 73942
+          }
+        },
+        {
+          "file": "2022-03-03_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 80272,
+          "mjd_first": 59641.0,
+          "mjd_last": 59641.999988,
+          "flag_histogram": {
+            "1": 80272
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 77919,
+          "mjd_first": 59642.0,
+          "mjd_last": 59642.999988,
+          "flag_histogram": {
+            "1": 77919
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 62645,
+          "mjd_first": 59643.0,
+          "mjd_last": 59643.931956,
+          "flag_histogram": {
+            "1": 62645
+          }
+        },
+        {
+          "file": "2022-03-06_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 19179,
+          "mjd_first": 59644.544213,
+          "mjd_last": 59644.766204,
+          "flag_histogram": {
+            "1": 19179
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 41116,
+          "mjd_first": 59645.305093,
+          "mjd_last": 59645.999988,
+          "flag_histogram": {
+            "1": 41116
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 80431,
+          "mjd_first": 59646.0,
+          "mjd_last": 59646.999988,
+          "flag_histogram": {
+            "1": 80431
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 76947,
+          "mjd_first": 59647.0,
+          "mjd_last": 59647.999988,
+          "flag_histogram": {
+            "1": 76947
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 72616,
+          "mjd_first": 59648.0,
+          "mjd_last": 59648.999988,
+          "flag_histogram": {
+            "1": 72616
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 76424,
+          "mjd_first": 59649.0,
+          "mjd_last": 59649.999988,
+          "flag_histogram": {
+            "1": 76424
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 73092,
+          "mjd_first": 59650.0,
+          "mjd_last": 59650.883981,
+          "flag_histogram": {
+            "1": 73092
+          }
+        },
+        {
+          "file": "2022-03-13_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 39501,
+          "mjd_first": 59651.429051,
+          "mjd_last": 59651.999988,
+          "flag_histogram": {
+            "1": 39501
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 51500,
+          "mjd_first": 59652.0,
+          "mjd_last": 59652.706146,
+          "flag_histogram": {
+            "1": 51500
+          }
+        },
+        {
+          "file": "2022-03-15_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 52367,
+          "mjd_first": 59653.37912,
+          "mjd_last": 59653.999988,
+          "flag_histogram": {
+            "1": 52367
+          }
+        },
+        {
+          "file": "2022-03-16_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 6807,
+          "mjd_first": 59654.0,
+          "mjd_last": 59654.443866,
+          "flag_histogram": {
+            "1": 6807
+          }
+        },
+        {
+          "file": "2022-03-17_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 2140,
+          "mjd_first": 59655.74706,
+          "mjd_last": 59655.771817,
+          "flag_histogram": {
+            "1": 2140
+          }
+        },
+        {
+          "file": "2022-03-30_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 27779,
+          "mjd_first": 59668.676887,
+          "mjd_last": 59668.999988,
+          "flag_histogram": {
+            "1": 27779
+          }
+        },
+        {
+          "file": "2022-03-31_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 70831,
+          "mjd_first": 59669.0,
+          "mjd_last": 59669.99941,
+          "flag_histogram": {
+            "1": 70831
+          }
+        },
+        {
+          "file": "2022-04-01_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 55195,
+          "mjd_first": 59670.0,
+          "mjd_last": 59670.999988,
+          "flag_histogram": {
+            "1": 55195
+          }
+        },
+        {
+          "file": "2022-04-02_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 30987,
+          "mjd_first": 59671.0,
+          "mjd_last": 59671.35919,
+          "flag_histogram": {
+            "1": 30987
+          }
+        },
+        {
+          "file": "2022-04-04_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 8933,
+          "mjd_first": 59673.306655,
+          "mjd_last": 59673.778032,
+          "flag_histogram": {
+            "1": 8933
+          }
+        },
+        {
+          "file": "2022-04-05_PTB_Yb_CombKnoten-PTB_Sr3_CombKnoten.dat",
+          "n_samples": 38110,
+          "mjd_first": 59674.275567,
+          "mjd_last": 59674.999988,
+          "flag_histogram": {
+            "1": 38110
+          }
+        }
+      ]
+    },
+    {
+      "comparison": "PTB_Yb_CombKnoten-SYRTE_Sr2",
+      "yaml_keys": [
+        "name",
+        "numrhoBA",
+        "denrhoBA",
+        "sB",
+        "nu0A",
+        "grsA",
+        "uA_sys",
+        "nu0B"
+      ],
+      "yaml_values": {
+        "name": "PTB_Yb_CombKnoten-SYRTE_Sr2",
+        "numrhoBA": "642121496772645.0000000000002",
+        "denrhoBA": "429228004229873",
+        "sB": "642121496772645.0",
+        "nu0A": "429228004229873",
+        "grsA": "6.086e-15",
+        "uA_sys": "1.7e-17",
+        "nu0B": "642121496772645"
+      },
+      "generation_headers": [
+        "# File generated on: 2025-01-20T17:03:35+01:00",
+        "# With the script: 06-procclocks-v3.py"
+      ],
+      "n_dat_files": 31,
+      "mjd_first": 59638.540162,
+      "mjd_last": 59670.718484,
+      "flag_histogram": {
+        "1": 1039413
+      },
+      "undocumented_flag_values": [],
+      "uncertainty_consistency": {
+        "uA_sys": {
+          "yaml_value": "1.7e-17",
+          "n_distinct_column_values": 1,
+          "column_value_min": "1.7e-17",
+          "column_value_max": "1.7e-17",
+          "identical_to_yaml": true
+        },
+        "uB_sys": {
+          "yaml_value": null,
+          "n_distinct_column_values": 1,
+          "column_value_min": "2.7e-18",
+          "column_value_max": "2.7e-18",
+          "identical_to_yaml": null
+        }
+      },
+      "n_valid_runs_in_candidate_window": 982,
+      "n_valid_samples_in_window": 54478,
+      "valid_support_seconds_in_window": 53494.892,
+      "window_support_envelope_mjd": [
+        59638.540162,
+        59639.975891
+      ],
+      "files": [
+        {
+          "file": "2022-02-28_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 20613,
+          "mjd_first": 59638.540162,
+          "mjd_last": 59638.998113,
+          "flag_histogram": {
+            "1": 20613
+          }
+        },
+        {
+          "file": "2022-03-01_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 33865,
+          "mjd_first": 59639.000023,
+          "mjd_last": 59639.975891,
+          "flag_histogram": {
+            "1": 33865
+          }
+        },
+        {
+          "file": "2022-03-02_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 19366,
+          "mjd_first": 59640.000023,
+          "mjd_last": 59640.817338,
+          "flag_histogram": {
+            "1": 19366
+          }
+        },
+        {
+          "file": "2022-03-03_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 24515,
+          "mjd_first": 59641.553171,
+          "mjd_last": 59641.975891,
+          "flag_histogram": {
+            "1": 24515
+          }
+        },
+        {
+          "file": "2022-03-04_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 52448,
+          "mjd_first": 59642.000208,
+          "mjd_last": 59642.975891,
+          "flag_histogram": {
+            "1": 52448
+          }
+        },
+        {
+          "file": "2022-03-05_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 55731,
+          "mjd_first": 59643.000197,
+          "mjd_last": 59643.975891,
+          "flag_histogram": {
+            "1": 55731
+          }
+        },
+        {
+          "file": "2022-03-06_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 44101,
+          "mjd_first": 59644.000023,
+          "mjd_last": 59644.712894,
+          "flag_histogram": {
+            "1": 44101
+          }
+        },
+        {
+          "file": "2022-03-07_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 25216,
+          "mjd_first": 59645.305162,
+          "mjd_last": 59645.975856,
+          "flag_histogram": {
+            "1": 25216
+          }
+        },
+        {
+          "file": "2022-03-08_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 41129,
+          "mjd_first": 59646.000023,
+          "mjd_last": 59646.975891,
+          "flag_histogram": {
+            "1": 41129
+          }
+        },
+        {
+          "file": "2022-03-09_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 34052,
+          "mjd_first": 59647.000023,
+          "mjd_last": 59647.975891,
+          "flag_histogram": {
+            "1": 34052
+          }
+        },
+        {
+          "file": "2022-03-10_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 31935,
+          "mjd_first": 59648.000023,
+          "mjd_last": 59648.734792,
+          "flag_histogram": {
+            "1": 31935
+          }
+        },
+        {
+          "file": "2022-03-11_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 9835,
+          "mjd_first": 59649.680266,
+          "mjd_last": 59649.975891,
+          "flag_histogram": {
+            "1": 9835
+          }
+        },
+        {
+          "file": "2022-03-12_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 38704,
+          "mjd_first": 59650.215116,
+          "mjd_last": 59650.975891,
+          "flag_histogram": {
+            "1": 38704
+          }
+        },
+        {
+          "file": "2022-03-13_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 58604,
+          "mjd_first": 59651.000023,
+          "mjd_last": 59651.975845,
+          "flag_histogram": {
+            "1": 58604
+          }
+        },
+        {
+          "file": "2022-03-14_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 47510,
+          "mjd_first": 59652.003322,
+          "mjd_last": 59652.975764,
+          "flag_histogram": {
+            "1": 47510
+          }
+        },
+        {
+          "file": "2022-03-15_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 40465,
+          "mjd_first": 59653.000023,
+          "mjd_last": 59653.975891,
+          "flag_histogram": {
+            "1": 40465
+          }
+        },
+        {
+          "file": "2022-03-16_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 32060,
+          "mjd_first": 59654.000023,
+          "mjd_last": 59654.438993,
+          "flag_histogram": {
+            "1": 32060
+          }
+        },
+        {
+          "file": "2022-03-17_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 25839,
+          "mjd_first": 59655.571181,
+          "mjd_last": 59655.975891,
+          "flag_histogram": {
+            "1": 25839
+          }
+        },
+        {
+          "file": "2022-03-18_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 39188,
+          "mjd_first": 59656.000023,
+          "mjd_last": 59656.975891,
+          "flag_histogram": {
+            "1": 39188
+          }
+        },
+        {
+          "file": "2022-03-19_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 35621,
+          "mjd_first": 59657.000023,
+          "mjd_last": 59657.975891,
+          "flag_histogram": {
+            "1": 35621
+          }
+        },
+        {
+          "file": "2022-03-20_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 43047,
+          "mjd_first": 59658.000023,
+          "mjd_last": 59658.998113,
+          "flag_histogram": {
+            "1": 43047
+          }
+        },
+        {
+          "file": "2022-03-21_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 10135,
+          "mjd_first": 59659.000023,
+          "mjd_last": 59659.999988,
+          "flag_histogram": {
+            "1": 10135
+          }
+        },
+        {
+          "file": "2022-03-22_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 21395,
+          "mjd_first": 59660.0,
+          "mjd_last": 59660.998785,
+          "flag_histogram": {
+            "1": 21395
+          }
+        },
+        {
+          "file": "2022-03-23_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 28261,
+          "mjd_first": 59661.004259,
+          "mjd_last": 59661.999988,
+          "flag_histogram": {
+            "1": 28261
+          }
+        },
+        {
+          "file": "2022-03-24_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 31919,
+          "mjd_first": 59662.0,
+          "mjd_last": 59662.868692,
+          "flag_histogram": {
+            "1": 31919
+          }
+        },
+        {
+          "file": "2022-03-25_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 31182,
+          "mjd_first": 59663.108218,
+          "mjd_last": 59663.941655,
+          "flag_histogram": {
+            "1": 31182
+          }
+        },
+        {
+          "file": "2022-03-26_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 11892,
+          "mjd_first": 59664.249769,
+          "mjd_last": 59664.429595,
+          "flag_histogram": {
+            "1": 11892
+          }
+        },
+        {
+          "file": "2022-03-29_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 11421,
+          "mjd_first": 59667.708426,
+          "mjd_last": 59667.975833,
+          "flag_histogram": {
+            "1": 11421
+          }
+        },
+        {
+          "file": "2022-03-30_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 37392,
+          "mjd_first": 59668.000023,
+          "mjd_last": 59668.975891,
+          "flag_histogram": {
+            "1": 37392
+          }
+        },
+        {
+          "file": "2022-03-31_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 56538,
+          "mjd_first": 59669.000023,
+          "mjd_last": 59669.998113,
+          "flag_histogram": {
+            "1": 56538
+          }
+        },
+        {
+          "file": "2022-04-01_PTB_Yb_CombKnoten-SYRTE_Sr2.dat",
+          "n_samples": 45434,
+          "mjd_first": 59670.000023,
+          "mjd_last": 59670.718484,
+          "flag_histogram": {
+            "1": 45434
+          }
+        }
+      ]
+    }
+  ]
+}

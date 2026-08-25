@@ -1,0 +1,38 @@
+# Lab Notes
+
+Append-only working record of the FTRO walking skeleton.
+
+## Conventions
+
+- **One file per working session**, named `YYYY-MM-DD-session-NN-<topic>.md`.
+- **Append-only.** Entries are never rewritten. A conclusion that later proves wrong is
+  corrected by a *new* entry that links back, not by editing the original. This mirrors
+  the project's own bitemporal rule: the record of what we believed at a knowledge time
+  is itself data.
+- **Every factual claim carries its evidence** — a command, a file path with a checksum,
+  or a generated report. A claim without a route to reproduce it does not belong here.
+- **Dead ends are recorded.** A retrieval that failed, a hypothesis that collapsed and a
+  wrong turn are all findings; §17 of the task card treats them as citable outputs.
+- Lab notes are **CC BY 4.0**, like all FTRO-authored documentation.
+
+## Relationship to the ledgers
+
+Lab notes are *narrative and chronological*: what was tried, in what order, and why.
+The ledgers are *structured and current*:
+
+| Want | Read |
+| --- | --- |
+| What happened, and how we got here | `labnotes/` |
+| The classified list of every deficiency found | [`ledgers/deficiency-log.md`](../ledgers/deficiency-log.md) |
+| Who may reuse what | [`ledgers/rights-ledger.md`](../ledgers/rights-ledger.md) |
+| Which artifacts are pinned, and to what | [`ledgers/source-ledger.md`](../ledgers/source-ledger.md) |
+| Why a choice was made | [`ledgers/decision-ledger.md`](../ledgers/decision-ledger.md) |
+
+A finding usually appears **first** in a lab note, then is promoted into a ledger entry
+with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
+
+## Sessions
+
+| Date | Session | Topic |
+| --- | --- | --- |
+| 2026-08-25 | 01 | [Phase 0 — evidence lock, bootstrap ledger and selection](2026-08-25-session-01-phase0.md) |

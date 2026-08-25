@@ -1,0 +1,28 @@
+# Licensing of this repository
+
+This repository is dual-licensed, per §7A of task card FTRO-WS-001 v0.3.
+
+| Content | Licence | Files |
+| --- | --- | --- |
+| FTRO-authored software | Apache-2.0 | `src/**`, any executable script |
+| FTRO-authored metadata, documents, manifests, graph metadata, certificates, ledgers, lab notes and reports | CC BY 4.0 | everything else authored here, including `phase0/**`, `ledgers/**`, `charter/**`, `profile/**`, `labnotes/**`, `*.md`, `*.json` |
+
+Full texts: [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt), [LICENSES/CC-BY-4.0.txt](LICENSES/CC-BY-4.0.txt).
+
+## Provider content is NOT relicensed by inclusion
+
+This repository is a **federation catalogue**. It records identifiers, checksums,
+manifests, evidence pointers, access instructions and FTRO-authored analysis.
+It does **not** redistribute provider source bytes, and inclusion here never
+relicenses provider content.
+
+Every referenced source retains its own licence, recorded in
+[`ledgers/rights-ledger.md`](ledgers/rights-ledger.md). Two of the pilot sources
+carry licences that are **not** interchangeable with the FTRO output licence:
+
+- Zenodo 17107693 (optical) — **CC BY 4.0**
+- PPTA DR3 (pulsar) — **CC BY-SA 4.0** (copyleft; see deficiency `FTRO-DEF-014`)
+
+Retrieved provider bytes are cached under `data/raw/` and are excluded from version
+control by `.gitignore`. Retrieval is reproducible from the pinned identifiers and
+checksums using the scripts in `src/ftro/`.

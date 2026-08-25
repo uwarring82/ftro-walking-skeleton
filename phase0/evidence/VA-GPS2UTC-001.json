@@ -1,0 +1,1062 @@
+{
+  "@type": "VerificationActivity",
+  "procedure_id": "VP-GPS2UTC-001",
+  "procedure_version": "1.0.0",
+  "subject": "gps2utc.clk supplies C0'-derived GPS->UTC corrections over MJD [59630.0, 59640.0]",
+  "artifact": "data/raw/evidence/gps2utc.clk",
+  "artifact_sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
+  "expected_sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
+  "checksum_match": true,
+  "result": "supports",
+  "reason": "every sample in the interval lies inside a C0' regime block",
+  "interval_mjd": [
+    59630.0,
+    59640.0
+  ],
+  "n_samples_in_interval": 11,
+  "regimes_in_interval": [
+    "C0'"
+  ],
+  "regime_markers": [
+    {
+      "line": 24,
+      "regime": "C0"
+    },
+    {
+      "line": 6653,
+      "regime": "C0'"
+    }
+  ],
+  "artifact_mjd_first": 48988.0,
+  "artifact_mjd_last": 61249.0,
+  "n_rows_total": 12318,
+  "duplicate_abscissae": [
+    {
+      "mjd": 49353.0,
+      "lines": [
+        390,
+        391
+      ],
+      "values": [
+        8.9e-08,
+        8.9e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 49709.0,
+      "lines": [
+        747,
+        748
+      ],
+      "values": [
+        7.3e-08,
+        7.4e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 9.999999999999957e-10
+    },
+    {
+      "mjd": 53399.0,
+      "lines": [
+        4430,
+        4431
+      ],
+      "values": [
+        -1.8e-08,
+        -1.8e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53429.0,
+      "lines": [
+        4461,
+        4462
+      ],
+      "values": [
+        -8.5e-09,
+        -8.5e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53459.0,
+      "lines": [
+        4492,
+        4493
+      ],
+      "values": [
+        -4.7e-09,
+        -4.8e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 53489.0,
+      "lines": [
+        4523,
+        4524
+      ],
+      "values": [
+        -3.1e-09,
+        -3.1e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53519.0,
+      "lines": [
+        4554,
+        4555
+      ],
+      "values": [
+        -3.9e-09,
+        -4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 53549.0,
+      "lines": [
+        4585,
+        4586
+      ],
+      "values": [
+        -8.8e-09,
+        -8.7e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 9.999999999999924e-11
+    },
+    {
+      "mjd": 53579.0,
+      "lines": [
+        4616,
+        4617
+      ],
+      "values": [
+        -7e-09,
+        -6.9e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.0000000000000007e-10
+    },
+    {
+      "mjd": 53609.0,
+      "lines": [
+        4647,
+        4648
+      ],
+      "values": [
+        -3.3e-09,
+        -3.4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -9.999999999999965e-11
+    },
+    {
+      "mjd": 53639.0,
+      "lines": [
+        4678,
+        4679
+      ],
+      "values": [
+        -1.43e-08,
+        -1.43e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53674.0,
+      "lines": [
+        4714,
+        4715
+      ],
+      "values": [
+        -1.68e-08,
+        -1.69e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -9.999999999999759e-11
+    },
+    {
+      "mjd": 53704.0,
+      "lines": [
+        4745,
+        4746
+      ],
+      "values": [
+        -1.09e-08,
+        -1.09e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53734.0,
+      "lines": [
+        4776,
+        4777
+      ],
+      "values": [
+        -7.2e-09,
+        -7.2e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53764.0,
+      "lines": [
+        4807,
+        4808
+      ],
+      "values": [
+        -1.06e-08,
+        -1.04e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 2.0000000000000014e-10
+    },
+    {
+      "mjd": 53794.0,
+      "lines": [
+        4838,
+        4839
+      ],
+      "values": [
+        -6e-09,
+        -5.8e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 2.0000000000000014e-10
+    },
+    {
+      "mjd": 53824.0,
+      "lines": [
+        4869,
+        4870
+      ],
+      "values": [
+        -1.14e-08,
+        -1.14e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53854.0,
+      "lines": [
+        4900,
+        4901
+      ],
+      "values": [
+        -1.42e-08,
+        -1.41e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 9.999999999999924e-11
+    },
+    {
+      "mjd": 53884.0,
+      "lines": [
+        4931,
+        4932
+      ],
+      "values": [
+        -1.27e-08,
+        -1.31e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -4.0000000000000027e-10
+    },
+    {
+      "mjd": 53914.0,
+      "lines": [
+        4962,
+        4963
+      ],
+      "values": [
+        -8.2e-09,
+        -8.1e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.000000000000009e-10
+    },
+    {
+      "mjd": 53944.0,
+      "lines": [
+        4993,
+        4994
+      ],
+      "values": [
+        -2.6e-09,
+        -2.6e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 53974.0,
+      "lines": [
+        5024,
+        5025
+      ],
+      "values": [
+        -7.9e-09,
+        -7.9e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54004.0,
+      "lines": [
+        5055,
+        5056
+      ],
+      "values": [
+        -7.6e-09,
+        -7.8e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -2.0000000000000014e-10
+    },
+    {
+      "mjd": 54039.0,
+      "lines": [
+        5091,
+        5092
+      ],
+      "values": [
+        -2.8e-09,
+        -2.5e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 2.999999999999998e-10
+    },
+    {
+      "mjd": 54069.0,
+      "lines": [
+        5122,
+        5123
+      ],
+      "values": [
+        1e-10,
+        2e-10
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1e-10
+    },
+    {
+      "mjd": 54099.0,
+      "lines": [
+        5153,
+        5154
+      ],
+      "values": [
+        -6.3e-09,
+        -6.1e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 2.0000000000000014e-10
+    },
+    {
+      "mjd": 54100.0,
+      "lines": [
+        5155,
+        5156
+      ],
+      "values": [
+        -5.4e-09,
+        -5.4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54129.0,
+      "lines": [
+        5185,
+        5186
+      ],
+      "values": [
+        -1e-08,
+        -1.02e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -2.0000000000000014e-10
+    },
+    {
+      "mjd": 54159.0,
+      "lines": [
+        5216,
+        5217
+      ],
+      "values": [
+        -1.2e-09,
+        -1.2e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54189.0,
+      "lines": [
+        5247,
+        5248
+      ],
+      "values": [
+        -2.9e-09,
+        -2.8e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.0000000000000007e-10
+    },
+    {
+      "mjd": 54219.0,
+      "lines": [
+        5278,
+        5279
+      ],
+      "values": [
+        -6.9e-09,
+        -6.6e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 2.999999999999994e-10
+    },
+    {
+      "mjd": 54249.0,
+      "lines": [
+        5309,
+        5310
+      ],
+      "values": [
+        -1.3e-09,
+        -1.4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -9.999999999999986e-11
+    },
+    {
+      "mjd": 54279.0,
+      "lines": [
+        5340,
+        5341
+      ],
+      "values": [
+        -5e-09,
+        -5.2e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -2.0000000000000014e-10
+    },
+    {
+      "mjd": 54309.0,
+      "lines": [
+        5371,
+        5372
+      ],
+      "values": [
+        2.4e-09,
+        2.5e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.0000000000000007e-10
+    },
+    {
+      "mjd": 54339.0,
+      "lines": [
+        5402,
+        5403
+      ],
+      "values": [
+        -2e-10,
+        -2e-10
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54369.0,
+      "lines": [
+        5433,
+        5434
+      ],
+      "values": [
+        -4.4e-09,
+        -4.4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54404.0,
+      "lines": [
+        5469,
+        5470
+      ],
+      "values": [
+        -3e-09,
+        -3.1e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 54434.0,
+      "lines": [
+        5500,
+        5501
+      ],
+      "values": [
+        2e-10,
+        2e-10
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54464.0,
+      "lines": [
+        5531,
+        5532
+      ],
+      "values": [
+        2e-10,
+        2e-10
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54831.0,
+      "lines": [
+        5899,
+        5900
+      ],
+      "values": [
+        -1.43e-08,
+        -1.43e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 54859.0,
+      "lines": [
+        5928,
+        5929
+      ],
+      "values": [
+        -5e-09,
+        -4.7e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 3.000000000000002e-10
+    },
+    {
+      "mjd": 54889.0,
+      "lines": [
+        5959,
+        5960
+      ],
+      "values": [
+        -1.8e-09,
+        -1.6e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.9999999999999993e-10
+    },
+    {
+      "mjd": 54919.0,
+      "lines": [
+        5990,
+        5991
+      ],
+      "values": [
+        1.3e-09,
+        1.5e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.9999999999999993e-10
+    },
+    {
+      "mjd": 54949.0,
+      "lines": [
+        6021,
+        6022
+      ],
+      "values": [
+        2.9e-09,
+        3e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.0000000000000007e-10
+    },
+    {
+      "mjd": 54979.0,
+      "lines": [
+        6052,
+        6053
+      ],
+      "values": [
+        2.6e-09,
+        2.7e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.0000000000000007e-10
+    },
+    {
+      "mjd": 55009.0,
+      "lines": [
+        6083,
+        6084
+      ],
+      "values": [
+        -5.6e-09,
+        -5.8e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -2.0000000000000014e-10
+    },
+    {
+      "mjd": 55039.0,
+      "lines": [
+        6114,
+        6115
+      ],
+      "values": [
+        -6e-09,
+        -6.1e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 55074.0,
+      "lines": [
+        6150,
+        6151
+      ],
+      "values": [
+        -1.2e-09,
+        -1.3e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 55104.0,
+      "lines": [
+        6181,
+        6182
+      ],
+      "values": [
+        -4.5e-09,
+        -4.4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.0000000000000007e-10
+    },
+    {
+      "mjd": 55134.0,
+      "lines": [
+        6212,
+        6213
+      ],
+      "values": [
+        -1.6e-09,
+        -1.7e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -9.999999999999986e-11
+    },
+    {
+      "mjd": 55164.0,
+      "lines": [
+        6243,
+        6244
+      ],
+      "values": [
+        3.2e-09,
+        3.4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1.9999999999999972e-10
+    },
+    {
+      "mjd": 55194.0,
+      "lines": [
+        6274,
+        6275
+      ],
+      "values": [
+        5.6e-09,
+        5.5e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 55224.0,
+      "lines": [
+        6305,
+        6306
+      ],
+      "values": [
+        4e-10,
+        3e-10
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000002e-10
+    },
+    {
+      "mjd": 55254.0,
+      "lines": [
+        6336,
+        6337
+      ],
+      "values": [
+        -9.4e-09,
+        -9.1e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 2.999999999999994e-10
+    },
+    {
+      "mjd": 55284.0,
+      "lines": [
+        6367,
+        6368
+      ],
+      "values": [
+        -4.4e-09,
+        -4.5e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 55314.0,
+      "lines": [
+        6398,
+        6399
+      ],
+      "values": [
+        -6.9e-09,
+        -7e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -1.0000000000000007e-10
+    },
+    {
+      "mjd": 55344.0,
+      "lines": [
+        6429,
+        6430
+      ],
+      "values": [
+        -1.11e-08,
+        -1.09e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 2.0000000000000014e-10
+    },
+    {
+      "mjd": 55374.0,
+      "lines": [
+        6460,
+        6461
+      ],
+      "values": [
+        -6.8e-09,
+        -6.8e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 55404.0,
+      "lines": [
+        6491,
+        6492
+      ],
+      "values": [
+        -1e-10,
+        2e-10
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 3e-10
+    },
+    {
+      "mjd": 55439.0,
+      "lines": [
+        6527,
+        6528
+      ],
+      "values": [
+        -1e-10,
+        0.0
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 1e-10
+    },
+    {
+      "mjd": 55469.0,
+      "lines": [
+        6558,
+        6559
+      ],
+      "values": [
+        1.4e-09,
+        1.3e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -9.999999999999986e-11
+    },
+    {
+      "mjd": 55499.0,
+      "lines": [
+        6589,
+        6590
+      ],
+      "values": [
+        -4e-09,
+        -4.4e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": -3.9999999999999945e-10
+    },
+    {
+      "mjd": 55529.0,
+      "lines": [
+        6620,
+        6621
+      ],
+      "values": [
+        -1.09e-08,
+        -1.09e-08
+      ],
+      "regimes": [
+        "C0",
+        "C0"
+      ],
+      "value_difference_s": 0.0
+    },
+    {
+      "mjd": 55559.0,
+      "lines": [
+        6651,
+        6654
+      ],
+      "values": [
+        -7.9e-09,
+        -8.2e-09
+      ],
+      "regimes": [
+        "C0",
+        "C0'"
+      ],
+      "value_difference_s": -3.0000000000000103e-10
+    }
+  ],
+  "non_monotonic_rows": [],
+  "gaps_in_interval_days": [],
+  "sampling_note": "artifact is tabulated at 1-day cadence; sub-daily use requires interpolation"
+}
