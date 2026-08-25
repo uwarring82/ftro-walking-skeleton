@@ -10,14 +10,14 @@
       "about": {
         "@id": "./"
       },
-      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the REPOSITORY as a research object for FAIR discoverability. The four per-domain manifests required by task card section 8 are a Phase-1 deliverable and do not exist yet; this crate does not claim conformance to the FTRO profile.",
+      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the REPOSITORY as a research object for FAIR discoverability. The four per-domain manifests required by task card section 8 are a Phase-1 deliverable and do not exist yet; this crate does not claim conformance to the FTRO profile. contentSize is deliberately omitted for this entity: it describes the file it is written into, so any value is stale the moment it is serialised.",
       "name": "RO-Crate Metadata Descriptor"
     },
     {
       "@id": "./",
       "@type": "Dataset",
       "name": "Federated Time-Reference Observatory — Walking Skeleton",
-      "description": "Phase-0 evidence lock, classified deficiency ledger and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Revised after external review: see labnotes session 02.",
+      "description": "Phase-0 evidence lock, classified deficiency ledger and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Revised twice after external review: see labnotes sessions 02 and 03.",
       "datePublished": "2026-08-25",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
@@ -112,6 +112,18 @@
         },
         {
           "@id": "phase0/reports/vlbi-vgosdb-pin.json"
+        },
+        {
+          "@id": "labnotes/2026-08-25-session-02-review-corrections.md"
+        },
+        {
+          "@id": "labnotes/README.md"
+        },
+        {
+          "@id": "tests/"
+        },
+        {
+          "@id": "labnotes/2026-08-25-session-03-review-corrections-2.md"
         }
       ],
       "isBasedOn": [
@@ -211,7 +223,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "16336",
+      "contentSize": "19772",
       "name": "ftro-graph-profile-v0.0.1.md"
     },
     {
@@ -221,7 +233,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "14679",
+      "contentSize": "15735",
       "name": "selection-note-v0.1.md"
     },
     {
@@ -241,7 +253,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7015",
+      "contentSize": "7581",
       "name": "optical-validity-intervals.md"
     },
     {
@@ -261,7 +273,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "19627",
+      "contentSize": "28450",
       "name": "identities.json"
     },
     {
@@ -281,7 +293,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4521",
+      "contentSize": "7380",
       "name": "four-domain-intersection.json"
     },
     {
@@ -361,7 +373,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "46844",
+      "contentSize": "54818",
       "name": "deficiency-log.json"
     },
     {
@@ -371,7 +383,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "47371",
+      "contentSize": "54972",
       "name": "deficiency-log.md"
     },
     {
@@ -401,7 +413,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "6112",
+      "contentSize": "7905",
       "name": "decision-ledger.md"
     },
     {
@@ -495,7 +507,7 @@
       "name": "four_domain_intersection.py",
       "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
       "encodingFormat": "text/x-python",
-      "contentSize": "8378",
+      "contentSize": "13638",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -512,7 +524,7 @@
       "name": "pin_igs.py",
       "description": "Retrieves and pins IGS products with full digests and content-shape validation.",
       "encodingFormat": "text/x-python",
-      "contentSize": "7584",
+      "contentSize": "7966",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -529,7 +541,7 @@
       "name": "pin_vgosdb.py",
       "description": "Retrieves and pins an IVS vgosDB from OPAR with content-shape validation and wrapper-version inventory.",
       "encodingFormat": "text/x-python",
-      "contentSize": "5623",
+      "contentSize": "9753",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -546,7 +558,7 @@
       "name": "render_deficiencies.py",
       "description": "Renders ledgers/deficiency-log.json to Markdown.",
       "encodingFormat": "text/x-python",
-      "contentSize": "2332",
+      "contentSize": "2742",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -580,7 +592,7 @@
       "name": "verify_gps2utc.py",
       "description": "Verification procedure VP-GPS2UTC-001: evaluates whether gps2utc.clk supplies C0' over a given interval and audits the artifact for duplicate abscissae.",
       "encodingFormat": "text/x-python",
-      "contentSize": "5861",
+      "contentSize": "6209",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -616,7 +628,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2416",
+      "contentSize": "7915",
       "name": "vlbi-vgosdb-pin.json"
     },
     {
@@ -628,12 +640,137 @@
       "name": "render_validity_intervals.py",
       "description": "Renders phase0/optical-validity-intervals.md from the committed optical summary.",
       "encodingFormat": "text/x-python",
-      "contentSize": "9035",
+      "contentSize": "9567",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "labnotes/2026-08-25-session-02-review-corrections.md",
+      "@type": "File",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "15490",
+      "name": "2026-08-25-session-02-review-corrections.md"
+    },
+    {
+      "@id": "labnotes/README.md",
+      "@type": "File",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2121",
+      "name": "README.md"
+    },
+    {
+      "@id": "tests/",
+      "@type": "Dataset",
+      "name": "FTRO regression tests",
+      "description": "Deterministic fixture tests for retrieval validation, fail-closed digest checking and profile §5.1 conformance. Standard-library unittest only.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "hasPart": [
+        {
+          "@id": "tests/test_retrieval_validation.py"
+        },
+        {
+          "@id": "tests/fixtures/genuine.sp3.Z"
+        },
+        {
+          "@id": "tests/fixtures/login_page.html"
+        },
+        {
+          "@id": "tests/fixtures/not_vgosdb.tgz"
+        },
+        {
+          "@id": "tests/fixtures/vgosdb_min.tgz"
+        },
+        {
+          "@id": "tests/fixtures/wrong_magic.sp3.Z"
+        }
+      ]
+    },
+    {
+      "@id": "tests/test_retrieval_validation.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_retrieval_validation.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "8251"
+    },
+    {
+      "@id": "tests/fixtures/genuine.sp3.Z",
+      "@type": "File",
+      "name": "genuine.sp3.Z",
+      "description": "Deterministic test fixture; not provider data.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "49"
+    },
+    {
+      "@id": "tests/fixtures/login_page.html",
+      "@type": "File",
+      "name": "login_page.html",
+      "description": "Deterministic test fixture; not provider data.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "454"
+    },
+    {
+      "@id": "tests/fixtures/not_vgosdb.tgz",
+      "@type": "File",
+      "name": "not_vgosdb.tgz",
+      "description": "Deterministic test fixture; not provider data.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "117"
+    },
+    {
+      "@id": "tests/fixtures/vgosdb_min.tgz",
+      "@type": "File",
+      "name": "vgosdb_min.tgz",
+      "description": "Deterministic test fixture; not provider data.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "292"
+    },
+    {
+      "@id": "tests/fixtures/wrong_magic.sp3.Z",
+      "@type": "File",
+      "name": "wrong_magic.sp3.Z",
+      "description": "Deterministic test fixture; not provider data.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "29"
+    },
+    {
+      "@id": "labnotes/2026-08-25-session-03-review-corrections-2.md",
+      "@type": "File",
+      "name": "2026-08-25-session-03-review-corrections-2.md",
+      "encodingFormat": "text/markdown",
+      "contentSize": "11893",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
       }
     }
   ]

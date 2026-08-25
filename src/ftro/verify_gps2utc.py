@@ -73,7 +73,8 @@ def main():
     args = ap.parse_args()
 
     digest = sha256(args.file)
-    checksum_ok = (args.expect_sha256 is None) or (digest == args.expect_sha256)
+    # Tri-state: None means "not checked", never a silent pass.
+    checksum_ok = None if args.expect_sha256 is None else (digest == args.expect_sha256)
 
     regimes, rows = load(args.file)
     window = [r for r in rows if args.mjd_start <= r[1] <= args.mjd_end]
@@ -100,7 +101,7 @@ def main():
         if b - a > 1.0:
             gaps.append({"after_mjd": a, "before_mjd": b, "gap_days": round(b - a, 6)})
 
-    if not checksum_ok:
+    if checksum_ok is False:
         result, reason = "indeterminate", "artifact checksum does not match the pinned value"
     elif not window:
         result, reason = "indeterminate", "no samples inside the requested interval"
@@ -142,7 +143,11 @@ def main():
         print(f"wrote {args.out}", file=sys.stderr)
     else:
         print(out)
-    return 0
+    # 0 supports, 1 contradicts, 2 indeterminate, 3 checksum mismatch.
+    if checksum_ok is False:
+        print("REJECTED: artifact checksum does not match the pinned value", file=sys.stderr)
+        return 3
+    return {"supports": 0, "contradicts": 1, "indeterminate": 2}[result]
 
 
 if __name__ == "__main__":

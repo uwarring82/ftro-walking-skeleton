@@ -92,7 +92,11 @@ def main():
     w("The 1.0368 / 0.9504 s dither in ratio 1.347775 — against 1.347826 for a mean of exactly "
       "1 s, implying a mean spacing of 0.999999199 s — is **strongly consistent with "
       "nearest-rounding of a one-second grid** to the 86.4 ms quantum. Under that model the "
-      "maximum serialisation error is **±43.2 ms**, 4.3% of the nominal sampling interval.\n")
+      "**per-tag rounding bound is ±43.2 ms**, 4.3% of the nominal sampling interval.\n")
+    w("That bound is neither universal nor irreducible. The absent `interval`, `lag` and "
+      "`weighting` leave a tag's placement within its own integration unconstrained over up to "
+      "**1 s** — a larger term — and if the grid model is accepted, reconstructing epochs by "
+      "sample index could recover much of the quantisation loss.\n")
     w("**No field in the archive declares the sampling grid**, so the one-second figure is a "
       "model-dependent inference, not a declared or measured fact. The ±43.2 ms bound is a limit "
       "on the *time* axis and is therefore not expressible as a ratio against the dimensionless "
@@ -123,7 +127,9 @@ def main():
     w("")
     w("> **The total row is comparison-hours, not wall-clock time.** It sums support across "
       "concurrently-running comparisons and so exceeds the 240 h window. The temporal **union** "
-      "of these runs is **133.112 h**; the union of the per-comparison envelopes is 197.075 h. "
+      "of these runs is **133.112 h** (7,398 runs merge to 1,384 intervals, of which 31 have "
+      "zero recorded span because they are single-sample runs, leaving 1,353 with positive "
+      "duration in the window); the union of the per-comparison envelopes is 197.075 h. "
       "See [`four-domain-intersection.json`](reports/four-domain-intersection.json).\n")
     w("**11 of 12 comparisons** have support inside the window. `NPL-Yb+(E3)-NPL-Sr1` has none: ")
     w("it begins at MJD 59647.73, and it is also the only comparison produced by a different "

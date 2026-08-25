@@ -23,17 +23,19 @@ w(f"**Task card:** {d['card']}\n")
 
 w("## Summary\n")
 for label, key in (("Class", "class"), ("Severity", "severity"), ("Domain", "domain"),
-                   ("Disposition", "disposition")):
+                   ("Disposition", "disposition"), ("Responsible party", "responsible_party")):
     c = collections.Counter(x[key] for x in e)
     w(f"**By {label.lower()}:** " + ", ".join(f"{k} ({v})" for k, v in sorted(c.items())) + "  ")
-w(f"\n**Total entries:** {len(e)}\n")
+sd = [x["id"] for x in e if x.get("self_directed")]
+w(f"\n**Total entries:** {len(e)} · **self-directed:** {len(sd)} ({', '.join(sd)})\n")
 
-w("| ID | Class | Sev. | Domain | Title |")
-w("| --- | --- | --- | --- | --- |")
+w("| ID | Class | Sev. | Domain | Party | Title |")
+w("| --- | --- | --- | --- | --- | --- |")
 order = {"critical": 0, "high": 1, "medium": 2, "low": 3}
 for x in sorted(e, key=lambda y: (order.get(y["severity"], 9), y["id"])):
+    party = "**self**" if x.get("self_directed") else x.get("responsible_party", "provider")
     w(f"| [`{x['id']}`](#{x['id'].lower()}) | {x['class']} | {x['severity']} "
-      f"| {x['domain']} | {x['title']} |")
+      f"| {x['domain']} | {party} | {x['title']} |")
 w("")
 
 w("## Entries\n")
@@ -47,6 +49,8 @@ for x in e:
     w(f"| Domain | {x['domain']} |")
     w(f"| Dataset | `{x['dataset']}` |")
     w(f"| Disposition | `{x['disposition']}` |")
+    w(f"| Responsible party | `{x.get('responsible_party', 'provider')}`"
+      f"{' — **self-directed**' if x.get('self_directed') else ''} |")
     w(f"| Version | {x['version']} |")
     w("")
     w(f"**Failed step.** {x['failed_step']}\n")

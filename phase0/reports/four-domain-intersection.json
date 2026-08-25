@@ -4,18 +4,77 @@
     59630.0,
     59640.0
   ],
-  "method_note": "The four legs are not computed on a common basis. Optical is the EXACT union of contiguous flag-in-{1,2} sample runs. VLBI uses scheduled session intervals, not per-observation supports, and GNSS uses IGS Final daily product validity, not per-epoch support: both are UPPER BOUNDS. Pulsar uses scan start from the file-name UTC stamp plus the header -tobs. Because two legs are upper bounds, every reported overlap is an upper bound; refining them into exact per-observation support can only remove overlap. The reported no_common_support is therefore robust under these conservative envelopes.",
-  "optical_support_basis": "run_level_union",
+  "method_note": "The four legs are not computed on a common basis. Optical is the union of RECORDED TIMESTAMP SPANS of contiguous flag-in-{1,2} runs under a 1.5 s contiguity rule -- exact with respect to the recorded tags, not to physical measurement support. VLBI uses scheduled session intervals, not per-observation supports, and GNSS uses IGS Final daily product validity, not per-epoch support: both are UPPER BOUNDS. Pulsar uses scan start from the file-name UTC stamp plus the header -tobs. Because two legs are upper bounds, every reported overlap is an upper bound; refining them into exact per-observation support can only remove overlap. The reported no_common_support is therefore robust under these conservative envelopes.",
+  "optical_support_basis": "recorded_timestamp_span_union",
   "optical_runs_merged": {
     "n_input_runs": 7398,
-    "n_disjoint_intervals": 1384
+    "n_disjoint_intervals_before_clip": 1384,
+    "n_zero_duration_intervals": 31,
+    "n_positive_duration_intervals_in_window": 1353,
+    "note": "merge() emits one interval per run; a run of exactly one sample has mjd_end == mjd_start and therefore zero recorded span. isect()'s strict hi > lo test drops those at the window clip, which is why the pre-clip count exceeds the in-window count."
+  },
+  "optical_support_convention": {
+    "rule": "maximal runs of flag in {1,2} with inter-sample spacing <= gap_tolerance_s",
+    "gap_tolerance_s": 1.5,
+    "run_span_definition": "first_recorded_tag_to_last_recorded_tag",
+    "interval_s": null,
+    "lag": null,
+    "weighting": null,
+    "ref_osc": null,
+    "declared_fields_absent_in": "12 of 12 comparisons (FTRO-DEF-003)"
+  },
+  "optical_exactness_scope": "Exact with respect to the recorded MJD tags under the 1.5 s contiguity rule. NOT exact with respect to physical measurement support: interval, lag and weighting are absent from all 12 comparisons, so each tag's placement within its own integration is unconstrained over up to 1 s, and no support is attributed to the trailing integration of any run.",
+  "optical_support_sensitivity": {
+    "note": "How the optical figures move under the two undeclared conventions: the contiguity tolerance, and the missing `lag` that leaves each tag's placement in its integration unconstrained over up to 1 s.",
+    "gap_tolerance_scan": {
+      "1.1": {
+        "optical_h": 133.1145,
+        "optical_vlbi_h": 82.0151
+      },
+      "1.5": {
+        "optical_h": 133.1145,
+        "optical_vlbi_h": 82.0151
+      },
+      "2.0": {
+        "optical_h": 133.1211,
+        "optical_vlbi_h": 82.0195
+      },
+      "5.0": {
+        "optical_h": 133.5716,
+        "optical_vlbi_h": 82.2361
+      }
+    },
+    "nominal_1s_sample_credit": {
+      "optical_h": 133.4961,
+      "optical_vlbi_h": 82.1826,
+      "note": "Support is credited as (last - first) per run, i.e. n-1 sample intervals for n samples of gate time, so every run is short by about one sample and single-sample runs are credited zero. This row shows the alternative."
+    },
+    "uniform_tag_shift": {
+      "-1s": {
+        "optical_h": 133.1119,
+        "optical_pulsar_h": 0,
+        "pulsar_optical_gap_h": 31.174147
+      },
+      "+0s": {
+        "optical_h": 133.1119,
+        "optical_pulsar_h": 0,
+        "pulsar_optical_gap_h": 31.174425
+      },
+      "+1s": {
+        "optical_h": 133.1119,
+        "optical_pulsar_h": 0,
+        "pulsar_optical_gap_h": 31.174702
+      }
+    },
+    "four_domain_status_invariant_over_all_tested_variants": true
   },
   "bound": {
-    "optical": "exact",
+    "optical": "derived",
     "vlbi": "upper",
     "gnss": "upper",
     "pulsar": "approximate",
-    "any_intersection_involving_vlbi_or_gnss": "upper"
+    "any_intersection_involving_vlbi_or_gnss": "upper",
+    "note": "optical is 'derived' rather than 'exact': it is exact over recorded tags but model-dependent as physical support."
   },
   "domain_support": {
     "optical": {

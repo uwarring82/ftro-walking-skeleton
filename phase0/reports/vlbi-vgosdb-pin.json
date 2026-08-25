@@ -7,7 +7,7 @@
   "content_type": "application/x-gzip",
   "last_modified": "Mon, 15 Dec 2025 16:46:58 GMT",
   "etag": "\"12b3c88-646005c046480\"",
-  "retrieved_utc": "2026-08-25T15:23:31.830427+00:00",
+  "retrieved_utc": "2026-08-25T18:14:35.922311+00:00",
   "size_bytes": 19610760,
   "sha256": "0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
   "md5": "f577564a3166a31f4db273ec66a7850e",
@@ -33,6 +33,137 @@
     "20220228-r11040_V005_iGSFC_kall.wrp",
     "20220228-r11040_V005_iIVS_kall.wrp"
   ],
+  "wrapper_records": [
+    {
+      "path": "20220228-r11040/20220228-r11040_V001_iMPI_kall.wrp",
+      "name": "20220228-r11040_V001_iMPI_kall.wrp",
+      "size_bytes": 2322,
+      "sha256": "32c3ef8e53ca994d02cb9431d4ab95dd0fa80207092acdb176f5d4cae335872a",
+      "run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC"
+      ],
+      "input_wrappers": []
+    },
+    {
+      "path": "20220228-r11040/20220228-r11040_V002_iGSFC_kall.wrp",
+      "name": "20220228-r11040_V002_iGSFC_kall.wrp",
+      "size_bytes": 6015,
+      "sha256": "c9616dd160c1393f5068346a559c78892c795ac2938d29ac1c967883885e29eb",
+      "run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC"
+      ],
+      "input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp"
+      ]
+    },
+    {
+      "path": "20220228-r11040/20220228-r11040_V003_iGSFC_kall.wrp",
+      "name": "20220228-r11040_V003_iGSFC_kall.wrp",
+      "size_bytes": 6455,
+      "sha256": "25a19892113aea2e724ceb17f48c693f6ba2fbb3673b2ca638abfa663d2e7ae8",
+      "run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC"
+      ],
+      "input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp"
+      ]
+    },
+    {
+      "path": "20220228-r11040/20220228-r11040_V004_iGSFC_kall.wrp",
+      "name": "20220228-r11040_V004_iGSFC_kall.wrp",
+      "size_bytes": 7246,
+      "sha256": "3c52b94fd87fc394535fe8a489b9fcd5017dba1063b3290d90e79fc6e191c16a",
+      "run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC",
+        "2022/03/10 22:28:49 UTC"
+      ],
+      "input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp",
+        "20220228-r11040_V003_iGSFC_kall.wrp"
+      ]
+    },
+    {
+      "path": "20220228-r11040/20220228-r11040_V004_iIVS_kall.wrp",
+      "name": "20220228-r11040_V004_iIVS_kall.wrp",
+      "size_bytes": 7246,
+      "sha256": "3c52b94fd87fc394535fe8a489b9fcd5017dba1063b3290d90e79fc6e191c16a",
+      "run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC",
+        "2022/03/10 22:28:49 UTC"
+      ],
+      "input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp",
+        "20220228-r11040_V003_iGSFC_kall.wrp"
+      ]
+    },
+    {
+      "path": "20220228-r11040/20220228-r11040_V005_iGSFC_kall.wrp",
+      "name": "20220228-r11040_V005_iGSFC_kall.wrp",
+      "size_bytes": 7645,
+      "sha256": "310c5815f9bc46f1802e1a27f7addc88f8b7358feb00ac5506dd34c67f18b67d",
+      "run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC",
+        "2022/03/10 22:28:49 UTC",
+        "2025/12/12 21:18:49 UTC"
+      ],
+      "input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp",
+        "20220228-r11040_V003_iGSFC_kall.wrp",
+        "20220228-r11040_V004_iGSFC_kall.wrp"
+      ]
+    },
+    {
+      "path": "20220228-r11040/20220228-r11040_V005_iIVS_kall.wrp",
+      "name": "20220228-r11040_V005_iIVS_kall.wrp",
+      "size_bytes": 7645,
+      "sha256": "310c5815f9bc46f1802e1a27f7addc88f8b7358feb00ac5506dd34c67f18b67d",
+      "run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC",
+        "2022/03/10 22:28:49 UTC",
+        "2025/12/12 21:18:49 UTC"
+      ],
+      "input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp",
+        "20220228-r11040_V003_iGSFC_kall.wrp",
+        "20220228-r11040_V004_iGSFC_kall.wrp"
+      ]
+    }
+  ],
+  "n_wrapper_filenames": 7,
+  "n_distinct_wrapper_digests": 5,
+  "duplicate_wrapper_groups": {
+    "3c52b94fd87fc394535fe8a489b9fcd5017dba1063b3290d90e79fc6e191c16a": [
+      "20220228-r11040_V004_iGSFC_kall.wrp",
+      "20220228-r11040_V004_iIVS_kall.wrp"
+    ],
+    "310c5815f9bc46f1802e1a27f7addc88f8b7358feb00ac5506dd34c67f18b67d": [
+      "20220228-r11040_V005_iGSFC_kall.wrp",
+      "20220228-r11040_V005_iIVS_kall.wrp"
+    ]
+  },
   "internal_versions": [
     "001",
     "002",
@@ -40,15 +171,26 @@
     "004",
     "005"
   ],
-  "analysis_centres": [
+  "institution_designators": [
     "GSFC",
     "IVS",
     "MPI"
   ],
-  "internal_version_note": "This archive is NOT a single snapshot: it carries 5 internal wrapper versions (V001, V002, V003, V004, V005) from analysis centres GSFC, IVS, MPI. A chain that consumes 'the R11040 vgosDB' must name WHICH wrapper version it used; the archive checksum alone does not pin that choice.",
+  "producing_centres": [
+    "GSFC",
+    "MPI"
+  ],
+  "internal_version_note": "This archive carries 7 wrapper FILENAMES but only 5 DISTINCT wrapper byte sequences: 20220228-r11040_V004_iGSFC_kall.wrp == 20220228-r11040_V004_iIVS_kall.wrp; 20220228-r11040_V005_iGSFC_kall.wrp == 20220228-r11040_V005_iIVS_kall.wrp. Institution designators present are GSFC, IVS, MPI, but only GSFC, MPI produced distinct wrapper bytes -- the others are redesignations of identical content. A chain consuming 'the R11040 vgosDB' must name the wrapper MEMBER it used, keyed by member SHA-256 rather than filename; the archive checksum alone does not pin that choice. The wrapper format's own InputWrapper keyword records wrapper-to-wrapper derivation.",
   "concept_id": "ftro:concept:ivs/session/R11040",
   "snapshot_id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
   "snapshot_kind": "ftro_composed",
   "snapshot_note": "OPAR supplies no immutable per-version PID for this archive, so task card \u00a710 requires an FTRO identity composed from concept id, retrieval time, byte checksum and retrieval procedure.",
-  "volatility_warning": "Last-Modified post-dates the 2022 session, so this archive is a re-release rather than a frozen 2022 artifact. The bytes may change again; the checksum pins THIS retrieval, not the session."
+  "composition_precondition_checked": [
+    "OPAR directory listing - no per-file PID",
+    "IVS session listing - no DOI or handle for the vgosDB",
+    "HTTP ETag / Last-Modified - mutable, and this archive is a re-release"
+  ],
+  "composition_justification": "No IVS data centre mints an immutable per-version PID for a vgosDB archive, so task card \u00a710 composition applies.",
+  "volatility_warning": "This archive is a RE-RELEASE, not a frozen 2022 artifact. The internal anchor is the latest wrapper's RunTimeTag (see wrapper_records), which post-dates the session by years; the HTTP Last-Modified is secondary and dates mirror publication rather than the reprocessing act. The bytes may change again; the checksum pins THIS retrieval.",
+  "bytes_written_to_cache": true
 }

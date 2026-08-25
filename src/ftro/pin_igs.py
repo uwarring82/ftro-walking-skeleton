@@ -15,6 +15,7 @@ import datetime
 import hashlib
 import json
 import os
+import sys
 import urllib.request
 
 # Content-shape validation (FTRO-DEF-018). A retrieval that checks only HTTP status and
@@ -56,15 +57,18 @@ def mjd_to_date(mjd):
     return (datetime.date(1858, 11, 17) + datetime.timedelta(days=int(mjd))).isoformat()
 
 
-def fetch(url, dest, timeout=120):
+def fetch(url, timeout=120):
+    """Retrieve without writing. Bytes are only cached after validation succeeds."""
     req = urllib.request.Request(url, headers={"User-Agent": "FTRO-walking-skeleton/0.1 (Phase-0 pinning)"})
     with urllib.request.urlopen(req, timeout=timeout) as resp:
-        headers = dict(resp.headers)
-        body = resp.read()
-        status = resp.status
-    with open(dest, "wb") as fh:
+        return resp.status, dict(resp.headers), resp.read()
+
+
+def cache(dest, body):
+    tmp = dest + ".part"
+    with open(tmp, "wb") as fh:
         fh.write(body)
-    return status, headers, body
+    os.replace(tmp, dest)
 
 
 def main():
@@ -103,7 +107,7 @@ def main():
         dest = os.path.join(args.cache, t["name"])
         retrieved = datetime.datetime.now(datetime.timezone.utc).isoformat()
         try:
-            status, headers, body = fetch(url, dest)
+            status, headers, body = fetch(url)
         except Exception as exc:                       # noqa: BLE001 - failure is recorded, not raised
             failures.append({**t, "url": url, "error": f"{type(exc).__name__}: {exc}",
                              "retrieved_utc": retrieved})
@@ -120,6 +124,7 @@ def main():
                                       "bytes; content-shape validation rejected them.")})
             continue
 
+        cache(dest, body)
         pins.append({
             **t,
             "utc_date": mjd_to_date(t["mjd"]) if t["mjd"] else None,
@@ -147,7 +152,8 @@ def main():
         "base_url": args.base,
         "data_centre": "BKG (Bundesamt für Kartographie und Geodäsie) IGS mirror, anonymous HTTP",
         "candidate_window_mjd": [args.mjd_start, args.mjd_end],
-        "retrieval_validation": "content_validated",
+        "retrieval_validation": ("content_validated" if not failures
+                                 else "content_validation_incomplete"),
         "availability_time_source": "mirror_derived",
         "availability_time_note": ("last_modified is the BKG mirror's file time, which "
                                    "approximates but is not identical to the IGS release time "
@@ -161,7 +167,11 @@ def main():
     with open(args.out, "w", encoding="utf-8") as fh:
         json.dump(report, fh, indent=2)
     print(f"pinned {len(pins)}, failed {len(failures)} -> {args.out}")
+    if failures:
+        for f in failures:
+            print(f"REJECTED {f['name']}: {f['error']}", file=sys.stderr)
+    return 0 if (pins and not failures) else 1
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

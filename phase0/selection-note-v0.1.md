@@ -167,7 +167,7 @@ uses the scan-start stamp plus the header `-tobs`. Full output:
 | Domain | Support inside window | Basis | Bound |
 | --- | --- | --- | --- |
 | GNSS | 240.000 h | IGS Final daily product validity | **upper** |
-| Optical | 133.112 h | exact union of 7,398 valid runs → 1,353 disjoint intervals | exact |
+| Optical | 133.112 h | union of recorded tag spans; 7,398 runs → 1,384 merged (31 zero-duration) → 1,353 with positive duration in window | derived |
 | VLBI | 123.500 h | scheduled session intervals | **upper** |
 | Pulsar | 1.067 h | one scan, start + `-tobs` | approximate |
 
@@ -188,6 +188,22 @@ earliest optical sample is MJD 59631.788542. The gap is **31.174 hours**.
 The VLBI and GNSS figures are upper bounds — scheduled sessions and daily product validity, not
 per-observation support. Refining either into exact support can only **remove** overlap, so this is
 a **robust `no_common_support` under conservative envelopes**.
+
+The optical figure is *derived*, not exact as physical support: it is exact over the recorded MJD
+tags under a chosen 1.5 s contiguity rule, but `interval`, `lag` and `weighting` are absent from all
+12 comparisons ([`FTRO-DEF-003`](../ledgers/deficiency-log.md#ftro-def-003)), so a tag's placement
+within its own integration is unconstrained over up to 1 s. Computed sensitivity
+([`four-domain-intersection.json`](reports/four-domain-intersection.json#optical_support_sensitivity)):
+
+| Variant | Optical | optical ∩ VLBI | Four-domain |
+| --- | --- | --- | --- |
+| gap tolerance 1.1–1.5 s | 133.11 h | 82.02 h | `no_common_support` |
+| gap tolerance 2.0 s | 133.12 h | 82.02 h | `no_common_support` |
+| gap tolerance 5.0 s | 133.57 h | 82.24 h | `no_common_support` |
+| crediting each sample 1 s | 133.50 h | 82.18 h | `no_common_support` |
+| uniform tag shift ±1 s | 133.11 h | — | `no_common_support` (gap 31.1741–31.1747 h) |
+
+**The null is invariant over every convention tested.**
 
 Per card §6 and §20 the interval is **not widened**, the March 2023 optical dataset is
 **not substituted**, and the object continues as an ancestry and federation skeleton

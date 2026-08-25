@@ -111,6 +111,16 @@ consumed the same state.
 **Every living artifact used in a reproduction must be materialised and pinned before
 execution.**
 
+### 5.0 [P0] A MUST-clause requires an executable check
+
+A profile whose own reference manifest does not satisfy it is not a specification. §5.1 below was
+introduced and violated in the same commit, across all five composed identities
+([`FTRO-DEF-029`](../ledgers/deficiency-log.md#ftro-def-029)).
+
+**No MUST-clause is landed in this profile until an executable check enforces it against the
+reference manifest.** §5.1 is enforced by
+`tests/test_retrieval_validation.py::TestComposedIdentityConformance`.
+
 ### 5.1 [P0] Record what was checked before composing an identity
 
 Phase 0 composed an FTRO snapshot identity for the optical leg while the provider supplied
@@ -126,15 +136,33 @@ absent:
 
 An `ftro_composed` identity without this record is not conforming.
 
-### 5.2 [P0] A snapshot identity may need an intra-archive component
+### 5.2 [P0] ~~A snapshot identity may need an intra-archive component~~ — **RETRACTED**
 
-Phase 1 found a container whose byte checksum does not pin what a chain consumed: the R11040
-vgosDB carries **five internal wrapper versions** (V001–V005) from three analysis centres
-([`FTRO-DEF-026`](../ledgers/deficiency-log.md#ftro-def-026)). Two chains citing the same archive
-checksum may have used different wrapper versions.
+> **Retracted 2026-08-25 after review.** This section originally concluded that a **third identity
+> level** was required. That was wrong, and the error is recorded in
+> [`FTRO-DEF-026`](../ledgers/deficiency-log.md#ftro-def-026) v2.0.0.
 
-Where an archive contains internally versioned members, snapshot identity requires a third
-component naming the member actually consumed. **Not frozen.**
+The finding that prompted it stands, in corrected form: the R11040 vgosDB carries **seven wrapper
+filenames but only five distinct wrapper byte sequences** — the two V004 files are byte-identical,
+as are the two V005 files — and the archive checksum records nothing about which wrapper a
+downstream analysis selected.
+
+But no new identity tier is needed. The vgosDB manual (§7.1–§7.2) defines a wrapper as *"an ASCII
+file that contains pointers to the files in a vgosDB"*: an **ordinary archive member**. So the
+selection is expressible with vocabulary the profile already has:
+
+| Concern | Existing mechanism |
+| --- | --- |
+| Which internal state was consumed | a member `File` data entity keyed by **member SHA-256** |
+| That a chain used it | a consumption edge to that entity |
+| Wrapper-to-wrapper derivation | `derived_from`, which the format itself records as `InputWrapper` |
+
+**Key on the member digest, never the filename.** Digest keying collapses the 7 names to the 5 real
+states; filename keying would have manufactured two states that do not exist, and would have
+attributed wrapper bytes to a third centre that produced none.
+
+**Requirement retained:** a chain consuming a container with internally versioned members must name
+the member it used, by path *and* digest. **Not frozen.**
 
 ### 5.3 [P0] Composite concept identity
 
@@ -204,10 +232,18 @@ sampling interval nor the physical realisation.
 | `time_coordinate_quantum` | numerical resolution of the recorded time coordinate **as serialised** |
 | `time_coordinate_quantum_evidence` | how it was determined (declared, or measured — and by what procedure) |
 
-An `AlignmentCertificate` must propagate this as a **floor** on achieved resolution. For the
-optical leg that floor is ±43.2 ms under the one-second-grid model — a limit on the *time* axis,
-and therefore not expressible as a ratio against the dimensionless fractional-frequency
-uncertainty the same files report.
+An `AlignmentCertificate` must propagate this as a **contribution** to achieved resolution. For
+the optical leg it is a **per-tag rounding bound of ±43.2 ms under the inferred nearest-rounding
+model** — not a universal limit and not a mandatory floor:
+
+- it is **not necessarily the dominant term**: the grid itself is undeclared, and the absent
+  `interval`, `lag` and `weighting` leave a tag's placement within its own integration
+  unconstrained over up to 1 s, which is larger;
+- it is **not irreducible**: if the one-second grid model is accepted, reconstructing epochs by
+  sample index can recover much of the quantisation loss.
+
+It is a limit on the *time* axis, and therefore not expressible as a ratio against the
+dimensionless fractional-frequency uncertainty the same files report.
 
 Recorded as [`FTRO-DEF-021`](../ledgers/deficiency-log.md#ftro-def-021). **Not frozen.**
 
@@ -244,12 +280,33 @@ incorporation into a CC BY 4.0 FTRO output:
 `access_class ∈ {public, registered, mediated, restricted}` is a property of the
 **retrieval path**, not the dataset.
 
-A conforming retrieval procedure must validate **content shape**, not merely HTTP status
-and checksum, because CDDIS returns an authentication interstitial with HTTP 200
+A conforming retrieval procedure must validate **content shape**, not merely HTTP status and
+checksum, because CDDIS returns an authentication interstitial with HTTP 200
 ([`FTRO-DEF-018`](../ledgers/deficiency-log.md#ftro-def-018)).
 
-Required: `retrieval_validation ∈ {status_only, status_and_checksum, content_validated}`.
-Only `content_validated` may support `evidence_state = resolvable`.
+Required: `retrieval_validation ∈ {status_only, status_and_checksum, content_validated, content_rejected}`.
+Only `content_validated` may support `evidence_state = resolvable`. A retrieval whose digest does
+not match an expected value **must not mint an identity** and must fail non-zero.
+
+**Positives are per-path; negatives are per-dataset.** It follows from `access_class` being a
+property of the retrieval path that one successful, content-validated anonymous retrieval
+establishes `access_class = public` **for that path**, whatever the state of any other channel, and
+needs no canvass of alternatives.
+
+The converse does **not** hold. No single failed path may establish a dataset-level negative.
+`evidence_state = unresolved`, and any dataset-scoped assertion of unavailability, requires that
+**every distribution channel the provider lists** has been attempted and the attempts recorded:
+
+| Field | Meaning |
+| --- | --- |
+| `routes_tried[]` | one entry per provider-listed channel: `{channel, url, protocol, attempted_utc, outcome, detail}` |
+| `outcome` | `retrieved` · `auth_required` · `not_found` · `unreachable` |
+| `routes_source` | the provider page enumerating the channels |
+
+An `unreachable` outcome establishes nothing about access class — only that the path could not be
+reached from the attempting network. Phase 0 recorded the VLBI leg `unresolved` after trying one
+channel of three ([`FTRO-DEF-025`](../ledgers/deficiency-log.md#ftro-def-025)); that is the failure
+this clause exists to prevent.
 
 ## 10. Policy objects and resolver
 

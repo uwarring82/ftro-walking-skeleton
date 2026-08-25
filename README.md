@@ -32,8 +32,9 @@ optical clocks, pulsar timing, VLBI and GNSS.
 
 **1. The four domains have no common support.** The pulsar leg is the binding constraint: it
 overlaps GNSS, but neither optical nor VLBI. The legs are *not* computed on a common basis —
-optical is the exact union of contiguous valid sample runs; VLBI uses scheduled session intervals
-and GNSS daily product validity, both upper bounds; pulsar uses scan start plus `-tobs`:
+optical is the union of *recorded timestamp spans* of contiguous valid runs under a 1.5 s
+contiguity rule — exact over recorded tags, not over physical support; VLBI uses scheduled session
+intervals and GNSS daily product validity, both upper bounds; pulsar uses scan start plus `-tobs`:
 
 | Combination | Result |
 | --- | --- |
@@ -65,14 +66,19 @@ different reasons:
 **3. The optical time tags are quantised at 86.4 ms** — every serialised MJD is an exact multiple
 of 10⁻⁶ d, on a census of **9,018,290 of 9,018,290** values with **0 exceptions**. The
 1.0368/0.9504 s dither, in ratio 1.347775 against the 1.347826 predicted for a one-second grid, is
-**strongly consistent with nearest-rounding of a one-second grid**, implying **at most ±43.2 ms
-serialisation error under that model**. The archive declares no sampling grid, so the 1 s figure is
-an inference. These files report fractional frequency at the 10⁻¹⁷ level; the two figures are not
-commensurable — a time quantum against a dimensionless ratio — but ±43.2 ms is the binding limit on
-placing these records on any shared time axis.
+**strongly consistent with nearest-rounding of a one-second grid**, implying a **per-tag rounding
+bound of ±43.2 ms under that model**.
 
-**4. 27 classified deficiencies** across all five classes — 2 critical, 11 high, 4 resolved.
-Three are **self-directed**, against FTRO's own tooling and evidence discipline.
+That bound is neither universal nor irreducible: the grid is undeclared, the absent `interval`,
+`lag` and `weighting` leave a tag's placement within its own integration unconstrained over up to
+**1 s** — a larger term — and reconstructing epochs by sample index could recover much of the
+quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
+commensurable with a time quantum.
+
+**4. 29 classified deficiencies** across all five classes — 2 critical, 12 high, 5 resolved.
+**Five are self-directed** (`FTRO-DEF-018`, `-024`, `-025`, `-027`, `-029`), against FTRO's own
+tooling, evidence discipline and profile conformance. Every entry carries a machine-readable
+`responsible_party`.
 
 **5. Platform conformance is separate from scientific demonstration.** The platform worked as far
 as it was exercised: each gap it encountered was located, typed and — where the bytes were
@@ -115,6 +121,9 @@ data/        Retrieved provider bytes — gitignored, never redistributed
 Python 3.13, standard library only — no third-party dependencies.
 
 ```bash
+# 0. Run the regression suite (no network, no provider bytes needed for most of it)
+python3 -m unittest discover -s tests -v
+
 # 1. Optical: retrieve, verify, analyse
 curl -L -o "ROCIT campaign results.zip" \
   "https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content"
@@ -193,7 +202,8 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | Commit | Change |
 | --- | --- |
 | `fdbf2b9` | Phase 0 as first published |
-| this | Corrections after external review — see [session 02 lab notes](labnotes/2026-08-26-session-02-review-corrections.md). The four-domain result is unchanged and now holds at exact run level; nine claims that outran their evidence were corrected, and three self-directed deficiencies were filed. |
+| `2c31279` | First external review — see [session 02](labnotes/2026-08-25-session-02-review-corrections.md). Nine claims corrected; optical support recomputed at run level; three self-directed deficiencies filed. |
+| this | Second external review — see [session 03](labnotes/2026-08-25-session-03-review-corrections-2.md). A conformance rule introduced in `2c31279` was violated by all five composed identities in the same commit (`FTRO-DEF-029`); retrieval tools now fail closed with a committed test suite; profile §5.2 retracted; the null is now shown **invariant over every convention tested**. |
 
 ## Next — Phase 1
 

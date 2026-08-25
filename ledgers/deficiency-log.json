@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -41,7 +41,9 @@
       "links": {
         "profile": "v0.0.1",
         "software": "src/ftro/analyse_optical.py"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-002",
@@ -66,7 +68,9 @@
       "links": {
         "profile": "v0.0.1",
         "software": "src/ftro/analyse_optical.py"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-003",
@@ -89,7 +93,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-004",
@@ -112,7 +118,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-005",
@@ -135,7 +143,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-006",
@@ -157,7 +167,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-007",
@@ -179,7 +191,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-008",
@@ -201,7 +215,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-009",
@@ -223,7 +239,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-010",
@@ -245,7 +263,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-011",
@@ -270,7 +290,9 @@
       "links": {
         "profile": "v0.0.1",
         "assessment": "AA-PPTA-CLKREALISATION-001"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-012",
@@ -293,7 +315,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-013",
@@ -317,7 +341,9 @@
       "links": {
         "profile": "v0.0.1",
         "assessment": "AA-PPTA-TIMINGMODEL-001"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-014",
@@ -341,7 +367,9 @@
       "links": {
         "charter": "v0.1",
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-015",
@@ -364,7 +392,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-016",
@@ -387,7 +417,9 @@
       "links": {
         "profile": "v0.0.1",
         "verification": "VA-GPS2UTC-001"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-017",
@@ -409,7 +441,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-018",
@@ -427,12 +461,14 @@
       "severity": "high",
       "impact": "A federation retrieval procedure that validates only status code and checksum will silently pin a login page as if it were data, then propagate that checksum as evidence. This affects FTRO's own tooling: src/ftro/pin_igs.py has the same weakness and is recorded here as a known limitation.",
       "workaround": "IVS session metadata was obtained from https://ivscc.gsfc.nasa.gov/sessions/2022/ instead, and the vgosDB itself from OPAR (see FTRO-DEF-025).",
-      "proposed_response": "RESOLVED for FTRO tooling 2026-08-25: src/ftro/pin_igs.py and src/ftro/pin_vgosdb.py now perform content-shape validation (HTML/auth-marker detection, magic-byte checks, archive-structure checks) and emit retrieval_validation=content_validated. A regression test against the live CDDIS URL confirms the validator rejects the Earthdata login page that status-and-checksum alone accepted. Profile v0.0.1 §9.2 requires content_validated before evidence_state=resolvable. The CDDIS behaviour itself is unchanged and remains reportable upstream; the PPTA leg is still pinned at status_and_checksum only.",
+      "proposed_response": "RESOLVED for FTRO tooling 2026-08-25: src/ftro/pin_igs.py and src/ftro/pin_vgosdb.py now perform content-shape validation (HTML/auth-marker detection, magic-byte checks, archive-structure checks) and emit retrieval_validation=content_validated. A regression test against the live CDDIS URL confirms the validator rejects the Earthdata login page that status-and-checksum alone accepted. Profile v0.0.1 §9.2 requires content_validated before evidence_state=resolvable. The CDDIS behaviour itself is unchanged and remains reportable upstream; the PPTA leg is still pinned at status_and_checksum only. Committed regression tests (tests/test_retrieval_validation.py) now hold all three tools fail-closed on a digest mismatch and reject an authentication interstitial.",
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.1",
         "software": "src/ftro/pin_igs.py"
-      }
+      },
+      "responsible_party": "ftro",
+      "self_directed": true
     },
     {
       "id": "FTRO-DEF-019",
@@ -455,7 +491,9 @@
       "links": {
         "profile": "v0.0.1",
         "software": "src/ftro/pin_igs.py"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-020",
@@ -477,7 +515,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-021",
@@ -499,7 +539,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-022",
@@ -521,7 +563,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-023",
@@ -544,7 +588,9 @@
       "links": {
         "profile": "v0.0.1",
         "selection_note": "phase0/selection-note-v0.1.md"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-024",
@@ -559,7 +605,7 @@
       "evidence": [
         "phase0/evidence/identities.json",
         "data/raw/zenodo-17107693/record.json",
-        "labnotes/2026-08-26-session-02-review-corrections.md"
+        "labnotes/2026-08-25-session-02-review-corrections.md"
       ],
       "severity": "high",
       "impact": "A false positive against task card §10's own precondition: FTRO invented an identity where the provider had supplied one, in the very leg used to demonstrate the two-level identity model. Had it stood, any consumer reconciling FTRO's identity against Zenodo's would have found no common identifier. This is the mirror image of the failure the project exists to catch -- not missing evidence, but available evidence not read.",
@@ -568,11 +614,13 @@
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "ftro",
+      "self_directed": true
     },
     {
       "id": "FTRO-DEF-025",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "class": "source_evidence",
       "domain": "vlbi",
       "dataset": "IVS session R11040 vgosDB",
@@ -587,35 +635,40 @@
       "severity": "high",
       "impact": "An access-class conclusion was drawn from a single data centre. 'unresolved' asserted unavailability that was not established, which is exactly the kind of unsupported null the typed-incompleteness model is meant to prevent. Corrected: the vgosDB is now pinned and content-validated; the downstream analysis-centre product and IERS EOP series remain unresolved.",
       "workaround": "None needed; corrected in place.",
-      "proposed_response": "Corrected 2026-08-25. Rule adopted: access_class may only be recorded after enumerating the provider's listed distribution channels, and the enumeration must be recorded.",
+      "proposed_response": "Corrected 2026-08-25; rule restated after review. The original wording attached route enumeration to access_class, which contradicts profile §9.2: access_class is a property of a single retrieval path, so one content-validated anonymous retrieval establishes access_class = public FOR THAT PATH and needs no canvass. Enumeration gates the dataset-level NEGATIVE instead. Rule adopted (D-025, revised): evidence_state = unresolved, and any dataset-scoped claim of unavailability, may only be recorded after every provider-listed distribution channel has been attempted, with the attempts recorded as a machine-readable routes_tried array. The IVS page lists three centres: CDDIS (registered), BKG (unreachable -- no TCP on 443 from two independent networks, so its class is NOT established) and OPAR (public). BKG was omitted from the original enumeration; recording it does not change the OPAR pin.",
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.1",
         "software": "src/ftro/pin_vgosdb.py"
-      }
+      },
+      "responsible_party": "ftro",
+      "self_directed": true
     },
     {
       "id": "FTRO-DEF-026",
-      "version": "1.0.0",
-      "class": "schema",
+      "version": "2.0.0",
+      "class": "source_evidence",
       "domain": "vlbi",
       "dataset": "IVS session R11040 vgosDB",
-      "title": "A single vgosDB archive checksum does not pin which internal wrapper version was consumed",
-      "failed_step": "Assigning one snapshot identity to 'the R11040 vgosDB'.",
-      "known_fact": "A snapshot identity must name the immutable state actually consumed (task card §11.3).",
-      "observed": "The archive contains SEVEN wrapper files spanning FIVE internal versions (V001-V005) from THREE analysis centres (MPI, GSFC, IVS): V001_iMPI, V002_iGSFC, V003_iGSFC, V004_iGSFC, V004_iIVS, V005_iGSFC, V005_iIVS. The byte checksum pins the container, not the wrapper version a downstream analysis used. Separately, the HTTP Last-Modified is 2025-12-15T16:46:58Z, so this is a re-release rather than a frozen 2022 artifact.",
+      "title": "A vgosDB archive checksum does not record which wrapper member a chain consumed",
+      "failed_step": "Recording which internal state of 'the R11040 vgosDB' a downstream chain used.",
+      "known_fact": "A snapshot identity must name the immutable state actually consumed (task card §11.3). The vgosDB format manual (vgosDB_format_2021Sep20.pdf §7.1-§7.2) defines a wrapper as 'an ASCII file that contains pointers to the files in a vgosDB', states that 'Wrappers are never over written' and that a new wrapper is created whenever files are added, and provides an InputWrapper keyword recording wrapper-to-wrapper derivation.",
+      "observed": "The archive contains SEVEN wrapper FILENAMES but only FIVE distinct wrapper byte sequences: 20220228-r11040_V004_iGSFC_kall.wrp and _V004_iIVS_kall.wrp are byte-identical (sha256 3c52b94f...c16a), as are the two V005 files (sha256 310c5815...b67d). Institution designators GSFC, IVS and MPI appear, but only MPI and GSFC produced distinct wrapper bytes; 'iIVS' is a redesignation of identical content, not a third centre's independent product. Every wrapper from V002 onward records InputWrapper 20220228-r11040_V001_iMPI_kall.wrp. The archive byte checksum pins the container and every member, but records nothing about which wrapper a downstream analysis selected.",
       "evidence": [
-        "phase0/reports/vlbi-vgosdb-pin.json#wrappers",
-        "phase0/reports/vlbi-vgosdb-pin.json#internal_version_note"
+        "phase0/reports/vlbi-vgosdb-pin.json#wrapper_records",
+        "phase0/reports/vlbi-vgosdb-pin.json#duplicate_wrapper_groups",
+        "phase0/reports/vlbi-vgosdb-pin.json#producing_centres"
       ],
       "severity": "medium",
-      "impact": "Two chains citing the same archive checksum may still have consumed different wrapper versions produced by different analysis centres. The profile's two-level identity is insufficient here: a third level (intra-archive version) is required. The 2025 Last-Modified also means the checksum pins THIS retrieval, not the session as released in 2022.",
-      "workaround": "Record the wrapper inventory alongside the archive checksum, as the pin report does.",
-      "proposed_response": "Add an intra-archive component to snapshot identity in the profile, and require any VLBI chain to name its wrapper version. Carry to Phase 6 freeze review.",
+      "impact": "Two chains citing the same archive checksum may have consumed different wrapper members. CORRECTION (v2.0.0): the original entry concluded that a THIRD identity level was required. That was wrong. A wrapper is an ordinary archive member and an ASCII pointer file, so the selection is expressible with existing vocabulary -- a member File entity keyed by member SHA-256, plus a consumption edge -- and the format's own InputWrapper keyword already supplies the derived_from relation. Keying on the member digest is also strictly better than keying on the filename, because it collapses 7 names to the 5 real states. The schema is adequate; what was missing was the recording.",
+      "workaround": "The pin report now records every wrapper member with its digest, RunTimeTag and InputWrapper.",
+      "proposed_response": "Require any VLBI chain to name the wrapper member it consumed (path + SHA-256) via a consumption edge. No profile identity-tier change. Retract profile §5.2 as originally written.",
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "responsible_party": "provider",
+      "self_directed": false
     },
     {
       "id": "FTRO-DEF-027",
@@ -639,9 +692,62 @@
       "links": {
         "profile": "v0.0.1",
         "software": "src/ftro/analyse_optical.py"
+      },
+      "responsible_party": "ftro",
+      "self_directed": true
+    },
+    {
+      "id": "FTRO-DEF-028",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "vlbi",
+      "dataset": "IVS session R11040 vgosDB",
+      "responsible_party": "provider",
+      "self_directed": false,
+      "title": "The published vgosDB was silently reprocessed in 2025 with no version signal outside its wrappers",
+      "failed_step": "Establishing when the retrieved archive's content was produced.",
+      "known_fact": "The session was observed 2022-02-28. The vgosDB format states that wrappers are never overwritten and that a new wrapper is created whenever files are added.",
+      "observed": "The archive's latest wrapper V005 carries RunTimeTag 2025/12/12 21:18:49 UTC in a sixth Process block (SgLib/nuSolve 0.8.3) absent from V004, and repoints 24 members to _V001 variants; those members and History/20220228-r11040_V005_knuSolve.hist carry tar mtime 2025-12-12. The HTTP Last-Modified is 2025-12-15T16:46:58Z, three days later, and dates the mirror publication rather than the reprocessing act. Nothing in the archive FILENAME, the URL or the IVS session listing signals that the 2022 session archive now contains 2025 reprocessing.",
+      "evidence": [
+        "phase0/reports/vlbi-vgosdb-pin.json#wrapper_records",
+        "phase0/reports/vlbi-vgosdb-pin.json#volatility_warning"
+      ],
+      "severity": "medium",
+      "impact": "A consumer retrieving '20220228-r11040.tgz' by that stable-looking name gets different bytes before and after 2025-12. The internal RunTimeTag is the only reliable anchor; the HTTP header is secondary and lags it. Any FTRO snapshot identity for this archive pins the retrieval, not the session as released in 2022.",
+      "workaround": "Pin by byte checksum and record the latest wrapper RunTimeTag as the content anchor.",
+      "proposed_response": "Ask IVS whether reprocessed session archives can carry a version token in the filename or an accompanying manifest.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.1"
+      }
+    },
+    {
+      "id": "FTRO-DEF-029",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.1 and phase0/evidence/identities.json",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: a conformance rule was introduced and violated in the same commit",
+      "failed_step": "Conforming to profile §5.1, introduced by commit 2c31279.",
+      "known_fact": "Profile §5.1, added in that commit, states that a manifest asserting `ftro_composed` MUST record `composition_precondition_checked[]` and `composition_justification`, and that 'An ftro_composed identity without this record is not conforming.'",
+      "observed": "At commit 2c31279 all FIVE ftro_composed identities in phase0/evidence/identities.json lacked both fields -- the four PPTA members and the vgosDB identity added by that same commit. 5 of 5 non-conforming against a rule published alongside them.",
+      "evidence": [
+        "profile/ftro-graph-profile-v0.0.1.md#51-p0-record-what-was-checked-before-composing-an-identity",
+        "tests/test_retrieval_validation.py#TestComposedIdentityConformance"
+      ],
+      "severity": "high",
+      "impact": "A profile whose own reference manifest does not satisfy it is not a specification, it is an aspiration. This repeats the pattern of FTRO-DEF-018, which was filed in session 01 and left unfixed for a session while being cited as evidence of good practice. Writing a rule is not implementing it, and the gap was invisible because nothing checked.",
+      "workaround": "None; corrected in place.",
+      "proposed_response": "Corrected 2026-08-25: all five identities carry both fields, src/ftro/pin_vgosdb.py emits them so regeneration stays conforming, and tests/test_retrieval_validation.py asserts the rule so a future violation fails the suite. Rule adopted (D-032): a profile MUST-clause is not landed until an executable check enforces it against the reference manifest.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.1",
+        "software": "tests/test_retrieval_validation.py"
       }
     }
   ],
   "revised": "2026-08-25",
-  "revision_note": "Revised after external review of the Phase-0 commit fdbf2b9. Entries 001-023 retain their identifiers; 002, 005, 012, 018, 022 and 023 are revised in place with incremented versions. Entries 024-027 are new, three of them self-directed against FTRO's own work."
+  "revision_note": "Revised twice after external review of Phase 0. Entries 001-023 date from session 01; 024-027 from session 02; 028-029 from session 03. Every entry now carries responsible_party and self_directed. Five entries are self-directed against FTRO's own work."
 }

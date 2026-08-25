@@ -2,49 +2,52 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.2.0  
+**Version:** 0.3.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (3), policy (1), rights (2), schema (4), source_evidence (17)  
-**By severity:** critical (2), high (11), low (3), medium (11)  
-**By domain:** cross-domain (2), gnss (2), optical (13), pulsar (7), vlbi (3)  
-**By disposition:** open (23), resolved (4)  
+**By class:** execution (3), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (12), low (3), medium (12)  
+**By domain:** cross-domain (3), gnss (2), optical (13), pulsar (7), vlbi (4)  
+**By disposition:** open (24), resolved (5)  
+**By responsible party:** ftro (5), provider (24)  
 
-**Total entries:** 27
+**Total entries:** 29 · **self-directed:** 5 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029)
 
-| ID | Class | Sev. | Domain | Title |
-| --- | --- | --- | --- | --- |
-| [`FTRO-DEF-003`](#ftro-def-003) | source_evidence | critical | optical | ref_osc, interval, lag and weighting are absent from every comparison, leaving the time-tag realisation unresolved |
-| [`FTRO-DEF-004`](#ftro-def-004) | source_evidence | critical | optical | Comparator output is formally ambiguous between two documented physical interpretations |
-| [`FTRO-DEF-001`](#ftro-def-001) | source_evidence | high | optical | Validity-flag vocabulary is documented but degenerate: every sample carries flag=1 |
-| [`FTRO-DEF-002`](#ftro-def-002) | source_evidence | high | optical | Published MJD time tags are quantised to 86.4 ms, coarser than the sampling interval they represent |
-| [`FTRO-DEF-007`](#ftro-def-007) | execution | high | optical | Named generating scripts are not present in the archive and no environment specification is supplied |
-| [`FTRO-DEF-011`](#ftro-def-011) | source_evidence | high | pulsar | Timing model requests TT(BIPM2020) but the release ships a TT(BIPM2021) clock file |
-| [`FTRO-DEF-012`](#ftro-def-012) | source_evidence | high | pulsar | The selected timing model declares no Earth-orientation artifact, and none is identified in the retrieved release inventory |
-| [`FTRO-DEF-014`](#ftro-def-014) | rights | high | pulsar | PPTA DR3 is CC BY-SA 4.0, incompatible with the CC BY 4.0 assigned to FTRO metadata outputs |
-| [`FTRO-DEF-018`](#ftro-def-018) | rights | high | vlbi | CDDIS returns an Earthdata login page with HTTP 200 instead of an authentication error |
-| [`FTRO-DEF-023`](#ftro-def-023) | policy | high | cross-domain | Candidate window contains no four-domain simultaneous support |
-| [`FTRO-DEF-024`](#ftro-def-024) | source_evidence | high | optical | SELF-DIRECTED: FTRO composed a snapshot identity for a leg where the provider supplies one |
-| [`FTRO-DEF-025`](#ftro-def-025) | source_evidence | high | vlbi | SELF-DIRECTED: a leg was recorded unresolved without canvassing alternative data centres |
-| [`FTRO-DEF-027`](#ftro-def-027) | execution | high | optical | SELF-DIRECTED: a headline verification count was not reproducible from any committed script |
-| [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | optical | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
-| [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | optical | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
-| [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | optical | One comparison was produced by a different pipeline at a different epoch |
-| [`FTRO-DEF-013`](#ftro-def-013) | source_evidence | medium | pulsar | Timing model's fit metadata does not correspond to the co-located TOA file |
-| [`FTRO-DEF-015`](#ftro-def-015) | source_evidence | medium | pulsar | One data release, two DOIs, ~42% duplicated content and no manifest of the split |
-| [`FTRO-DEF-016`](#ftro-def-016) | source_evidence | medium | pulsar | Pinned gps2utc.clk contains 64 duplicate MJD abscissae with differing ordinates |
-| [`FTRO-DEF-017`](#ftro-def-017) | source_evidence | medium | pulsar | TT(BIPM2021) values at the candidate epoch are extrapolated, not published BIPM values |
-| [`FTRO-DEF-019`](#ftro-def-019) | source_evidence | medium | gnss | Product availability time is mirror-derived, not provider-declared |
-| [`FTRO-DEF-021`](#ftro-def-021) | schema | medium | cross-domain | No vocabulary yet exists for a quantised time coordinate whose precision is coarser than its sampling interval |
-| [`FTRO-DEF-022`](#ftro-def-022) | execution | medium | optical | Pinned processing-evidence commit post-dates the data it is cited to explain by 19 months |
-| [`FTRO-DEF-026`](#ftro-def-026) | schema | medium | vlbi | A single vgosDB archive checksum does not pin which internal wrapper version was consumed |
-| [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | optical | Declared coverage begins 1.8 days before the first actual sample |
-| [`FTRO-DEF-010`](#ftro-def-010) | schema | low | optical | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
-| [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | gnss | High-rate 30 s clock products are absent from the mirror used |
+| ID | Class | Sev. | Domain | Party | Title |
+| --- | --- | --- | --- | --- | --- |
+| [`FTRO-DEF-003`](#ftro-def-003) | source_evidence | critical | optical | provider | ref_osc, interval, lag and weighting are absent from every comparison, leaving the time-tag realisation unresolved |
+| [`FTRO-DEF-004`](#ftro-def-004) | source_evidence | critical | optical | provider | Comparator output is formally ambiguous between two documented physical interpretations |
+| [`FTRO-DEF-001`](#ftro-def-001) | source_evidence | high | optical | provider | Validity-flag vocabulary is documented but degenerate: every sample carries flag=1 |
+| [`FTRO-DEF-002`](#ftro-def-002) | source_evidence | high | optical | provider | Published MJD time tags are quantised to 86.4 ms, coarser than the sampling interval they represent |
+| [`FTRO-DEF-007`](#ftro-def-007) | execution | high | optical | provider | Named generating scripts are not present in the archive and no environment specification is supplied |
+| [`FTRO-DEF-011`](#ftro-def-011) | source_evidence | high | pulsar | provider | Timing model requests TT(BIPM2020) but the release ships a TT(BIPM2021) clock file |
+| [`FTRO-DEF-012`](#ftro-def-012) | source_evidence | high | pulsar | provider | The selected timing model declares no Earth-orientation artifact, and none is identified in the retrieved release inventory |
+| [`FTRO-DEF-014`](#ftro-def-014) | rights | high | pulsar | provider | PPTA DR3 is CC BY-SA 4.0, incompatible with the CC BY 4.0 assigned to FTRO metadata outputs |
+| [`FTRO-DEF-018`](#ftro-def-018) | rights | high | vlbi | **self** | CDDIS returns an Earthdata login page with HTTP 200 instead of an authentication error |
+| [`FTRO-DEF-023`](#ftro-def-023) | policy | high | cross-domain | provider | Candidate window contains no four-domain simultaneous support |
+| [`FTRO-DEF-024`](#ftro-def-024) | source_evidence | high | optical | **self** | SELF-DIRECTED: FTRO composed a snapshot identity for a leg where the provider supplies one |
+| [`FTRO-DEF-025`](#ftro-def-025) | source_evidence | high | vlbi | **self** | SELF-DIRECTED: a leg was recorded unresolved without canvassing alternative data centres |
+| [`FTRO-DEF-027`](#ftro-def-027) | execution | high | optical | **self** | SELF-DIRECTED: a headline verification count was not reproducible from any committed script |
+| [`FTRO-DEF-029`](#ftro-def-029) | schema | high | cross-domain | **self** | SELF-DIRECTED: a conformance rule was introduced and violated in the same commit |
+| [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | optical | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
+| [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | optical | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
+| [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | optical | provider | One comparison was produced by a different pipeline at a different epoch |
+| [`FTRO-DEF-013`](#ftro-def-013) | source_evidence | medium | pulsar | provider | Timing model's fit metadata does not correspond to the co-located TOA file |
+| [`FTRO-DEF-015`](#ftro-def-015) | source_evidence | medium | pulsar | provider | One data release, two DOIs, ~42% duplicated content and no manifest of the split |
+| [`FTRO-DEF-016`](#ftro-def-016) | source_evidence | medium | pulsar | provider | Pinned gps2utc.clk contains 64 duplicate MJD abscissae with differing ordinates |
+| [`FTRO-DEF-017`](#ftro-def-017) | source_evidence | medium | pulsar | provider | TT(BIPM2021) values at the candidate epoch are extrapolated, not published BIPM values |
+| [`FTRO-DEF-019`](#ftro-def-019) | source_evidence | medium | gnss | provider | Product availability time is mirror-derived, not provider-declared |
+| [`FTRO-DEF-021`](#ftro-def-021) | schema | medium | cross-domain | provider | No vocabulary yet exists for a quantised time coordinate whose precision is coarser than its sampling interval |
+| [`FTRO-DEF-022`](#ftro-def-022) | execution | medium | optical | provider | Pinned processing-evidence commit post-dates the data it is cited to explain by 19 months |
+| [`FTRO-DEF-026`](#ftro-def-026) | source_evidence | medium | vlbi | provider | A vgosDB archive checksum does not record which wrapper member a chain consumed |
+| [`FTRO-DEF-028`](#ftro-def-028) | source_evidence | medium | vlbi | provider | The published vgosDB was silently reprocessed in 2025 with no version signal outside its wrappers |
+| [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | optical | provider | Declared coverage begins 1.8 days before the first actual sample |
+| [`FTRO-DEF-010`](#ftro-def-010) | schema | low | optical | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
+| [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | gnss | provider | High-rate 30 s clock products are absent from the mirror used |
 
 ## Entries
 
@@ -59,6 +62,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Computing an actual validity mask from the archive's flag column.
@@ -91,6 +95,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.1.0 |
 
 **Failed step.** Establishing the achieved timestamp resolution of the optical records for the alignment certificate.
@@ -124,6 +129,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Task card section 5.1 required action: 'Extract the declared ref_osc, interval, lag and weighting fields.'
@@ -156,6 +162,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Assigning a single physical interpretation to the published comparator output.
@@ -188,6 +195,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.1.0 |
 
 **Failed step.** Expressing both clocks' systematic uncertainties within the pinned format.
@@ -220,6 +228,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Selecting a single systematic-uncertainty value per comparison side.
@@ -251,6 +260,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Instantiating the recorded software environment for a cold reproduction (task card section 16 step 4).
@@ -282,6 +292,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Treating the archive as a single homogeneous product.
@@ -313,6 +324,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Computing actual support (task card section 6: no inference from campaign boundaries).
@@ -344,6 +356,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Consuming numrhoBA/denrhoBA at the precision the format promises.
@@ -375,6 +388,7 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Assembling a self-consistent clock chain from artifacts inside one data release.
@@ -408,6 +422,7 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.1.0 |
 
 **Failed step.** Recovering the exact EOP artifact consumed by the PPTA timing solution (task card section 15.1).
@@ -440,6 +455,7 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Verifying that the shipped .par was fitted to the shipped .tim.
@@ -472,6 +488,7 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Assigning a redistribution mode for pulsar-leg content under task card section 7A.
@@ -504,6 +521,7 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Establishing a single concept identity and a single snapshot identity for 'PPTA DR3'.
@@ -536,6 +554,7 @@
 | Domain | pulsar |
 | Dataset | `IPTA/pulsar-clock-corrections` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Interpolating the GPS-to-UTC correction deterministically.
@@ -567,6 +586,7 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Evidencing the terrestrial-time realisation applied at the TOA epoch.
@@ -598,6 +618,7 @@
 | Domain | vlbi |
 | Dataset | `CDDIS IVS archive` |
 | Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
 | Version | 1.1.0 |
 
 **Failed step.** Anonymous retrieval of the IVS master schedule from CDDIS.
@@ -614,7 +635,7 @@
 
 **Workaround.** IVS session metadata was obtained from https://ivscc.gsfc.nasa.gov/sessions/2022/ instead, and the vgosDB itself from OPAR (see FTRO-DEF-025).
 
-**Proposed response.** RESOLVED for FTRO tooling 2026-08-25: src/ftro/pin_igs.py and src/ftro/pin_vgosdb.py now perform content-shape validation (HTML/auth-marker detection, magic-byte checks, archive-structure checks) and emit retrieval_validation=content_validated. A regression test against the live CDDIS URL confirms the validator rejects the Earthdata login page that status-and-checksum alone accepted. Profile v0.0.1 §9.2 requires content_validated before evidence_state=resolvable. The CDDIS behaviour itself is unchanged and remains reportable upstream; the PPTA leg is still pinned at status_and_checksum only.
+**Proposed response.** RESOLVED for FTRO tooling 2026-08-25: src/ftro/pin_igs.py and src/ftro/pin_vgosdb.py now perform content-shape validation (HTML/auth-marker detection, magic-byte checks, archive-structure checks) and emit retrieval_validation=content_validated. A regression test against the live CDDIS URL confirms the validator rejects the Earthdata login page that status-and-checksum alone accepted. Profile v0.0.1 §9.2 requires content_validated before evidence_state=resolvable. The CDDIS behaviour itself is unchanged and remains reportable upstream; the PPTA leg is still pinned at status_and_checksum only. Committed regression tests (tests/test_retrieval_validation.py) now hold all three tools fail-closed on a digest mismatch and reject an authentication interstitial.
 
 ---
 
@@ -629,6 +650,7 @@
 | Domain | gnss |
 | Dataset | `IGS operational products` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Recording a provider-authoritative first-availability time for the bitemporal resolver.
@@ -660,6 +682,7 @@
 | Domain | gnss |
 | Dataset | `IGS operational products` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Pinning the clock artifact at the cadence a sub-daily alignment would require.
@@ -691,6 +714,7 @@
 | Domain | cross-domain |
 | Dataset | `FTRO profile v0.0.1` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.0.0 |
 
 **Failed step.** Expressing FTRO-DEF-002 in the minimum record fields of task card section 10.
@@ -722,6 +746,7 @@
 | Domain | optical |
 | Dataset | `INRIM/tintervals` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.1.0 |
 
 **Failed step.** Treating the pinned tintervals commit as the software that produced the archive.
@@ -753,6 +778,7 @@
 | Domain | cross-domain |
 | Dataset | `pilot window MJD 59630-59640` |
 | Disposition | `open` |
+| Responsible party | `provider` |
 | Version | 1.1.0 |
 
 **Failed step.** Task card section 2: constructing a four-domain walking skeleton for a common interval.
@@ -784,6 +810,7 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107692` |
 | Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
 **Failed step.** Establishing concept and snapshot identity for the optical leg (task card §10, §11.3).
@@ -796,7 +823,7 @@
 
 - `phase0/evidence/identities.json`
 - `data/raw/zenodo-17107693/record.json`
-- `labnotes/2026-08-26-session-02-review-corrections.md`
+- `labnotes/2026-08-25-session-02-review-corrections.md`
 
 **Impact.** A false positive against task card §10's own precondition: FTRO invented an identity where the provider had supplied one, in the very leg used to demonstrate the two-level identity model. Had it stood, any consumer reconciling FTRO's identity against Zenodo's would have found no common identifier. This is the mirror image of the failure the project exists to catch -- not missing evidence, but available evidence not read.
 
@@ -817,7 +844,8 @@
 | Domain | vlbi |
 | Dataset | `IVS session R11040 vgosDB` |
 | Disposition | `resolved` |
-| Version | 1.0.0 |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.1.0 |
 
 **Failed step.** Establishing whether the R11040 vgosDB is publicly retrievable.
 
@@ -834,39 +862,41 @@
 
 **Workaround.** None needed; corrected in place.
 
-**Proposed response.** Corrected 2026-08-25. Rule adopted: access_class may only be recorded after enumerating the provider's listed distribution channels, and the enumeration must be recorded.
+**Proposed response.** Corrected 2026-08-25; rule restated after review. The original wording attached route enumeration to access_class, which contradicts profile §9.2: access_class is a property of a single retrieval path, so one content-validated anonymous retrieval establishes access_class = public FOR THAT PATH and needs no canvass. Enumeration gates the dataset-level NEGATIVE instead. Rule adopted (D-025, revised): evidence_state = unresolved, and any dataset-scoped claim of unavailability, may only be recorded after every provider-listed distribution channel has been attempted, with the attempts recorded as a machine-readable routes_tried array. The IVS page lists three centres: CDDIS (registered), BKG (unreachable -- no TCP on 443 from two independent networks, so its class is NOT established) and OPAR (public). BKG was omitted from the original enumeration; recording it does not change the OPAR pin.
 
 ---
 
 ### FTRO-DEF-026
 
-**A single vgosDB archive checksum does not pin which internal wrapper version was consumed**
+**A vgosDB archive checksum does not record which wrapper member a chain consumed**
 
 | Field | Value |
 | --- | --- |
-| Class | `schema` |
+| Class | `source_evidence` |
 | Severity | medium |
 | Domain | vlbi |
 | Dataset | `IVS session R11040 vgosDB` |
 | Disposition | `open` |
-| Version | 1.0.0 |
+| Responsible party | `provider` |
+| Version | 2.0.0 |
 
-**Failed step.** Assigning one snapshot identity to 'the R11040 vgosDB'.
+**Failed step.** Recording which internal state of 'the R11040 vgosDB' a downstream chain used.
 
-**Known fact or required evidence.** A snapshot identity must name the immutable state actually consumed (task card §11.3).
+**Known fact or required evidence.** A snapshot identity must name the immutable state actually consumed (task card §11.3). The vgosDB format manual (vgosDB_format_2021Sep20.pdf §7.1-§7.2) defines a wrapper as 'an ASCII file that contains pointers to the files in a vgosDB', states that 'Wrappers are never over written' and that a new wrapper is created whenever files are added, and provides an InputWrapper keyword recording wrapper-to-wrapper derivation.
 
-**Observed.** The archive contains SEVEN wrapper files spanning FIVE internal versions (V001-V005) from THREE analysis centres (MPI, GSFC, IVS): V001_iMPI, V002_iGSFC, V003_iGSFC, V004_iGSFC, V004_iIVS, V005_iGSFC, V005_iIVS. The byte checksum pins the container, not the wrapper version a downstream analysis used. Separately, the HTTP Last-Modified is 2025-12-15T16:46:58Z, so this is a re-release rather than a frozen 2022 artifact.
+**Observed.** The archive contains SEVEN wrapper FILENAMES but only FIVE distinct wrapper byte sequences: 20220228-r11040_V004_iGSFC_kall.wrp and _V004_iIVS_kall.wrp are byte-identical (sha256 3c52b94f...c16a), as are the two V005 files (sha256 310c5815...b67d). Institution designators GSFC, IVS and MPI appear, but only MPI and GSFC produced distinct wrapper bytes; 'iIVS' is a redesignation of identical content, not a third centre's independent product. Every wrapper from V002 onward records InputWrapper 20220228-r11040_V001_iMPI_kall.wrp. The archive byte checksum pins the container and every member, but records nothing about which wrapper a downstream analysis selected.
 
 **Evidence.**
 
-- `phase0/reports/vlbi-vgosdb-pin.json#wrappers`
-- `phase0/reports/vlbi-vgosdb-pin.json#internal_version_note`
+- `phase0/reports/vlbi-vgosdb-pin.json#wrapper_records`
+- `phase0/reports/vlbi-vgosdb-pin.json#duplicate_wrapper_groups`
+- `phase0/reports/vlbi-vgosdb-pin.json#producing_centres`
 
-**Impact.** Two chains citing the same archive checksum may still have consumed different wrapper versions produced by different analysis centres. The profile's two-level identity is insufficient here: a third level (intra-archive version) is required. The 2025 Last-Modified also means the checksum pins THIS retrieval, not the session as released in 2022.
+**Impact.** Two chains citing the same archive checksum may have consumed different wrapper members. CORRECTION (v2.0.0): the original entry concluded that a THIRD identity level was required. That was wrong. A wrapper is an ordinary archive member and an ASCII pointer file, so the selection is expressible with existing vocabulary -- a member File entity keyed by member SHA-256, plus a consumption edge -- and the format's own InputWrapper keyword already supplies the derived_from relation. Keying on the member digest is also strictly better than keying on the filename, because it collapses 7 names to the 5 real states. The schema is adequate; what was missing was the recording.
 
-**Workaround.** Record the wrapper inventory alongside the archive checksum, as the pin report does.
+**Workaround.** The pin report now records every wrapper member with its digest, RunTimeTag and InputWrapper.
 
-**Proposed response.** Add an intra-archive component to snapshot identity in the profile, and require any VLBI chain to name its wrapper version. Carry to Phase 6 freeze review.
+**Proposed response.** Require any VLBI chain to name the wrapper member it consumed (path + SHA-256) via a consumption edge. No profile identity-tier change. Retract profile §5.2 as originally written.
 
 ---
 
@@ -881,6 +911,7 @@
 | Domain | optical |
 | Dataset | `FTRO Phase-0 tooling` |
 | Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
 **Failed step.** Supporting the FTRO-DEF-002 quantisation claim from committed evidence.
@@ -899,5 +930,71 @@
 **Workaround.** None; the test is now implemented and the counts regenerated.
 
 **Proposed response.** Corrected 2026-08-25: analyse_optical.py emits mjd_quantum_check and sample_spacing_coverage. Rule adopted: a number quoted in a finding must be traceable to a key in a committed report, and evidence pointers must name that key.
+
+---
+
+### FTRO-DEF-028
+
+**The published vgosDB was silently reprocessed in 2025 with no version signal outside its wrappers**
+
+| Field | Value |
+| --- | --- |
+| Class | `source_evidence` |
+| Severity | medium |
+| Domain | vlbi |
+| Dataset | `IVS session R11040 vgosDB` |
+| Disposition | `open` |
+| Responsible party | `provider` |
+| Version | 1.0.0 |
+
+**Failed step.** Establishing when the retrieved archive's content was produced.
+
+**Known fact or required evidence.** The session was observed 2022-02-28. The vgosDB format states that wrappers are never overwritten and that a new wrapper is created whenever files are added.
+
+**Observed.** The archive's latest wrapper V005 carries RunTimeTag 2025/12/12 21:18:49 UTC in a sixth Process block (SgLib/nuSolve 0.8.3) absent from V004, and repoints 24 members to _V001 variants; those members and History/20220228-r11040_V005_knuSolve.hist carry tar mtime 2025-12-12. The HTTP Last-Modified is 2025-12-15T16:46:58Z, three days later, and dates the mirror publication rather than the reprocessing act. Nothing in the archive FILENAME, the URL or the IVS session listing signals that the 2022 session archive now contains 2025 reprocessing.
+
+**Evidence.**
+
+- `phase0/reports/vlbi-vgosdb-pin.json#wrapper_records`
+- `phase0/reports/vlbi-vgosdb-pin.json#volatility_warning`
+
+**Impact.** A consumer retrieving '20220228-r11040.tgz' by that stable-looking name gets different bytes before and after 2025-12. The internal RunTimeTag is the only reliable anchor; the HTTP header is secondary and lags it. Any FTRO snapshot identity for this archive pins the retrieval, not the session as released in 2022.
+
+**Workaround.** Pin by byte checksum and record the latest wrapper RunTimeTag as the content anchor.
+
+**Proposed response.** Ask IVS whether reprocessed session archives can carry a version token in the filename or an accompanying manifest.
+
+---
+
+### FTRO-DEF-029
+
+**SELF-DIRECTED: a conformance rule was introduced and violated in the same commit**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO profile v0.0.1 and phase0/evidence/identities.json` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Conforming to profile §5.1, introduced by commit 2c31279.
+
+**Known fact or required evidence.** Profile §5.1, added in that commit, states that a manifest asserting `ftro_composed` MUST record `composition_precondition_checked[]` and `composition_justification`, and that 'An ftro_composed identity without this record is not conforming.'
+
+**Observed.** At commit 2c31279 all FIVE ftro_composed identities in phase0/evidence/identities.json lacked both fields -- the four PPTA members and the vgosDB identity added by that same commit. 5 of 5 non-conforming against a rule published alongside them.
+
+**Evidence.**
+
+- `profile/ftro-graph-profile-v0.0.1.md#51-p0-record-what-was-checked-before-composing-an-identity`
+- `tests/test_retrieval_validation.py#TestComposedIdentityConformance`
+
+**Impact.** A profile whose own reference manifest does not satisfy it is not a specification, it is an aspiration. This repeats the pattern of FTRO-DEF-018, which was filed in session 01 and left unfixed for a session while being cited as evidence of good practice. Writing a rule is not implementing it, and the gap was invisible because nothing checked.
+
+**Workaround.** None; corrected in place.
+
+**Proposed response.** Corrected 2026-08-25: all five identities carry both fields, src/ftro/pin_vgosdb.py emits them so regeneration stays conforming, and tests/test_retrieval_validation.py asserts the rule so a future violation fails the suite. Rule adopted (D-032): a profile MUST-clause is not landed until an executable check enforces it against the reference manifest.
 
 ---

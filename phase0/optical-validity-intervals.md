@@ -71,7 +71,9 @@ Sample-spacing histogram (20 most common of 1,237 distinct spacings):
 
 These 20 spacings cover **8,999,974 of 9,018,038** intervals (99.80%), so statements about the histogram must not be generalised to all spacings.
 
-The 1.0368 / 0.9504 s dither in ratio 1.347775 — against 1.347826 for a mean of exactly 1 s, implying a mean spacing of 0.999999199 s — is **strongly consistent with nearest-rounding of a one-second grid** to the 86.4 ms quantum. Under that model the maximum serialisation error is **±43.2 ms**, 4.3% of the nominal sampling interval.
+The 1.0368 / 0.9504 s dither in ratio 1.347775 — against 1.347826 for a mean of exactly 1 s, implying a mean spacing of 0.999999199 s — is **strongly consistent with nearest-rounding of a one-second grid** to the 86.4 ms quantum. Under that model the **per-tag rounding bound is ±43.2 ms**, 4.3% of the nominal sampling interval.
+
+That bound is neither universal nor irreducible. The absent `interval`, `lag` and `weighting` leave a tag's placement within its own integration unconstrained over up to **1 s** — a larger term — and if the grid model is accepted, reconstructing epochs by sample index could recover much of the quantisation loss.
 
 **No field in the archive declares the sampling grid**, so the one-second figure is a model-dependent inference, not a declared or measured fact. The ±43.2 ms bound is a limit on the *time* axis and is therefore not expressible as a ratio against the dimensionless fractional-frequency uncertainty the same files report.
 
@@ -100,7 +102,7 @@ Runs are maximal contiguous stretches of flag ∈ {1,2} samples with inter-sampl
 | `NPL-Yb+(E3)-NPL-Sr1` | 0 | 0 | **none** | — |
 | **Sum over comparisons** | **7,398** | **1,023,950** | **282.37 h** | |
 
-> **The total row is comparison-hours, not wall-clock time.** It sums support across concurrently-running comparisons and so exceeds the 240 h window. The temporal **union** of these runs is **133.112 h**; the union of the per-comparison envelopes is 197.075 h. See [`four-domain-intersection.json`](reports/four-domain-intersection.json).
+> **The total row is comparison-hours, not wall-clock time.** It sums support across concurrently-running comparisons and so exceeds the 240 h window. The temporal **union** of these runs is **133.112 h** (7,398 runs merge to 1,384 intervals, of which 31 have zero recorded span because they are single-sample runs, leaving 1,353 with positive duration in the window); the union of the per-comparison envelopes is 197.075 h. See [`four-domain-intersection.json`](reports/four-domain-intersection.json).
 
 **11 of 12 comparisons** have support inside the window. `NPL-Yb+(E3)-NPL-Sr1` has none: 
 it begins at MJD 59647.73, and it is also the only comparison produced by a different pipeline ([`FTRO-DEF-008`](../ledgers/deficiency-log.md#ftro-def-008)).
