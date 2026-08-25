@@ -75,9 +75,9 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 29 classified deficiencies** across all five classes — 2 critical, 12 high, 5 resolved.
-**Five are self-directed** (`FTRO-DEF-018`, `-024`, `-025`, `-027`, `-029`), against FTRO's own
-tooling, evidence discipline and profile conformance. Every entry carries a machine-readable
+**4. 33 classified deficiencies** across all five classes, 9 resolved. **Nine are self-directed**
+(`FTRO-DEF-018`, `-024`, `-025`, `-027`, `-029` … `-033`) — against FTRO's own tooling, evidence
+discipline, test suite and profile conformance. Every entry carries a machine-readable
 `responsible_party`.
 
 **5. Platform conformance is separate from scientific demonstration.** The platform worked as far
@@ -99,7 +99,7 @@ that failing to demonstrate shared ancestry is a valid scientific result, not a 
 | What is pinned, and to what checksum | [Source ledger](ledgers/source-ledger.md) · [`identities.json`](phase0/evidence/identities.json) |
 | Who may reuse what | [Rights ledger](ledgers/rights-ledger.md) |
 | Governance and principles | [Access Charter v0.1](charter/access-charter-v0.1.md) |
-| The vocabulary (nothing frozen yet) | [Graph profile v0.0.1](profile/ftro-graph-profile-v0.0.1.md) |
+| The vocabulary (nothing frozen yet) | [Graph profile v0.0.2](profile/ftro-graph-profile-v0.0.2.md) |
 
 ---
 
@@ -107,7 +107,8 @@ that failing to demonstrate shared ancestry is a valid scientific result, not a 
 
 ```
 charter/     Access Charter v0.1                      (deliverable A)
-profile/     Reference-Ancestry Graph Profile v0.0.1  (deliverable B, nothing frozen)
+profile/     Reference-Ancestry Graph Profile v0.0.2  (deliverable B, nothing frozen)
+tests/       Regression suite: retrieval validation, fail-closed digests, profile conformance
 phase0/      Selection note, ancestry notes, applicability assessments, reports
 ledgers/     Deficiency, rights, source and decision ledgers
 labnotes/    Append-only working record
@@ -160,12 +161,18 @@ retrievals that stamp a fresh `retrieved_utc`, so their outputs differ on each r
 construction — the *pinned digests* they record are what must match, and they are asserted in
 [`identities.json`](phase0/evidence/identities.json).
 
-**Retrieval validation.** `pin_igs.py` and `pin_vgosdb.py` validate content *shape*, not just
-HTTP status and checksum — a status-and-checksum retrieval will happily pin an authentication
-interstitial as data, which is how CDDIS returns its Earthdata login page. That weakness was
-logged against our own tooling as
-[`FTRO-DEF-018`](ledgers/deficiency-log.md#ftro-def-018) and is now closed, with a regression
-test against the live CDDIS URL.
+**Retrieval validation.** `pin_igs.py`, `pin_vgosdb.py` and `pin_ppta.py` validate content
+*shape*, not just HTTP status and checksum — a status-and-checksum retrieval will happily pin an
+authentication interstitial as data, which is how CDDIS returns its Earthdata login page. For a
+`.Z` product that means actually decompressing it (via `src/ftro/unixz.py`, a pure-stdlib
+Unix-compress decoder verified byte-identical to system `gzip` on a real 253 KB IGS artifact) and
+checking the inner format. All three tools fail closed on a digest mismatch: non-zero exit, no
+identity minted, no bytes cached. Logged against our own tooling as
+[`FTRO-DEF-018`](ledgers/deficiency-log.md#ftro-def-018).
+
+The regression tests use committed deterministic fixtures and perform **no network call**; an
+earlier README described a live-CDDIS test that did not exist as committed code
+([`FTRO-DEF-031`](ledgers/deficiency-log.md#ftro-def-031)).
 
 ---
 
@@ -189,7 +196,7 @@ See [LICENSE](LICENSE) and the [rights ledger](ledgers/rights-ledger.md).
 
 | Content | Licence |
 | --- | --- |
-| Software (`src/**`) | [Apache-2.0](LICENSES/Apache-2.0.txt) |
+| Software (`src/**`, `tests/**`) | [Apache-2.0](LICENSES/Apache-2.0.txt) |
 | Metadata, documents, ledgers, lab notes, reports | [CC BY 4.0](LICENSES/CC-BY-4.0.txt) |
 | Provider content | Its own licence, unchanged by inclusion |
 
@@ -203,7 +210,8 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | --- | --- |
 | `fdbf2b9` | Phase 0 as first published |
 | `2c31279` | First external review — see [session 02](labnotes/2026-08-25-session-02-review-corrections.md). Nine claims corrected; optical support recomputed at run level; three self-directed deficiencies filed. |
-| this | Second external review — see [session 03](labnotes/2026-08-25-session-03-review-corrections-2.md). A conformance rule introduced in `2c31279` was violated by all five composed identities in the same commit (`FTRO-DEF-029`); retrieval tools now fail closed with a committed test suite; profile §5.2 retracted; the null is now shown **invariant over every convention tested**. |
+| `0b41929` | Second external review — see [session 03](labnotes/2026-08-25-session-03-review-corrections-2.md). Conformance rule violated by its own commit (`FTRO-DEF-029`); tools fail closed; profile §5.2 retracted. |
+| this | Third external review — see [session 04](labnotes/2026-08-25-session-04-review-corrections-3.md). The sensitivity scan could not perform the reanalysis it reported (`FTRO-DEF-030`) and is reimplemented by re-segmentation; the test suite skipped its own fail-closed coverage on a clean clone (`FTRO-DEF-031`); the §9.2 conformance contradiction is resolved by validating rather than downgrading (`FTRO-DEF-032`); profile bumped to **v0.0.2** because a drifting version label identifies no constraint state (`FTRO-DEF-033`). |
 
 ## Next — Phase 1
 

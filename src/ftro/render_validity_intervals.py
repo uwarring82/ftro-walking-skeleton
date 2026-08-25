@@ -136,7 +136,9 @@ def main():
       "pipeline ([`FTRO-DEF-008`](../ledgers/deficiency-log.md#ftro-def-008)).\n")
     w("Support is heavily **fragmented**: e.g. `PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten` has 1,934 "
       "separate runs. Envelopes therefore substantially overstate real coverage, which is why the "
-      "four-domain calculation uses the **exact run-level union** rather than envelopes.\n")
+      "four-domain calculation uses the **run-level union of recorded tag spans** rather than "
+      "envelopes -- exact over the recorded tags under the 1.5 s contiguity rule, not over "
+      "physical support.\n")
     w("---\n")
 
     w("## 4. Declared vs actual coverage\n")

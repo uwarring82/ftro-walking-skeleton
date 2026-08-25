@@ -18,6 +18,8 @@ import os
 import sys
 import urllib.request
 
+import unixz
+
 # Content-shape validation (FTRO-DEF-018). A retrieval that checks only HTTP status and
 # byte checksum will happily pin an authentication interstitial as if it were data --
 # CDDIS returns an Earthdata login page with HTTP 200. Status and checksum are necessary
@@ -25,6 +27,22 @@ import urllib.request
 HTML_MARKERS = (b"<!DOCTYPE html", b"<!doctype html", b"<html", b"<HTML")
 AUTH_MARKERS = (b"Earthdata Login", b"oauth", b"Sign In", b"login", b"Log In", b"password")
 UNIX_COMPRESS_MAGIC = b"\x1f\x9d"   # .Z files produced by compress(1)
+MAX_DECOMPRESSED = 64 << 20          # refuse absurd expansion rather than exhaust memory
+
+# Inner-format signatures, checked AFTER decompression. Magic bytes alone would accept any
+# payload with the right first two bytes; a .Z that will not decompress, or decompresses to
+# something that is not the product it claims to be, is not validated content.
+INNER_FORMAT = {
+    "sp3": lambda t: t.startswith("#") and "ORBIT" in t[:120],
+    "clk": lambda t: ("RINEX" in t[:400] and "CLOCK" in t[:400]) or "ANALYSIS CENTER" in t[:2000],
+    # IGS ERP. Final (igs*.erp) and Rapid (igr*.erp) share almost nothing structurally:
+    # Final opens "version 2 / EOP  SOLUTION" with an "X  Y" column header; Rapid opens
+    # "version 2 / Source: ..." with an "Xpole Ypole" header and no EOP line. Two earlier
+    # signatures guessed from memory and each rejected one of the two families. What the
+    # bytes actually share is: a version line, an MJD column, and a UT1-UTC column.
+    "erp": lambda t: "version" in t[:200].lower() and "MJD" in t[:3000].upper()
+                     and "UT1-UTC" in t[:3000].upper(),
+}
 
 
 def validate_content(name, body, content_type):
@@ -41,6 +59,19 @@ def validate_content(name, body, content_type):
         if not body.startswith(UNIX_COMPRESS_MAGIC):
             return False, "content_validated", (
                 f"expected Unix-compress magic 1f9d for a .Z file, got {body[:2].hex()}")
+        # Magic is necessary, not sufficient: actually decompress it.
+        try:
+            plain = unixz.decompress(body, max_output=MAX_DECOMPRESSED)
+        except Exception as exc:                                 # noqa: BLE001
+            return False, "content_validated", f"magic 1f9d but will not decompress: {exc}"
+        if not plain:
+            return False, "content_validated", "decompressed to an empty stream"
+        text = plain[:4096].decode("ascii", errors="replace")
+        kind = name.split(".")[-2].lower() if "." in name[:-2] else ""
+        check = INNER_FORMAT.get(kind)
+        if check and not check(text):
+            return False, "content_validated", (
+                f"decompressed, but the content does not look like a {kind.upper()} product")
     if content_type and "html" in content_type.lower():
         return False, "content_validated", f"unexpected Content-Type {content_type!r}"
     return True, "content_validated", "ok"
@@ -80,7 +111,14 @@ def main():
     ap.add_argument("--out", default="data/work/igs-pins.json")
     ap.add_argument("--series", nargs="+", default=["igs", "igr"],
                     help="product line prefixes: igs=Final, igr=Rapid, igu=Ultra-rapid")
+    ap.add_argument("--expect-sha256-manifest", default=None,
+                    help="JSON map of filename -> sha256; a listed-but-mismatched file fails")
     args = ap.parse_args()
+
+    expected = {}
+    if args.expect_sha256_manifest:
+        with open(args.expect_sha256_manifest, encoding="utf-8") as fh:
+            expected = json.load(fh)
 
     os.makedirs(args.cache, exist_ok=True)
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
@@ -114,6 +152,11 @@ def main():
             continue
         content_type = headers.get("Content-Type")
         ok, validation_level, reason = validate_content(t["name"], body, content_type)
+        digest = hashlib.sha256(body).hexdigest()
+        exp = expected.get(t["name"])
+        checksum_match = None if exp is None else (digest == exp)
+        if checksum_match is False:
+            ok, reason = False, f"expected-checksum mismatch: got {digest}, want {exp}"
         if not ok:
             failures.append({**t, "url": url, "retrieved_utc": retrieved,
                              "http_status": status, "size_bytes": len(body),
@@ -137,6 +180,8 @@ def main():
             "last_modified": headers.get("Last-Modified"),
             "etag": headers.get("ETag"),
             "content_type": content_type,
+            "expected_sha256": exp,
+            "checksum_match": checksum_match,
             "retrieval_validation": validation_level,
             "content_validation": reason,
             # Full 64-character digest. An identity that carries a truncated digest is a

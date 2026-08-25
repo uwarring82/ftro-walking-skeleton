@@ -25,48 +25,301 @@
   },
   "optical_exactness_scope": "Exact with respect to the recorded MJD tags under the 1.5 s contiguity rule. NOT exact with respect to physical measurement support: interval, lag and weighting are absent from all 12 comparisons, so each tag's placement within its own integration is unconstrained over up to 1 s, and no support is attributed to the trailing integration of any run.",
   "optical_support_sensitivity": {
-    "note": "How the optical figures move under the two undeclared conventions: the contiguity tolerance, and the missing `lag` that leaves each tag's placement in its integration unconstrained over up to 1 s.",
+    "method": "Each gap tolerance is a full re-segmentation from the raw records via analyse_optical.contiguous_runs(); the previous implementation re-merged an inventory already segmented at 1.5 s and bridged gaps across comparisons and files, so it could not split runs and did join series that never overlapped.",
+    "arithmetic": "exact integer microseconds; 1e-6 d = 86400 us, 1 s = 1000000 us",
     "gap_tolerance_scan": {
       "1.1": {
-        "optical_h": 133.1145,
-        "optical_vlbi_h": 82.0151
+        "domain_h": {
+          "optical": 133.11192,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.11192,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.013424,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.013424,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 1353,
+        "n_runs": 7398,
+        "n_samples": 1023950
       },
       "1.5": {
-        "optical_h": 133.1145,
-        "optical_vlbi_h": 82.0151
+        "domain_h": {
+          "optical": 133.11192,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.11192,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.013424,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.013424,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 1353,
+        "n_runs": 7398,
+        "n_samples": 1023950
       },
       "2.0": {
-        "optical_h": 133.1211,
-        "optical_vlbi_h": 82.0195
+        "domain_h": {
+          "optical": 133.116888,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.116888,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.016184,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.016184,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 1346,
+        "n_runs": 7139,
+        "n_samples": 1023950
       },
       "5.0": {
-        "optical_h": 133.5716,
-        "optical_vlbi_h": 82.2361
+        "domain_h": {
+          "optical": 133.567344,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.567344,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.23276,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.23276,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 941,
+        "n_runs": 4826,
+        "n_samples": 1023950
       }
     },
-    "nominal_1s_sample_credit": {
-      "optical_h": 133.4961,
-      "optical_vlbi_h": 82.1826,
-      "note": "Support is credited as (last - first) per run, i.e. n-1 sample intervals for n samples of gate time, so every run is short by about one sample and single-sample runs are credited zero. This row shows the alternative."
+    "sample_credit": {
+      "run_span_plus_trailing_gate": {
+        "domain_h": {
+          "optical": 133.496073,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.496073,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.182577,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.182577,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 1382,
+        "note": "Each RUN extended 1 s past its last tag -- what the previous 'nominal_1s_sample_credit' row computed. Credits one gate per RUN, not per SAMPLE, and inherits the contiguity rule."
+      },
+      "per_run_nominal_block": {
+        "domain_h": {
+          "optical": 133.496567,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.496567,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.182929,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.182929,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 1379,
+        "note": "Each run repacked as n contiguous 1 s gates from its first tag. Totals n x 1 s per run but relocates tags, so it is a bookkeeping figure, not a support claim."
+      },
+      "per_sample_nominal_1s_credit": {
+        "domain_h": {
+          "optical": 130.684083,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 130.684083,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 80.450043,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 80.450043,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 276468,
+        "n_samples": 1023950,
+        "naive_sum_h": 284.430556,
+        "note": "Union of [t, t+1 s) over every valid tag. The only credit basis that is independent of the contiguity rule, and the only one that never attributes support to an instant no comparison sampled."
+      }
     },
     "uniform_tag_shift": {
       "-1s": {
-        "optical_h": 133.1119,
-        "optical_pulsar_h": 0,
-        "pulsar_optical_gap_h": 31.174147
+        "domain_h": {
+          "optical": 133.11192,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.11192,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.013702,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.013702,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174147,
+        "optical_n_intervals": 1353
       },
       "+0s": {
-        "optical_h": 133.1119,
-        "optical_pulsar_h": 0,
-        "pulsar_optical_gap_h": 31.174425
+        "domain_h": {
+          "optical": 133.11192,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.11192,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.013424,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.013424,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174425,
+        "optical_n_intervals": 1353
       },
       "+1s": {
-        "optical_h": 133.1119,
-        "optical_pulsar_h": 0,
-        "pulsar_optical_gap_h": 31.174702
+        "domain_h": {
+          "optical": 133.11192,
+          "pulsar": 1.067528,
+          "vlbi": 123.499992,
+          "gnss": 240.0
+        },
+        "pairwise_h": {
+          "gnss|optical": 133.11192,
+          "gnss|pulsar": 1.067528,
+          "gnss|vlbi": 123.499992,
+          "optical|pulsar": 0.0,
+          "optical|vlbi": 82.013146,
+          "pulsar|vlbi": 0.0
+        },
+        "three_domain_h": {
+          "without_gnss": 0.0,
+          "without_optical": 0.0,
+          "without_pulsar": 82.013146,
+          "without_vlbi": 0.0
+        },
+        "four_domain_h": 0.0,
+        "four_domain_n_intervals": 0,
+        "four_domain_status": "no_common_support",
+        "pulsar_optical_gap_h": 31.174702,
+        "optical_n_intervals": 1353
       }
     },
-    "four_domain_status_invariant_over_all_tested_variants": true
+    "four_domain_status_over_all_variants": [
+      "no_common_support"
+    ],
+    "four_domain_status_invariant": true
   },
   "bound": {
     "optical": "derived",

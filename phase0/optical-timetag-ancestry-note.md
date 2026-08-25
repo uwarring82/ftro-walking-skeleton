@@ -108,8 +108,12 @@ the archive declares the sampling grid. Note also that the spacing histogram is 
 
 The serialised time coordinate and the reported fractional-frequency uncertainty are quantities of
 different kinds — seconds against a dimensionless ratio — so no ratio between them is meaningful.
-What follows is nonetheless decisive: any alignment certificate involving these records is floored
-at ~43 ms by the serialisation alone, before any question of physical realisation arises. See
+What follows is nonetheless material: an alignment certificate involving these records must carry
+the ±43.2 ms per-tag rounding bound as a **contribution** to achieved resolution. It is not a floor.
+It is neither necessarily dominant — the absent `interval`, `lag` and `weighting` leave a tag's
+placement within its own integration unconstrained over up to **1 s**, over twenty times larger —
+nor irreducible: if the one-second grid model is accepted, reconstructing epochs by sample index
+recovers much of the quantisation loss. See
 [`FTRO-DEF-002`](../ledgers/deficiency-log.md#ftro-def-002).
 
 ---

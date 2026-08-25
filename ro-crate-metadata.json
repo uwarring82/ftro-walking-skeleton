@@ -33,7 +33,7 @@
           "@id": "charter/access-charter-v0.1.md"
         },
         {
-          "@id": "profile/ftro-graph-profile-v0.0.1.md"
+          "@id": "profile/ftro-graph-profile-v0.0.2.md"
         },
         {
           "@id": "phase0/selection-note-v0.1.md"
@@ -124,6 +124,12 @@
         },
         {
           "@id": "labnotes/2026-08-25-session-03-review-corrections-2.md"
+        },
+        {
+          "@id": "labnotes/2026-08-25-session-04-review-corrections-3.md"
+        },
+        {
+          "@id": "phase0/reports/ppta-artifact-pins.json"
         }
       ],
       "isBasedOn": [
@@ -217,14 +223,14 @@
       "name": "access-charter-v0.1.md"
     },
     {
-      "@id": "profile/ftro-graph-profile-v0.0.1.md",
+      "@id": "profile/ftro-graph-profile-v0.0.2.md",
       "@type": "File",
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "19772",
-      "name": "ftro-graph-profile-v0.0.1.md"
+      "contentSize": "21507",
+      "name": "ftro-graph-profile-v0.0.2.md"
     },
     {
       "@id": "phase0/selection-note-v0.1.md",
@@ -233,7 +239,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "15735",
+      "contentSize": "17677",
       "name": "selection-note-v0.1.md"
     },
     {
@@ -243,7 +249,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "9651",
+      "contentSize": "9997",
       "name": "optical-timetag-ancestry-note.md"
     },
     {
@@ -253,7 +259,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7581",
+      "contentSize": "7688",
       "name": "optical-validity-intervals.md"
     },
     {
@@ -273,7 +279,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "28450",
+      "contentSize": "30728",
       "name": "identities.json"
     },
     {
@@ -293,7 +299,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7380",
+      "contentSize": "15370",
       "name": "four-domain-intersection.json"
     },
     {
@@ -313,7 +319,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "55285",
+      "contentSize": "62296",
       "name": "igs-artifact-pins.json"
     },
     {
@@ -373,7 +379,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "54818",
+      "contentSize": "64345",
       "name": "deficiency-log.json"
     },
     {
@@ -383,7 +389,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "54972",
+      "contentSize": "64603",
       "name": "deficiency-log.md"
     },
     {
@@ -413,7 +419,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7905",
+      "contentSize": "9879",
       "name": "decision-ledger.md"
     },
     {
@@ -445,10 +451,19 @@
           "@id": "src/ftro/four_domain_intersection.py"
         },
         {
+          "@id": "src/ftro/optical_sensitivity.py"
+        },
+        {
           "@id": "src/ftro/pin_igs.py"
         },
         {
+          "@id": "src/ftro/pin_ppta.py"
+        },
+        {
           "@id": "src/ftro/pin_vgosdb.py"
+        },
+        {
+          "@id": "src/ftro/refresh_crate.py"
         },
         {
           "@id": "src/ftro/render_deficiencies.py"
@@ -458,6 +473,9 @@
         },
         {
           "@id": "src/ftro/summarise_optical.py"
+        },
+        {
+          "@id": "src/ftro/unixz.py"
         },
         {
           "@id": "src/ftro/verify_gps2utc.py"
@@ -507,7 +525,7 @@
       "name": "four_domain_intersection.py",
       "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
       "encodingFormat": "text/x-python",
-      "contentSize": "13638",
+      "contentSize": "11243",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -524,7 +542,7 @@
       "name": "pin_igs.py",
       "description": "Retrieves and pins IGS products with full digests and content-shape validation.",
       "encodingFormat": "text/x-python",
-      "contentSize": "7966",
+      "contentSize": "10553",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -640,7 +658,7 @@
       "name": "render_validity_intervals.py",
       "description": "Renders phase0/optical-validity-intervals.md from the committed optical summary.",
       "encodingFormat": "text/x-python",
-      "contentSize": "9567",
+      "contentSize": "9692",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -665,7 +683,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2121",
+      "contentSize": "2259",
       "name": "README.md"
     },
     {
@@ -681,13 +699,19 @@
           "@id": "tests/test_retrieval_validation.py"
         },
         {
-          "@id": "tests/fixtures/genuine.sp3.Z"
+          "@id": "tests/fixtures/bad_lzw.sp3.Z"
         },
         {
           "@id": "tests/fixtures/login_page.html"
         },
         {
           "@id": "tests/fixtures/not_vgosdb.tgz"
+        },
+        {
+          "@id": "tests/fixtures/synthetic_sp3.Z"
+        },
+        {
+          "@id": "tests/fixtures/valid_lzw_wrong_inner.sp3.Z"
         },
         {
           "@id": "tests/fixtures/vgosdb_min.tgz"
@@ -711,17 +735,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "8251"
-    },
-    {
-      "@id": "tests/fixtures/genuine.sp3.Z",
-      "@type": "File",
-      "name": "genuine.sp3.Z",
-      "description": "Deterministic test fixture; not provider data.",
-      "license": {
-        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
-      },
-      "contentSize": "49"
+      "contentSize": "15276"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -772,6 +786,117 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       }
+    },
+    {
+      "@id": "labnotes/2026-08-25-session-04-review-corrections-3.md",
+      "@type": "File",
+      "name": "2026-08-25-session-04-review-corrections-3.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "11908"
+    },
+    {
+      "@id": "phase0/reports/ppta-artifact-pins.json",
+      "@type": "File",
+      "name": "ppta-artifact-pins.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "4119"
+    },
+    {
+      "@id": "src/ftro/optical_sensitivity.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "optical_sensitivity.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "14092"
+    },
+    {
+      "@id": "src/ftro/pin_ppta.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "pin_ppta.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "5437"
+    },
+    {
+      "@id": "src/ftro/refresh_crate.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "refresh_crate.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "1833"
+    },
+    {
+      "@id": "src/ftro/unixz.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "unixz.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "8380"
+    },
+    {
+      "@id": "tests/fixtures/bad_lzw.sp3.Z",
+      "@type": "File",
+      "name": "bad_lzw.sp3.Z",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "35"
+    },
+    {
+      "@id": "tests/fixtures/synthetic_sp3.Z",
+      "@type": "File",
+      "name": "synthetic_sp3.Z",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "420"
+    },
+    {
+      "@id": "tests/fixtures/valid_lzw_wrong_inner.sp3.Z",
+      "@type": "File",
+      "name": "valid_lzw_wrong_inner.sp3.Z",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "138"
     }
   ]
 }

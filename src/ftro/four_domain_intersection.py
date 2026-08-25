@@ -23,9 +23,14 @@
 
 import datetime
 import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from optical_sensitivity import build_sensitivity  # noqa: E402
 
 W0, W1 = 59630.0, 59640.0
-GAP_TOLERANCE_S = 1.5   # the contiguity convention used by analyse_optical.py
+ARCHIVE_ROOT = "data/raw/zenodo-17107693/extracted"
 OPTICAL_INVENTORY = "data/work/optical-inventory.json"
 OPTICAL_SUMMARY = "phase0/reports/optical-inventory-summary.json"
 IVS_SESSIONS = "phase0/reports/ivs-sessions-candidate-window.json"
@@ -103,55 +108,11 @@ def main():
     domains = {"optical": optical, "pulsar": pulsar, "vlbi": vlbi, "gnss": gnss}
     clipped = {k: isect(v, [(W0, W1)]) for k, v in domains.items()}
 
-    # --- convention sensitivity, computed rather than asserted -------------------------
-    sensitivity = {"note": ("How the optical figures move under the two undeclared conventions: "
-                            "the contiguity tolerance, and the missing `lag` that leaves each "
-                            "tag's placement in its integration unconstrained over up to 1 s.")}
-    try:
-        raw = [(r["mjd_start"], r["mjd_end"], r["n_samples"])
-               for c in inv["comparisons"] for r in c["valid_runs_in_candidate_window"]]
-        gap_scan = {}
-        for tol in (1.1, 1.5, 2.0, 5.0):
-            # Re-merging with a wider tolerance can only join runs, never split them, so the
-            # union is monotonic in tol; recompute by merging with a join threshold.
-            iv = sorted((a, b) for a, b, _ in raw)
-            out = []
-            for a, b in iv:
-                if out and a - out[-1][1] <= tol / 86400.0:
-                    out[-1][1] = max(out[-1][1], b)
-                else:
-                    out.append([a, b])
-            merged = [tuple(x) for x in out]
-            cl = isect(merged, [(W0, W1)])
-            gap_scan[str(tol)] = {"optical_h": total_h(cl),
-                                  "optical_vlbi_h": total_h(isect(cl, isect(vlbi, [(W0, W1)])))}
-        sensitivity["gap_tolerance_scan"] = gap_scan
-
-        # Crediting each sample its nominal 1 s instead of (last - first).
-        credited = merge([(a, b + 1.0 / 86400.0) for a, b, _ in raw])
-        cc = isect(credited, [(W0, W1)])
-        sensitivity["nominal_1s_sample_credit"] = {
-            "optical_h": total_h(cc),
-            "optical_vlbi_h": total_h(isect(cc, isect(vlbi, [(W0, W1)]))),
-            "note": ("Support is credited as (last - first) per run, i.e. n-1 sample intervals "
-                     "for n samples of gate time, so every run is short by about one sample and "
-                     "single-sample runs are credited zero. This row shows the alternative."),
-        }
-
-        # Uniform tag shift over the full range the missing `lag` permits.
-        shifts = {}
-        for sh in (-1.0, 0.0, 1.0):
-            sm = merge([(a + sh / 86400.0, b + sh / 86400.0) for a, b, _ in raw])
-            sc = isect(sm, [(W0, W1)])
-            po = isect(sc, isect(pulsar, [(W0, W1)]))
-            gap = (min(a for a, _ in sc) - max(b for _, b in isect(pulsar, [(W0, W1)]))) * 24
-            shifts[f"{sh:+.0f}s"] = {"optical_h": total_h(sc),
-                                     "optical_pulsar_h": total_h(po),
-                                     "pulsar_optical_gap_h": round(gap, 6)}
-        sensitivity["uniform_tag_shift"] = shifts
-        sensitivity["four_domain_status_invariant_over_all_tested_variants"] = True
-    except Exception as exc:                                     # noqa: BLE001
-        sensitivity["error"] = f"{type(exc).__name__}: {exc}"
+    # Convention sensitivity: RE-SEGMENTS from the raw records at each tolerance.
+    # The earlier in-line block re-merged an inventory already segmented at 1.5 s and
+    # pooled across comparisons and files, so it could never split a run and could join
+    # unrelated series. See FTRO-DEF-030.
+    sensitivity = build_sensitivity(ARCHIVE_ROOT, ivs_sessions, igs)
 
     pairwise = {}
     keys = sorted(clipped)
@@ -191,7 +152,7 @@ def main():
         "candidate_window_mjd": [W0, W1],
         "method_note": ("The four legs are not computed on a common basis. Optical is the union "
                         "of RECORDED TIMESTAMP SPANS of contiguous flag-in-{1,2} runs under a "
-                        f"{GAP_TOLERANCE_S} s contiguity rule -- exact with respect to the "
+                        "1.5 s contiguity rule -- exact with respect to the "
                         "recorded tags, not to physical measurement support. VLBI uses scheduled "
                         "session intervals, not per-observation supports, and GNSS uses IGS Final "
                         "daily product validity, not per-epoch support: both are UPPER BOUNDS. "
@@ -213,14 +174,14 @@ def main():
         },
         "optical_support_convention": {
             "rule": "maximal runs of flag in {1,2} with inter-sample spacing <= gap_tolerance_s",
-            "gap_tolerance_s": GAP_TOLERANCE_S,
+            "gap_tolerance_s": inv.get("gap_tolerance_s"),
             "run_span_definition": "first_recorded_tag_to_last_recorded_tag",
             "interval_s": None, "lag": None, "weighting": None, "ref_osc": None,
             "declared_fields_absent_in": "12 of 12 comparisons (FTRO-DEF-003)",
         },
         "optical_exactness_scope": (
             "Exact with respect to the recorded MJD tags under the "
-            f"{GAP_TOLERANCE_S} s contiguity rule. NOT exact with respect to physical "
+            f"{inv.get('gap_tolerance_s')} s contiguity rule. NOT exact with respect to physical "
             "measurement support: interval, lag and weighting are absent from all 12 "
             "comparisons, so each tag's placement within its own integration is unconstrained "
             "over up to 1 s, and no support is attributed to the trailing integration of any run."),

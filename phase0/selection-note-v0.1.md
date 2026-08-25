@@ -128,10 +128,16 @@ HTTP 200 ([`FTRO-DEF-018`](../ledgers/deficiency-log.md#ftro-def-018)). That was
 canvass alternative data centres, not an access restriction
 ([`FTRO-DEF-025`](../ledgers/deficiency-log.md#ftro-def-025)).
 
-Two caveats: the archive carries **five internal wrapper versions** (V001–V005) from three analysis
-centres, so its checksum does not pin which version a chain consumed
-([`FTRO-DEF-026`](../ledgers/deficiency-log.md#ftro-def-026)); and its `Last-Modified` is
-2025-12-15, making it a re-release rather than a frozen 2022 artifact.
+Two caveats. The archive carries **seven wrapper filenames but only five distinct wrapper byte
+sequences** — the two V004 files are byte-identical, as are the two V005 files — produced by **two**
+centres, MPI and GSFC; `iIVS` is a redesignation of identical content, not a third centre's product.
+The checksum therefore does not pin which wrapper **member** a chain consumed, and the member must
+be named by digest rather than filename
+([`FTRO-DEF-026`](../ledgers/deficiency-log.md#ftro-def-026), D-034). Second, its latest wrapper
+carries **RunTimeTag 2025/12/12 21:18:49 UTC** in a sixth Process block (nuSolve 0.8.3, absent from
+V004), making this a 2025 re-release rather than a frozen 2022 artifact; the HTTP `Last-Modified` of
+2025-12-15 is three days later and dates mirror publication, not the reprocessing act
+([`FTRO-DEF-028`](../ledgers/deficiency-log.md#ftro-def-028)).
 
 **Still unresolved and blocking:** the analysis-centre product and the downstream IERS EOP series.
 
@@ -158,8 +164,13 @@ Reference frame for the interval: **IGb14**. IGS20 became operational at GPS wee
 
 ## 3. Computed temporal support and the four-domain intersection
 
-The four legs are **not** computed on a common basis. Only the optical leg meets card §6's ideal
-of per-record support: it is the exact union of contiguous flag-in-{1,2} sample runs. VLBI uses
+The four legs are **not** computed on a common basis, and **no leg fully meets card §6's ideal**
+of per-record support. The optical leg comes closest — the union of the *recorded timestamp spans*
+of contiguous flag-in-{1,2} runs, exact over recorded tags under a chosen 1.5 s contiguity rule, but
+not per-record physical support, because `interval`, `lag` and `weighting` are absent from all 12
+comparisons and the validity flag is degenerate
+([`FTRO-DEF-003`](../ledgers/deficiency-log.md#ftro-def-003),
+[`FTRO-DEF-001`](../ledgers/deficiency-log.md#ftro-def-001)). VLBI uses
 scheduled session intervals and GNSS daily product validity — both **upper bounds** — and pulsar
 uses the scan-start stamp plus the header `-tobs`. Full output:
 [`phase0/reports/four-domain-intersection.json`](reports/four-domain-intersection.json).
@@ -196,14 +207,26 @@ within its own integration is unconstrained over up to 1 s. Computed sensitivity
 ([`four-domain-intersection.json`](reports/four-domain-intersection.json#optical_support_sensitivity)):
 
 | Variant | Optical | optical ∩ VLBI | Four-domain |
-| --- | --- | --- | --- |
-| gap tolerance 1.1–1.5 s | 133.11 h | 82.02 h | `no_common_support` |
-| gap tolerance 2.0 s | 133.12 h | 82.02 h | `no_common_support` |
-| gap tolerance 5.0 s | 133.57 h | 82.24 h | `no_common_support` |
-| crediting each sample 1 s | 133.50 h | 82.18 h | `no_common_support` |
-| uniform tag shift ±1 s | 133.11 h | — | `no_common_support` (gap 31.1741–31.1747 h) |
+| --- | ---: | ---: | --- |
+| gap tolerance 1.1 s | 133.111920 h | 82.013424 h | `no_common_support` |
+| gap tolerance 1.5 s (shipped) | 133.111920 h | 82.013424 h | `no_common_support` |
+| gap tolerance 2.0 s | 133.116888 h | 82.016184 h | `no_common_support` |
+| gap tolerance 5.0 s | 133.567344 h | 82.232760 h | `no_common_support` |
+| run span + trailing 1 s gate | 133.496073 h | 82.182577 h | `no_common_support` |
+| per-run nominal *n* × 1 s block | 133.496567 h | 82.182929 h | `no_common_support` |
+| **per-sample 1 s credit** | **130.684083 h** | **80.450043 h** | `no_common_support` |
+| uniform tag shift −1 s / +1 s | 133.111920 h | — | `no_common_support` (gap 31.174147 / 31.174702 h) |
 
-**The null is invariant over every convention tested.**
+**The null is invariant over every convention tested**, and the status is *computed* per variant,
+not asserted. Each tolerance is a full re-segmentation from all 9,018,290 records
+([`FTRO-DEF-030`](../ledgers/deficiency-log.md#ftro-def-030)).
+
+Two results worth noting. **1.1 s equals 1.5 s** because no inter-sample spacing exists anywhere in
+that interval — the spacings jump from 1.0368 s straight to 1.9872 s — so the equality is a property
+of the data, not of the method. And the **per-sample credit is 2.43 h *below* the recorded-span
+basis**, because crediting each tag its own 1 s exposes the ~36.8 ms holes the span basis silently
+fills at each of ~276,000 sample boundaries. A credit correction can subtract support, not only
+add it.
 
 Per card §6 and §20 the interval is **not widened**, the March 2023 optical dataset is
 **not substituted**, and the object continues as an ancestry and federation skeleton

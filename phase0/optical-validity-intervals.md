@@ -107,7 +107,7 @@ Runs are maximal contiguous stretches of flag ∈ {1,2} samples with inter-sampl
 **11 of 12 comparisons** have support inside the window. `NPL-Yb+(E3)-NPL-Sr1` has none: 
 it begins at MJD 59647.73, and it is also the only comparison produced by a different pipeline ([`FTRO-DEF-008`](../ledgers/deficiency-log.md#ftro-def-008)).
 
-Support is heavily **fragmented**: e.g. `PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten` has 1,934 separate runs. Envelopes therefore substantially overstate real coverage, which is why the four-domain calculation uses the **exact run-level union** rather than envelopes.
+Support is heavily **fragmented**: e.g. `PTB_Yb1E2_CombYb-PTB_Yb_CombKnoten` has 1,934 separate runs. Envelopes therefore substantially overstate real coverage, which is why the four-domain calculation uses the **run-level union of recorded tag spans** rather than envelopes -- exact over the recorded tags under the 1.5 s contiguity rule, not over physical support.
 
 ---
 

@@ -1,8 +1,27 @@
-# FTRO Reference-Ancestry Graph Profile v0.0.1
+# FTRO Reference-Ancestry Graph Profile v0.0.2
 
-**Document ID:** FTRO-PRF-001 · **Version:** 0.0.1 · **Date:** 2026-08-25
+**Document ID:** FTRO-PRF-001 · **Version:** 0.0.2 · **Date:** 2026-08-25
+**Supersedes:** v0.0.1 (commits `fdbf2b9` … `0b41929`)
 **Status:** Draft — **no term is frozen** (task card Gate 1) · **Licence:** CC BY 4.0
 **Normative base:** [RO-Crate Metadata Specification 1.3](https://w3id.org/ro/crate/1.3)
+
+> **Version history.** Task card §9.1 requires conformance to be declared *by version*, so a
+> version label must identify a unique constraint state. v0.0.1 did not: it was byte-distinct
+> across three commits while gaining normative clauses
+> ([`FTRO-DEF-033`](../ledgers/deficiency-log.md#ftro-def-033)).
+>
+> | Version | Commit | Normative changes |
+> | --- | --- | --- |
+> | 0.0.1 | `fdbf2b9` | initial draft |
+> | 0.0.1 | `2c31279` | *(unversioned)* added §5.1 composed-identity record, §5.2 intra-archive tier, §9.2 content validation |
+> | 0.0.1 | `0b41929` | *(unversioned)* added §5.0 MUST-clause gate, retracted §5.2, added §9.2 `routes_tried` |
+> | **0.0.2** | this | §5.1 denominator spans both identity levels; §9.2 coupling enforced by test; version-bump rule (§0.1) |
+
+## 0.1 Versioning of this profile
+
+Any change to a normative clause **bumps the profile version in the same commit**, and the
+version-history table above records the predecessor and what changed. Until the profile freezes,
+a conformance assertion should cite the commit hash alongside the version label.
 
 > **Freeze status.** Task card §21 Gate 1: *"no FTRO term is frozen."* Every term below
 > is provisional and will be reviewed at Phase 6 against the full deficiency ledger.
@@ -126,15 +145,22 @@ reference manifest.** §5.1 is enforced by
 Phase 0 composed an FTRO snapshot identity for the optical leg while the provider supplied
 both a concept DOI and a version DOI ([`FTRO-DEF-024`](../ledgers/deficiency-log.md#ftro-def-024)).
 Task card §10 composition is conditional on the provider supplying no immutable snapshot PID, so a
-manifest asserting `ftro_composed` **must** record which provider fields were checked and found
-absent:
+manifest asserting `ftro_composed` — **at either identity level, `concept_kind` or
+`snapshot_kind`** — **must** record which provider fields were checked and found absent:
 
 | Field | Meaning |
 | --- | --- |
 | `composition_precondition_checked[]` | the provider metadata fields inspected (e.g. `conceptdoi`, `links.parent_doi`, `relations.version[].parent`) |
 | `composition_justification` | why none supplied an immutable snapshot PID |
 
-An `ftro_composed` identity without this record is not conforming.
+An `ftro_composed` identity without this record is not conforming. The record must be
+substantive: an empty list or an empty justification does not satisfy the clause.
+
+> **Scope correction (v0.0.2).** v0.0.1 was enforced by a check that filtered on `snapshot_kind`
+> alone, so it passed while two `concept_kind` records violated the clause — the check inherited
+> the finding's own scoping error ([`FTRO-DEF-029`](../ledgers/deficiency-log.md#ftro-def-029)
+> v2.0.0). A check written to enforce a rule must not reuse the assumptions of the observation
+> that prompted it.
 
 ### 5.2 [P0] ~~A snapshot identity may need an intra-archive component~~ — **RETRACTED**
 

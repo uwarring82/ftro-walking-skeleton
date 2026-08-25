@@ -129,7 +129,13 @@
         "FTRO-DEF-014",
         "FTRO-DEF-015",
         "FTRO-DEF-017"
-      ]
+      ],
+      "composition_precondition_checked": [
+        "CSIRO DAP collection DOIs (two, dataset-level: 10.25919/j4xr-wp05 and 10.25919/axvw-qa43)",
+        "CSIRO DAP parent/series record (none: DAP mints no PID spanning the two collections)",
+        "release README (states the split exists but supplies no identifier for the whole)"
+      ],
+      "composition_justification": "PPTA DR3 is published as two separately-DOI'd collections sharing 90,884 file paths, with no provider identifier for the release as a whole, so the CONCEPT identity must be composed. See FTRO-DEF-015."
     },
     {
       "role": "core measurement",
@@ -142,7 +148,7 @@
       "size_bytes": 4464619,
       "declared_size_bytes": 4464619,
       "size_match": true,
-      "retrieved_utc": "2026-08-25T14:02Z",
+      "retrieved_utc": "2026-08-25T19:22:05.088684+00:00",
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419499",
       "n_toa_lines": 11637,
       "toa_mjd_range": [
@@ -157,14 +163,15 @@
       "provider_collection": 59423,
       "download_url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419499",
       "provider_last_updated": "2023-06-26T18:08:21.000+10:00",
-      "retrieval_validation": "status_and_checksum",
-      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018).",
+      "retrieval_validation": "content_validated",
+      "retrieval_validation_note": "Content-shape validated by src/ftro/pin_ppta.py: the bytes are checked against the inner format they claim (PSRJ line for .par, TEMPO2 FORMAT header for .tim, comment header plus MJD rows for .clk), not merely size and checksum. This closes the profile §9.2 contradiction recorded as FTRO-DEF-032.",
       "composition_precondition_checked": [
         "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
         "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
         "provider_last_updated (mutable timestamp, not a persistent identifier)"
       ],
-      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members."
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members.",
+      "content_validation": "ok"
     },
     {
       "role": "ancestry or correction artifact",
@@ -204,14 +211,16 @@
       "declared_size_bytes": 4402,
       "size_match": true,
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419506",
-      "retrieval_validation": "status_and_checksum",
-      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018).",
+      "retrieval_validation": "content_validated",
+      "retrieval_validation_note": "Content-shape validated by src/ftro/pin_ppta.py: the bytes are checked against the inner format they claim (PSRJ line for .par, TEMPO2 FORMAT header for .tim, comment header plus MJD rows for .clk), not merely size and checksum. This closes the profile §9.2 contradiction recorded as FTRO-DEF-032.",
       "composition_precondition_checked": [
         "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
         "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
         "provider_last_updated (mutable timestamp, not a persistent identifier)"
       ],
-      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members."
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members.",
+      "retrieved_utc": "2026-08-25T19:21:59.585285+00:00",
+      "content_validation": "ok"
     },
     {
       "role": "ancestry or correction artifact",
@@ -250,14 +259,16 @@
       "declared_size_bytes": 1742710,
       "size_match": true,
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419593",
-      "retrieval_validation": "status_and_checksum",
-      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018).",
+      "retrieval_validation": "content_validated",
+      "retrieval_validation_note": "Content-shape validated by src/ftro/pin_ppta.py: the bytes are checked against the inner format they claim (PSRJ line for .par, TEMPO2 FORMAT header for .tim, comment header plus MJD rows for .clk), not merely size and checksum. This closes the profile §9.2 contradiction recorded as FTRO-DEF-032.",
       "composition_precondition_checked": [
         "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
         "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
         "provider_last_updated (mutable timestamp, not a persistent identifier)"
       ],
-      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members."
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members.",
+      "retrieved_utc": "2026-08-25T19:22:10.151795+00:00",
+      "content_validation": "ok"
     },
     {
       "role": "ancestry or correction artifact",
@@ -292,14 +303,16 @@
       "declared_size_bytes": 48871,
       "size_match": true,
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419592",
-      "retrieval_validation": "status_and_checksum",
-      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018).",
+      "retrieval_validation": "content_validated",
+      "retrieval_validation_note": "Content-shape validated by src/ftro/pin_ppta.py: the bytes are checked against the inner format they claim (PSRJ line for .par, TEMPO2 FORMAT header for .tim, comment header plus MJD rows for .clk), not merely size and checksum. This closes the profile §9.2 contradiction recorded as FTRO-DEF-032.",
       "composition_precondition_checked": [
         "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
         "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
         "provider_last_updated (mutable timestamp, not a persistent identifier)"
       ],
-      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members."
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card §10 composition applies to these members.",
+      "retrieved_utc": "2026-08-25T19:22:14.759538+00:00",
+      "content_validation": "ok"
     },
     {
       "role": "ancestry or correction artifact",
@@ -554,7 +567,8 @@
         }
       ],
       "routes_source": "https://ivscc.gsfc.nasa.gov/products-data/data.html",
-      "access_class": "public (OPAR path); CDDIS path is registered; BKG path not established"
+      "access_class": "public (OPAR path); CDDIS path is registered; BKG path not established",
+      "retrieval_procedure": "GET https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz"
     },
     {
       "role": "ancestry or correction artifact",
@@ -588,7 +602,13 @@
       "deficiencies": [
         "FTRO-DEF-019",
         "FTRO-DEF-020"
-      ]
+      ],
+      "composition_precondition_checked": [
+        "BKG mirror directory listing (filenames only; no PID, no sidecar metadata)",
+        "IGS product documentation (product line named, but no per-file persistent identifier scheme)",
+        "HTTP ETag / Last-Modified (mirror-local and mutable, not a PID)"
+      ],
+      "composition_justification": "IGS supplies no per-file immutable persistent identifier for operational products, so both concept and snapshot identities are composed per task card §10."
     }
   ]
 }

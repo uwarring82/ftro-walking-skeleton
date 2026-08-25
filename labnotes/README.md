@@ -38,3 +38,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-25 | 01 | [Phase 0 — evidence lock, bootstrap ledger and selection](2026-08-25-session-01-phase0.md) |
 | 2026-08-25 | 02 | [External review — corrections and self-directed deficiencies](2026-08-25-session-02-review-corrections.md) |
 | 2026-08-25 | 03 | [Second external review — a rule written and broken in the same commit](2026-08-25-session-03-review-corrections-2.md) |
+| 2026-08-25 | 04 | [Third external review — checks that said more than they executed](2026-08-25-session-04-review-corrections-3.md) |

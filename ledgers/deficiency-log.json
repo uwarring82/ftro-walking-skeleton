@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -530,7 +530,7 @@
       "known_fact": "Section 10 requires 'sampling interval, integration interval, estimator window and validity mask as distinct fields' and 'coordinate-time scale, timestamp format and physical realisation of the timestamp'.",
       "observed": "There is no field for the numerical resolution of the recorded time coordinate as serialised, which is distinct from the sampling interval and from the timestamp realisation. The optical leg needs all three: 1 s sampling, 86.4 ms serialisation quantum, unresolved physical realisation.",
       "evidence": [
-        "profile/ftro-graph-profile-v0.0.1.md"
+        "profile/ftro-graph-profile-v0.0.2.md"
       ],
       "severity": "medium",
       "impact": "Without this field the achieved-resolution figure in an alignment certificate cannot be traced to its cause.",
@@ -723,8 +723,8 @@
     },
     {
       "id": "FTRO-DEF-029",
-      "version": "1.0.0",
-      "class": "schema",
+      "version": "2.0.0",
+      "class": "execution",
       "domain": "cross-domain",
       "dataset": "FTRO profile v0.0.1 and phase0/evidence/identities.json",
       "responsible_party": "ftro",
@@ -732,22 +732,124 @@
       "title": "SELF-DIRECTED: a conformance rule was introduced and violated in the same commit",
       "failed_step": "Conforming to profile §5.1, introduced by commit 2c31279.",
       "known_fact": "Profile §5.1, added in that commit, states that a manifest asserting `ftro_composed` MUST record `composition_precondition_checked[]` and `composition_justification`, and that 'An ftro_composed identity without this record is not conforming.'",
-      "observed": "At commit 2c31279 all FIVE ftro_composed identities in phase0/evidence/identities.json lacked both fields -- the four PPTA members and the vgosDB identity added by that same commit. 5 of 5 non-conforming against a rule published alongside them.",
+      "observed": "At commit 2c31279 all composed identities in phase0/evidence/identities.json lacked both fields. CORRECTION (v2.0.0): the original count of FIVE was wrong. §5.1's text is unqualified, so the denominator spans BOTH identity levels: seven records assert ftro_composed (five via snapshot_kind, plus ftro:concept:ppta/dr3 and ftro:concept:igs/igs/orbit via concept_kind). At 0b41929, 2 of those 7 were still non-conforming, because the test written to enforce the rule filtered on snapshot_kind alone and so encoded the same wrong denominator the finding had used.",
       "evidence": [
-        "profile/ftro-graph-profile-v0.0.1.md#51-p0-record-what-was-checked-before-composing-an-identity",
+        "profile/ftro-graph-profile-v0.0.2.md#51-p0-record-what-was-checked-before-composing-an-identity",
         "tests/test_retrieval_validation.py#TestComposedIdentityConformance"
       ],
       "severity": "high",
-      "impact": "A profile whose own reference manifest does not satisfy it is not a specification, it is an aspiration. This repeats the pattern of FTRO-DEF-018, which was filed in session 01 and left unfixed for a session while being cited as evidence of good practice. Writing a rule is not implementing it, and the gap was invisible because nothing checked.",
+      "impact": "A profile whose own reference manifest does not satisfy it is not a specification. This repeats FTRO-DEF-018's pattern. Worse, the first fix was self-confirming: the check inherited the error it was written to catch, so it passed while 2 of 7 records violated the rule. CLASSIFICATION (v2.0.0): reclassified schema -> execution. The fields were always expressible with existing vocabulary -- the fix added two ordinary JSON keys, no new node class or identity tier -- so by the card §17 test this is not a schema defect. It is the same shape as FTRO-DEF-027: the committed pipeline did not do what was claimed, and nothing checked.",
       "workaround": "None; corrected in place.",
-      "proposed_response": "Corrected 2026-08-25: all five identities carry both fields, src/ftro/pin_vgosdb.py emits them so regeneration stays conforming, and tests/test_retrieval_validation.py asserts the rule so a future violation fails the suite. Rule adopted (D-032): a profile MUST-clause is not landed until an executable check enforces it against the reference manifest.",
+      "proposed_response": "Corrected across two rounds. 2026-08-25 (round 1): five snapshot-level identities gained both fields. 2026-08-25 (round 2): the denominator was corrected to seven, the two concept-level records gained the fields, and the test helper now selects on either identity level. Additional tests assert §10 identity ingredients, non-empty justifications and the §9.2 content_validated/resolvable coupling. Rule D-032 stands, strengthened by D-036: a check written to enforce a rule must not inherit the finding's own scoping assumptions.",
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.1",
         "software": "tests/test_retrieval_validation.py"
       }
+    },
+    {
+      "id": "FTRO-DEF-030",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "FTRO Phase-0 tooling",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the convention-sensitivity scan could not perform the reanalysis it reported",
+      "failed_step": "Testing whether the optical support figure is robust to its undeclared conventions.",
+      "known_fact": "analyse_optical.py's --gap-tolerance-s bounds the inter-sample spacing WITHIN one file's flag-in-{1,2} sequence. Probing a different tolerance therefore requires re-segmenting from the raw records.",
+      "observed": "The scan added in 0b41929 started from an inventory ALREADY segmented at 1.5 s and re-merged it, so (a) it could never SPLIT a run, making the 1.1 s row structurally identical to 1.5 s rather than found equal, and (b) it pooled runs across comparisons and .dat files, joining series that never overlapped and crediting support no measurement covered. All eight reported cells were wrong, always high. Correct values, from re-segmentation over all 9,018,290 records: 1.1 s and 1.5 s give 133.111920 h optical / 82.013424 h optical-VLBI; 2.0 s gives 133.116888 / 82.016184; 5.0 s gives 133.567344 / 82.232760. Separately, four_domain_status_invariant_over_all_tested_variants was assigned the literal True rather than computed, in the same commit whose lab note said 'compute the sensitivity instead of asserting robustness'. And the 'nominal_1s_sample_credit' row extended each RUN end by 1 s rather than crediting each SAMPLE.",
+      "evidence": [
+        "src/ftro/optical_sensitivity.py",
+        "phase0/reports/four-domain-intersection.json#optical_support_sensitivity"
+      ],
+      "severity": "high",
+      "impact": "A robustness claim that no computation supported. The CONCLUSION survives and is now stronger: re-segmentation confirms no_common_support at every tolerance, and the status is computed per variant rather than asserted. Two substantive findings emerged that the broken scan concealed: 1.1 s equals 1.5 s because NO inter-sample spacing exists anywhere in that interval (the spacings jump from 1.0368 s to 1.9872 s), which is a real property of the data; and crediting each SAMPLE its nominal 1 s gives 130.684083 h, some 2.43 h BELOW the recorded-span basis, because the span basis silently fills sub-second holes inside runs. The committed note had asserted the credit correction could only ADD support.",
+      "workaround": "None; the scan is reimplemented in src/ftro/optical_sensitivity.py.",
+      "proposed_response": "Corrected 2026-08-25. Rule adopted (D-037): a sensitivity probe must re-run the pipeline stage whose parameter it varies, never post-process that stage's output.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/optical_sensitivity.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-031",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the committed test suite did not exercise the behaviour it was written to protect",
+      "failed_step": "Regression-testing fail-closed retrieval on a clean clone.",
+      "known_fact": "A test that skips is not a test. FTRO-DEF-027 established that a claim must be traceable to committed, runnable code.",
+      "observed": "On a clean git archive export the suite reported 'OK (skipped=3)': all three fail-closed tests depended on gitignored data/raw/evidence/gps2utc.clk and skipped without it, so the fail-closed behaviour was never exercised. Neither pinner was tested end-to-end. The fixture tests/fixtures/genuine.sp3.Z was literal fake payload behind a 1f9d prefix that real uncompress rejects, and the validator checked only the first two bytes -- so 'content_validated' meant no more than 'non-empty, non-HTML, right first two bytes'. One test ignored the subprocess return code and could read a stale file from a fixed /tmp path. The README meanwhile described a regression test running 'against the live CDDIS URL' that does not exist as committed code.",
+      "evidence": [
+        "tests/test_retrieval_validation.py",
+        "src/ftro/unixz.py",
+        "tests/fixtures/"
+      ],
+      "severity": "high",
+      "impact": "The suite created an appearance of enforcement without the substance, which is worse than no suite. Now: a pure-stdlib Unix-compress decoder verified byte-identical to system gzip on a real 253 KB IGS artifact; validate_content actually decompresses and checks inner format; fail-closed tests use local fixtures and temporary directories so nothing skips or reads stale state; 26 tests pass on a clean clone.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-25. Rule adopted (D-038): a test that can skip must not be the only coverage of a behaviour, and a fixture must be a real instance of the format it stands for.",
+      "disposition": "resolved",
+      "links": {
+        "software": "tests/test_retrieval_validation.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-032",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "pulsar",
+      "dataset": "FTRO profile v0.0.1 and the PPTA leg",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: four artifacts asserted evidence_state=resolvable under validation the profile forbids",
+      "failed_step": "Conforming to profile §9.2.",
+      "known_fact": "Profile §9.2: 'Only content_validated may support evidence_state = resolvable.'",
+      "observed": "The four PPTA artifacts carried retrieval_validation = status_and_checksum AND evidence_state = resolvable simultaneously, from 2c31279 through 0b41929. The contradiction was recorded in a note on each record rather than resolved, and no check tested the coupling.",
+      "evidence": [
+        "phase0/reports/ppta-artifact-pins.json",
+        "tests/test_retrieval_validation.py#test_resolvable_requires_content_validated"
+      ],
+      "severity": "high",
+      "impact": "An active conformance contradiction in the reference manifest, documented rather than fixed. Resolved by validating rather than downgrading: src/ftro/pin_ppta.py now checks each artifact against the inner format it claims (a PSRJ line for .par, a TEMPO2 FORMAT header for .tim, a comment header plus MJD rows for .clk), all four pass, and a test now asserts the coupling for every artifact.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-25. A recorded contradiction is not a resolved one; if a clause cannot be met, either meet it or change the clause.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.2",
+        "software": "src/ftro/pin_ppta.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-033",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile and ledger version labels",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: version labels stopped identifying a constraint state",
+      "failed_step": "Declaring conformance 'to the FTRO profile v0.0.1' across three commits.",
+      "known_fact": "Task card §9.1 requires each manifest to declare conformance to the pinned base AND the FTRO profile BY VERSION. A version label must therefore identify a unique constraint state.",
+      "observed": "profile/ftro-graph-profile-v0.0.2.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints.",
+      "evidence": [
+        "profile/ftro-graph-profile-v0.0.2.md",
+        "phase0/evidence/identities.json"
+      ],
+      "severity": "medium",
+      "impact": "Any conformance assertion made against a drifting label is unfalsifiable, which defeats the purpose of §9.1. Corrected: the profile is now v0.0.2 with a version history recording what changed, and versioned documents carry the commit at which the version was set.",
+      "workaround": "Cite the commit hash alongside the version label until the profile freezes.",
+      "proposed_response": "Rule adopted (D-039): any normative change bumps the profile version in the same commit, and every version bump records its predecessor and the clauses added.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.2"
+      }
     }
   ],
   "revised": "2026-08-25",
-  "revision_note": "Revised twice after external review of Phase 0. Entries 001-023 date from session 01; 024-027 from session 02; 028-029 from session 03. Every entry now carries responsible_party and self_directed. Five entries are self-directed against FTRO's own work."
+  "revision_note": "Revised across three review rounds. 001-023 session 01; 024-027 session 02; 028-029 session 03; 030-033 session 04. DEF-029 reclassified schema -> execution at v2.0.0 with its denominator corrected from five to seven. Nine entries are self-directed."
 }
