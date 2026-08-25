@@ -238,6 +238,31 @@ def main():
         "global_undocumented_flag_values": sorted(v for v in global_flags if v not in DOCUMENTED_FLAGS),
         "sample_spacing_histogram_s": {str(k): v for k, v in
                                        sorted(all_spacings.items(), key=lambda kv: -kv[1])[:20]},
+        # Exhaustive support for the claim that no spacing lies between the two dominant
+        # values. The truncated top-20 histogram cannot carry that claim, and the summary
+        # explicitly warns against generalising from it.
+        "sample_spacing_exhaustive": {
+            "n_spacings_total": spacings_total,
+            "n_distinct_spacings": len(all_spacings),
+            "min_spacing_s": min(all_spacings) if all_spacings else None,
+            "max_spacing_s": max(all_spacings) if all_spacings else None,
+            "second_dominant_spacing_s": 1.0368,
+            "next_distinct_spacing_above_s": min((k for k in all_spacings if k > 1.0368),
+                                                 default=None),
+            "n_strictly_between": sum(
+                v for k, v in all_spacings.items()
+                if 1.0368 < k < min((x for x in all_spacings if x > 1.0368), default=1e9)),
+            "quanta_of_next_distinct": round(
+                min((k for k in all_spacings if k > 1.0368), default=0) / 0.0864, 3),
+            "note": ("Computed over ALL adjacent pairs, not the truncated top-20 histogram. "
+                     "The two dominant spacings are 0.9504 s (11 quanta) and 1.0368 s (12 "
+                     "quanta); the next distinct value is reported above and is 23 quanta, i.e. "
+                     "a float-representation twin of 1.9872 s. Nothing lies strictly between, so "
+                     "any gap tolerance in (1.0368, next) segments identically -- which is why "
+                     "1.1 s and 1.5 s give identical runs. Compare against the rounded literal "
+                     "1.9872 with care: round(x, 6) yields both 1.9872 and 1.987199 for the same "
+                     "physical spacing."),
+        },
         "sample_spacing_coverage": {
             "n_spacings_total": spacings_total,
             "n_distinct_spacings": len(all_spacings),

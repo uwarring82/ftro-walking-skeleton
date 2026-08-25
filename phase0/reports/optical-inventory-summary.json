@@ -44,6 +44,17 @@
     "n_spacings_in_top20": 8999974,
     "note": "sample_spacing_histogram_s is truncated to the 20 most common spacings; n_spacings_in_top20 states how many of n_spacings_total those cover, so claims about the histogram must not be generalised to all spacings."
   },
+  "sample_spacing_exhaustive": {
+    "n_spacings_total": 9018038,
+    "n_distinct_spacings": 1237,
+    "min_spacing_s": 0.9504,
+    "max_spacing_s": 67930.0128,
+    "second_dominant_spacing_s": 1.0368,
+    "next_distinct_spacing_above_s": 1.987199,
+    "n_strictly_between": 0,
+    "quanta_of_next_distinct": 23.0,
+    "note": "Computed over ALL adjacent pairs, not the truncated top-20 histogram. The two dominant spacings are 0.9504 s (11 quanta) and 1.0368 s (12 quanta); the next distinct value is reported above and is 23 quanta, i.e. a float-representation twin of 1.9872 s. Nothing lies strictly between, so any gap tolerance in (1.0368, next) segments identically -- which is why 1.1 s and 1.5 s give identical runs. Compare against the rounded literal 1.9872 with care: round(x, 6) yields both 1.9872 and 1.987199 for the same physical spacing."
+  },
   "mjd_quantum_check": {
     "quantum_days": 1e-06,
     "quantum_seconds": 0.0864,

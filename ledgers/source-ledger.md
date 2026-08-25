@@ -84,7 +84,8 @@ GPS weeks 2198–2199 · frame **IGb14** · data centre BKG, anonymous HTTP ·
 | --- | --- | --- | --- |
 | `VA-GPS2UTC-001` | `VP-GPS2UTC-001` v1.0.0 | `gps2utc.clk` supplies C0′ over MJD 59630–59640 | **`supports`** |
 | — | `src/ftro/pin_vgosdb.py` content checks | R11040 vgosDB is a gzip/tar vgosDB with versioned wrappers | **`supports`** |
-| — | `src/ftro/pin_igs.py` `validate_content` | live CDDIS URL is an authentication interstitial, not data | **`supports`** (regression test for [`FTRO-DEF-018`](deficiency-log.md#ftro-def-018)) |
+| — | `src/ftro/pin_igs.py` `validate_content` | an Earthdata login interstitial is not data; a `.Z` that will not decompress is not a product | **`supports`** — 34 committed tests, deterministic fixtures, **no network call** ([`FTRO-DEF-031`](deficiency-log.md#ftro-def-031) v2.0.0) |
+| — | `src/ftro/unixz.py` | pure-stdlib `.Z` decoder matches system `gzip -dc` byte-for-byte on `igs21980.sp3.Z` | **`supports`** |
 
 ## Applicability assessments
 

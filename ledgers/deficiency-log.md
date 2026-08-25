@@ -2,20 +2,20 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.4.0  
+**Version:** 0.5.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (7), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (15), low (3), medium (13)  
-**By domain:** cross-domain (5), gnss (2), optical (14), pulsar (8), vlbi (4)  
-**By disposition:** open (24), resolved (9)  
-**By responsible party:** ftro (9), provider (24)  
+**By class:** execution (9), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (17), low (3), medium (13)  
+**By domain:** cross-domain (7), gnss (2), optical (14), pulsar (8), vlbi (4)  
+**By disposition:** open (24), resolved (11)  
+**By responsible party:** ftro (11), provider (24)  
 
-**Total entries:** 33 · **self-directed:** 9 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033)
+**Total entries:** 35 · **self-directed:** 11 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035)
 
 | ID | Class | Sev. | Domain | Party | Title |
 | --- | --- | --- | --- | --- | --- |
@@ -36,6 +36,8 @@
 | [`FTRO-DEF-030`](#ftro-def-030) | execution | high | optical | **self** | SELF-DIRECTED: the convention-sensitivity scan could not perform the reanalysis it reported |
 | [`FTRO-DEF-031`](#ftro-def-031) | execution | high | cross-domain | **self** | SELF-DIRECTED: the committed test suite did not exercise the behaviour it was written to protect |
 | [`FTRO-DEF-032`](#ftro-def-032) | execution | high | pulsar | **self** | SELF-DIRECTED: four artifacts asserted evidence_state=resolvable under validation the profile forbids |
+| [`FTRO-DEF-034`](#ftro-def-034) | execution | high | cross-domain | **self** | SELF-DIRECTED: the §9.2 conformance test exempted every record that omitted the field |
+| [`FTRO-DEF-035`](#ftro-def-035) | execution | high | cross-domain | **self** | SELF-DIRECTED: projection-only verification -- tests checked a hand-corrected manifest while its generators drifted |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | optical | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | optical | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | optical | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -623,7 +625,7 @@
 | Dataset | `CDDIS IVS archive` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.1.0 |
+| Version | 1.2.0 |
 
 **Failed step.** Anonymous retrieval of the IVS master schedule from CDDIS.
 
@@ -639,7 +641,7 @@
 
 **Workaround.** IVS session metadata was obtained from https://ivscc.gsfc.nasa.gov/sessions/2022/ instead, and the vgosDB itself from OPAR (see FTRO-DEF-025).
 
-**Proposed response.** RESOLVED for FTRO tooling 2026-08-25: src/ftro/pin_igs.py and src/ftro/pin_vgosdb.py now perform content-shape validation (HTML/auth-marker detection, magic-byte checks, archive-structure checks) and emit retrieval_validation=content_validated. A regression test against the live CDDIS URL confirms the validator rejects the Earthdata login page that status-and-checksum alone accepted. Profile v0.0.1 §9.2 requires content_validated before evidence_state=resolvable. The CDDIS behaviour itself is unchanged and remains reportable upstream; the PPTA leg is still pinned at status_and_checksum only. Committed regression tests (tests/test_retrieval_validation.py) now hold all three tools fail-closed on a digest mismatch and reject an authentication interstitial.
+**Proposed response.** RESOLVED for FTRO tooling 2026-08-25. All four pinners (pin_igs, pin_vgosdb, pin_ppta, pin_evidence_repos) perform content-shape validation: HTML/auth-marker detection, magic-byte checks, actual decompression via src/ftro/unixz.py for .Z products, inner-format checks, and archive-structure checks for vgosDB. All fail closed on a digest mismatch. Profile §9.2 requires content_validated before evidence_state = resolvable, and 34 committed tests enforce it. CORRECTION (v1.2.0): earlier versions of this entry claimed 'a regression test against the live CDDIS URL'. No such committed test ever existed -- the live check was run interactively once and never committed. The committed suite uses deterministic fixtures and makes NO network call (FTRO-DEF-031 v2.0.0). The CDDIS behaviour itself is unchanged and remains reportable upstream.
 
 ---
 
@@ -729,7 +731,7 @@
 
 **Evidence.**
 
-- `profile/ftro-graph-profile-v0.0.2.md`
+- `profile/ftro-graph-profile-v0.0.3.md`
 
 **Impact.** Without this field the achieved-resolution figure in an alignment certificate cannot be traced to its cause.
 
@@ -992,7 +994,7 @@
 
 **Evidence.**
 
-- `profile/ftro-graph-profile-v0.0.2.md#51-p0-record-what-was-checked-before-composing-an-identity`
+- `profile/ftro-graph-profile-v0.0.3.md#51-p0-record-what-was-checked-before-composing-an-identity`
 - `tests/test_retrieval_validation.py#TestComposedIdentityConformance`
 
 **Impact.** A profile whose own reference manifest does not satisfy it is not a specification. This repeats FTRO-DEF-018's pattern. Worse, the first fix was self-confirming: the check inherited the error it was written to catch, so it passed while 2 of 7 records violated the rule. CLASSIFICATION (v2.0.0): reclassified schema -> execution. The fields were always expressible with existing vocabulary -- the fix added two ordinary JSON keys, no new node class or identity tier -- so by the card §17 test this is not a schema defect. It is the same shape as FTRO-DEF-027: the committed pipeline did not do what was claimed, and nothing checked.
@@ -1048,13 +1050,13 @@
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 **Failed step.** Regression-testing fail-closed retrieval on a clean clone.
 
 **Known fact or required evidence.** A test that skips is not a test. FTRO-DEF-027 established that a claim must be traceable to committed, runnable code.
 
-**Observed.** On a clean git archive export the suite reported 'OK (skipped=3)': all three fail-closed tests depended on gitignored data/raw/evidence/gps2utc.clk and skipped without it, so the fail-closed behaviour was never exercised. Neither pinner was tested end-to-end. The fixture tests/fixtures/genuine.sp3.Z was literal fake payload behind a 1f9d prefix that real uncompress rejects, and the validator checked only the first two bytes -- so 'content_validated' meant no more than 'non-empty, non-HTML, right first two bytes'. One test ignored the subprocess return code and could read a stale file from a fixed /tmp path. The README meanwhile described a regression test running 'against the live CDDIS URL' that does not exist as committed code.
+**Observed.** On a clean git archive export the suite reported 'OK (skipped=3)': all three fail-closed tests depended on gitignored data/raw/evidence/gps2utc.clk and skipped without it, so the fail-closed behaviour was never exercised. Neither pinner was tested end-to-end. The fixture tests/fixtures/genuine.sp3.Z was literal fake payload behind a 1f9d prefix that real uncompress rejects, and the validator checked only the first two bytes -- so 'content_validated' meant no more than 'non-empty, non-HTML, right first two bytes'. One test ignored the subprocess return code and could read a stale file from a fixed /tmp path. The README meanwhile described a regression test running 'against the live CDDIS URL' that does not exist as committed code. CORRECTION (v2.0.0): the first fix was incomplete. A clean export still reported 'OK (skipped=3)' -- the three provider-dependent tests remained skippable and no test invoked any pinner end-to-end, so session 04's claims 'nothing skips' and '26 tests passing on a clean clone' were false. The cold path was also unenforced: both expected-digest manifests lived in gitignored data/work/, the documented IGS command passed no manifest, and pin_ppta.py treated an absent expectation file as an empty map while still recording checksum_match.
 
 **Evidence.**
 
@@ -1066,7 +1068,7 @@
 
 **Workaround.** None.
 
-**Proposed response.** Corrected 2026-08-25. Rule adopted (D-038): a test that can skip must not be the only coverage of a behaviour, and a fixture must be a real instance of the format it stands for.
+**Proposed response.** Corrected across two rounds. Round 2 (2026-08-25): the three skippable tests are removed in favour of six end-to-end pinner tests over local file:// URLs, so the suite runs 34 tests with ZERO skips on a clean export; expected digests are committed to phase0/evidence/expected-digests.json; pin_ppta.py and pin_evidence_repos.py refuse to run without an expectation file unless --allow-unpinned is passed; and a test asserts the expectation file covers every pinned artifact.
 
 ---
 
@@ -1115,23 +1117,89 @@
 | Dataset | `FTRO profile and ledger version labels` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 **Failed step.** Declaring conformance 'to the FTRO profile v0.0.1' across three commits.
 
 **Known fact or required evidence.** Task card §9.1 requires each manifest to declare conformance to the pinned base AND the FTRO profile BY VERSION. A version label must therefore identify a unique constraint state.
 
-**Observed.** profile/ftro-graph-profile-v0.0.2.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints.
+**Observed.** profile/ftro-graph-profile-v0.0.3.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints. CORRECTION (v2.0.0): the first fix bumped the profile only. phase0/evidence/identities.json -- named in this entry's own scope -- had four byte-distinct states at fdbf2b9, 2c31279, 0b41929 and 1b77a72 while remaining version 0.1.0 throughout, so the entry was marked resolved while half its own scope was untouched.
 
 **Evidence.**
 
-- `profile/ftro-graph-profile-v0.0.2.md`
+- `profile/ftro-graph-profile-v0.0.3.md`
 - `phase0/evidence/identities.json`
 
 **Impact.** Any conformance assertion made against a drifting label is unfalsifiable, which defeats the purpose of §9.1. Corrected: the profile is now v0.0.2 with a version history recording what changed, and versioned documents carry the commit at which the version was set.
 
 **Workaround.** Cite the commit hash alongside the version label until the profile freezes.
 
-**Proposed response.** Rule adopted (D-039): any normative change bumps the profile version in the same commit, and every version bump records its predecessor and the clauses added.
+**Proposed response.** Corrected round 2 (2026-08-25): identities.json is v0.2.0 and carries a version_history array recording its prior four-state drift. Rule D-039 extended: the rule binds every versioned artifact, not only the profile.
+
+---
+
+### FTRO-DEF-034
+
+**SELF-DIRECTED: the §9.2 conformance test exempted every record that omitted the field**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO test suite and profile §9.2` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Enforcing profile §9.2 against the reference manifest.
+
+**Known fact or required evidence.** Profile §9.2: only content_validated may support evidence_state = resolvable. An absent value is not evidence of validation.
+
+**Observed.** The test carried `rv is not None`, so a record omitting retrieval_validation was skipped rather than failed. All 11 manifest artifacts assert resolvable; only 5 declared content_validated and 6 omitted the field entirely. The test passed. This is the unsupported-null failure the project exists to catch, committed inside the check written to prevent it.
+
+**Evidence.**
+
+- `tests/test_retrieval_validation.py#test_resolvable_requires_content_validated`
+- `phase0/evidence/identities.json`
+
+**Impact.** A green suite certifying a manifest that did not satisfy the clause. Resolved by doing the work rather than widening the clause: the three git-hosted evidence artifacts are now retrieved and content-validated by src/ftro/pin_evidence_repos.py -- one of them, tintervals, previously asserted resolvable with NO checksummed file at all -- and the two concept-level records carry an explicit not_applicable, itself guarded by a test that refuses it for anything with a snapshot_id.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-25. Rule adopted (D-042): a conformance test must fail closed on a missing value; an exemption must be an explicit enumerated state, never an absence.
+
+---
+
+### FTRO-DEF-035
+
+**SELF-DIRECTED: projection-only verification -- tests checked a hand-corrected manifest while its generators drifted**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO tooling and reference manifest` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Keeping the generated and curated views of an identity in agreement.
+
+**Known fact or required evidence.** Task card §3: human and machine views share one source of truth. A generator and the manifest it feeds must therefore agree.
+
+**Observed.** src/ftro/pin_ppta.py, added to close FTRO-DEF-032, emitted snapshot identities of the form ftro:snapshot:ppta/dr3/<name>@sha256:... while the canonical manifest used ftro:snapshot:ppta/dr3/<dir>/<name>@sha256:... -- all four differed. It emitted no concept_id and none of the profile §5.1 composition fields, so every identity it produced was non-conforming. DEF-029 was therefore closed only in the manually curated manifest, and no test compared the two views.
+
+**Evidence.**
+
+- `src/ftro/pin_ppta.py`
+- `tests/test_retrieval_validation.py#TestGeneratorManifestReconciliation`
+
+**Impact.** The general form of four sessions of findings: assertions were verified against a projection that had been corrected by hand, while the machinery producing it was never reconciled. A passing suite meant only 'the curated copy is self-consistent'. Resolved: generators declare the canonical concept_id and snapshot stem explicitly, emit the §5.1 fields, and three reconciliation tests assert generator output equals the manifest for every pinned artifact -- plus a test that a FRESHLY generated identity is §5.1-conforming, not only the stored one.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-25. Rule adopted (D-043): every curated record that a generator can produce must be reconciled against that generator by test. Phase 1 should go further and derive the manifest from the pin reports rather than maintaining both.
 
 ---

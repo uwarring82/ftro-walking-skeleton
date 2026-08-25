@@ -75,10 +75,10 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 33 classified deficiencies** across all five classes, 9 resolved. **Nine are self-directed**
-(`FTRO-DEF-018`, `-024`, `-025`, `-027`, `-029` … `-033`) — against FTRO's own tooling, evidence
-discipline, test suite and profile conformance. Every entry carries a machine-readable
-`responsible_party`.
+**4. 35 classified deficiencies** across all five classes, 11 resolved. **Eleven are
+self-directed** — against FTRO's own tooling, evidence discipline, test suite and profile
+conformance. Every entry carries a machine-readable `responsible_party`. Two
+(`FTRO-DEF-031`, `-033`) were **reopened** after their first fixes proved partial.
 
 **5. Platform conformance is separate from scientific demonstration.** The platform worked as far
 as it was exercised: each gap it encountered was located, typed and — where the bytes were
@@ -99,7 +99,7 @@ that failing to demonstrate shared ancestry is a valid scientific result, not a 
 | What is pinned, and to what checksum | [Source ledger](ledgers/source-ledger.md) · [`identities.json`](phase0/evidence/identities.json) |
 | Who may reuse what | [Rights ledger](ledgers/rights-ledger.md) |
 | Governance and principles | [Access Charter v0.1](charter/access-charter-v0.1.md) |
-| The vocabulary (nothing frozen yet) | [Graph profile v0.0.2](profile/ftro-graph-profile-v0.0.2.md) |
+| The vocabulary (nothing frozen yet) | [Graph profile v0.0.3](profile/ftro-graph-profile-v0.0.3.md) |
 
 ---
 
@@ -107,7 +107,7 @@ that failing to demonstrate shared ancestry is a valid scientific result, not a 
 
 ```
 charter/     Access Charter v0.1                      (deliverable A)
-profile/     Reference-Ancestry Graph Profile v0.0.2  (deliverable B, nothing frozen)
+profile/     Reference-Ancestry Graph Profile v0.0.3  (deliverable B, nothing frozen)
 tests/       Regression suite: retrieval validation, fail-closed digests, profile conformance
 phase0/      Selection note, ancestry notes, applicability assessments, reports
 ledgers/     Deficiency, rights, source and decision ledgers
@@ -140,12 +140,17 @@ python3 src/ftro/verify_gps2utc.py --file data/raw/evidence/gps2utc.clk \
   --mjd-start 59630 --mjd-end 59640 \
   --expect-sha256 7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a
 
-# 3. Pin the IGS artifacts for the window (content-validated)
-python3 src/ftro/pin_igs.py
+# 3. Pin the IGS artifacts, enforcing the committed digests
+python3 src/ftro/pin_igs.py \
+  --expect-sha256-manifest phase0/evidence/expected-digests.json
 
 # 4. Pin the R11040 vgosDB from OPAR (content-validated)
 python3 src/ftro/pin_vgosdb.py \
   --expect-sha256 0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54
+
+# 4b. Pin the PPTA artifacts and the git-hosted evidence repositories
+python3 src/ftro/pin_ppta.py
+python3 src/ftro/pin_evidence_repos.py
 
 # 5. Compute the four-domain intersection (needs step 1's full inventory)
 python3 src/ftro/four_domain_intersection.py
@@ -211,7 +216,8 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | `fdbf2b9` | Phase 0 as first published |
 | `2c31279` | First external review — see [session 02](labnotes/2026-08-25-session-02-review-corrections.md). Nine claims corrected; optical support recomputed at run level; three self-directed deficiencies filed. |
 | `0b41929` | Second external review — see [session 03](labnotes/2026-08-25-session-03-review-corrections-2.md). Conformance rule violated by its own commit (`FTRO-DEF-029`); tools fail closed; profile §5.2 retracted. |
-| this | Third external review — see [session 04](labnotes/2026-08-25-session-04-review-corrections-3.md). The sensitivity scan could not perform the reanalysis it reported (`FTRO-DEF-030`) and is reimplemented by re-segmentation; the test suite skipped its own fail-closed coverage on a clean clone (`FTRO-DEF-031`); the §9.2 conformance contradiction is resolved by validating rather than downgrading (`FTRO-DEF-032`); profile bumped to **v0.0.2** because a drifting version label identifies no constraint state (`FTRO-DEF-033`). |
+| `1b77a72` | Third external review — see [session 04](labnotes/2026-08-25-session-04-review-corrections-3.md). The sensitivity scan could not perform the reanalysis it reported (`FTRO-DEF-030`) and is reimplemented by re-segmentation; the test suite skipped its own fail-closed coverage on a clean clone (`FTRO-DEF-031`); the §9.2 conformance contradiction is resolved by validating rather than downgrading (`FTRO-DEF-032`); profile bumped because a drifting version label identifies no constraint state (`FTRO-DEF-033`). |
+| this | Fourth external review — see [session 05](labnotes/2026-08-25-session-05-review-corrections-4.md). **Projection-only verification** named and fixed: the §9.2 check exempted every record that omitted the field (`FTRO-DEF-034`), and `pin_ppta.py` emitted four identities that differed from the manifest it was built to support (`FTRO-DEF-035`). Generators now declare canonical identities and are reconciled by test; the suite runs **34 tests with zero skips** on a clean export; expected digests are committed. |
 
 ## Next — Phase 1
 

@@ -31,16 +31,39 @@ VALIDATORS = {
     "txt": lambda t: len(t.strip()) > 0,
 }
 
+# concept_id and snapshot_stem are declared here, not derived ad hoc, because the
+# generator and phase0/evidence/identities.json must agree exactly. An earlier version
+# invented its own stem (ppta/dr3/<name>) while the manifest used ppta/dr3/<dir>/<name>,
+# so the tool built to support the manifest emitted four identities that did not match
+# it and nothing noticed. tests/test_retrieval_validation.py now reconciles the two.
 TARGETS = [
     {"name": "J0437-4715.par", "file_id": 65419506, "kind": "par",
-     "path": "ppta_dr3/toas_and_parameters/all/J0437-4715.par"},
+     "path": "ppta_dr3/toas_and_parameters/all/J0437-4715.par",
+     "concept_id": "ftro:concept:ppta/dr3/par/J0437-4715",
+     "snapshot_stem": "ppta/dr3/all/J0437-4715.par"},
     {"name": "J0437-4715.tim", "file_id": 65419499, "kind": "tim",
-     "path": "ppta_dr3/toas_and_parameters/all/J0437-4715.tim"},
+     "path": "ppta_dr3/toas_and_parameters/all/J0437-4715.tim",
+     "concept_id": "ftro:concept:ppta/dr3/toas/J0437-4715",
+     "snapshot_stem": "ppta/dr3/all/J0437-4715.tim"},
     {"name": "pks2gps.clk", "file_id": 65419593, "kind": "clk",
-     "path": "ppta_dr3/toas_and_parameters/clock/pks2gps.clk"},
+     "path": "ppta_dr3/toas_and_parameters/clock/pks2gps.clk",
+     "concept_id": "ftro:concept:ppta/dr3/clock/pks2gps",
+     "snapshot_stem": "ppta/dr3/clock/pks2gps.clk"},
     {"name": "tai2tt_bipm2021.clk", "file_id": 65419592, "kind": "clk",
-     "path": "ppta_dr3/toas_and_parameters/clock/tai2tt_bipm2021.clk"},
+     "path": "ppta_dr3/toas_and_parameters/clock/tai2tt_bipm2021.clk",
+     "concept_id": "ftro:concept:ppta/dr3/clock/tai2tt_bipm2021",
+     "snapshot_stem": "ppta/dr3/clock/tai2tt_bipm2021.clk"},
 ]
+
+# Profile §5.1: an ftro_composed identity must record what was checked and found absent.
+# Emitted by the generator so a regenerated report stays conforming.
+COMPOSITION_CHECKED = [
+    "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
+    "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
+    "provider_last_updated (mutable timestamp, not a persistent identifier)",
+]
+COMPOSITION_WHY = ("CSIRO DAP mints DOIs at collection level only and supplies no immutable "
+                   "per-file snapshot PID, so task card §10 composition applies to these members.")
 
 
 def validate(kind, body):
@@ -59,13 +82,23 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", default="data/raw/ppta")
     ap.add_argument("--out", default="phase0/reports/ppta-artifact-pins.json")
-    ap.add_argument("--expect", default="data/work/ppta-hashes.json",
-                    help="optional JSON map of name -> sha256 to enforce")
+    ap.add_argument("--expect", default="phase0/evidence/expected-digests.json",
+                    help="JSON map of name -> sha256 to enforce")
+    ap.add_argument("--allow-unpinned", action="store_true",
+                    help="proceed when no expectation file exists (establishes a first pin)")
     args = ap.parse_args()
 
+    # An absent expectation file used to be silently treated as an empty map, so the
+    # documented cold path enforced nothing while recording checksum_match: true.
     expected = {}
-    if args.expect and os.path.exists(args.expect):
-        expected = {k: v["sha256"] for k, v in json.load(open(args.expect, encoding="utf-8")).items()}
+    if os.path.exists(args.expect):
+        raw = json.load(open(args.expect, encoding="utf-8"))
+        expected = {k: (v["sha256"] if isinstance(v, dict) else v)
+                    for k, v in raw.get("ppta", raw).items()}
+    elif not args.allow_unpinned:
+        print(f"no expectation file at {args.expect}; rerun with --allow-unpinned to "
+              f"establish a first pin", file=sys.stderr)
+        return 2
 
     os.makedirs(args.cache, exist_ok=True)
     pins, failures = [], []
@@ -103,8 +136,11 @@ def main():
             "expected_sha256": exp, "checksum_match": checksum_match,
             "retrieval_validation": "content_validated",
             "content_validation": reason,
-            "snapshot_id": f"ftro:snapshot:ppta/dr3/{t['name']}@sha256:{sha256}",
+            "concept_id": t["concept_id"],
+            "snapshot_id": f"ftro:snapshot:{t['snapshot_stem']}@sha256:{sha256}",
             "snapshot_kind": "ftro_composed",
+            "composition_precondition_checked": COMPOSITION_CHECKED,
+            "composition_justification": COMPOSITION_WHY,
         })
 
     report = {"generator": "src/ftro/pin_ppta.py", "collection": COLLECTION,

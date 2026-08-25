@@ -208,44 +208,6 @@ class TestFailClosed(unittest.TestCase):
                        "--expect-sha256", digest, "--out", self.out("ok.json")])
         self.assertEqual(r.returncode, 0, r.stderr)
 
-    def test_verify_gps2utc_exits_nonzero_on_digest_mismatch(self):
-        clk = os.path.join(REPO, "data", "raw", "evidence", "gps2utc.clk")
-        if not os.path.exists(clk):
-            self.skipTest("pinned artifact not present; run the retrieval steps in README first")
-        out = self.out("vg.json")
-        r = self._run(["src/ftro/verify_gps2utc.py", "--file", clk,
-                       "--mjd-start", "59630", "--mjd-end", "59640",
-                       "--expect-sha256", "0" * 64, "--out", out])
-        self.assertEqual(r.returncode, 3, f"expected exit 3, got {r.returncode}: {r.stderr}")
-        with open(out, encoding="utf-8") as fh:
-            rec = json.load(fh)
-        self.assertIs(rec["checksum_match"], False)
-        self.assertEqual(rec["result"], "indeterminate")
-
-    def test_verify_gps2utc_exits_zero_on_correct_digest(self):
-        clk = os.path.join(REPO, "data", "raw", "evidence", "gps2utc.clk")
-        if not os.path.exists(clk):
-            self.skipTest("pinned artifact not present")
-        r = self._run(["src/ftro/verify_gps2utc.py", "--file", clk,
-                       "--mjd-start", "59630", "--mjd-end", "59640",
-                       "--expect-sha256",
-                       "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
-                       "--out", self.out("vg-ok.json")])
-        self.assertEqual(r.returncode, 0, r.stderr)
-
-    def test_unchecked_digest_is_null_not_true(self):
-        """None must mean 'not checked'. A missing check must never read as a pass."""
-        clk = os.path.join(REPO, "data", "raw", "evidence", "gps2utc.clk")
-        if not os.path.exists(clk):
-            self.skipTest("pinned artifact not present")
-        out = self.out("vg-none.json")
-        r = self._run(["src/ftro/verify_gps2utc.py", "--file", clk,
-                       "--mjd-start", "59630", "--mjd-end", "59640", "--out", out])
-        self.assertEqual(r.returncode, 0, r.stderr)   # never read a stale file on failure
-        with open(out, encoding="utf-8") as fh:
-            self.assertIsNone(json.load(fh)["checksum_match"])
-
-
 def _identities():
     path = os.path.join(REPO, "phase0", "evidence", "identities.json")
     with open(path, encoding="utf-8") as fh:
@@ -258,10 +220,77 @@ def _composed(artifacts):
     The first version of this helper filtered on snapshot_kind alone. Profile §5.1 is
     unqualified, so the real denominator includes concept_kind too -- the earlier test
     passed while 2 of 7 records were non-conforming, because it encoded the same wrong
-    denominator the finding had used (FTRO-DEF-031).
+    denominator the finding had used (FTRO-DEF-029 v2.0.0).
     """
     return [a for a in artifacts
             if "ftro_composed" in (a.get("snapshot_kind"), a.get("concept_kind"))]
+
+
+class TestPinnerEndToEnd(unittest.TestCase):
+    """Run the pinners as subprocesses over local file:// URLs.
+
+    FTRO-DEF-031 v2.0.0: the earlier suite exercised validate_content in-process but never
+    ran a pinner, and its three fail-closed tests skipped on a clean clone because they
+    needed a gitignored provider artifact. These need nothing but committed fixtures.
+    """
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="ftro-e2e-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+
+    def _pin_vgosdb(self, fixture_name, expect=None):
+        url = "file://" + os.path.join(FIXTURES, fixture_name)
+        out = os.path.join(self.tmp, "pin.json")
+        args = [sys.executable, "src/ftro/pin_vgosdb.py", "--url", url, "--session", "R11040",
+                "--cache", os.path.join(self.tmp, "cache"), "--out", out]
+        if expect:
+            args += ["--expect-sha256", expect]
+        r = subprocess.run(args, cwd=REPO, capture_output=True, text=True, timeout=120)
+        rec = json.load(open(out, encoding="utf-8")) if os.path.exists(out) else None
+        return r, rec
+
+    def test_pins_a_valid_vgosdb_end_to_end(self):
+        r, rec = self._pin_vgosdb("vgosdb_min.tgz")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertTrue(rec["content_valid"])
+        self.assertIn("snapshot_id", rec)
+        self.assertTrue(rec["bytes_written_to_cache"])
+        self.assertEqual(rec["internal_versions"], ["001"])
+
+    def test_rejects_a_tarball_that_is_not_a_vgosdb(self):
+        r, rec = self._pin_vgosdb("not_vgosdb.tgz")
+        self.assertEqual(r.returncode, 1, "a tarball with no wrappers must fail closed")
+        self.assertFalse(rec["content_valid"])
+        self.assertNotIn("snapshot_id", rec, "a rejected retrieval must mint no identity")
+        self.assertFalse(rec["bytes_written_to_cache"])
+
+    def test_rejects_html_served_as_an_archive(self):
+        r, rec = self._pin_vgosdb("login_page.html")
+        self.assertEqual(r.returncode, 1)
+        self.assertNotIn("snapshot_id", rec)
+
+    def test_fails_closed_on_digest_mismatch_end_to_end(self):
+        r, rec = self._pin_vgosdb("vgosdb_min.tgz", expect="0" * 64)
+        self.assertEqual(r.returncode, 1, "digest mismatch must be fatal")
+        self.assertIs(rec["checksum_match"], False)
+        self.assertNotIn("snapshot_id", rec)
+        self.assertFalse(rec["bytes_written_to_cache"],
+                         "unverified bytes must not occupy the product filename")
+
+    def test_succeeds_on_matching_digest_end_to_end(self):
+        import hashlib
+        digest = hashlib.sha256(fixture("vgosdb_min.tgz")).hexdigest()
+        r, rec = self._pin_vgosdb("vgosdb_min.tgz", expect=digest)
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIs(rec["checksum_match"], True)
+        self.assertIn("snapshot_id", rec)
+
+    def test_composed_identity_emitted_by_the_generator_is_conforming(self):
+        """Profile §5.1 must hold for freshly generated output, not only for the manifest."""
+        _, rec = self._pin_vgosdb("vgosdb_min.tgz")
+        self.assertEqual(rec["snapshot_kind"], "ftro_composed")
+        self.assertTrue(rec["composition_precondition_checked"])
+        self.assertGreater(len(rec["composition_justification"].strip()), 20)
 
 
 class TestComposedIdentityConformance(unittest.TestCase):
@@ -300,14 +329,97 @@ class TestComposedIdentityConformance(unittest.TestCase):
                                 "§10 requires the recorded retrieval procedure")
 
     def test_resolvable_requires_content_validated(self):
-        """Profile §9.2: only content_validated may support evidence_state = resolvable."""
+        """Profile §9.2: only content_validated may support evidence_state = resolvable.
+
+        Fails CLOSED on a missing value. The earlier version carried `rv is not None`,
+        which exempted six of eleven records that simply omitted the field -- the
+        unsupported-null failure this project exists to catch (FTRO-DEF-034).
+        """
         offenders = []
         for a in _identities():
             rv, es = a.get("retrieval_validation"), a.get("evidence_state")
-            if es == "resolvable" and rv is not None and rv != "content_validated":
+            if es != "resolvable":
+                continue
+            if rv not in ("content_validated", "not_applicable"):
                 offenders.append((a.get("concept_id"), rv))
         self.assertEqual(offenders, [],
-                         f"evidence_state=resolvable with weaker validation: {offenders}")
+                         f"evidence_state=resolvable without content_validated: {offenders}")
+
+    def test_not_applicable_only_for_records_without_a_snapshot(self):
+        """`not_applicable` is for concept-level records, not an escape hatch for retrievals."""
+        for a in _identities():
+            if a.get("retrieval_validation") == "not_applicable":
+                with self.subTest(concept=a.get("concept_id")):
+                    self.assertFalse(a.get("snapshot_id"),
+                                     "a record with a snapshot_id IS a retrieval")
+
+    def test_every_record_declares_retrieval_validation(self):
+        """No record may leave the field absent: absence is not evidence of validation."""
+        for a in _identities():
+            with self.subTest(concept=a.get("concept_id")):
+                self.assertIn("retrieval_validation", a)
+
+
+class TestGeneratorManifestReconciliation(unittest.TestCase):
+    """The generators and the curated manifest must agree.
+
+    FTRO-DEF-035: tests validated a hand-corrected manifest while the generators that
+    feed it drifted. pin_ppta.py emitted four snapshot identities that differed from the
+    canonical ones and nothing noticed, because nothing compared them.
+    """
+
+    REPORTS = [
+        ("phase0/reports/ppta-artifact-pins.json", "pins"),
+        ("phase0/reports/evidence-repo-pins.json", "pins"),
+    ]
+
+    def _canonical(self):
+        return {a["concept_id"]: a for a in _identities() if a.get("concept_id")}
+
+    def test_generated_identities_match_the_manifest(self):
+        canon = self._canonical()
+        checked = 0
+        for path, key in self.REPORTS:
+            full = os.path.join(REPO, path)
+            if not os.path.exists(full):
+                self.fail(f"{path} missing; regenerate it before running the suite")
+            with open(full, encoding="utf-8") as fh:
+                report = json.load(fh)
+            for pin in report[key]:
+                cid = pin.get("concept_id")
+                if cid not in canon:
+                    continue
+                with self.subTest(report=path, concept=cid):
+                    rec = canon[cid]
+                    for field in ("snapshot_id", "sha256"):
+                        if pin.get(field) and rec.get(field):
+                            self.assertEqual(pin[field], rec[field],
+                                             f"{field} disagrees between generator and manifest")
+                    checked += 1
+        self.assertGreater(checked, 0, "no generated identity was reconciled")
+
+    def test_vgosdb_pin_matches_the_manifest(self):
+        full = os.path.join(REPO, "phase0", "reports", "vlbi-vgosdb-pin.json")
+        if not os.path.exists(full):
+            self.fail("vlbi-vgosdb-pin.json missing; regenerate it")
+        with open(full, encoding="utf-8") as fh:
+            pin = json.load(fh)
+        rec = self._canonical()[pin["concept_id"]]
+        self.assertEqual(pin["snapshot_id"], rec["snapshot_id"])
+        self.assertEqual(pin["sha256"], rec["sha256"])
+
+    def test_expected_digests_cover_every_pinned_artifact(self):
+        """The committed expectation file must actually enforce the committed pins."""
+        exp_path = os.path.join(REPO, "phase0", "evidence", "expected-digests.json")
+        self.assertTrue(os.path.exists(exp_path),
+                        "expected-digests.json must be committed, not left in gitignored data/work")
+        with open(exp_path, encoding="utf-8") as fh:
+            exp = json.load(fh)
+        with open(os.path.join(REPO, "phase0", "reports", "ppta-artifact-pins.json"),
+                  encoding="utf-8") as fh:
+            for pin in json.load(fh)["pins"]:
+                with self.subTest(name=pin["name"]):
+                    self.assertEqual(exp["ppta"].get(pin["name"]), pin["sha256"])
 
     def test_no_truncated_digest_inside_an_identity(self):
         import re

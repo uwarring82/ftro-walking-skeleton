@@ -12,9 +12,11 @@
       "file_id": 65419506,
       "kind": "par",
       "path": "ppta_dr3/toas_and_parameters/all/J0437-4715.par",
+      "concept_id": "ftro:concept:ppta/dr3/par/J0437-4715",
+      "snapshot_stem": "ppta/dr3/all/J0437-4715.par",
       "url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419506",
       "http_status": 200,
-      "retrieved_utc": "2026-08-25T19:21:59.585285+00:00",
+      "retrieved_utc": "2026-08-25T21:26:45.547358+00:00",
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419506",
       "size_bytes": 4402,
       "sha256": "cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75",
@@ -23,17 +25,25 @@
       "checksum_match": true,
       "retrieval_validation": "content_validated",
       "content_validation": "ok",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/J0437-4715.par@sha256:cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75",
-      "snapshot_kind": "ftro_composed"
+      "snapshot_id": "ftro:snapshot:ppta/dr3/all/J0437-4715.par@sha256:cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75",
+      "snapshot_kind": "ftro_composed",
+      "composition_precondition_checked": [
+        "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
+        "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
+        "provider_last_updated (mutable timestamp, not a persistent identifier)"
+      ],
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card \u00a710 composition applies to these members."
     },
     {
       "name": "J0437-4715.tim",
       "file_id": 65419499,
       "kind": "tim",
       "path": "ppta_dr3/toas_and_parameters/all/J0437-4715.tim",
+      "concept_id": "ftro:concept:ppta/dr3/toas/J0437-4715",
+      "snapshot_stem": "ppta/dr3/all/J0437-4715.tim",
       "url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419499",
       "http_status": 200,
-      "retrieved_utc": "2026-08-25T19:22:05.088684+00:00",
+      "retrieved_utc": "2026-08-25T21:26:50.105218+00:00",
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419499",
       "size_bytes": 4464619,
       "sha256": "ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564",
@@ -42,17 +52,25 @@
       "checksum_match": true,
       "retrieval_validation": "content_validated",
       "content_validation": "ok",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/J0437-4715.tim@sha256:ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564",
-      "snapshot_kind": "ftro_composed"
+      "snapshot_id": "ftro:snapshot:ppta/dr3/all/J0437-4715.tim@sha256:ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564",
+      "snapshot_kind": "ftro_composed",
+      "composition_precondition_checked": [
+        "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
+        "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
+        "provider_last_updated (mutable timestamp, not a persistent identifier)"
+      ],
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card \u00a710 composition applies to these members."
     },
     {
       "name": "pks2gps.clk",
       "file_id": 65419593,
       "kind": "clk",
       "path": "ppta_dr3/toas_and_parameters/clock/pks2gps.clk",
+      "concept_id": "ftro:concept:ppta/dr3/clock/pks2gps",
+      "snapshot_stem": "ppta/dr3/clock/pks2gps.clk",
       "url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419593",
       "http_status": 200,
-      "retrieved_utc": "2026-08-25T19:22:10.151795+00:00",
+      "retrieved_utc": "2026-08-25T21:26:55.366080+00:00",
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419593",
       "size_bytes": 1742710,
       "sha256": "c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
@@ -61,17 +79,25 @@
       "checksum_match": true,
       "retrieval_validation": "content_validated",
       "content_validation": "ok",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
-      "snapshot_kind": "ftro_composed"
+      "snapshot_id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
+      "snapshot_kind": "ftro_composed",
+      "composition_precondition_checked": [
+        "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
+        "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
+        "provider_last_updated (mutable timestamp, not a persistent identifier)"
+      ],
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card \u00a710 composition applies to these members."
     },
     {
       "name": "tai2tt_bipm2021.clk",
       "file_id": 65419592,
       "kind": "clk",
       "path": "ppta_dr3/toas_and_parameters/clock/tai2tt_bipm2021.clk",
+      "concept_id": "ftro:concept:ppta/dr3/clock/tai2tt_bipm2021",
+      "snapshot_stem": "ppta/dr3/clock/tai2tt_bipm2021.clk",
       "url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419592",
       "http_status": 200,
-      "retrieved_utc": "2026-08-25T19:22:14.759538+00:00",
+      "retrieved_utc": "2026-08-25T21:26:59.333967+00:00",
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419592",
       "size_bytes": 48871,
       "sha256": "047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
@@ -80,8 +106,14 @@
       "checksum_match": true,
       "retrieval_validation": "content_validated",
       "content_validation": "ok",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/tai2tt_bipm2021.clk@sha256:047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
-      "snapshot_kind": "ftro_composed"
+      "snapshot_id": "ftro:snapshot:ppta/dr3/clock/tai2tt_bipm2021.clk@sha256:047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
+      "snapshot_kind": "ftro_composed",
+      "composition_precondition_checked": [
+        "CSIRO DAP per-file record (id + lastUpdated only; no per-file DOI or handle)",
+        "CSIRO DAP collection DOI (dataset-level only: 10.25919/j4xr-wp05, 10.25919/axvw-qa43)",
+        "provider_last_updated (mutable timestamp, not a persistent identifier)"
+      ],
+      "composition_justification": "CSIRO DAP mints DOIs at collection level only and supplies no immutable per-file snapshot PID, so task card \u00a710 composition applies to these members."
     }
   ],
   "failures": []

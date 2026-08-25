@@ -1,7 +1,7 @@
-# FTRO Reference-Ancestry Graph Profile v0.0.2
+# FTRO Reference-Ancestry Graph Profile v0.0.3
 
-**Document ID:** FTRO-PRF-001 · **Version:** 0.0.2 · **Date:** 2026-08-25
-**Supersedes:** v0.0.1 (commits `fdbf2b9` … `0b41929`)
+**Document ID:** FTRO-PRF-001 · **Version:** 0.0.3 · **Date:** 2026-08-25
+**Supersedes:** v0.0.2 (`1b77a72`), v0.0.1 (`fdbf2b9` … `0b41929`)
 **Status:** Draft — **no term is frozen** (task card Gate 1) · **Licence:** CC BY 4.0
 **Normative base:** [RO-Crate Metadata Specification 1.3](https://w3id.org/ro/crate/1.3)
 
@@ -15,7 +15,8 @@
 > | 0.0.1 | `fdbf2b9` | initial draft |
 > | 0.0.1 | `2c31279` | *(unversioned)* added §5.1 composed-identity record, §5.2 intra-archive tier, §9.2 content validation |
 > | 0.0.1 | `0b41929` | *(unversioned)* added §5.0 MUST-clause gate, retracted §5.2, added §9.2 `routes_tried` |
-> | **0.0.2** | this | §5.1 denominator spans both identity levels; §9.2 coupling enforced by test; version-bump rule (§0.1) |
+> | 0.0.2 | `1b77a72` | §5.1 denominator spans both identity levels; §9.2 coupling enforced by test; version-bump rule (§0.1) |
+> | **0.0.3** | this | §9.2 `retrieval_validation` is REQUIRED and `not_applicable` is an explicit enumerated state; §9.3 generator/manifest reconciliation |
 
 ## 0.1 Versioning of this profile
 
@@ -310,8 +311,18 @@ A conforming retrieval procedure must validate **content shape**, not merely HTT
 checksum, because CDDIS returns an authentication interstitial with HTTP 200
 ([`FTRO-DEF-018`](../ledgers/deficiency-log.md#ftro-def-018)).
 
-Required: `retrieval_validation ∈ {status_only, status_and_checksum, content_validated, content_rejected}`.
-Only `content_validated` may support `evidence_state = resolvable`. A retrieval whose digest does
+**`retrieval_validation` is required on every record.** Its absence is not evidence of validation,
+and a conformance check must fail closed on a missing value — v0.0.2's check exempted six of eleven
+records that simply omitted the field ([`FTRO-DEF-034`](../ledgers/deficiency-log.md#ftro-def-034)).
+
+`retrieval_validation ∈ {status_only, status_and_checksum, content_validated, content_rejected, not_applicable}`
+
+Only `content_validated` may support `evidence_state = resolvable`.
+
+`not_applicable` is reserved for **concept-level records that are not themselves retrievals** — a
+record with no `snapshot_id`, whose `evidence_state` derives from its member snapshots. A record
+carrying a `snapshot_id` is a retrieval and may never use it. Both constraints are enforced by
+`tests/test_retrieval_validation.py`. A retrieval whose digest does
 not match an expected value **must not mint an identity** and must fail non-zero.
 
 **Positives are per-path; negatives are per-dataset.** It follows from `access_class` being a
@@ -333,6 +344,27 @@ An `unreachable` outcome establishes nothing about access class — only that th
 reached from the attempting network. Phase 0 recorded the VLBI leg `unresolved` after trying one
 channel of three ([`FTRO-DEF-025`](../ledgers/deficiency-log.md#ftro-def-025)); that is the failure
 this clause exists to prevent.
+
+### 9.3 [P0] Generated and curated views must be reconciled
+
+Task card §3 requires human and machine views to share one source of truth. A curated manifest and
+the generator that feeds it are two views of the same record, so they must be **compared by test**,
+not merely maintained in parallel.
+
+Phase 1 found the failure mode in its general form
+([`FTRO-DEF-035`](../ledgers/deficiency-log.md#ftro-def-035)): a pinner written to close a
+conformance finding emitted four snapshot identities that differed from the canonical manifest,
+carried no `concept_id`, and omitted the §5.1 composition fields — while the suite passed, because
+it only ever examined the hand-corrected manifest.
+
+| Requirement | |
+| --- | --- |
+| A generator that can produce a record **must declare** its canonical `concept_id` and snapshot stem, not derive one ad hoc | |
+| A generator's output **must satisfy** every clause the stored record must satisfy | a freshly generated identity is tested, not only the stored one |
+| Every curated record a generator can produce **must be reconciled** against that generator by test | `snapshot_id` and digest must agree exactly |
+
+The stronger form — deriving the manifest from the pin reports rather than maintaining both — is
+deferred to Phase 1 and is the preferred long-term fix. **Not frozen.**
 
 ## 10. Policy objects and resolver
 

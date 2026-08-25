@@ -33,7 +33,7 @@
           "@id": "charter/access-charter-v0.1.md"
         },
         {
-          "@id": "profile/ftro-graph-profile-v0.0.2.md"
+          "@id": "profile/ftro-graph-profile-v0.0.3.md"
         },
         {
           "@id": "phase0/selection-note-v0.1.md"
@@ -130,6 +130,15 @@
         },
         {
           "@id": "phase0/reports/ppta-artifact-pins.json"
+        },
+        {
+          "@id": "labnotes/2026-08-25-session-05-review-corrections-4.md"
+        },
+        {
+          "@id": "phase0/reports/evidence-repo-pins.json"
+        },
+        {
+          "@id": "phase0/evidence/expected-digests.json"
         }
       ],
       "isBasedOn": [
@@ -223,14 +232,14 @@
       "name": "access-charter-v0.1.md"
     },
     {
-      "@id": "profile/ftro-graph-profile-v0.0.2.md",
+      "@id": "profile/ftro-graph-profile-v0.0.3.md",
       "@type": "File",
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "21507",
-      "name": "ftro-graph-profile-v0.0.2.md"
+      "contentSize": "23646",
+      "name": "ftro-graph-profile-v0.0.3.md"
     },
     {
       "@id": "phase0/selection-note-v0.1.md",
@@ -279,7 +288,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "30728",
+      "contentSize": "33894",
       "name": "identities.json"
     },
     {
@@ -309,7 +318,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "85274",
+      "contentSize": "86134",
       "name": "optical-inventory-summary.json"
     },
     {
@@ -379,7 +388,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "64345",
+      "contentSize": "69845",
       "name": "deficiency-log.json"
     },
     {
@@ -389,7 +398,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "64603",
+      "contentSize": "70210",
       "name": "deficiency-log.md"
     },
     {
@@ -409,7 +418,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5926",
+      "contentSize": "6150",
       "name": "source-ledger.md"
     },
     {
@@ -419,7 +428,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "9879",
+      "contentSize": "11420",
       "name": "decision-ledger.md"
     },
     {
@@ -452,6 +461,9 @@
         },
         {
           "@id": "src/ftro/optical_sensitivity.py"
+        },
+        {
+          "@id": "src/ftro/pin_evidence_repos.py"
         },
         {
           "@id": "src/ftro/pin_igs.py"
@@ -491,7 +503,7 @@
       "name": "analyse_optical.py",
       "description": "Parses the extracted optical archive; emits flag histograms, per-run support, the MJD quantisation census and spacing-coverage statistics.",
       "encodingFormat": "text/x-python",
-      "contentSize": "11537",
+      "contentSize": "13309",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -593,7 +605,7 @@
       "name": "summarise_optical.py",
       "description": "Reduces the full optical inventory to a committable summary.",
       "encodingFormat": "text/x-python",
-      "contentSize": "2764",
+      "contentSize": "2818",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -683,7 +695,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2259",
+      "contentSize": "2386",
       "name": "README.md"
     },
     {
@@ -735,7 +747,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "15276"
+      "contentSize": "20519"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -805,7 +817,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4119"
+      "contentSize": "6656"
     },
     {
       "@id": "src/ftro/optical_sensitivity.py",
@@ -837,7 +849,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "5437"
+      "contentSize": "7724"
     },
     {
       "@id": "src/ftro/refresh_crate.py",
@@ -897,6 +909,52 @@
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "contentSize": "138"
+    },
+    {
+      "@id": "labnotes/2026-08-25-session-05-review-corrections-4.md",
+      "@type": "File",
+      "name": "2026-08-25-session-05-review-corrections-4.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "10493"
+    },
+    {
+      "@id": "phase0/reports/evidence-repo-pins.json",
+      "@type": "File",
+      "name": "evidence-repo-pins.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "4024"
+    },
+    {
+      "@id": "phase0/evidence/expected-digests.json",
+      "@type": "File",
+      "name": "expected-digests.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "6285"
+    },
+    {
+      "@id": "src/ftro/pin_evidence_repos.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "pin_evidence_repos.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "5982"
     }
   ]
 }

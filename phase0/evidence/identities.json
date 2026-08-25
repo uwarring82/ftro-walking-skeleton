@@ -1,6 +1,6 @@
 {
   "document": "FTRO Phase-0 concept and snapshot identities",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "date": "2026-08-25",
   "card": "FTRO-WS-001 v0.3",
   "note": "Task card section 11.3: living series carry a concept identity naming the continuing product line and a snapshot identity naming the immutable state actually consumed. Where the provider supplies no immutable snapshot PID, section 10 requires an FTRO identity composed from the concept identifier, retrieval time, byte checksum and recorded retrieval procedure.",
@@ -46,7 +46,9 @@
       "record_revision": 6,
       "metadata_snapshot_note": "The version DOI pins the FILES immutably but not the record METADATA: revision 6 records six metadata edits between created 2025-09-12T16:09:41Z and updated 2025-09-12T16:22:22Z, none of which minted a new DOI. A metadata snapshot therefore needs revision + updated in addition to the version DOI.",
       "file_identity": "ftro:file:zenodo/17107693/ROCIT campaign results.zip@md5:4ae290f559c90b462991286c933a1147",
-      "provider_file_id": "0948c6a9-fd42-4255-9ffd-c5d15aaa97f7"
+      "provider_file_id": "0948c6a9-fd42-4255-9ffd-c5d15aaa97f7",
+      "retrieval_validation": "content_validated",
+      "content_validation": "Archive expanded and fully parsed by src/ftro/analyse_optical.py: 12 comparison directories, 252 .dat and 12 .yml members, 9,018,290 records read and 9,018,290/9,018,290 MJD tokens confirmed as exact 1e-6 d multiples. Content validation here is stronger than a shape check -- the whole archive is parsed."
     },
     {
       "role": "ancestry or correction artifact",
@@ -64,7 +66,12 @@
       "size_bytes": 11147,
       "evidence_state": "resolvable",
       "temporal_note": "This commit is dated 2025-01-20T15:39:52Z, approximately 22 minutes before the first archive data file was generated at 2025-01-20T17:01:50+01:00 (16:01:50Z). The format specification and the data were therefore finalised in the same working session.",
-      "edge_to_optical_archive": "conforms_to"
+      "edge_to_optical_archive": "conforms_to",
+      "retrieval_validation": "content_validated",
+      "content_validation": "ok",
+      "retrieved_utc": "2026-08-25T21:26:06.086243+00:00",
+      "retrieval_procedure": "GET https://raw.githubusercontent.com/INRIM/optical-link-data-format/689bda77000fec52c401bc0c9c3664d1dd534ecb/README.md",
+      "sha256": "cf93ae7a8f934944230e8555941d9d1e1afac9fa59d3a6d15bacd7befbfcee98"
     },
     {
       "role": "ancestry or correction artifact",
@@ -80,7 +87,16 @@
       "edge_to_optical_archive": "contextualized_by",
       "deficiencies": [
         "FTRO-DEF-022"
-      ]
+      ],
+      "retrieval_validation": "content_validated",
+      "content_validation": "ok",
+      "retrieved_utc": "2026-08-25T21:26:06.232085+00:00",
+      "retrieval_procedure": "GET https://raw.githubusercontent.com/INRIM/tintervals/2064db12777df78bc87f68f7710a47176192c2e1/pyproject.toml",
+      "pinned_file": "pyproject.toml",
+      "pinned_file_sha256": "c1054d63703d42cded863d536202be014d3ce5166d1f70bee6f69d89dc81c180",
+      "sha256": "c1054d63703d42cded863d536202be014d3ce5166d1f70bee6f69d89dc81c180",
+      "size_bytes": 904,
+      "first_pin_note": "No prior expected digest existed for this repository: before 2026-08-25 the record asserted evidence_state=resolvable on commit metadata alone, with no checksummed file at all. This retrieval establishes the first pin."
     },
     {
       "role": "core measurement",
@@ -135,7 +151,9 @@
         "CSIRO DAP parent/series record (none: DAP mints no PID spanning the two collections)",
         "release README (states the split exists but supplies no identifier for the whole)"
       ],
-      "composition_justification": "PPTA DR3 is published as two separately-DOI'd collections sharing 90,884 file paths, with no provider identifier for the release as a whole, so the CONCEPT identity must be composed. See FTRO-DEF-015."
+      "composition_justification": "PPTA DR3 is published as two separately-DOI'd collections sharing 90,884 file paths, with no provider identifier for the release as a whole, so the CONCEPT identity must be composed. See FTRO-DEF-015.",
+      "retrieval_validation": "not_applicable",
+      "retrieval_validation_note": "Concept-level record spanning two provider DOIs; it is not itself a retrieval. Its evidence_state derives from the member snapshots, all of which are content_validated (phase0/reports/ppta-artifact-pins.json)."
     },
     {
       "role": "core measurement",
@@ -339,7 +357,12 @@
       "deficiencies": [
         "FTRO-DEF-016"
       ],
-      "edge": "time_referenced_to"
+      "edge": "time_referenced_to",
+      "retrieval_validation": "content_validated",
+      "content_validation": "ok",
+      "retrieved_utc": "2026-08-25T21:26:06.147567+00:00",
+      "retrieval_procedure": "GET https://raw.githubusercontent.com/ipta/pulsar-clock-corrections/36dc139a150efde056aa32fa13deac856a7a679d/T2runtime/clock/gps2utc.clk",
+      "sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a"
     },
     {
       "role": "core measurement",
@@ -608,7 +631,27 @@
         "IGS product documentation (product line named, but no per-file persistent identifier scheme)",
         "HTTP ETag / Last-Modified (mirror-local and mutable, not a PID)"
       ],
-      "composition_justification": "IGS supplies no per-file immutable persistent identifier for operational products, so both concept and snapshot identities are composed per task card §10."
+      "composition_justification": "IGS supplies no per-file immutable persistent identifier for operational products, so both concept and snapshot identities are composed per task card §10.",
+      "retrieval_validation": "not_applicable",
+      "retrieval_validation_note": "Concept-level product-line record; it is not itself a retrieval. Its evidence_state derives from the 57 pinned snapshots, all content_validated with digests enforced (phase0/reports/igs-artifact-pins.json)."
+    }
+  ],
+  "revised": "2026-08-25",
+  "version_history": [
+    {
+      "version": "0.1.0",
+      "commits": [
+        "fdbf2b9",
+        "2c31279",
+        "0b41929",
+        "1b77a72"
+      ],
+      "note": "Four byte-distinct states under one label, which is the defect FTRO-DEF-033 named for the profile but did not fix for this file."
+    },
+    {
+      "version": "0.2.0",
+      "commit": "this",
+      "note": "Every record declares retrieval_validation; the three git-hosted evidence artifacts are retrieved and content-validated rather than asserted resolvable on commit metadata; concept-level records carry not_applicable."
     }
   ]
 }
