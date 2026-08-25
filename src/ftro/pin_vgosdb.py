@@ -116,6 +116,7 @@ def main():
         "last_modified": headers.get("Last-Modified"),
         "etag": headers.get("ETag"),
         "retrieved_utc": retrieved,
+        "retrieval_procedure": f"GET {args.url}",
         "size_bytes": len(body),
         "sha256": sha256,
         "md5": md5,

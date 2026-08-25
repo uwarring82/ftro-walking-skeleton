@@ -2,20 +2,20 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.5.0  
+**Version:** 0.6.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (9), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (17), low (3), medium (13)  
-**By domain:** cross-domain (7), gnss (2), optical (14), pulsar (8), vlbi (4)  
-**By disposition:** open (24), resolved (11)  
-**By responsible party:** ftro (11), provider (24)  
+**By class:** execution (10), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (17), low (3), medium (14)  
+**By domain:** cross-domain (7), gnss (2), optical (15), pulsar (8), vlbi (4)  
+**By disposition:** open (24), resolved (12)  
+**By responsible party:** ftro (12), provider (24)  
 
-**Total entries:** 35 · **self-directed:** 11 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035)
+**Total entries:** 36 · **self-directed:** 12 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035, FTRO-DEF-036)
 
 | ID | Class | Sev. | Domain | Party | Title |
 | --- | --- | --- | --- | --- | --- |
@@ -51,6 +51,7 @@
 | [`FTRO-DEF-026`](#ftro-def-026) | source_evidence | medium | vlbi | provider | A vgosDB archive checksum does not record which wrapper member a chain consumed |
 | [`FTRO-DEF-028`](#ftro-def-028) | source_evidence | medium | vlbi | provider | The published vgosDB was silently reprocessed in 2025 with no version signal outside its wrappers |
 | [`FTRO-DEF-033`](#ftro-def-033) | schema | medium | cross-domain | **self** | SELF-DIRECTED: version labels stopped identifying a constraint state |
+| [`FTRO-DEF-036`](#ftro-def-036) | execution | medium | optical | **self** | SELF-DIRECTED: the spacing analysis differenced binary floats and invented a distinct spacing |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | optical | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | optical | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | gnss | provider | High-rate 30 s clock products are absent from the mirror used |
@@ -1023,14 +1024,14 @@
 
 **Known fact or required evidence.** analyse_optical.py's --gap-tolerance-s bounds the inter-sample spacing WITHIN one file's flag-in-{1,2} sequence. Probing a different tolerance therefore requires re-segmenting from the raw records.
 
-**Observed.** The scan added in 0b41929 started from an inventory ALREADY segmented at 1.5 s and re-merged it, so (a) it could never SPLIT a run, making the 1.1 s row structurally identical to 1.5 s rather than found equal, and (b) it pooled runs across comparisons and .dat files, joining series that never overlapped and crediting support no measurement covered. All eight reported cells were wrong, always high. Correct values, from re-segmentation over all 9,018,290 records: 1.1 s and 1.5 s give 133.111920 h optical / 82.013424 h optical-VLBI; 2.0 s gives 133.116888 / 82.016184; 5.0 s gives 133.567344 / 82.232760. Separately, four_domain_status_invariant_over_all_tested_variants was assigned the literal True rather than computed, in the same commit whose lab note said 'compute the sensitivity instead of asserting robustness'. And the 'nominal_1s_sample_credit' row extended each RUN end by 1 s rather than crediting each SAMPLE.
+**Observed.** The scan added in 0b41929 started from an inventory ALREADY segmented at 1.5 s and re-merged it, so (a) it could never SPLIT a run, making the 1.1 s row structurally identical to 1.5 s rather than found equal, and (b) it pooled runs across comparisons and .dat files, joining series that never overlapped and crediting support no measurement covered. All eight reported cells were wrong, always high. Correct values, from re-segmenting the records at each tolerance (the archive is parsed once and the 1,023,950 in-window records are cached; session 04 overstated this as 'all 9,018,290 records at each tolerance'): 1.1 s and 1.5 s give 133.111920 h optical / 82.013424 h optical-VLBI; 2.0 s gives 133.116888 / 82.016184; 5.0 s gives 133.567344 / 82.232760. Separately, four_domain_status_invariant_over_all_tested_variants was assigned the literal True rather than computed, in the same commit whose lab note said 'compute the sensitivity instead of asserting robustness'. And the 'nominal_1s_sample_credit' row extended each RUN end by 1 s rather than crediting each SAMPLE.
 
 **Evidence.**
 
 - `src/ftro/optical_sensitivity.py`
 - `phase0/reports/four-domain-intersection.json#optical_support_sensitivity`
 
-**Impact.** A robustness claim that no computation supported. The CONCLUSION survives and is now stronger: re-segmentation confirms no_common_support at every tolerance, and the status is computed per variant rather than asserted. Two substantive findings emerged that the broken scan concealed: 1.1 s equals 1.5 s because NO inter-sample spacing exists anywhere in that interval (the spacings jump from 1.0368 s to 1.9872 s), which is a real property of the data; and crediting each SAMPLE its nominal 1 s gives 130.684083 h, some 2.43 h BELOW the recorded-span basis, because the span basis silently fills sub-second holes inside runs. The committed note had asserted the credit correction could only ADD support.
+**Impact.** A robustness claim that no computation supported. The CONCLUSION survives and is now stronger: re-segmentation confirms no_common_support at every tolerance, and the status is computed per variant rather than asserted. Two substantive findings emerged that the broken scan concealed: 1.1 s equals 1.5 s because NO inter-sample spacing exists anywhere in that interval (ticks 13-22 of the exact tick distribution are empty, the next populated value being 23 ticks = 1.9872 s), which is a real property of the data -- though the boundary was first reported as 1.987199 s, a float artefact corrected in FTRO-DEF-036; and crediting each SAMPLE its nominal 1 s gives 130.684083 h, some 2.43 h BELOW the recorded-span basis, because the span basis silently fills sub-second holes inside runs. The committed note had asserted the credit correction could only ADD support.
 
 **Workaround.** None; the scan is reimplemented in src/ftro/optical_sensitivity.py.
 
@@ -1050,13 +1051,13 @@
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 2.0.0 |
+| Version | 3.0.0 |
 
 **Failed step.** Regression-testing fail-closed retrieval on a clean clone.
 
 **Known fact or required evidence.** A test that skips is not a test. FTRO-DEF-027 established that a claim must be traceable to committed, runnable code.
 
-**Observed.** On a clean git archive export the suite reported 'OK (skipped=3)': all three fail-closed tests depended on gitignored data/raw/evidence/gps2utc.clk and skipped without it, so the fail-closed behaviour was never exercised. Neither pinner was tested end-to-end. The fixture tests/fixtures/genuine.sp3.Z was literal fake payload behind a 1f9d prefix that real uncompress rejects, and the validator checked only the first two bytes -- so 'content_validated' meant no more than 'non-empty, non-HTML, right first two bytes'. One test ignored the subprocess return code and could read a stale file from a fixed /tmp path. The README meanwhile described a regression test running 'against the live CDDIS URL' that does not exist as committed code. CORRECTION (v2.0.0): the first fix was incomplete. A clean export still reported 'OK (skipped=3)' -- the three provider-dependent tests remained skippable and no test invoked any pinner end-to-end, so session 04's claims 'nothing skips' and '26 tests passing on a clean clone' were false. The cold path was also unenforced: both expected-digest manifests lived in gitignored data/work/, the documented IGS command passed no manifest, and pin_ppta.py treated an absent expectation file as an empty map while still recording checksum_match.
+**Observed.** On a clean git archive export the suite reported 'OK (skipped=3)': all three fail-closed tests depended on gitignored data/raw/evidence/gps2utc.clk and skipped without it, so the fail-closed behaviour was never exercised. Neither pinner was tested end-to-end. The fixture tests/fixtures/genuine.sp3.Z was literal fake payload behind a 1f9d prefix that real uncompress rejects, and the validator checked only the first two bytes -- so 'content_validated' meant no more than 'non-empty, non-HTML, right first two bytes'. One test ignored the subprocess return code and could read a stale file from a fixed /tmp path. The README meanwhile described a regression test running 'against the live CDDIS URL' that does not exist as committed code. CORRECTION (v2.0.0): the first fix was incomplete. A clean export still reported 'OK (skipped=3)' -- the three provider-dependent tests remained skippable and no test invoked any pinner end-to-end, so session 04's claims 'nothing skips' and '26 tests passing on a clean clone' were false. The cold path was also unenforced: both expected-digest manifests lived in gitignored data/work/, the documented IGS command passed no manifest, and pin_ppta.py treated an absent expectation file as an empty map while still recording checksum_match. CORRECTION (v3.0.0): the second fix was ALSO incomplete. The 65 committed expectations were not enforced: pin_igs.py loaded the sectioned registry but looked names up at its root, so all 57 IGS artifacts pinned with expected_sha256 null while the report still read as enforced; pin_evidence_repos.py hard-coded the tintervals expectation as None even after its digest was committed, so the documented command rejected it and exited 1; pin_igs.py wrote to data/work/igs-pins.json while the intersection consumed the committed report; and the test named 'cover every pinned artifact' checked 4 of 65.
 
 **Evidence.**
 
@@ -1068,7 +1069,7 @@
 
 **Workaround.** None.
 
-**Proposed response.** Corrected across two rounds. Round 2 (2026-08-25): the three skippable tests are removed in favour of six end-to-end pinner tests over local file:// URLs, so the suite runs 34 tests with ZERO skips on a clean export; expected digests are committed to phase0/evidence/expected-digests.json; pin_ppta.py and pin_evidence_repos.py refuse to run without an expectation file unless --allow-unpinned is passed; and a test asserts the expectation file covers every pinned artifact.
+**Proposed response.** Corrected across three rounds. Round 3 (2026-08-26): pin_igs.py takes --expect-section and fails on an absent or empty section, plus --require-expectations to reject any artifact the registry does not cover; it now writes to phase0/reports/ where its consumers read. pin_evidence_repos.py reads the evidence_repos section instead of literals. A new TestDigestRegistryChain asserts the registry and reports agree on WHICH artifacts exist across all four sections, that the count is exactly 65, and that every pin records its expectation as enforced rather than merely equal.
 
 ---
 
@@ -1117,24 +1118,24 @@
 | Dataset | `FTRO profile and ledger version labels` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 2.0.0 |
+| Version | 3.0.0 |
 
 **Failed step.** Declaring conformance 'to the FTRO profile v0.0.1' across three commits.
 
 **Known fact or required evidence.** Task card §9.1 requires each manifest to declare conformance to the pinned base AND the FTRO profile BY VERSION. A version label must therefore identify a unique constraint state.
 
-**Observed.** profile/ftro-graph-profile-v0.0.3.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints. CORRECTION (v2.0.0): the first fix bumped the profile only. phase0/evidence/identities.json -- named in this entry's own scope -- had four byte-distinct states at fdbf2b9, 2c31279, 0b41929 and 1b77a72 while remaining version 0.1.0 throughout, so the entry was marked resolved while half its own scope was untouched.
+**Observed.** profile/ftro-graph-profile-v0.0.3.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints. CORRECTION (v2.0.0): the first fix bumped the profile only. phase0/evidence/identities.json -- named in this entry's own scope -- had four byte-distinct states at fdbf2b9, 2c31279, 0b41929 and 1b77a72 while remaining version 0.1.0 throughout, so the entry was marked resolved while half its own scope was untouched. CORRECTION (v3.0.0): D-039a extended the rule to every versioned artifact and the same commit then changed both ledgers without bumping decision-ledger v0.1.0 or source-ledger v0.2.0. The entry also still described the current profile as v0.0.2 after it had become v0.0.3.
 
 **Evidence.**
 
 - `profile/ftro-graph-profile-v0.0.3.md`
 - `phase0/evidence/identities.json`
 
-**Impact.** Any conformance assertion made against a drifting label is unfalsifiable, which defeats the purpose of §9.1. Corrected: the profile is now v0.0.2 with a version history recording what changed, and versioned documents carry the commit at which the version was set.
+**Impact.** Any conformance assertion made against a drifting label is unfalsifiable, which defeats the purpose of §9.1. Corrected: the profile is at v0.0.3 with a version-history table, every versioned artifact carries a version, and src/ftro/check_versions.py enforces the rule.
 
 **Workaround.** Cite the commit hash alongside the version label until the profile freezes.
 
-**Proposed response.** Corrected round 2 (2026-08-25): identities.json is v0.2.0 and carries a version_history array recording its prior four-state drift. Rule D-039 extended: the rule binds every versioned artifact, not only the profile.
+**Proposed response.** Corrected round 3 (2026-08-26): every versioned document carries a version and a version_history, and src/ftro/check_versions.py plus a test assert that a document changed since its recorded version-set commit has had its version bumped.
 
 ---
 
@@ -1183,13 +1184,13 @@
 | Dataset | `FTRO tooling and reference manifest` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 **Failed step.** Keeping the generated and curated views of an identity in agreement.
 
 **Known fact or required evidence.** Task card §3: human and machine views share one source of truth. A generator and the manifest it feeds must therefore agree.
 
-**Observed.** src/ftro/pin_ppta.py, added to close FTRO-DEF-032, emitted snapshot identities of the form ftro:snapshot:ppta/dr3/<name>@sha256:... while the canonical manifest used ftro:snapshot:ppta/dr3/<dir>/<name>@sha256:... -- all four differed. It emitted no concept_id and none of the profile §5.1 composition fields, so every identity it produced was non-conforming. DEF-029 was therefore closed only in the manually curated manifest, and no test compared the two views.
+**Observed.** src/ftro/pin_ppta.py, added to close FTRO-DEF-032, emitted snapshot identities of the form ftro:snapshot:ppta/dr3/<name>@sha256:... while the canonical manifest used ftro:snapshot:ppta/dr3/<dir>/<name>@sha256:... -- all four differed. It emitted no concept_id and none of the profile §5.1 composition fields, so every identity it produced was non-conforming. DEF-029 was therefore closed only in the manually curated manifest, and no test compared the two views. CORRECTION (v2.0.0): the first fix reproduced the defect inside the fix. The reconciliation test read STORED reports rather than running the generators, skipped concepts absent from the manifest instead of failing, and compared a field only when both copies already carried it. Removing a snapshot_id, adding a rogue concept or deleting the generated §5.1 fields all left the suite green. All six end-to-end tests invoked only pin_vgosdb, whose generated identity itself lacked the profile-required retrieval_procedure.
 
 **Evidence.**
 
@@ -1200,6 +1201,39 @@
 
 **Workaround.** None.
 
-**Proposed response.** Corrected 2026-08-25. Rule adopted (D-043): every curated record that a generator can produce must be reconciled against that generator by test. Phase 1 should go further and derive the manifest from the pin reports rather than maintaining both.
+**Proposed response.** Corrected round 2 (2026-08-26). GENERATOR_REPORTS declares which generator is authoritative for which concept, so a concept no generator produces cannot escape reconciliation and a report entry naming an unknown concept cannot be skipped. Six tests reject MISSING, UNKNOWN and MISMATCHED records on every edge, require reconciled fields on BOTH sides, and assert no curated content_validated record claims generated provenance without a report entry. Verified by injected mutation: removing a snapshot_id, adding a rogue concept, dropping the generated §5.1 fields, deleting a pin and corrupting a digest each fail the suite.
+
+---
+
+### FTRO-DEF-036
+
+**SELF-DIRECTED: the spacing analysis differenced binary floats and invented a distinct spacing**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | optical |
+| Dataset | `FTRO Phase-0 tooling` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Characterising the inter-sample spacing distribution of the optical archive.
+
+**Known fact or required evidence.** Every MJD token in the archive is an exact multiple of 1e-6 d, so spacings are exact integer multiples of one 86.4 ms tick and can be computed without rounding.
+
+**Observed.** analyse_optical.py computed spacings as round((b - a) * 86400, 6) over binary floats, from session 01 through 11ea11c. That split the single physical 23-tick spacing into two apparent values, 1.9872 (6,235 occurrences) and 1.987199 (528), and inflated the distinct-spacing count from 1,161 to 1,237. The exhaustive evidence key added in session 05 then reported 1.987199 as the next spacing above 1.0368 s -- an artefact, not a measurement. Its n_strictly_between was also tautologically zero, because the upper endpoint was defined as the next observed value.
+
+**Evidence.**
+
+- `src/ftro/analyse_optical.py`
+- `phase0/reports/optical-inventory-summary.json#sample_spacing_exhaustive`
+
+**Impact.** The finding survives and is now exact: the two dominant spacings are 11 and 12 ticks, ticks 13-22 are EMPTY (0 of 9,018,038 pairs), and the next populated value is 23 ticks = 1.9872 s exactly, 6,763 times. So any gap tolerance strictly between 12 and 23 ticks segments identically, which is why 1.1 s and 1.5 s agree. The 1.1/1.5 equality and the four-domain null are unaffected. But a float artefact had been promoted into a published evidence key, and the non-tautological form of the claim -- an EMPTY BAND, not 'nothing before the next value' -- was only visible once the arithmetic was exact.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26: spacings are computed in integer microday ticks throughout; the histogram is emitted in both ticks and seconds. Rule adopted (D-047): where a serialised quantity is exactly representable in integers, compute in integers.
 
 ---

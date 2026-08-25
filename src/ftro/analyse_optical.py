@@ -23,6 +23,7 @@ CANDIDATE_MJD_END = 59640.0     # 2022-03-02
 # Documented flag vocabulary, pinned from INRIM/optical-link-data-format (see source ledger).
 DOCUMENTED_FLAGS = {0: "invalid", 1: "valid but experimental", 2: "valid"}
 NOMINAL_SAMPLING_S = 1.0
+TICK_SECONDS = 0.0864          # 1e-6 d, the serialisation quantum
 SEC_PER_DAY = 86400.0
 
 
@@ -72,7 +73,13 @@ def parse_dat(path):
                 continue
             uA = parts[3] if len(parts) > 3 else None
             uB = parts[4] if len(parts) > 4 else None
-            rows.append((mjd, parts[1], flag, uA, uB, parts[0]))
+            # Integer microdays ("ticks") parsed from the decimal token. Every MJD in this
+            # archive is an exact multiple of 1e-6 d, so tick arithmetic is exact where
+            # float subtraction is not: differencing binary floats split the single
+            # physical 23-tick spacing into 1.9872 and 1.987199 (FTRO-DEF-036).
+            ipart, _, frac = parts[0].partition(".")
+            tick = int(ipart) * 1_000_000 + int(frac.ljust(6, "0")[:6])
+            rows.append((mjd, parts[1], flag, uA, uB, parts[0], tick))
     return header, rows, malformed
 
 
@@ -110,7 +117,8 @@ def main():
 
     comparisons = []
     global_flags = Counter()
-    all_spacings = Counter()
+    all_spacings = Counter()          # keyed by integer ticks, not floats
+    tick_spacings = Counter()
     # Time-coordinate quantisation test (FTRO-DEF-002). Counts EVERY value, not a sample.
     mjd_decimal_places = Counter()
     quantum_tested = 0
@@ -148,8 +156,9 @@ def main():
             cflags.update(fc)
             global_flags.update(fc)
 
-            for a, b in zip(mjds, mjds[1:]):
-                all_spacings[round((b - a) * SEC_PER_DAY, 6)] += 1
+            ticks = [r[6] for r in rows]
+            for a, b in zip(ticks, ticks[1:]):
+                tick_spacings[b - a] += 1
                 spacings_total += 1
 
             # Is every serialised MJD an exact multiple of the 1e-6 d quantum?
@@ -236,24 +245,31 @@ def main():
         "nominal_sampling_s": NOMINAL_SAMPLING_S,
         "global_flag_histogram": {str(k): v for k, v in sorted(global_flags.items())},
         "global_undocumented_flag_values": sorted(v for v in global_flags if v not in DOCUMENTED_FLAGS),
-        "sample_spacing_histogram_s": {str(k): v for k, v in
-                                       sorted(all_spacings.items(), key=lambda kv: -kv[1])[:20]},
+        "sample_spacing_histogram_s": {
+            f"{k * TICK_SECONDS:.4f}": v
+            for k, v in sorted(tick_spacings.items(), key=lambda kv: -kv[1])[:20]},
+        "sample_spacing_histogram_ticks": {
+            str(k): v for k, v in sorted(tick_spacings.items(), key=lambda kv: -kv[1])[:20]},
         # Exhaustive support for the claim that no spacing lies between the two dominant
         # values. The truncated top-20 histogram cannot carry that claim, and the summary
         # explicitly warns against generalising from it.
         "sample_spacing_exhaustive": {
             "n_spacings_total": spacings_total,
-            "n_distinct_spacings": len(all_spacings),
-            "min_spacing_s": min(all_spacings) if all_spacings else None,
-            "max_spacing_s": max(all_spacings) if all_spacings else None,
-            "second_dominant_spacing_s": 1.0368,
-            "next_distinct_spacing_above_s": min((k for k in all_spacings if k > 1.0368),
-                                                 default=None),
-            "n_strictly_between": sum(
-                v for k, v in all_spacings.items()
-                if 1.0368 < k < min((x for x in all_spacings if x > 1.0368), default=1e9)),
-            "quanta_of_next_distinct": round(
-                min((k for k in all_spacings if k > 1.0368), default=0) / 0.0864, 3),
+            "n_distinct_spacings": len(tick_spacings),
+            "min_spacing_ticks": min(tick_spacings) if tick_spacings else None,
+            "max_spacing_ticks": max(tick_spacings) if tick_spacings else None,
+            "arithmetic": ("integer microday ticks; 1 tick = 1e-6 d = 86.4 ms exactly. "
+                           "Float subtraction is NOT used: it split the single physical "
+                           "23-tick spacing into 1.9872 and 1.987199 and inflated the "
+                           "distinct-gap count from 1161 to 1237 (FTRO-DEF-036)."),
+            "dominant_spacings_ticks": {str(k): tick_spacings.get(k, 0) for k in (11, 12)},
+            "next_populated_tick_above_12": min((k for k in tick_spacings if k > 12), default=None),
+            "n_pairs_in_ticks_13_to_22": sum(v for k, v in tick_spacings.items() if 13 <= k <= 22),
+            "empty_tick_band": [13, 22],
+            "gap_tolerances_that_segment_identically_s": [
+                round(12 * TICK_SECONDS, 4),
+                round(min((k for k in tick_spacings if k > 12), default=0) * TICK_SECONDS, 4)],
+            "n_distinct_tick_spacings": len(tick_spacings),
             "note": ("Computed over ALL adjacent pairs, not the truncated top-20 histogram. "
                      "The two dominant spacings are 0.9504 s (11 quanta) and 1.0368 s (12 "
                      "quanta); the next distinct value is reported above and is 23 quanta, i.e. "
@@ -265,9 +281,9 @@ def main():
         },
         "sample_spacing_coverage": {
             "n_spacings_total": spacings_total,
-            "n_distinct_spacings": len(all_spacings),
+            "n_distinct_spacings": len(tick_spacings),
             "n_spacings_in_top20": sum(v for _, v in
-                                       sorted(all_spacings.items(), key=lambda kv: -kv[1])[:20]),
+                                       sorted(tick_spacings.items(), key=lambda kv: -kv[1])[:20]),
             "note": ("sample_spacing_histogram_s is truncated to the 20 most common spacings; "
                      "n_spacings_in_top20 states how many of n_spacings_total those cover, so "
                      "claims about the histogram must not be generalised to all spacings."),

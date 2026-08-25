@@ -108,17 +108,32 @@ def main():
     ap.add_argument("--mjd-end", type=float, default=59640)
     ap.add_argument("--base", default="https://igs.bkg.bund.de/root_ftp/IGS/products/orbits")
     ap.add_argument("--cache", default="data/raw/igs")
-    ap.add_argument("--out", default="data/work/igs-pins.json")
+    ap.add_argument("--out", default="phase0/reports/igs-artifact-pins.json",
+                    help="written where the consumers read it, not to a scratch path")
     ap.add_argument("--series", nargs="+", default=["igs", "igr"],
                     help="product line prefixes: igs=Final, igr=Rapid, igu=Ultra-rapid")
     ap.add_argument("--expect-sha256-manifest", default=None,
-                    help="JSON map of filename -> sha256; a listed-but-mismatched file fails")
+                    help="sectioned digest registry; a listed-but-mismatched file fails")
+    ap.add_argument("--expect-section", default="igs",
+                    help="section of the registry to enforce")
+    ap.add_argument("--require-expectations", action="store_true",
+                    help="fail if any pinned artifact has no expected digest in the registry")
     args = ap.parse_args()
 
+    # The registry is SECTIONED ({"igs": {...}, "ppta": {...}, ...}). An earlier version
+    # looked names up at the root, so all 57 artifacts pinned with expected_sha256 null
+    # while the report still read as enforced (FTRO-DEF-031 v3.0.0).
     expected = {}
     if args.expect_sha256_manifest:
         with open(args.expect_sha256_manifest, encoding="utf-8") as fh:
-            expected = json.load(fh)
+            registry = json.load(fh)
+        section = registry.get(args.expect_section)
+        if section is None:
+            raise SystemExit(f"registry has no section {args.expect_section!r}; "
+                             f"sections present: {sorted(k for k, v in registry.items() if isinstance(v, dict))}")
+        expected = {k: (v["sha256"] if isinstance(v, dict) else v) for k, v in section.items()}
+        if not expected:
+            raise SystemExit(f"section {args.expect_section!r} is empty")
 
     os.makedirs(args.cache, exist_ok=True)
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
@@ -192,8 +207,15 @@ def main():
             "concept_id": f"ftro:concept:igs/{t['series']}/{t['kind']}",
         })
 
+    unexpected = [p["name"] for p in pins if p.get("expected_sha256") is None]
+    if args.require_expectations and unexpected:
+        failures.append({"name": "<registry coverage>",
+                         "error": f"{len(unexpected)} artifacts had no expected digest: "
+                                  f"{unexpected[:5]}{'...' if len(unexpected) > 5 else ''}"})
+
     report = {
         "generator": "src/ftro/pin_igs.py",
+        "n_without_expected_digest": len(unexpected),
         "base_url": args.base,
         "data_centre": "BKG (Bundesamt für Kartographie und Geodäsie) IGS mirror, anonymous HTTP",
         "candidate_window_mjd": [args.mjd_start, args.mjd_end],

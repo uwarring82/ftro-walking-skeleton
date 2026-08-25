@@ -40,7 +40,7 @@ TARGETS = [
     # on commit metadata alone. Pinning pyproject.toml gives it a checksummed artifact.
     {"key": "tintervals", "repo": "INRIM/tintervals",
      "commit": "2064db12777df78bc87f68f7710a47176192c2e1", "path": "pyproject.toml",
-     "kind": "python-package", "expect_sha256": None},
+     "kind": "python-package"},
 ]
 
 
@@ -60,9 +60,19 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cache", default="data/raw/evidence")
     ap.add_argument("--out", default="phase0/reports/evidence-repo-pins.json")
+    ap.add_argument("--expect", default="phase0/evidence/expected-digests.json",
+                    help="sectioned digest registry; the evidence_repos section is enforced")
     ap.add_argument("--allow-unpinned", action="store_true",
                     help="permit a target with no expected digest (records it as first-pin)")
     args = ap.parse_args()
+
+    # Expectations come from the committed registry, not from literals in this file. The
+    # tintervals digest was hard-coded None here even after being committed, so the
+    # documented command rejected it and exited 1 (FTRO-DEF-031 v3.0.0).
+    registry = {}
+    if os.path.exists(args.expect):
+        with open(args.expect, encoding="utf-8") as fh:
+            registry = json.load(fh).get("evidence_repos", {})
 
     os.makedirs(args.cache, exist_ok=True)
     pins, failures = [], []
@@ -79,7 +89,7 @@ def main():
 
         sha256 = hashlib.sha256(body).hexdigest()
         ok, reason = validate(t["kind"], body)
-        exp = t["expect_sha256"]
+        exp = registry.get(t["key"]) or t.get("expect_sha256")
         checksum_match = None if exp is None else (sha256 == exp)
         if checksum_match is None and not args.allow_unpinned:
             failures.append({**t, "url": url, "sha256": sha256,

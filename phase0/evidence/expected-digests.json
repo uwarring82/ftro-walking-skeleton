@@ -1,6 +1,6 @@
 {
   "document": "FTRO expected digests for cold reproduction",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "date": "2026-08-25",
   "note": "Committed so the documented cold path ENFORCES the digests that produced the committed checksum_match records. Previously these lived only in gitignored data/work/, so a clean clone verified nothing (FTRO-DEF-031).",
   "ppta": {

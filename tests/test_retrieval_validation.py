@@ -246,7 +246,10 @@ class TestPinnerEndToEnd(unittest.TestCase):
         if expect:
             args += ["--expect-sha256", expect]
         r = subprocess.run(args, cwd=REPO, capture_output=True, text=True, timeout=120)
-        rec = json.load(open(out, encoding="utf-8")) if os.path.exists(out) else None
+        rec = None
+        if os.path.exists(out):
+            with open(out, encoding="utf-8") as fh:
+                rec = json.load(fh)
         return r, rec
 
     def test_pins_a_valid_vgosdb_end_to_end(self):
@@ -360,76 +363,175 @@ class TestComposedIdentityConformance(unittest.TestCase):
                 self.assertIn("retrieval_validation", a)
 
 
-class TestGeneratorManifestReconciliation(unittest.TestCase):
-    """The generators and the curated manifest must agree.
+# Which generator is authoritative for which canonical concept. Declared explicitly so a
+# concept that no generator produces cannot silently escape reconciliation, and a report
+# entry naming an unknown concept cannot be silently skipped (FTRO-DEF-035 v2.0.0).
+GENERATOR_REPORTS = {
+    "phase0/reports/ppta-artifact-pins.json": [
+        "ftro:concept:ppta/dr3/par/J0437-4715",
+        "ftro:concept:ppta/dr3/toas/J0437-4715",
+        "ftro:concept:ppta/dr3/clock/pks2gps",
+        "ftro:concept:ppta/dr3/clock/tai2tt_bipm2021",
+    ],
+    "phase0/reports/evidence-repo-pins.json": [
+        "https://github.com/INRIM/optical-link-data-format",
+        "https://github.com/ipta/pulsar-clock-corrections",
+        "https://github.com/INRIM/tintervals",
+    ],
+    "phase0/reports/vlbi-vgosdb-pin.json": [
+        "ftro:concept:ivs/session/R11040",
+    ],
+}
+RECONCILED_FIELDS = ("snapshot_id", "sha256", "retrieved_utc", "retrieval_procedure")
 
-    FTRO-DEF-035: tests validated a hand-corrected manifest while the generators that
-    feed it drifted. pin_ppta.py emitted four snapshot identities that differed from the
-    canonical ones and nothing noticed, because nothing compared them.
+
+def _report_pins(path):
+    """Return {concept_id: pin} for a report, whether it holds a list or a single pin."""
+    with open(os.path.join(REPO, path), encoding="utf-8") as fh:
+        doc = json.load(fh)
+    pins = doc["pins"] if isinstance(doc.get("pins"), list) else [doc]
+    return {p["concept_id"]: p for p in pins if p.get("concept_id")}
+
+
+class TestGeneratorManifestReconciliation(unittest.TestCase):
+    """Generated and curated views must agree, and disagreement must be detectable.
+
+    FTRO-DEF-035 v2.0.0: the first version skipped concepts absent from the manifest and
+    compared a field only when BOTH copies carried it, so deleting a snapshot_id, adding a
+    rogue concept, or dropping the generated composition fields all left the suite green.
+    Every edge below rejects MISSING, UNKNOWN and MISMATCHED records.
     """
 
-    REPORTS = [
-        ("phase0/reports/ppta-artifact-pins.json", "pins"),
-        ("phase0/reports/evidence-repo-pins.json", "pins"),
-    ]
+    def setUp(self):
+        self.canon = {a["concept_id"]: a for a in _identities() if a.get("concept_id")}
 
-    def _canonical(self):
-        return {a["concept_id"]: a for a in _identities() if a.get("concept_id")}
+    def test_every_declared_report_exists(self):
+        for path in GENERATOR_REPORTS:
+            self.assertTrue(os.path.exists(os.path.join(REPO, path)),
+                            f"{path} missing; regenerate before running the suite")
 
-    def test_generated_identities_match_the_manifest(self):
-        canon = self._canonical()
-        checked = 0
-        for path, key in self.REPORTS:
-            full = os.path.join(REPO, path)
-            if not os.path.exists(full):
-                self.fail(f"{path} missing; regenerate it before running the suite")
-            with open(full, encoding="utf-8") as fh:
-                report = json.load(fh)
-            for pin in report[key]:
-                cid = pin.get("concept_id")
-                if cid not in canon:
+    def test_no_report_entry_is_unknown_to_the_manifest(self):
+        """An UNKNOWN concept must fail, not be skipped."""
+        for path, expected in GENERATOR_REPORTS.items():
+            pins = _report_pins(path)
+            for cid in pins:
+                with self.subTest(report=path, concept=cid):
+                    self.assertIn(cid, self.canon,
+                                  "report names a concept absent from identities.json")
+                    self.assertIn(cid, expected,
+                                  "report names a concept this generator does not declare")
+
+    def test_no_declared_concept_is_missing_from_its_report(self):
+        """A MISSING record must fail, not pass vacuously."""
+        for path, expected in GENERATOR_REPORTS.items():
+            pins = _report_pins(path)
+            for cid in expected:
+                with self.subTest(report=path, concept=cid):
+                    self.assertIn(cid, pins, "declared concept absent from generator output")
+                    self.assertIn(cid, self.canon, "declared concept absent from identities.json")
+
+    def test_reconciled_fields_present_on_both_sides_and_equal(self):
+        """A field missing from EITHER side is a failure, not an exemption."""
+        for path, expected in GENERATOR_REPORTS.items():
+            pins = _report_pins(path)
+            for cid in expected:
+                pin, rec = pins.get(cid, {}), self.canon.get(cid, {})
+                for field in RECONCILED_FIELDS:
+                    with self.subTest(report=path, concept=cid, field=field):
+                        self.assertIn(field, pin, "generator output lacks the field")
+                        self.assertIn(field, rec, "manifest record lacks the field")
+                        if field == "retrieved_utc":
+                            continue          # timestamps differ per run by construction
+                        self.assertEqual(pin[field], rec[field],
+                                         "generator and manifest disagree")
+
+    def test_generated_composition_fields_are_conforming(self):
+        """Profile §5.1 must hold for generated output, not only for the stored manifest."""
+        for path, expected in GENERATOR_REPORTS.items():
+            pins = _report_pins(path)
+            for cid in expected:
+                pin = pins.get(cid, {})
+                if pin.get("snapshot_kind") != "ftro_composed":
                     continue
                 with self.subTest(report=path, concept=cid):
-                    rec = canon[cid]
-                    for field in ("snapshot_id", "sha256"):
-                        if pin.get(field) and rec.get(field):
-                            self.assertEqual(pin[field], rec[field],
-                                             f"{field} disagrees between generator and manifest")
-                    checked += 1
-        self.assertGreater(checked, 0, "no generated identity was reconciled")
+                    self.assertTrue(pin.get("composition_precondition_checked"))
+                    self.assertGreater(len((pin.get("composition_justification") or "").strip()), 20)
 
-    def test_vgosdb_pin_matches_the_manifest(self):
-        full = os.path.join(REPO, "phase0", "reports", "vlbi-vgosdb-pin.json")
-        if not os.path.exists(full):
-            self.fail("vlbi-vgosdb-pin.json missing; regenerate it")
-        with open(full, encoding="utf-8") as fh:
-            pin = json.load(fh)
-        rec = self._canonical()[pin["concept_id"]]
-        self.assertEqual(pin["snapshot_id"], rec["snapshot_id"])
-        self.assertEqual(pin["sha256"], rec["sha256"])
+    def test_every_manifest_record_claiming_a_generator_has_one(self):
+        """No curated record may claim generated provenance without an entry in a report."""
+        produced = {c for v in GENERATOR_REPORTS.values() for c in v}
+        for cid, rec in self.canon.items():
+            if rec.get("retrieval_validation") != "content_validated":
+                continue
+            if cid == "https://doi.org/10.5281/zenodo.17107692":
+                continue      # validated by full parse in analyse_optical, not by a pinner
+            with self.subTest(concept=cid):
+                self.assertIn(cid, produced,
+                              "content_validated record with no generator reconciling it")
 
-    def test_expected_digests_cover_every_pinned_artifact(self):
-        """The committed expectation file must actually enforce the committed pins."""
-        exp_path = os.path.join(REPO, "phase0", "evidence", "expected-digests.json")
-        self.assertTrue(os.path.exists(exp_path),
-                        "expected-digests.json must be committed, not left in gitignored data/work")
-        with open(exp_path, encoding="utf-8") as fh:
-            exp = json.load(fh)
-        with open(os.path.join(REPO, "phase0", "reports", "ppta-artifact-pins.json"),
-                  encoding="utf-8") as fh:
-            for pin in json.load(fh)["pins"]:
-                with self.subTest(name=pin["name"]):
-                    self.assertEqual(exp["ppta"].get(pin["name"]), pin["sha256"])
 
-    def test_no_truncated_digest_inside_an_identity(self):
-        import re
-        path = os.path.join(REPO, "phase0", "evidence", "identities.json")
-        with open(path, encoding="utf-8") as fh:
-            blob = fh.read()
-        for m in re.finditer(r"@sha256:([0-9a-f]+)", blob):
-            with self.subTest(digest=m.group(1)[:12]):
-                self.assertEqual(len(m.group(1)), 64,
-                                 "a truncated digest inside an identity is a different identity")
+class TestDigestRegistryChain(unittest.TestCase):
+    """expected registry -> pin reports -> identities. Every edge rejects missing/extra."""
+
+    REGISTRY = "phase0/evidence/expected-digests.json"
+    SECTIONS = {
+        "ppta": "phase0/reports/ppta-artifact-pins.json",
+        "igs": "phase0/reports/igs-artifact-pins.json",
+        "evidence_repos": "phase0/reports/evidence-repo-pins.json",
+        "vgosdb": "phase0/reports/vlbi-vgosdb-pin.json",
+    }
+
+    def setUp(self):
+        with open(os.path.join(REPO, self.REGISTRY), encoding="utf-8") as fh:
+            self.registry = json.load(fh)
+
+    @staticmethod
+    def _keyed(path, section):
+        with open(os.path.join(REPO, path), encoding="utf-8") as fh:
+            doc = json.load(fh)
+        pins = doc["pins"] if isinstance(doc.get("pins"), list) else [doc]
+        if section == "evidence_repos":
+            return {p["key"]: p["sha256"] for p in pins}
+        if section == "vgosdb":
+            return {os.path.basename(p["url"]): p["sha256"] for p in pins}
+        return {p["name"]: p["sha256"] for p in pins}
+
+    def test_registry_covers_every_pinned_artifact(self):
+        """All 65, not the four that happened to be checked before."""
+        total = 0
+        for section, path in self.SECTIONS.items():
+            got = self._keyed(path, section)
+            exp = self.registry.get(section, {})
+            with self.subTest(section=section):
+                self.assertEqual(sorted(got), sorted(exp),
+                                 "registry and report disagree on WHICH artifacts exist")
+                for name, digest in got.items():
+                    self.assertEqual(exp[name], digest, f"{section}/{name} digest disagrees")
+            total += len(got)
+        self.assertEqual(total, 65, f"expected 65 pinned artifacts, reconciled {total}")
+
+    def test_reports_record_the_expectation_as_enforced(self):
+        """A digest in the registry must appear as ENFORCED in the report, not merely equal."""
+        for section, path in self.SECTIONS.items():
+            if section == "vgosdb":
+                continue      # single pin, asserted by its own test
+            with open(os.path.join(REPO, path), encoding="utf-8") as fh:
+                doc = json.load(fh)
+            for pin in doc["pins"]:
+                with self.subTest(section=section, name=pin.get("name") or pin.get("key")):
+                    self.assertIsNotNone(pin.get("expected_sha256"),
+                                         "pinned without an expected digest: the registry "
+                                         "exists but was not applied")
+                    self.assertIs(pin.get("checksum_match"), True)
+
+    def test_no_report_declares_incomplete_validation(self):
+        for section, path in self.SECTIONS.items():
+            with open(os.path.join(REPO, path), encoding="utf-8") as fh:
+                doc = json.load(fh)
+            with self.subTest(section=section):
+                self.assertIn(doc.get("retrieval_validation"),
+                              ("content_validated", None),
+                              "a report declaring incomplete validation must not be committed")
 
 
 if __name__ == "__main__":

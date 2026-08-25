@@ -134,7 +134,7 @@ execution.**
 ### 5.0 [P0] A MUST-clause requires an executable check
 
 A profile whose own reference manifest does not satisfy it is not a specification. §5.1 below was
-introduced and violated in the same commit, across all five composed identities
+introduced and violated in the same commit, across all seven composed identities
 ([`FTRO-DEF-029`](../ledgers/deficiency-log.md#ftro-def-029)).
 
 **No MUST-clause is landed in this profile until an executable check enforces it against the

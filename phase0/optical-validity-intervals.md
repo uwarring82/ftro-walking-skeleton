@@ -58,18 +58,18 @@ The test operates on the serialised decimal token, not a float round-trip.
 
 ### 2.2 The one-second grid — an inference
 
-Sample-spacing histogram (20 most common of 1,237 distinct spacings):
+Sample-spacing histogram (20 most common of 1,161 distinct spacings):
 
 | Spacing (s) | Count | Multiple of 86.4 ms |
 | --- | --- | --- |
 | 1.0368 | 5,139,806 | 12 |
 | 0.9504 | 3,813,549 | 11 |
-| 3.024 | 7,274 | 35 |
-| 1.9872 | 6,235 | 23 |
-| 8.9856 | 4,263 | 104 |
+| 3.0240 | 7,274 | 35 |
+| 1.9872 | 6,763 | 23 |
+| 8.9856 | 5,038 | 104 |
 | 6.9984 | 3,865 | 81 |
 
-These 20 spacings cover **8,999,974 of 9,018,038** intervals (99.80%), so statements about the histogram must not be generalised to all spacings.
+These 20 spacings cover **9,001,817 of 9,018,038** intervals (99.82%), so statements about the histogram must not be generalised to all spacings.
 
 The 1.0368 / 0.9504 s dither in ratio 1.347775 — against 1.347826 for a mean of exactly 1 s, implying a mean spacing of 0.999999199 s — is **strongly consistent with nearest-rounding of a one-second grid** to the 86.4 ms quantum. Under that model the **per-tag rounding bound is ±43.2 ms**, 4.3% of the nominal sampling interval.
 

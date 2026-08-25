@@ -40,3 +40,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-25 | 03 | [Second external review — a rule written and broken in the same commit](2026-08-25-session-03-review-corrections-2.md) |
 | 2026-08-25 | 04 | [Third external review — checks that said more than they executed](2026-08-25-session-04-review-corrections-3.md) |
 | 2026-08-25 | 05 | [Fourth external review — projection-only verification](2026-08-25-session-05-review-corrections-4.md) |
+| 2026-08-26 | 06 | [Fifth external review — the fix reproduced the defect inside the fix](2026-08-26-session-06-review-corrections-5.md) |

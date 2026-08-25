@@ -1,7 +1,7 @@
 # Phase-0 Selection Note v0.1
 
 **Document ID:** FTRO-SEL-001
-**Version:** 0.2.0
+**Version:** 0.3.0
 **Date:** 2026-08-25
 **Task card:** FTRO-WS-001 v0.3, §21 Phase 0 and §22
 **Status:** Gate 0 passed — VLBI downstream products carried forward as an explicit open item (§6)
@@ -218,12 +218,17 @@ within its own integration is unconstrained over up to 1 s. Computed sensitivity
 | uniform tag shift −1 s / +1 s | 133.111920 h | — | `no_common_support` (gap 31.174147 / 31.174702 h) |
 
 **The null is invariant over every convention tested**, and the status is *computed* per variant,
-not asserted. Each tolerance is a full re-segmentation from all 9,018,290 records
-([`FTRO-DEF-030`](../ledgers/deficiency-log.md#ftro-def-030)).
+not asserted. The archive is parsed **once**; the 1,023,950 in-window records are cached and
+re-segmented at each tolerance using `analyse_optical.contiguous_runs()`, so the convention under
+test is the shipped one ([`FTRO-DEF-030`](../ledgers/deficiency-log.md#ftro-def-030)).
 
-Two results worth noting. **1.1 s equals 1.5 s** because no inter-sample spacing exists anywhere in
-that interval — the spacings jump from 1.0368 s straight to 1.9872 s — so the equality is a property
-of the data, not of the method. And the **per-sample credit is 2.43 h *below* the recorded-span
+Two results worth noting. **1.1 s equals 1.5 s** because of an *empty band* in the spacing
+distribution: computed in exact integer ticks of 86.4 ms, the two dominant spacings are 11 and 12
+ticks, ticks **13–22 are empty** (0 of 9,018,038 adjacent pairs), and the next populated value is
+23 ticks = 1.9872 s exactly (6,763 pairs). Any tolerance strictly between 12 and 23 ticks segments
+identically, so the equality is a property of the data, not of the method. Earlier float arithmetic
+had reported this boundary as 1.987199 s, an artefact
+([`FTRO-DEF-036`](../ledgers/deficiency-log.md#ftro-def-036)). And the **per-sample credit is 2.43 h *below* the recorded-span
 basis**, because crediting each tag its own 1 s exposes the ~36.8 ms holes the span basis silently
 fills at each of ~276,000 sample boundaries. A credit correction can subtract support, not only
 add it.

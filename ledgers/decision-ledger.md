@@ -1,6 +1,8 @@
 # FTRO Decision Ledger
 
-**Version:** 0.1.0 · **Opened:** 2026-08-25 · **Licence:** CC BY 4.0
+**Version:** 0.3.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+
+> **Version history.** 0.1.0 (`fdbf2b9`) · 0.2.0 (D-021…D-028, `2c31279`–`0b41929`, unversioned at the time) · **0.3.0** (D-029…D-047). D-039a required every versioned artifact to be bumped when it changes; this ledger and the source ledger were then changed twice without a bump ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v3.0.0). `src/ftro/check_versions.py` now enforces it.
 
 Decisions taken during implementation, with their basis. Card-level decisions live in
 task card §23; this ledger records choices made *while executing* it.

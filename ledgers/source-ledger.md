@@ -1,6 +1,6 @@
 # FTRO Source Ledger
 
-**Version:** 0.2.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-25 · **Licence:** CC BY 4.0
+**Version:** 0.3.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
 
 > **v0.2.0** corrects the optical identity to the provider's own concept/version DOIs, restores
 > full 64-character digests, and pins the VLBI vgosDB. Digests below are abbreviated head…tail for
@@ -20,7 +20,7 @@ and evidence state. Machine-readable companion:
 | --- | --- | --- | --- |
 | ROCIT campaign results.zip | **concept** `doi:10.5281/zenodo.17107692`<br>**version** `doi:10.5281/zenodo.17107693` (provider-immutable) | MD5 `4ae290f559c90b462991286c933a1147` ✅ matches card<br>SHA-256 `6168e24a…bd56bd` | `resolvable` |
 | optical-link-data-format | `git:INRIM/optical-link-data-format@689bda77000fec52c401bc0c9c3664d1dd534ecb` | README SHA-256 `cf93ae7a…fcee98` ✅ matches card | `resolvable` |
-| tintervals | `git:INRIM/tintervals@2064db12777df78bc87f68f7710a47176192c2e1` | commit dated 2026-08-16 ⚠️ **19 months after the data**; this revision cannot be the generating software, and no earlier one is pinned | `resolvable`, edge `contextualized_by` |
+| tintervals | `git:INRIM/tintervals@2064db12777df78bc87f68f7710a47176192c2e1` · pinned file `pyproject.toml` `sha256:c1054d63…` | commit dated 2026-08-16 ⚠️ **19 months after the data**; this revision cannot be the generating software, and no earlier one is pinned. Before 2026-08-25 this record asserted `resolvable` with **no checksummed file at all** ([`FTRO-DEF-034`](deficiency-log.md#ftro-def-034)) | `resolvable`, **content_validated**, edge `contextualized_by` |
 | Local reference oscillator | — | — | **`unresolved`** |
 | Station time scale / UTC(k) | — | — | **`unresolved`** |
 | Generating scripts | `06-procclocks-v3.py`, `convert-to-rocit.py` | named in headers, **absent from archive** | **`unresolved`** |

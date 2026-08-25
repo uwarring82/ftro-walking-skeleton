@@ -16,9 +16,15 @@ comparison and every .dat file. That construction is wrong twice over:
   * it JOINS runs belonging to different comparisons and different files, inventing
     support in a hole that no single measurement series covered.
 
-The correct probe re-segments from the 9,018,290 raw records at each tolerance,
-using analyse_optical's own contiguous_runs() so the convention under test is
-literally the shipped one, and then rebuilds the union and every intersection.
+The correct probe re-segments the RECORDS THEMSELVES at each tolerance, using
+analyse_optical's own contiguous_runs() so the convention under test is literally the
+shipped one, and then rebuilds the union and every intersection.
+
+For efficiency the archive is parsed ONCE (all 9,018,290 records) and the 1,023,950
+records inside the candidate window are cached; each tolerance re-segments that cache.
+Records outside the window cannot affect in-window runs at any tested tolerance, since
+the smallest inter-file gap far exceeds 5 s. Session 04 described this as
+"re-segmenting from all 9,018,290 records at each tolerance", which overstated it.
 
 Arithmetic
 ----------
