@@ -1,6 +1,6 @@
 # Optical Time-Tag Ancestry Note
 
-**Document ID:** FTRO-OTA-001 · **Version:** 0.1.0 · **Date:** 2026-08-25
+**Document ID:** FTRO-OTA-001 · **Version:** 0.2.0 · **Date:** 2026-08-25
 **Task card:** FTRO-WS-001 v0.3 §5.1, §15.1, §22.6 · **Licence:** CC BY 4.0
 
 > **The question.** Card §5.1: *"identify what physically realises the one-second MJD
@@ -83,11 +83,13 @@ Both are retained as competing assertions. See
 
 ## 4. Consequence 3 — the recorded time coordinate is quantised at 86.4 ms
 
-Independent of the missing fields, the *serialised* time coordinate has a measurable
-defect. Every MJD value carries exactly 6 decimal places and is an exact multiple of
-10⁻⁶ d = **86.4 ms** (verified on 1,564,882 of 1,564,882 sampled values).
+Independent of the missing fields, the *serialised* time coordinate has a measurable defect.
+Every MJD value carries exactly 6 decimal places and is an exact multiple of 10⁻⁶ d =
+**86.4 ms** — a census of **9,018,290 of 9,018,290** values with **0 exceptions**, computed by
+`src/ftro/analyse_optical.py` and recorded at
+[`optical-inventory-summary.json#mjd_quantum_check`](reports/optical-inventory-summary.json).
 
-The underlying grid is nevertheless exactly 1 s. The evidence is the spacing histogram:
+The spacing histogram is strongly consistent with an underlying one-second grid:
 
 | Spacing | Count | In quanta |
 | --- | --- | --- |
@@ -98,19 +100,21 @@ The underlying grid is nevertheless exactly 1 s. The evidence is the spacing his
 - ratio required for a mean of exactly 1.000000 s = 0.0496/0.0368 = **1.347826**
 - implied mean spacing = **0.999999199 s**
 
-So a true 1 s grid is being rounded to the nearest 86.4 ms quantum, producing a
-deterministic 11/12-quantum dither. **Maximum timestamp error: ±43.2 ms**, or 4.3% of
-the sampling interval.
+This is strongly consistent with nearest-rounding of a one-second grid to the 86.4 ms quantum,
+producing a deterministic 11/12-quantum dither. **Under that model the maximum serialisation
+error is ±43.2 ms**, 4.3% of the nominal sampling interval. The model is an inference: no field in
+the archive declares the sampling grid. Note also that the spacing histogram is truncated to the
+20 most common spacings, covering 8,999,974 of 9,018,038 intervals.
 
-This is roughly **eight orders of magnitude** coarser than the fractional-frequency
-precision of the comparisons the file reports. Any alignment certificate involving
-these records is floored at ~43 ms by the serialisation alone, before any question of
-physical realisation arises. See
+The serialised time coordinate and the reported fractional-frequency uncertainty are quantities of
+different kinds — seconds against a dimensionless ratio — so no ratio between them is meaningful.
+What follows is nonetheless decisive: any alignment certificate involving these records is floored
+at ~43 ms by the serialisation alone, before any question of physical realisation arises. See
 [`FTRO-DEF-002`](../ledgers/deficiency-log.md#ftro-def-002).
 
 ---
 
-## 5. Why this is structural, not accidental
+## 5. Why the gap is structurally permitted by the format
 
 The pinned specification's second sentence reads:
 
@@ -121,9 +125,10 @@ The format was designed to carry *frequency ratios*. Its MJD column exists to in
 samples, not to assert a time-referenced epoch. The archive is being asked, by this
 task card, a question its format explicitly declines to answer.
 
-That is a finding about the **federation boundary**, not a defect by the depositors:
-a cross-domain observatory needs time-tag ancestry that domain formats optimised for
-frequency ratios were never built to carry.
+The gap is therefore **structurally permitted by the format**, and the finding is about the
+**federation boundary**: a cross-domain observatory needs time-tag ancestry that domain formats
+optimised for frequency ratios were never built to carry. Whether a depositor could nonetheless
+have populated the optional fields is a separate question this assessment does not settle.
 
 ---
 

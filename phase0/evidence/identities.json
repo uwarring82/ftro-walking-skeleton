@@ -8,11 +8,11 @@
     {
       "role": "core measurement",
       "domain": "optical",
-      "concept_id": "https://doi.org/10.5281/zenodo.17107693",
+      "concept_id": "https://doi.org/10.5281/zenodo.17107692",
       "concept_kind": "provider_pid",
-      "concept_note": "Zenodo concept DOI resolves to the latest version. The record declares no version string (metadata.version is null), so concept and snapshot are not separable by provider metadata alone.",
-      "snapshot_id": "ftro:snapshot:zenodo/17107693/ROCIT-campaign-results.zip@md5:4ae290f559c90b462991286c933a1147",
-      "snapshot_kind": "ftro_composed",
+      "concept_note": "Zenodo supplies BOTH a concept DOI (10.5281/zenodo.17107692, resolving to the latest version) and a version DOI (10.5281/zenodo.17107693, pinning this version's files immutably). The distinction is asserted by the provider in four independent fields: conceptdoi, conceptrecid, links.parent_doi (vs links.self_doi) and metadata.relations.version[0].parent.pid_value. CORRECTION: Phase 0 originally recorded this leg as requiring an FTRO-composed snapshot identity on the grounds that 'metadata.version is null'. That was wrong twice over -- the key is ABSENT rather than null, and a human-readable version string has no bearing on PID separability. Task card §10 composition applies only where the provider supplies no immutable snapshot PID; Zenodo supplies one, so §10 was never triggered here. See FTRO-DEF-024.",
+      "snapshot_id": "https://doi.org/10.5281/zenodo.17107693",
+      "snapshot_kind": "provider_immutable",
       "provider_checksum": "md5:4ae290f559c90b462991286c933a1147",
       "verified_checksum": "md5:4ae290f559c90b462991286c933a1147",
       "checksum_match": true,
@@ -26,7 +26,27 @@
       "metadata_rights": "CC-BY-4.0 (Zenodo record metadata)",
       "redistribution_mode": "copy_permitted",
       "evidence_state": "resolvable",
-      "deficiencies": ["FTRO-DEF-001", "FTRO-DEF-002", "FTRO-DEF-003", "FTRO-DEF-004", "FTRO-DEF-005", "FTRO-DEF-006", "FTRO-DEF-007", "FTRO-DEF-008", "FTRO-DEF-009", "FTRO-DEF-010"]
+      "deficiencies": [
+        "FTRO-DEF-001",
+        "FTRO-DEF-002",
+        "FTRO-DEF-003",
+        "FTRO-DEF-004",
+        "FTRO-DEF-005",
+        "FTRO-DEF-006",
+        "FTRO-DEF-007",
+        "FTRO-DEF-008",
+        "FTRO-DEF-009",
+        "FTRO-DEF-010"
+      ],
+      "concept_recid": "17107692",
+      "snapshot_recid": "17107693",
+      "version_index": 0,
+      "is_last": true,
+      "versions_total": 1,
+      "record_revision": 6,
+      "metadata_snapshot_note": "The version DOI pins the FILES immutably but not the record METADATA: revision 6 records six metadata edits between created 2025-09-12T16:09:41Z and updated 2025-09-12T16:22:22Z, none of which minted a new DOI. A metadata snapshot therefore needs revision + updated in addition to the version DOI.",
+      "file_identity": "ftro:file:zenodo/17107693/ROCIT campaign results.zip@md5:4ae290f559c90b462991286c933a1147",
+      "provider_file_id": "0948c6a9-fd42-4255-9ffd-c5d15aaa97f7"
     },
     {
       "role": "ancestry or correction artifact",
@@ -56,9 +76,11 @@
       "commit_date": "2026-08-16T16:00:18Z",
       "commit_message": "Prepare documentation for 0.3.0",
       "evidence_state": "resolvable",
-      "temporal_note": "CAUTION: this commit post-dates the archive's data generation (2025-01-20 and 2024-04-22) by about 19 months. It cannot be the software that produced the archive.",
+      "temporal_note": "CAUTION: this commit is dated 2026-08-16T16:00:18Z, about 19 months after the archive's data generation (2025-01-20 and 2024-04-22). THIS REVISION cannot be the software that produced the archive. An earlier revision of the same tool is not excluded, and none is pinned.",
       "edge_to_optical_archive": "contextualized_by",
-      "deficiencies": ["FTRO-DEF-022"]
+      "deficiencies": [
+        "FTRO-DEF-022"
+      ]
     },
     {
       "role": "core measurement",
@@ -66,24 +88,54 @@
       "concept_id": "ftro:concept:ppta/dr3",
       "concept_kind": "ftro_composed",
       "concept_note": "No single provider PID exists for PPTA DR3; it is published as two DOIs with ~42% duplicated content. See FTRO-DEF-015.",
-      "member_pids": ["https://doi.org/10.25919/j4xr-wp05", "https://doi.org/10.25919/axvw-qa43"],
-      "member_details": [
-        {"pid": "csiro:59374", "doi": "10.25919/j4xr-wp05", "title": "Parkes Pulsar Timing Array Third Data Release (part 1 of 2)", "files": 109298, "size_bytes": 1425759414615, "published": "2023-08-31T05:44:52.318+10:00", "dataVersionNumber": 2},
-        {"pid": "csiro:59381", "doi": "10.25919/axvw-qa43", "title": "Parkes Pulsar Timing Array Third Data Release (part 2 of 2)", "files": 106393, "size_bytes": 1347980055236, "published": "2023-09-01T00:46:14.881+10:00", "dataVersionNumber": 2}
+      "member_pids": [
+        "https://doi.org/10.25919/j4xr-wp05",
+        "https://doi.org/10.25919/axvw-qa43"
       ],
-      "computed_part_overlap": {"shared_paths": 90884, "part1_only": 18414, "part2_only": 15509},
+      "member_details": [
+        {
+          "pid": "csiro:59374",
+          "doi": "10.25919/j4xr-wp05",
+          "title": "Parkes Pulsar Timing Array Third Data Release (part 1 of 2)",
+          "files": 109298,
+          "size_bytes": 1425759414615,
+          "published": "2023-08-31T05:44:52.318+10:00",
+          "dataVersionNumber": 2
+        },
+        {
+          "pid": "csiro:59381",
+          "doi": "10.25919/axvw-qa43",
+          "title": "Parkes Pulsar Timing Array Third Data Release (part 2 of 2)",
+          "files": 106393,
+          "size_bytes": 1347980055236,
+          "published": "2023-09-01T00:46:14.881+10:00",
+          "dataVersionNumber": 2
+        }
+      ],
+      "computed_part_overlap": {
+        "shared_paths": 90884,
+        "part1_only": 18414,
+        "part2_only": 15509
+      },
       "data_coverage": "2004-02-05 to 2022-03-07",
       "data_rights": "CC-BY-SA-4.0",
       "metadata_rights": "CC-BY-SA-4.0 declared; rights statement 'All Rights (including copyright) CSIRO 2023.'",
       "redistribution_mode": "link_only",
       "evidence_state": "resolvable",
-      "deficiencies": ["FTRO-DEF-011", "FTRO-DEF-012", "FTRO-DEF-013", "FTRO-DEF-014", "FTRO-DEF-015", "FTRO-DEF-017"]
+      "deficiencies": [
+        "FTRO-DEF-011",
+        "FTRO-DEF-012",
+        "FTRO-DEF-013",
+        "FTRO-DEF-014",
+        "FTRO-DEF-015",
+        "FTRO-DEF-017"
+      ]
     },
     {
       "role": "core measurement",
       "domain": "pulsar",
       "concept_id": "ftro:concept:ppta/dr3/toas/J0437-4715",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/all/J0437-4715.tim@sha256:ee6a2dec40b4dc6f",
+      "snapshot_id": "ftro:snapshot:ppta/dr3/all/J0437-4715.tim@sha256:ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564",
       "snapshot_kind": "ftro_composed",
       "provider_path": "ppta_dr3/toas_and_parameters/all/J0437-4715.tim",
       "provider_file_id": 65419499,
@@ -93,15 +145,26 @@
       "retrieved_utc": "2026-08-25T14:02Z",
       "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419499",
       "n_toa_lines": 11637,
-      "toa_mjd_range": [54297.85253, 59645.40317],
+      "toa_mjd_range": [
+        54297.85253,
+        59645.40317
+      ],
       "evidence_state": "resolvable",
-      "redistribution_mode": "link_only"
+      "redistribution_mode": "link_only",
+      "sha256": "ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564",
+      "md5": "5c3f77775efd449192d4fe9447e58a09",
+      "sha256_short": "ee6a2dec",
+      "provider_collection": 59423,
+      "download_url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419499",
+      "provider_last_updated": "2023-06-26T18:08:21.000+10:00",
+      "retrieval_validation": "status_and_checksum",
+      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018)."
     },
     {
       "role": "ancestry or correction artifact",
       "domain": "pulsar",
       "concept_id": "ftro:concept:ppta/dr3/par/J0437-4715",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/all/J0437-4715.par@sha256:cfbd0db49a66d8a1",
+      "snapshot_id": "ftro:snapshot:ppta/dr3/all/J0437-4715.par@sha256:cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75",
       "snapshot_kind": "ftro_composed",
       "provider_path": "ppta_dr3/toas_and_parameters/all/J0437-4715.par",
       "size_bytes": 4402,
@@ -116,43 +179,103 @@
         "DILATEFREQ": "Y",
         "EPHVER": "5"
       },
-      "undeclared_dependencies": ["Earth-orientation series (no EOP/UT1/IERS/C04 term present)"],
+      "undeclared_dependencies": [
+        "Earth-orientation series (no EOP/UT1/IERS/C04 term present)"
+      ],
       "evidence_state": "resolvable",
-      "deficiencies": ["FTRO-DEF-011", "FTRO-DEF-012", "FTRO-DEF-013"]
+      "deficiencies": [
+        "FTRO-DEF-011",
+        "FTRO-DEF-012",
+        "FTRO-DEF-013"
+      ],
+      "sha256": "cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75",
+      "md5": "5ec53ba1432489b1861d2eb0eb06d31c",
+      "sha256_short": "cfbd0db4",
+      "provider_file_id": 65419506,
+      "provider_collection": 59423,
+      "download_url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419506",
+      "provider_last_updated": "2023-06-26T18:08:20.000+10:00",
+      "declared_size_bytes": 4402,
+      "size_match": true,
+      "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419506",
+      "retrieval_validation": "status_and_checksum",
+      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018)."
     },
     {
       "role": "ancestry or correction artifact",
       "domain": "pulsar",
       "concept_id": "ftro:concept:ppta/dr3/clock/pks2gps",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef40",
+      "snapshot_id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
       "snapshot_kind": "ftro_composed",
       "provider_path": "ppta_dr3/toas_and_parameters/clock/pks2gps.clk",
       "size_bytes": 1742710,
-      "mjd_coverage": [50844.72917, 65000.0],
+      "mjd_coverage": [
+        50844.72917,
+        65000.0
+      ],
       "cadence_near_window": "approximately 1 day (60 samples over MJD 59600-59660)",
-      "bracketing_samples_at_toa": [[59630.37155, -9.0041e-08], [59631.37502, -9.4252e-08]],
+      "bracketing_samples_at_toa": [
+        [
+          59630.37155,
+          -9.0041e-08
+        ],
+        [
+          59631.37502,
+          -9.4252e-08
+        ]
+      ],
       "interpolated_correction_at_toa_s": -9.044e-08,
       "evidence_state": "resolvable",
       "note": "Header records a merge by D. Reardon of a pre-MJD-53040 file with M. Kerr's high-resolution PPTA DR2 file, with post-MJD-58269.72743 values taken from the Parkes observatory calibration page. This is itself a composed artifact whose own ancestry is only narratively described.",
-      "edge": "time_referenced_to"
+      "edge": "time_referenced_to",
+      "sha256": "c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
+      "md5": "923679fdb13050b538047fe37e740435",
+      "sha256_short": "c8131f51",
+      "provider_file_id": 65419593,
+      "provider_collection": 59423,
+      "download_url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419593",
+      "provider_last_updated": "2023-06-26T18:08:25.000+10:00",
+      "declared_size_bytes": 1742710,
+      "size_match": true,
+      "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419593",
+      "retrieval_validation": "status_and_checksum",
+      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018)."
     },
     {
       "role": "ancestry or correction artifact",
       "domain": "pulsar",
       "concept_id": "ftro:concept:ppta/dr3/clock/tai2tt_bipm2021",
-      "snapshot_id": "ftro:snapshot:ppta/dr3/clock/tai2tt_bipm2021.clk@sha256:047c2a19b13f6923",
+      "snapshot_id": "ftro:snapshot:ppta/dr3/clock/tai2tt_bipm2021.clk@sha256:047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
       "snapshot_kind": "ftro_composed",
       "provider_path": "ppta_dr3/toas_and_parameters/clock/tai2tt_bipm2021.clk",
       "size_bytes": 48871,
-      "mjd_coverage": [42589.0, 99999.0],
+      "mjd_coverage": [
+        42589.0,
+        99999.0
+      ],
       "cadence": "10 days",
       "extrapolation_formula": "32.184 + 27667.5ns - 0.01(MJD - 59579.0)ns",
       "extrapolation_reference_epoch_mjd": 59579.0,
-      "value_at_candidate_epoch_s": 32.1840276670,
+      "value_at_candidate_epoch_s": 32.184027667,
       "value_is_extrapolated": true,
       "evidence_state": "resolvable",
-      "deficiencies": ["FTRO-DEF-011", "FTRO-DEF-017"],
-      "edge": "time_referenced_to"
+      "deficiencies": [
+        "FTRO-DEF-011",
+        "FTRO-DEF-017"
+      ],
+      "edge": "time_referenced_to",
+      "sha256": "047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
+      "md5": "4d19f1a4974686a127f593e34fc65fc5",
+      "sha256_short": "047c2a19",
+      "provider_file_id": 65419592,
+      "provider_collection": 59423,
+      "download_url": "https://data.csiro.au/dap/ws/v2/collections/59423/data/65419592",
+      "provider_last_updated": "2023-06-26T18:08:25.000+10:00",
+      "declared_size_bytes": 48871,
+      "size_match": true,
+      "retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419592",
+      "retrieval_validation": "status_and_checksum",
+      "retrieval_validation_note": "Size verified against the DAP manifest; content-shape validation was not applied to this leg (FTRO-DEF-018)."
     },
     {
       "role": "ancestry or correction artifact",
@@ -168,12 +291,17 @@
       "card_declared_sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
       "checksum_match": true,
       "size_bytes": 340087,
-      "mjd_coverage": [48988.0, 61249.0],
+      "mjd_coverage": [
+        48988.0,
+        61249.0
+      ],
       "n_rows": 12318,
       "regime_at_candidate_window": "C0'",
       "verification_activity": "VA-GPS2UTC-001",
       "evidence_state": "resolvable",
-      "deficiencies": ["FTRO-DEF-016"],
+      "deficiencies": [
+        "FTRO-DEF-016"
+      ],
       "edge": "time_referenced_to"
     },
     {
@@ -186,16 +314,61 @@
       "session_type": "IVS-R1",
       "start_utc": "2022-02-28T17:00",
       "duration_h": 24,
-      "mjd_support": [59638.708333, 59639.708333],
+      "mjd_support": [
+        59638.708333,
+        59639.708333
+      ],
       "db_code": "XA",
       "ops_center": "NASA",
       "correlator": "BONN",
       "analysis_center": "NASA",
       "status": "Released",
       "evidence_source": "https://ivscc.gsfc.nasa.gov/sessions/2022/",
-      "evidence_state": "unresolved",
-      "evidence_note": "Session metadata is resolvable; the data products themselves are not yet pinned. CDDIS, the primary archive, is behind an Earthdata login that returns HTTP 200 with an HTML login page (FTRO-DEF-018).",
-      "deficiencies": ["FTRO-DEF-018"]
+      "evidence_state": "resolvable",
+      "evidence_note": "CORRECTED 2026-08-25: Phase 0 recorded this leg as unresolved on the grounds that CDDIS requires an Earthdata login. That was a failure to canvass alternative data centres, not an actual access restriction: OPAR serves the same archive anonymously. The vgosDB is now pinned and content-validated. The downstream analysis-centre product and IERS EOP series remain unresolved. See FTRO-DEF-025.",
+      "deficiencies": [
+        "FTRO-DEF-018",
+        "FTRO-DEF-025",
+        "FTRO-DEF-026"
+      ],
+      "snapshot_id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
+      "snapshot_kind": "ftro_composed",
+      "snapshot_note": "OPAR supplies no immutable per-version PID for this archive, so task card §10 requires an FTRO identity composed from concept id, retrieval time, byte checksum and retrieval procedure.",
+      "vgosdb_url": "https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz",
+      "data_centre": "OPAR (Observatoire de Paris) IVS data centre, anonymous HTTPS",
+      "sha256": "0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
+      "md5": "f577564a3166a31f4db273ec66a7850e",
+      "size_bytes": 19610760,
+      "retrieved_utc": "2026-08-25T15:23:31.830427+00:00",
+      "last_modified": "Mon, 15 Dec 2025 16:46:58 GMT",
+      "etag": "\"12b3c88-646005c046480\"",
+      "retrieval_validation": "content_validated",
+      "content_checks": {
+        "gzip_magic": true,
+        "not_html": true,
+        "tar_readable": true,
+        "has_wrappers": true,
+        "has_versioned_wrappers": true,
+        "session_in_paths": true
+      },
+      "internal_versions": [
+        "001",
+        "002",
+        "003",
+        "004",
+        "005"
+      ],
+      "analysis_centres": [
+        "GSFC",
+        "IVS",
+        "MPI"
+      ],
+      "internal_version_note": "This archive is NOT a single snapshot: it carries 5 internal wrapper versions (V001, V002, V003, V004, V005) from analysis centres GSFC, IVS, MPI. A chain that consumes 'the R11040 vgosDB' must name WHICH wrapper version it used; the archive checksum alone does not pin that choice.",
+      "volatility_warning": "Last-Modified post-dates the 2022 session, so this archive is a re-release rather than a frozen 2022 artifact. The bytes may change again; the checksum pins THIS retrieval, not the session.",
+      "unresolved_downstream": [
+        "analysis-centre product",
+        "downstream IERS EOP series"
+      ]
     },
     {
       "role": "ancestry or correction artifact",
@@ -204,8 +377,21 @@
       "concept_kind": "ftro_composed",
       "concept_note": "IGS Final orbit product line. IGS supplies no per-file immutable PID, so section 10 requires an FTRO composed snapshot identity.",
       "snapshot_examples": [
-        {"name": "igs21980.sp3.Z", "mjd": 59630, "utc_date": "2022-02-20", "sha256_prefix": "4e9a0038bce4c07f", "size_bytes": 97301, "mirror_last_modified": "Sun, 13 Mar 2022 11:46:51 GMT"},
-        {"name": "igs21991.sp3.Z", "mjd": 59638, "utc_date": "2022-02-28", "sha256_prefix": null, "note": "see phase0/reports/igs-artifact-pins.json"}
+        {
+          "name": "igs21980.sp3.Z",
+          "mjd": 59630,
+          "utc_date": "2022-02-20",
+          "sha256_prefix": "4e9a0038bce4c07f",
+          "size_bytes": 97301,
+          "mirror_last_modified": "Sun, 13 Mar 2022 11:46:51 GMT"
+        },
+        {
+          "name": "igs21991.sp3.Z",
+          "mjd": 59638,
+          "utc_date": "2022-02-28",
+          "sha256_prefix": null,
+          "note": "see phase0/reports/igs-artifact-pins.json"
+        }
       ],
       "reference_frame": "IGb14 (operational for GPS weeks 2106-2237; IGS20 begins week 2238, 2022-11-27)",
       "n_artifacts_pinned": 57,
@@ -213,7 +399,10 @@
       "data_rights": "IGS data and products are provided free of charge; no explicit machine-readable licence was located for these artifacts",
       "redistribution_mode": "link_only",
       "evidence_state": "resolvable",
-      "deficiencies": ["FTRO-DEF-019", "FTRO-DEF-020"]
+      "deficiencies": [
+        "FTRO-DEF-019",
+        "FTRO-DEF-020"
+      ]
     }
   ]
 }

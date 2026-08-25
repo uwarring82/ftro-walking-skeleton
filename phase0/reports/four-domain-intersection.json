@@ -4,18 +4,31 @@
     59630.0,
     59640.0
   ],
-  "method_note": "Optical support uses per-comparison envelopes of flag-in-{1,2} runs, an UPPER BOUND: real support is fragmented. VLBI uses scheduled session intervals, not per-observation supports. Pulsar uses scan start plus -tobs. GNSS uses IGS Final daily product validity. A null under an upper bound is therefore a strong null.",
+  "method_note": "The four legs are not computed on a common basis. Optical is the EXACT union of contiguous flag-in-{1,2} sample runs. VLBI uses scheduled session intervals, not per-observation supports, and GNSS uses IGS Final daily product validity, not per-epoch support: both are UPPER BOUNDS. Pulsar uses scan start from the file-name UTC stamp plus the header -tobs. Because two legs are upper bounds, every reported overlap is an upper bound; refining them into exact per-observation support can only remove overlap. The reported no_common_support is therefore robust under these conservative envelopes.",
+  "optical_support_basis": "run_level_union",
+  "optical_runs_merged": {
+    "n_input_runs": 7398,
+    "n_disjoint_intervals": 1384
+  },
+  "bound": {
+    "optical": "exact",
+    "vlbi": "upper",
+    "gnss": "upper",
+    "pulsar": "approximate",
+    "any_intersection_involving_vlbi_or_gnss": "upper"
+  },
   "domain_support": {
     "optical": {
-      "intervals": [
-        [
-          59631.788542,
-          59640.0
-        ]
+      "n_intervals": 1353,
+      "total_hours": 133.1119,
+      "envelope_mjd": [
+        59631.788542,
+        59639.999988
       ],
-      "total_hours": 197.075
+      "intervals_omitted_for_size": true
     },
     "pulsar": {
+      "n_intervals": 1,
       "intervals": [
         [
           59630.445127314815,
@@ -25,6 +38,7 @@
       "total_hours": 1.0675
     },
     "vlbi": {
+      "n_intervals": 4,
       "intervals": [
         [
           59631.583333,
@@ -46,6 +60,7 @@
       "total_hours": 123.5
     },
     "gnss": {
+      "n_intervals": 1,
       "intervals": [
         [
           59630.0,
@@ -61,26 +76,26 @@
   ],
   "pairwise": {
     "gnss|optical": {
-      "intervals": [
-        [
-          59631.788542,
-          59640.0
-        ]
-      ],
-      "total_hours": 197.075,
-      "status": "overlap"
+      "n_intervals": 1353,
+      "total_hours": 133.1119,
+      "status": "overlap",
+      "intervals_omitted_for_size": true
     },
     "gnss|pulsar": {
+      "n_intervals": 1,
+      "total_hours": 1.0675,
+      "status": "overlap",
       "intervals": [
         [
           59630.445127314815,
           59630.48960763889
         ]
-      ],
-      "total_hours": 1.0675,
-      "status": "overlap"
+      ]
     },
     "gnss|vlbi": {
+      "n_intervals": 4,
+      "total_hours": 123.5,
+      "status": "overlap",
       "intervals": [
         [
           59631.583333,
@@ -98,41 +113,25 @@
           59638.708333,
           59639.708333
         ]
-      ],
-      "total_hours": 123.5,
-      "status": "overlap"
+      ]
     },
     "optical|pulsar": {
-      "intervals": [],
+      "n_intervals": 0,
       "total_hours": 0,
-      "status": "no_common_support"
+      "status": "no_common_support",
+      "intervals": []
     },
     "optical|vlbi": {
-      "intervals": [
-        [
-          59631.788542,
-          59632.708333
-        ],
-        [
-          59632.729167,
-          59633.729167
-        ],
-        [
-          59633.75,
-          59635.770833
-        ],
-        [
-          59638.708333,
-          59639.708333
-        ]
-      ],
-      "total_hours": 118.575,
-      "status": "overlap"
+      "n_intervals": 595,
+      "total_hours": 82.0134,
+      "status": "overlap",
+      "intervals_omitted_for_size": true
     },
     "pulsar|vlbi": {
-      "intervals": [],
+      "n_intervals": 0,
       "total_hours": 0,
-      "status": "no_common_support"
+      "status": "no_common_support",
+      "intervals": []
     }
   },
   "three_domain": {
@@ -142,9 +141,10 @@
         "pulsar",
         "vlbi"
       ],
-      "intervals": [],
+      "n_intervals": 0,
       "total_hours": 0,
-      "status": "no_common_support"
+      "status": "no_common_support",
+      "intervals": []
     },
     "without_optical": {
       "domains": [
@@ -152,9 +152,10 @@
         "pulsar",
         "vlbi"
       ],
-      "intervals": [],
+      "n_intervals": 0,
       "total_hours": 0,
-      "status": "no_common_support"
+      "status": "no_common_support",
+      "intervals": []
     },
     "without_pulsar": {
       "domains": [
@@ -162,26 +163,10 @@
         "optical",
         "vlbi"
       ],
-      "intervals": [
-        [
-          59631.788542,
-          59632.708333
-        ],
-        [
-          59632.729167,
-          59633.729167
-        ],
-        [
-          59633.75,
-          59635.770833
-        ],
-        [
-          59638.708333,
-          59639.708333
-        ]
-      ],
-      "total_hours": 118.575,
-      "status": "overlap"
+      "n_intervals": 595,
+      "total_hours": 82.0134,
+      "status": "overlap",
+      "intervals_omitted_for_size": true
     },
     "without_vlbi": {
       "domains": [
@@ -189,13 +174,15 @@
         "optical",
         "pulsar"
       ],
-      "intervals": [],
+      "n_intervals": 0,
       "total_hours": 0,
-      "status": "no_common_support"
+      "status": "no_common_support",
+      "intervals": []
     }
   },
   "four_domain": {
     "intervals": [],
+    "n_intervals": 0,
     "total_hours": 0,
     "status": "no_common_support"
   },

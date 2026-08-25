@@ -36,3 +36,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | Date | Session | Topic |
 | --- | --- | --- |
 | 2026-08-25 | 01 | [Phase 0 — evidence lock, bootstrap ledger and selection](2026-08-25-session-01-phase0.md) |
+| 2026-08-25 | 02 | [External review — corrections and self-directed deficiencies](2026-08-26-session-02-review-corrections.md) |

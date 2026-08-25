@@ -111,7 +111,32 @@ consumed the same state.
 **Every living artifact used in a reproduction must be materialised and pinned before
 execution.**
 
-### 5.1 [P0] Composite concept identity
+### 5.1 [P0] Record what was checked before composing an identity
+
+Phase 0 composed an FTRO snapshot identity for the optical leg while the provider supplied
+both a concept DOI and a version DOI ([`FTRO-DEF-024`](../ledgers/deficiency-log.md#ftro-def-024)).
+Task card §10 composition is conditional on the provider supplying no immutable snapshot PID, so a
+manifest asserting `ftro_composed` **must** record which provider fields were checked and found
+absent:
+
+| Field | Meaning |
+| --- | --- |
+| `composition_precondition_checked[]` | the provider metadata fields inspected (e.g. `conceptdoi`, `links.parent_doi`, `relations.version[].parent`) |
+| `composition_justification` | why none supplied an immutable snapshot PID |
+
+An `ftro_composed` identity without this record is not conforming.
+
+### 5.2 [P0] A snapshot identity may need an intra-archive component
+
+Phase 1 found a container whose byte checksum does not pin what a chain consumed: the R11040
+vgosDB carries **five internal wrapper versions** (V001–V005) from three analysis centres
+([`FTRO-DEF-026`](../ledgers/deficiency-log.md#ftro-def-026)). Two chains citing the same archive
+checksum may have used different wrapper versions.
+
+Where an archive contains internally versioned members, snapshot identity requires a third
+component naming the member actually consumed. **Not frozen.**
+
+### 5.3 [P0] Composite concept identity
 
 Phase 0 found a case where even the concept identity had to be composed: PPTA DR3 is
 published as two DOIs with 90,884 shared file paths and no manifest of the split
@@ -179,9 +204,10 @@ sampling interval nor the physical realisation.
 | `time_coordinate_quantum` | numerical resolution of the recorded time coordinate **as serialised** |
 | `time_coordinate_quantum_evidence` | how it was determined (declared, or measured — and by what procedure) |
 
-An `AlignmentCertificate` must propagate this as a **floor** on achieved resolution.
-For the optical leg that floor is ±43.2 ms, roughly eight orders of magnitude coarser
-than the fractional-frequency precision the same files report.
+An `AlignmentCertificate` must propagate this as a **floor** on achieved resolution. For the
+optical leg that floor is ±43.2 ms under the one-second-grid model — a limit on the *time* axis,
+and therefore not expressible as a ratio against the dimensionless fractional-frequency
+uncertainty the same files report.
 
 Recorded as [`FTRO-DEF-021`](../ledgers/deficiency-log.md#ftro-def-021). **Not frozen.**
 

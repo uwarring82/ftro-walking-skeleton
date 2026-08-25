@@ -43,7 +43,8 @@ for c in d["comparisons"]:
 out = {k: d[k] for k in ("generator", "source_record", "candidate_window_mjd",
                          "documented_flag_vocabulary", "gap_tolerance_s", "nominal_sampling_s",
                          "global_flag_histogram", "global_undocumented_flag_values",
-                         "sample_spacing_histogram_s", "n_comparisons")}
+                         "sample_spacing_histogram_s", "sample_spacing_coverage",
+                         "mjd_quantum_check", "n_comparisons")}
 out["note"] = ("Summary of the full inventory; per-sample uncertainty-column value sets and "
                "individual run boundaries are omitted. Regenerate the full inventory with "
                "src/ftro/analyse_optical.py.")

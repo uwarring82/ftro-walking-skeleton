@@ -38,6 +38,24 @@
     "10.0224": 799,
     "13.0464": 786
   },
+  "sample_spacing_coverage": {
+    "n_spacings_total": 9018038,
+    "n_distinct_spacings": 1237,
+    "n_spacings_in_top20": 8999974,
+    "note": "sample_spacing_histogram_s is truncated to the 20 most common spacings; n_spacings_in_top20 states how many of n_spacings_total those cover, so claims about the histogram must not be generalised to all spacings."
+  },
+  "mjd_quantum_check": {
+    "quantum_days": 1e-06,
+    "quantum_seconds": 0.0864,
+    "n_tested": 9018290,
+    "n_conforming": 9018290,
+    "n_exceptions": 0,
+    "exceptions_sample": [],
+    "decimal_place_histogram": {
+      "6": 9018290
+    },
+    "note": "Tests whether every serialised MJD value is an exact multiple of 1e-6 d (86.4 ms), evaluated on the decimal token as written, not a float round-trip. Evidence for FTRO-DEF-002."
+  },
   "n_comparisons": 12,
   "note": "Summary of the full inventory; per-sample uncertainty-column value sets and individual run boundaries are omitted. Regenerate the full inventory with src/ftro/analyse_optical.py.",
   "comparisons": [

@@ -16,6 +16,7 @@ import os
 import re
 import sys
 from collections import Counter
+from decimal import Decimal
 
 CANDIDATE_MJD_START = 59630.0   # 2022-02-20
 CANDIDATE_MJD_END = 59640.0     # 2022-03-02
@@ -44,7 +45,12 @@ def parse_yaml_block(path):
 
 
 def parse_dat(path):
-    """Return (header_lines, rows). Rows are (mjd, ratio_str, flag_int, uA_str, uB_str)."""
+    """Return (header_lines, rows, malformed).
+
+    Rows are (mjd, ratio_str, flag_int, uA_str, uB_str, mjd_token). The raw MJD token is
+    retained so the time-coordinate quantisation test operates on the serialised decimal
+    string rather than on a float round-trip.
+    """
     header, rows, malformed = [], [], []
     with open(path, encoding="utf-8") as fh:
         for lineno, line in enumerate(fh, 1):
@@ -66,7 +72,7 @@ def parse_dat(path):
                 continue
             uA = parts[3] if len(parts) > 3 else None
             uB = parts[4] if len(parts) > 4 else None
-            rows.append((mjd, parts[1], flag, uA, uB))
+            rows.append((mjd, parts[1], flag, uA, uB, parts[0]))
     return header, rows, malformed
 
 
@@ -105,6 +111,12 @@ def main():
     comparisons = []
     global_flags = Counter()
     all_spacings = Counter()
+    # Time-coordinate quantisation test (FTRO-DEF-002). Counts EVERY value, not a sample.
+    mjd_decimal_places = Counter()
+    quantum_tested = 0
+    quantum_conforming = 0
+    quantum_exceptions = []
+    spacings_total = 0
 
     for name in sorted(os.listdir(args.root)):
         cdir = os.path.join(args.root, name)
@@ -138,6 +150,18 @@ def main():
 
             for a, b in zip(mjds, mjds[1:]):
                 all_spacings[round((b - a) * SEC_PER_DAY, 6)] += 1
+                spacings_total += 1
+
+            # Is every serialised MJD an exact multiple of the 1e-6 d quantum?
+            for r in rows:
+                tok = r[5]
+                frac = tok.split(".")[1] if "." in tok else ""
+                mjd_decimal_places[len(frac)] += 1
+                quantum_tested += 1
+                if Decimal(tok).scaleb(6) % 1 == 0:
+                    quantum_conforming += 1
+                elif len(quantum_exceptions) < 50:
+                    quantum_exceptions.append({"file": fn, "mjd_token": tok})
 
             fmin, fmax = min(mjds), max(mjds)
             c_min = fmin if c_min is None else min(c_min, fmin)
@@ -214,6 +238,27 @@ def main():
         "global_undocumented_flag_values": sorted(v for v in global_flags if v not in DOCUMENTED_FLAGS),
         "sample_spacing_histogram_s": {str(k): v for k, v in
                                        sorted(all_spacings.items(), key=lambda kv: -kv[1])[:20]},
+        "sample_spacing_coverage": {
+            "n_spacings_total": spacings_total,
+            "n_distinct_spacings": len(all_spacings),
+            "n_spacings_in_top20": sum(v for _, v in
+                                       sorted(all_spacings.items(), key=lambda kv: -kv[1])[:20]),
+            "note": ("sample_spacing_histogram_s is truncated to the 20 most common spacings; "
+                     "n_spacings_in_top20 states how many of n_spacings_total those cover, so "
+                     "claims about the histogram must not be generalised to all spacings."),
+        },
+        "mjd_quantum_check": {
+            "quantum_days": 1e-6,
+            "quantum_seconds": 0.0864,
+            "n_tested": quantum_tested,
+            "n_conforming": quantum_conforming,
+            "n_exceptions": quantum_tested - quantum_conforming,
+            "exceptions_sample": quantum_exceptions,
+            "decimal_place_histogram": {str(k): v for k, v in sorted(mjd_decimal_places.items())},
+            "note": ("Tests whether every serialised MJD value is an exact multiple of 1e-6 d "
+                     "(86.4 ms), evaluated on the decimal token as written, not a float "
+                     "round-trip. Evidence for FTRO-DEF-002."),
+        },
         "n_comparisons": len(comparisons),
         "comparisons": comparisons,
     }

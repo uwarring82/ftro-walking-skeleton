@@ -62,15 +62,15 @@ A cold reproducer loading this `.par` with this `.tim` **cannot** reproduce the 
 | `TIMEEPH` | `IF99` | `unresolved` — no artifact |
 | `T2CMETHOD` | `IAU2000B` | `unresolved` — no artifact |
 | `CORRECT_TROPOSPHERE` | `Y` | `unresolved` — no model artifact or met data identified |
-| Earth orientation | **not declared at all** | **`unresolved`** — [`FTRO-DEF-012`](../../ledgers/deficiency-log.md#ftro-def-012) |
+| Earth-orientation **data series** (EOP/UT1/polar motion) | **no artifact declared** | **`unresolved`** — note `T2CMETHOD IAU2000B` declares the transformation *model* but no data series — [`FTRO-DEF-012`](../../ledgers/deficiency-log.md#ftro-def-012) |
 
-`J0437-4715.par` contains **zero** occurrences of `EOP`, `UT1`, `IERS`, `C04` or polar
-motion. Barycentring nevertheless requires an Earth-orientation series; the dependency
-is satisfied implicitly by an unshipped, unversioned TEMPO2 runtime.
+`J0437-4715.par` contains **zero** occurrences of `EOP`, `UT1`, `IERS`, `C04` or polar motion, and
+the release identifies no EOP artifact. Barycentring nevertheless requires an Earth-orientation
+series, so one must have been supplied by the production environment — plausibly an unshipped,
+unversioned TEMPO2 runtime, though the release provides no evidence either way.
 
-This **confirms the card's pre-registered expectation** (§15.1) that the PPTA→C04 chain
-would be opaque — in a stronger form: the artifact is not merely opaque, it is
-**unidentified**.
+The card (§15.1) anticipated an **opaque** PPTA→C04 chain. The observed outcome is different and
+more severe: the artifact is **unidentified**, so the expectation is not strictly confirmed.
 
 ### 4. Chi-squared magnitude
 

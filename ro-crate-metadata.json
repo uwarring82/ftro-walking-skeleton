@@ -10,13 +10,14 @@
       "about": {
         "@id": "./"
       },
-      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the REPOSITORY as a research object for FAIR discoverability. The four per-domain manifests required by task card section 8 are a Phase-1 deliverable and do not exist yet; this crate does not claim conformance to the FTRO profile."
+      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the REPOSITORY as a research object for FAIR discoverability. The four per-domain manifests required by task card section 8 are a Phase-1 deliverable and do not exist yet; this crate does not claim conformance to the FTRO profile.",
+      "name": "RO-Crate Metadata Descriptor"
     },
     {
       "@id": "./",
       "@type": "Dataset",
       "name": "Federated Time-Reference Observatory — Walking Skeleton",
-      "description": "Phase-0 evidence lock, classified deficiency ledger and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640.",
+      "description": "Phase-0 evidence lock, classified deficiency ledger and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Revised after external review: see labnotes session 02.",
       "datePublished": "2026-08-25",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
@@ -95,10 +96,25 @@
           "@id": "labnotes/2026-08-25-session-01-phase0.md"
         },
         {
-          "@id": "src/ftro"
+          "@id": "src/ftro/"
+        },
+        {
+          "@id": "https://doi.org/10.5281/zenodo.17107693"
+        },
+        {
+          "@id": "https://doi.org/10.25919/j4xr-wp05"
+        },
+        {
+          "@id": "https://doi.org/10.25919/axvw-qa43"
+        },
+        {
+          "@id": "https://doi.org/10.5281/zenodo.17107692"
+        },
+        {
+          "@id": "phase0/reports/vlbi-vgosdb-pin.json"
         }
       ],
-      "mentions": [
+      "isBasedOn": [
         {
           "@id": "https://doi.org/10.5281/zenodo.17107693"
         },
@@ -108,7 +124,10 @@
         {
           "@id": "https://doi.org/10.25919/axvw-qa43"
         }
-      ]
+      ],
+      "publisher": {
+        "@id": "#ulrich-warring"
+      }
     },
     {
       "@id": "#ulrich-warring",
@@ -119,13 +138,15 @@
       "@id": "https://creativecommons.org/licenses/by/4.0/",
       "@type": "CreativeWork",
       "name": "Creative Commons Attribution 4.0 International",
-      "identifier": "CC-BY-4.0"
+      "identifier": "CC-BY-4.0",
+      "url": "https://creativecommons.org/licenses/by/4.0/"
     },
     {
       "@id": "https://www.apache.org/licenses/LICENSE-2.0",
       "@type": "CreativeWork",
       "name": "Apache License 2.0",
-      "identifier": "Apache-2.0"
+      "identifier": "Apache-2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0"
     },
     {
       "@id": "https://doi.org/10.5281/zenodo.17107693",
@@ -135,7 +156,12 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "description": "ROCIT European fibre subset. Optical leg of the pilot. MD5 4ae290f559c90b462991286c933a1147, verified.",
-      "temporalCoverage": "2022-02-21/2022-04-06"
+      "temporalCoverage": "2022-02-21/2022-04-06",
+      "identifier": "10.5281/zenodo.17107693",
+      "url": "https://doi.org/10.5281/zenodo.17107693",
+      "isVersionOf": {
+        "@id": "https://doi.org/10.5281/zenodo.17107692"
+      }
     },
     {
       "@id": "https://doi.org/10.25919/j4xr-wp05",
@@ -145,7 +171,9 @@
         "@id": "https://creativecommons.org/licenses/by-sa/4.0/"
       },
       "description": "Pulsar leg of the pilot. CC BY-SA 4.0; redistribution_mode link_only.",
-      "temporalCoverage": "2004-02-05/2022-03-07"
+      "temporalCoverage": "2004-02-05/2022-03-07",
+      "identifier": "10.25919/j4xr-wp05",
+      "url": "https://doi.org/10.25919/j4xr-wp05"
     },
     {
       "@id": "https://doi.org/10.25919/axvw-qa43",
@@ -155,22 +183,16 @@
         "@id": "https://creativecommons.org/licenses/by-sa/4.0/"
       },
       "description": "Shares 90,884 file paths with part 1; see FTRO-DEF-015.",
-      "temporalCoverage": "2004-02-05/2022-03-07"
+      "temporalCoverage": "2004-02-05/2022-03-07",
+      "identifier": "10.25919/axvw-qa43",
+      "url": "https://doi.org/10.25919/axvw-qa43"
     },
     {
       "@id": "https://creativecommons.org/licenses/by-sa/4.0/",
       "@type": "CreativeWork",
       "name": "Creative Commons Attribution-ShareAlike 4.0 International",
-      "identifier": "CC-BY-SA-4.0"
-    },
-    {
-      "@id": "src/ftro",
-      "@type": "SoftwareSourceCode",
-      "name": "FTRO Phase-0 tooling",
-      "programmingLanguage": "Python 3.13",
-      "license": {
-        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
-      }
+      "identifier": "CC-BY-SA-4.0",
+      "url": "https://creativecommons.org/licenses/by-sa/4.0/"
     },
     {
       "@id": "charter/access-charter-v0.1.md",
@@ -178,7 +200,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "10420",
+      "name": "access-charter-v0.1.md"
     },
     {
       "@id": "profile/ftro-graph-profile-v0.0.1.md",
@@ -186,7 +210,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "16336",
+      "name": "ftro-graph-profile-v0.0.1.md"
     },
     {
       "@id": "phase0/selection-note-v0.1.md",
@@ -194,7 +220,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "14679",
+      "name": "selection-note-v0.1.md"
     },
     {
       "@id": "phase0/optical-timetag-ancestry-note.md",
@@ -202,7 +230,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "9651",
+      "name": "optical-timetag-ancestry-note.md"
     },
     {
       "@id": "phase0/optical-validity-intervals.md",
@@ -210,7 +240,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "7015",
+      "name": "optical-validity-intervals.md"
     },
     {
       "@id": "phase0/ppta-observations.md",
@@ -218,7 +250,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "6397",
+      "name": "ppta-observations.md"
     },
     {
       "@id": "phase0/evidence/identities.json",
@@ -226,7 +260,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "19627",
+      "name": "identities.json"
     },
     {
       "@id": "phase0/evidence/VA-GPS2UTC-001.json",
@@ -234,7 +270,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "17007",
+      "name": "VA-GPS2UTC-001.json"
     },
     {
       "@id": "phase0/reports/four-domain-intersection.json",
@@ -242,7 +280,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "4521",
+      "name": "four-domain-intersection.json"
     },
     {
       "@id": "phase0/reports/optical-inventory-summary.json",
@@ -250,7 +290,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "85274",
+      "name": "optical-inventory-summary.json"
     },
     {
       "@id": "phase0/reports/igs-artifact-pins.json",
@@ -258,7 +300,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "55285",
+      "name": "igs-artifact-pins.json"
     },
     {
       "@id": "phase0/reports/support-intersection.json",
@@ -266,7 +310,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "7317",
+      "name": "support-intersection.json"
     },
     {
       "@id": "phase0/reports/ivs-sessions-candidate-window.json",
@@ -274,7 +320,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "810",
+      "name": "ivs-sessions-candidate-window.json"
     },
     {
       "@id": "phase0/applicability/AA-PARKES-C0C0PRIME-001.md",
@@ -282,7 +330,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "4196",
+      "name": "AA-PARKES-C0C0PRIME-001.md"
     },
     {
       "@id": "phase0/applicability/AA-PPTA-CLKREALISATION-001.md",
@@ -290,7 +340,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "3068",
+      "name": "AA-PPTA-CLKREALISATION-001.md"
     },
     {
       "@id": "phase0/applicability/AA-PPTA-TIMINGMODEL-001.md",
@@ -298,7 +350,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "5372",
+      "name": "AA-PPTA-TIMINGMODEL-001.md"
     },
     {
       "@id": "ledgers/deficiency-log.json",
@@ -306,7 +360,9 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "46844",
+      "name": "deficiency-log.json"
     },
     {
       "@id": "ledgers/deficiency-log.md",
@@ -314,7 +370,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "47371",
+      "name": "deficiency-log.md"
     },
     {
       "@id": "ledgers/rights-ledger.md",
@@ -322,7 +380,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "4995",
+      "name": "rights-ledger.md"
     },
     {
       "@id": "ledgers/source-ledger.md",
@@ -330,7 +390,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "5926",
+      "name": "source-ledger.md"
     },
     {
       "@id": "ledgers/decision-ledger.md",
@@ -338,7 +400,9 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      }
+      },
+      "contentSize": "6112",
+      "name": "decision-ledger.md"
     },
     {
       "@id": "labnotes/2026-08-25-session-01-phase0.md",
@@ -346,6 +410,230 @@
       "encodingFormat": "text/markdown",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "22645",
+      "name": "2026-08-25-session-01-phase0.md"
+    },
+    {
+      "@id": "src/ftro/",
+      "@type": "Dataset",
+      "name": "FTRO Phase-0 tooling",
+      "description": "Retrieval, analysis and verification scripts. Python 3.13 standard library only; no third-party dependencies.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "hasPart": [
+        {
+          "@id": "src/ftro/analyse_optical.py"
+        },
+        {
+          "@id": "src/ftro/compute_overlap.py"
+        },
+        {
+          "@id": "src/ftro/four_domain_intersection.py"
+        },
+        {
+          "@id": "src/ftro/pin_igs.py"
+        },
+        {
+          "@id": "src/ftro/pin_vgosdb.py"
+        },
+        {
+          "@id": "src/ftro/render_deficiencies.py"
+        },
+        {
+          "@id": "src/ftro/render_validity_intervals.py"
+        },
+        {
+          "@id": "src/ftro/summarise_optical.py"
+        },
+        {
+          "@id": "src/ftro/verify_gps2utc.py"
+        }
+      ]
+    },
+    {
+      "@id": "src/ftro/analyse_optical.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "analyse_optical.py",
+      "description": "Parses the extracted optical archive; emits flag histograms, per-run support, the MJD quantisation census and spacing-coverage statistics.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "11537",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "src/ftro/compute_overlap.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "compute_overlap.py",
+      "description": "Intersects optical valid runs with candidate VLBI session supports.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "3039",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "src/ftro/four_domain_intersection.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "four_domain_intersection.py",
+      "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "8378",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "src/ftro/pin_igs.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "pin_igs.py",
+      "description": "Retrieves and pins IGS products with full digests and content-shape validation.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "7584",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "src/ftro/pin_vgosdb.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "pin_vgosdb.py",
+      "description": "Retrieves and pins an IVS vgosDB from OPAR with content-shape validation and wrapper-version inventory.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "5623",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "src/ftro/render_deficiencies.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "render_deficiencies.py",
+      "description": "Renders ledgers/deficiency-log.json to Markdown.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "2332",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "src/ftro/summarise_optical.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "summarise_optical.py",
+      "description": "Reduces the full optical inventory to a committable summary.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "2764",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "src/ftro/verify_gps2utc.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "verify_gps2utc.py",
+      "description": "Verification procedure VP-GPS2UTC-001: evaluates whether gps2utc.clk supplies C0' over a given interval and audits the artifact for duplicate abscissae.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "5861",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      }
+    },
+    {
+      "@id": "#python-3.13",
+      "@type": [
+        "ComputerLanguage",
+        "SoftwareApplication"
+      ],
+      "name": "Python",
+      "version": "3.13",
+      "url": "https://www.python.org/"
+    },
+    {
+      "@id": "https://doi.org/10.5281/zenodo.17107692",
+      "@type": "Dataset",
+      "name": "Dataset for \"Coordinated international comparisons between optical clocks connected via fiber and satellite links\" (concept)",
+      "description": "Zenodo CONCEPT DOI; resolves to the latest version. The version actually consumed is 10.5281/zenodo.17107693.",
+      "identifier": "10.5281/zenodo.17107692",
+      "url": "https://doi.org/10.5281/zenodo.17107692",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      }
+    },
+    {
+      "@id": "phase0/reports/vlbi-vgosdb-pin.json",
+      "@type": "File",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2416",
+      "name": "vlbi-vgosdb-pin.json"
+    },
+    {
+      "@id": "src/ftro/render_validity_intervals.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "render_validity_intervals.py",
+      "description": "Renders phase0/optical-validity-intervals.md from the committed optical summary.",
+      "encodingFormat": "text/x-python",
+      "contentSize": "9035",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       }
     }
   ]

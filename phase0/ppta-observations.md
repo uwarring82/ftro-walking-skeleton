@@ -56,9 +56,10 @@ sub-band ordering is not a simple dispersion sweep.
 | Next observation | MJD 59645.403173 (`uwl_220307_090825`) | **+14.94 d** |
 | Last TOA in DR3 | MJD 59645.403173 | — |
 
-The card's ~3-week cadence (§5.2) is confirmed. Critically, the **next** observation is
-5.4 days *past the end of the candidate window*, so the selected scan is the sole
-pulsar record available for the window.
+The observed local cadence is irregular — 1.07 d before and 14.94 d after the selected scan — so
+card §5.2's ~3-week figure is neither confirmed nor contradicted by this window; a cadence claim
+would need the full DR3 epoch series. Critically, the **next** observation is 5.4 days *past the
+end of the candidate window*, so the selected scan is the sole pulsar record available for it.
 
 DR3's declared coverage ends 2022-03-07 (MJD 59645), i.e. 5 days after the window closes.
 The candidate window is therefore genuinely at the release's terminal edge, but the
@@ -94,7 +95,8 @@ J0437−4715 TOA @ MJD 59630.467530701           [resolvable]
   │
   ├── uses_eop ──► ???                               [UNRESOLVED — NOT DECLARED AT ALL]
   │        No EOP/UT1/IERS/C04/polar-motion term anywhere in J0437-4715.par.
-  │        Dependency satisfied implicitly by an unshipped TEMPO2 runtime.
+  │        Release identifies no EOP artifact; the source of the series is not
+  │        evidenced (an unshipped TEMPO2 runtime is the likely but unverified supplier).
   │                                                  [FTRO-DEF-012]
   │
   └── evaluated_by ──► J0437-4715.par                [PARTIAL — AA-PPTA-TIMINGMODEL-001]
@@ -113,8 +115,9 @@ The card's leading candidate path is *IVS session → IERS EOP series → pulsar
 The pulsar end of that path **cannot be evidenced**: no EOP artifact is identified in the
 release ([`FTRO-DEF-012`](../ledgers/deficiency-log.md#ftro-def-012)).
 
-This **confirms the card's pre-registered expectation** (§15.1), in the stronger form of
-`unresolved` rather than `opaque`. No modern C04 snapshot is substituted (§20).
+The card (§15.1) anticipated an **opaque** EOP artifact. The observed outcome is different and
+more severe: **`unresolved`** — no artifact is identified at all — so the expectation is not
+strictly confirmed. No modern C04 snapshot is substituted (§20).
 
 ## 6. Rights
 

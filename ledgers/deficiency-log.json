@@ -1,356 +1,647 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
-  "classes": ["source_evidence", "schema", "execution", "policy", "rights"],
-  "dispositions": ["open", "accepted", "rejected", "deferred", "resolved"],
+  "classes": [
+    "source_evidence",
+    "schema",
+    "execution",
+    "policy",
+    "rights"
+  ],
+  "dispositions": [
+    "open",
+    "accepted",
+    "rejected",
+    "deferred",
+    "resolved"
+  ],
   "entries": [
     {
-      "id": "FTRO-DEF-001", "version": "1.0.0", "class": "source_evidence",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-001",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "Validity-flag vocabulary is documented but degenerate: every sample carries flag=1",
       "failed_step": "Computing an actual validity mask from the archive's flag column.",
       "known_fact": "The pinned format (INRIM/optical-link-data-format@689bda77, README.md line 77) defines column 3 as '0 = invalid, 1 = valid but experimental, 2 = valid'.",
       "observed": "All 9,018,290 samples across all 12 comparisons carry flag=1. Values 0 and 2 never occur.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#global_flag_histogram", "data/raw/evidence/olf-README.md"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#global_flag_histogram",
+        "data/raw/evidence/olf-README.md"
+      ],
       "severity": "high",
       "impact": "The flag column carries zero discriminating information. Validity intervals must be derived from sample presence/absence, not from the mask. Every published sample is formally only 'valid but experimental'; no sample is declared fully 'valid'.",
       "workaround": "Derive support from contiguous runs of present samples; treat the entire archive as flag-state 1.",
       "proposed_response": "Ask the provider whether invalid samples were removed before publication rather than flagged, and whether flag=2 was ever intended for this release.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1", "software": "src/ftro/analyse_optical.py"}
+      "links": {
+        "profile": "v0.0.1",
+        "software": "src/ftro/analyse_optical.py"
+      }
     },
     {
-      "id": "FTRO-DEF-002", "version": "1.0.0", "class": "source_evidence",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
-      "title": "Published MJD time tags are quantised to 86.4 ms, coarser than the 1 s sampling they represent",
+      "id": "FTRO-DEF-002",
+      "version": "1.1.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
+      "title": "Published MJD time tags are quantised to 86.4 ms, coarser than the sampling interval they represent",
       "failed_step": "Establishing the achieved timestamp resolution of the optical records for the alignment certificate.",
       "known_fact": "The archive is described as one-second fractional-frequency ratios with MJD time tags.",
-      "observed": "Every MJD value in the sampled files is written with exactly 6 decimal places and is an exact multiple of 1e-6 d = 86.4 ms (1,564,882/1,564,882 sampled). The nominal 1 s grid appears as a dither between 0.9504 s (11 quanta) and 1.0368 s (12 quanta) in ratio 1.347775, against 1.347826 required for a mean of exactly 1 s; implied mean spacing 0.999999199 s.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#sample_spacing_histogram_s"],
+      "observed": "Every MJD value in the archive is written with exactly 6 decimal places and is an exact multiple of 1e-6 d = 86.4 ms: 9,018,290 of 9,018,290 values tested, 0 exceptions (mjd_quantum_check). The nominal 1 s grid appears as a dither between 0.9504 s (11 quanta) and 1.0368 s (12 quanta) in ratio 1.347775, against 1.347826 required for a mean of exactly 1 s; implied mean spacing 0.999999199 s. The archive declares no sampling grid, so the one-second grid is an INFERENCE strongly consistent with the observed dither, not a declared fact.",
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#mjd_quantum_check",
+        "phase0/reports/optical-inventory-summary.json#sample_spacing_histogram_s",
+        "phase0/reports/optical-inventory-summary.json#sample_spacing_coverage"
+      ],
       "severity": "high",
-      "impact": "Maximum timestamp error from quantisation is +/-43.2 ms, i.e. 4.3% of the sampling interval. Any cross-domain alignment involving these records is bounded at ~43 ms, roughly eight orders of magnitude coarser than the fractional-frequency precision of the comparisons themselves. A consumer taking the MJD column at face value will mis-state the achieved resolution.",
-      "workaround": "Reconstruct the underlying 1 s grid by index rather than by reading the MJD column; record the quantisation as a floor in the alignment certificate.",
+      "impact": "Under the one-second-grid model the maximum serialisation error is +/-43.2 ms, 4.3% of the nominal sampling interval. Any cross-domain alignment involving these records is bounded at ~43 ms by serialisation alone. That bound is not commensurable with the 1e-17-level fractional-frequency uncertainty the same files report -- a time quantum and a dimensionless ratio are different kinds of quantity, and no ratio between them is meaningful -- but it is the binding limit on placing these records on any shared time axis.",
+      "workaround": "If the one-second-grid model is accepted, reconstruct epochs by sample index rather than by reading the MJD column, and record the model as a stated assumption.",
       "proposed_response": "Request time tags at a precision commensurate with the sampling interval, or an explicit statement of the intended time-tag epoch and its uncertainty.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1", "software": "src/ftro/analyse_optical.py"}
+      "links": {
+        "profile": "v0.0.1",
+        "software": "src/ftro/analyse_optical.py"
+      }
     },
     {
-      "id": "FTRO-DEF-003", "version": "1.0.0", "class": "source_evidence",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-003",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "ref_osc, interval, lag and weighting are absent from every comparison, leaving the time-tag realisation unresolved",
       "failed_step": "Task card section 5.1 required action: 'Extract the declared ref_osc, interval, lag and weighting fields.'",
       "known_fact": "The pinned format defines all four as OPTIONAL YAML fields: ref_osc = 'Local reference oscillator'; interval = 'Duration of each measurement, in seconds'; lag = 'Fractional timetag location wrt the interval (1=end of the interval)'; weighting = 'Weighting function of the frequency counter'.",
       "observed": "None of the four keys appears in any of the 12 YAML files. Observed keys are exactly: denrhoBA, grsA, grsB, name, nu0A, nu0B, numrhoBA, sB, uA_sys, uB_sys.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#comparisons[].yaml_keys", "data/raw/evidence/olf-README.md"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#comparisons[].yaml_keys",
+        "data/raw/evidence/olf-README.md"
+      ],
       "severity": "critical",
       "impact": "The omission is spec-conformant (the fields are optional) but evidentially fatal for the pilot's headline question. Without `lag` the time tag cannot be placed within its own integration interval; without `interval` the integration duration is unknown; without `weighting` the counter response is unknown; without `ref_osc` the local reference oscillator is unnamed. The optical time-tag ancestry chain therefore terminates at evidence_state=unresolved inside the archive boundary.",
       "workaround": "None available from the archive. See phase0/optical-timetag-ancestry-note.md.",
       "proposed_response": "Request the four optional fields from the depositors; propose to the format maintainers that ref_osc, interval and lag become REQUIRED when the file is published as a citable archive.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-004", "version": "1.0.0", "class": "source_evidence",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-004",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "Comparator output is formally ambiguous between two documented physical interpretations",
       "failed_step": "Assigning a single physical interpretation to the published comparator output.",
       "known_fact": "The pinned format's 'Examples of comparator outputs' table lists two rows with identical rho0 = nu0B/nu0A and sB = nu0B, distinguished ONLY by the reference oscillator: Ref = A gives Delta = rho-tilde(B,A) ('Frequency of B referenced to A, relative units'); Ref = local RF gives Delta = rho-tilde(B,x) - rho-tilde(A,x) ('Difference of reduced frequency ratios, using an external reference x').",
       "observed": "All 12 comparisons use rho0 = nu0B/nu0A and sB = nu0B (numrhoBA equals nu0B and denrhoBA equals nu0A to within float64 round-trip artifacts). `ref_osc` is absent in all 12.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#comparisons[].yaml_values", "data/raw/evidence/olf-README.md"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#comparisons[].yaml_values",
+        "data/raw/evidence/olf-README.md"
+      ],
       "severity": "critical",
       "impact": "The archive cannot, from its own contents, distinguish which of two documented interpretations applies. The two have different reference oscillators and therefore different time-tag ancestry. This is a direct consequence of FTRO-DEF-003 and is the reason the optical leg cannot be resolved to a station time scale.",
       "workaround": "Record both candidate interpretations as competing assertions rather than selecting one.",
       "proposed_response": "Request ref_osc from the depositors.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-005", "version": "1.0.0", "class": "schema",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-005",
+      "version": "1.1.0",
+      "class": "schema",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "A semantically significant second systematic uncertainty is carried in a column the format declares ignorable",
       "failed_step": "Expressing both clocks' systematic uncertainties within the pinned format.",
       "known_fact": "The pinned format defines column 4 as 'time-varying systematic uncertainty (optional, for accurate clocks only)' and column >4 as 'custom information. Not used in automatic data analysis scripts.'",
       "observed": "All 252 data files carry five columns. The header names column 5 `uB_sys`, and it holds the B-side systematic uncertainty. Under the pinned specification a conforming consumer would discard it.",
-      "evidence": ["data/raw/evidence/olf-README.md", "phase0/reports/optical-inventory-summary.json#comparisons[].uncertainty_consistency"],
+      "evidence": [
+        "data/raw/evidence/olf-README.md",
+        "phase0/reports/optical-inventory-summary.json#comparisons[].uncertainty_consistency"
+      ],
       "severity": "medium",
-      "impact": "The format cannot express two per-sample systematic uncertainties. A spec-conforming reader silently drops half the uncertainty budget. This is a schema limitation of the pinned format, not a mistake by the depositors.",
+      "impact": "The format cannot express two per-sample systematic uncertainties. A spec-conforming reader silently drops half the uncertainty budget. This is a schema limitation of the pinned format; the departure is structurally permitted by it.",
       "workaround": "Read column 5 explicitly, documenting the departure from the pinned specification.",
       "proposed_response": "Propose a uB_sys column to the format maintainers.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-006", "version": "1.0.0", "class": "source_evidence",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-006",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "YAML scalar uncertainties disagree with the per-sample uncertainty columns",
       "failed_step": "Selecting a single systematic-uncertainty value per comparison side.",
       "known_fact": "The pinned format defines YAML `uA_sys`/`uB_sys` as 'fractional uncertainty of the oscillator (optional)' and column 4 as the time-varying systematic uncertainty.",
       "observed": "For 4 of 12 comparisons the YAML scalar differs from every value in the corresponding column, e.g. INRIM_ITYb1-SYRTE_Sr2 declares uB_sys = 2.2e-17 while the column takes 5 distinct values spanning 2.1e-17 to 2.3e-17. Elsewhere the YAML key is absent while the column is populated, and vice versa.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#comparisons[].uncertainty_consistency"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#comparisons[].uncertainty_consistency"
+      ],
       "severity": "medium",
       "impact": "Uncertainty propagation into an alignment certificate is ambiguous: the scalar and the series are both plausible authorities and the format does not say which prevails.",
       "workaround": "Prefer the per-sample column where present; record the scalar as a separate provider assertion.",
       "proposed_response": "Ask the format maintainers to state precedence when both are supplied.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-007", "version": "1.0.0", "class": "execution",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-007",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "Named generating scripts are not present in the archive and no environment specification is supplied",
       "failed_step": "Instantiating the recorded software environment for a cold reproduction (task card section 16 step 4).",
       "known_fact": "Task card section 5.1 states the record contents include 'processing code'.",
       "observed": "The archive contains exactly 252 .dat and 12 .yml files; no code, README, licence or environment file. Data-file headers name two generating scripts, `06-procclocks-v3.py` (11 comparisons, generated 2025-01-20) and `convert-to-rocit.py` (NPL-Yb+(E3)-NPL-Sr1 only, generated 2024-04-22). Neither script is in the archive.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#comparisons[].generation_headers"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#comparisons[].generation_headers"
+      ],
       "severity": "high",
       "impact": "The optical processing step cannot be re-executed. The card's section 5.1 description of the record contents is not supported by the bytes.",
       "workaround": "Treat the .dat files as the earliest reproducible artifact; the transformation that produced them is opaque.",
       "proposed_response": "Request the two scripts and an environment lock; correct the card's section 5.1 description in v0.4.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-008", "version": "1.0.0", "class": "source_evidence",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-008",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "One comparison was produced by a different pipeline at a different epoch",
       "failed_step": "Treating the archive as a single homogeneous product.",
       "known_fact": "The archive is published as one Zenodo record with one DOI.",
       "observed": "NPL-Yb+(E3)-NPL-Sr1 was generated by `convert-to-rocit.py` on 2024-04-22T14:53:18+02:00; the other 11 comparisons by `06-procclocks-v3.py` on 2025-01-20 between 17:01:50 and 17:04:07 +01:00. NPL-Yb+(E3)-NPL-Sr1 is also the only comparison with no support inside the candidate window (it begins at MJD 59647.73).",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#comparisons[].generation_headers"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#comparisons[].generation_headers"
+      ],
       "severity": "medium",
       "impact": "The archive is two provenance branches under one identifier. Snapshot identity at record level conceals a heterogeneous derivation history.",
       "workaround": "Model the NPL comparison as a separate derivation branch in the ancestry graph.",
       "proposed_response": "Record two generating activities in the manifest rather than one.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-009", "version": "1.0.0", "class": "source_evidence",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-009",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "Declared coverage begins 1.8 days before the first actual sample",
       "failed_step": "Computing actual support (task card section 6: no inference from campaign boundaries).",
       "known_fact": "The Zenodo record and task card section 5.1 state coverage MJD 59630-59675.",
       "observed": "The earliest sample in the archive is MJD 59631.78854 (PTB_Yb_CombKnoten-INRIM_ITYb1); the latest is MJD 59675.00000.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#comparisons[].mjd_first"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#comparisons[].mjd_first"
+      ],
       "severity": "low",
       "impact": "Declared coverage overstates support at the lower bound by 1.789 days. This directly affects the four-domain intersection test, in which the pulsar observation falls in exactly that unsupported region.",
       "workaround": "Use computed support; ignore the declared range.",
       "proposed_response": "Correct the coverage statement in card v0.4.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-010", "version": "1.0.0", "class": "schema",
-      "domain": "optical", "dataset": "doi:10.5281/zenodo.17107693",
+      "id": "FTRO-DEF-010",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107693",
       "title": "Arbitrary-precision nominal ratios carry float64 round-trip artifacts",
       "failed_step": "Consuming numrhoBA/denrhoBA at the precision the format promises.",
       "known_fact": "The pinned format types numrhoBA and denrhoBA as 'Arbitrary precision floating point', explicitly so the nominal ratio is exact.",
       "observed": "7 of 12 numrhoBA values differ from the corresponding nu0B by ~1e-13 Hz, e.g. '518295836590863.6000000000002' against '518295836590863.6' (relative 3.9e-28). sB is additionally truncated to double precision, e.g. 642121496772645.1 against nu0B 642121496772645.12.",
-      "evidence": ["phase0/reports/optical-inventory-summary.json#comparisons[].yaml_values"],
+      "evidence": [
+        "phase0/reports/optical-inventory-summary.json#comparisons[].yaml_values"
+      ],
       "severity": "low",
       "impact": "Physically negligible at 1e-28 relative, but it defeats the arbitrary-precision intent of the field and shows the value passed through a float64. A downstream consumer chaining many comparisons cannot rely on exactness.",
       "workaround": "Round to the declared nominal frequency when the intent is unambiguous, recording the correction.",
       "proposed_response": "Serialise these fields as exact decimal strings without a float round-trip.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-011", "version": "1.0.0", "class": "source_evidence",
-      "domain": "pulsar", "dataset": "doi:10.25919/j4xr-wp05",
+      "id": "FTRO-DEF-011",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "pulsar",
+      "dataset": "doi:10.25919/j4xr-wp05",
       "title": "Timing model requests TT(BIPM2020) but the release ships a TT(BIPM2021) clock file",
       "failed_step": "Assembling a self-consistent clock chain from artifacts inside one data release.",
       "known_fact": "`toas_and_parameters/all/J0437-4715.par` declares `CLK TT(BIPM2020)`.",
       "observed": "The only TAI-to-TT artifact in `toas_and_parameters/clock/` is `tai2tt_bipm2021.clk`, whose header reads '# TAI TT(BIPM2021)'. No TT(BIPM2020) artifact is present in the release.",
-      "evidence": ["data/raw/ppta/J0437-4715.par", "data/raw/ppta/tai2tt_bipm2021.clk", "phase0/applicability/AA-PPTA-CLKREALISATION-001.md"],
+      "evidence": [
+        "data/raw/ppta/J0437-4715.par",
+        "data/raw/ppta/tai2tt_bipm2021.clk",
+        "phase0/applicability/AA-PPTA-CLKREALISATION-001.md"
+      ],
       "severity": "high",
       "impact": "Two artifacts in the same release specify different realisations of terrestrial time. A reproducer cannot satisfy the .par's declared CLK from the release contents alone. The discrepancy is recorded as an ApplicabilityAssessment with an indeterminate outcome, not silently resolved.",
       "workaround": "None applied. Both assertions are retained; no substitution is made.",
       "proposed_response": "Ask the PPTA team which realisation was actually applied during production of the shipped TOAs.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1", "assessment": "AA-PPTA-CLKREALISATION-001"}
+      "links": {
+        "profile": "v0.0.1",
+        "assessment": "AA-PPTA-CLKREALISATION-001"
+      }
     },
     {
-      "id": "FTRO-DEF-012", "version": "1.0.0", "class": "source_evidence",
-      "domain": "pulsar", "dataset": "doi:10.25919/j4xr-wp05",
-      "title": "No Earth-orientation artifact is identified anywhere in the release",
+      "id": "FTRO-DEF-012",
+      "version": "1.1.0",
+      "class": "source_evidence",
+      "domain": "pulsar",
+      "dataset": "doi:10.25919/j4xr-wp05",
+      "title": "The selected timing model declares no Earth-orientation artifact, and none is identified in the retrieved release inventory",
       "failed_step": "Recovering the exact EOP artifact consumed by the PPTA timing solution (task card section 15.1).",
       "known_fact": "Barycentring a pulsar TOA requires an Earth-orientation series. The card pre-registered the expectation that this node 'may terminate at a bundled or regenerated artifact whose ancestry to a particular IERS C04 snapshot is opaque.'",
-      "observed": "`J0437-4715.par` contains zero occurrences of EOP, UT1, IERS, C04 or polar-motion terms. The release's `clock/` directory contains only pks2gps.clk and tai2tt_bipm2021.clk. The EOP dependency is satisfied implicitly by the TEMPO2 runtime, which is not shipped or versioned in the release.",
-      "evidence": ["data/raw/ppta/J0437-4715.par", "data/raw/ppta/dr3-part1-files.json"],
+      "observed": "J0437-4715.par contains zero occurrences of EOP, UT1, IERS, C04 or polar motion. The release's clock/ directory contains only pks2gps.clk and tai2tt_bipm2021.clk. The release identifies no EOP artifact. Barycentring requires an Earth-orientation series, so one must have been supplied by the production environment; the TEMPO2 runtime is the most likely source, but that is an INFERENCE and no runtime is shipped or versioned in the release. SCOPE: verified against J0437-4715.par and the part-1 file listing; the part-2 listing and the remaining ~2.77 TB were not searched.",
+      "evidence": [
+        "data/raw/ppta/J0437-4715.par",
+        "data/raw/ppta/dr3-part1-files.json"
+      ],
       "severity": "high",
-      "impact": "PRE-REGISTERED EXPECTATION CONFIRMED, and in a stronger form than anticipated: the artifact is not merely opaque, it is unidentified. evidence_state = unresolved. This removes the most likely IVS-to-pulsar shared-ancestry path, because the pulsar side of that path cannot be evidenced at all.",
+      "impact": "PRE-REGISTERED EXPECTATION NOT MET AS WRITTEN: card §15.1 anticipated a bundled or regenerated artifact whose ancestry to a C04 snapshot is OPAQUE. The observed outcome is different and more severe -- the artifact is UNIDENTIFIED, evidence_state = unresolved -- so the expectation is not strictly confirmed. This removes the most likely IVS-to-pulsar shared-ancestry path, because the pulsar side cannot be evidenced at all.",
       "workaround": "None. No modern C04 snapshot is substituted, per task card section 20.",
       "proposed_response": "Ask the PPTA team for the TEMPO2 runtime revision and the eopc04 file actually present at production time.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-013", "version": "1.0.0", "class": "source_evidence",
-      "domain": "pulsar", "dataset": "doi:10.25919/j4xr-wp05",
+      "id": "FTRO-DEF-013",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "pulsar",
+      "dataset": "doi:10.25919/j4xr-wp05",
       "title": "Timing model's fit metadata does not correspond to the co-located TOA file",
       "failed_step": "Verifying that the shipped .par was fitted to the shipped .tim.",
       "known_fact": "`toas_and_parameters/all/` is described by the release README as 'the .tim and .par files for the full data set'.",
       "observed": "`J0437-4715.par` records `NTOA 20836` and `CHI2R 23.8024 20780`, implying a fit against 20,836 TOAs. `J0437-4715.tim` contains 11,637 TOA lines and no INCLUDE, JUMP, EFAC or EQUAD directives that could reconcile the difference. START and FINISH in the .par do match the .tim's first and last TOA epochs.",
-      "evidence": ["data/raw/ppta/J0437-4715.par", "data/raw/ppta/J0437-4715.tim"],
+      "evidence": [
+        "data/raw/ppta/J0437-4715.par",
+        "data/raw/ppta/J0437-4715.tim"
+      ],
       "severity": "medium",
       "impact": "A cold reproducer loading this .par with this .tim cannot reproduce the quoted chi-squared. The .par may have been fitted against a different (e.g. combined narrowband-plus-wideband) TOA set. Recorded as an observation requiring assessment, not as a proven error.",
       "workaround": "None. Recorded as an open ApplicabilityAssessment.",
       "proposed_response": "Ask the PPTA team which TOA set produced the shipped fit metadata.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1", "assessment": "AA-PPTA-TIMINGMODEL-001"}
+      "links": {
+        "profile": "v0.0.1",
+        "assessment": "AA-PPTA-TIMINGMODEL-001"
+      }
     },
     {
-      "id": "FTRO-DEF-014", "version": "1.0.0", "class": "rights",
-      "domain": "pulsar", "dataset": "doi:10.25919/j4xr-wp05",
+      "id": "FTRO-DEF-014",
+      "version": "1.0.0",
+      "class": "rights",
+      "domain": "pulsar",
+      "dataset": "doi:10.25919/j4xr-wp05",
       "title": "PPTA DR3 is CC BY-SA 4.0, incompatible with the CC BY 4.0 assigned to FTRO metadata outputs",
       "failed_step": "Assigning a redistribution mode for pulsar-leg content under task card section 7A.",
       "known_fact": "Task card section 7A assigns CC BY 4.0 to FTRO-authored manifests, graph metadata, certificates, ledgers and documentation, and states that provider content retains its own licence and is never relicensed by inclusion.",
       "observed": "Both PPTA DR3 collections declare 'Creative Commons Attribution-ShareAlike 4.0 International Licence' together with the rights statement 'All Rights (including copyright) CSIRO 2023.' ShareAlike is a copyleft term; CC BY-SA 4.0 content cannot be incorporated into a CC BY 4.0 work.",
-      "evidence": ["ledgers/rights-ledger.md", "https://data.csiro.au/collection/csiro:59374"],
+      "evidence": [
+        "ledgers/rights-ledger.md",
+        "https://data.csiro.au/collection/csiro:59374"
+      ],
       "severity": "high",
       "impact": "Any FTRO output that incorporated PPTA descriptive content would inherit ShareAlike, contradicting section 7A. Factual pins (checksums, filenames, epochs) are not affected, but quoted description text is.",
       "workaround": "redistribution_mode = link_only for PPTA content; FTRO records facts and pointers only and quotes provider prose only under fair dealing with attribution.",
       "proposed_response": "State the CC BY / CC BY-SA boundary explicitly in Access Charter v0.1.",
       "disposition": "open",
-      "links": {"charter": "v0.1", "profile": "v0.0.1"}
+      "links": {
+        "charter": "v0.1",
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-015", "version": "1.0.0", "class": "source_evidence",
-      "domain": "pulsar", "dataset": "doi:10.25919/j4xr-wp05",
+      "id": "FTRO-DEF-015",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "pulsar",
+      "dataset": "doi:10.25919/j4xr-wp05",
       "title": "One data release, two DOIs, ~42% duplicated content and no manifest of the split",
       "failed_step": "Establishing a single concept identity and a single snapshot identity for 'PPTA DR3'.",
       "known_fact": "Task card section 5.2 treats PPTA DR3 as one dataset.",
       "observed": "DR3 is published as two separately-DOI'd DAP collections: csiro:59374 (10.25919/j4xr-wp05, 109,298 files, 1.426 TB) and csiro:59381 (10.25919/axvw-qa43, 106,393 files, 1.348 TB). They share 90,884 identical file paths, including the entire dr2/profiles tree and the entire toas_and_parameters tree; only 18,414 and 15,509 files respectively are unique. Both are dataVersionNumber 2. Neither collection states which files are unique to it.",
-      "evidence": ["data/raw/ppta/dr3-part1-files.json", "data/raw/ppta/dr3-part2-files.json"],
+      "evidence": [
+        "data/raw/ppta/dr3-part1-files.json",
+        "data/raw/ppta/dr3-part2-files.json"
+      ],
       "severity": "medium",
       "impact": "'PPTA DR3' has no single provider PID. Citing either DOI alone is incomplete; citing both implies 2.77 TB when the union is smaller. Concept identity requires an FTRO-composed identifier over the pair.",
       "workaround": "Define an FTRO concept identity spanning both DOIs and record the computed part overlap.",
       "proposed_response": "Ask CSIRO for a parent collection or an explicit split manifest.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-016", "version": "1.0.0", "class": "source_evidence",
-      "domain": "pulsar", "dataset": "IPTA/pulsar-clock-corrections",
+      "id": "FTRO-DEF-016",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "pulsar",
+      "dataset": "IPTA/pulsar-clock-corrections",
       "title": "Pinned gps2utc.clk contains 64 duplicate MJD abscissae with differing ordinates",
       "failed_step": "Interpolating the GPS-to-UTC correction deterministically.",
       "known_fact": "The artifact is a two-column table of MJD against correction in seconds, consumed by TEMPO2 as an interpolable series.",
       "observed": "Verification procedure VP-GPS2UTC-001 v1.0.0 found 64 repeated MJD values, 45 of them carrying two different ordinates, with a maximum difference of 1.0e-09 s. One of them, MJD 55559.0, is the C0-to-C0' regime boundary itself, where the two entries differ by 3.0e-10 s. Rows are otherwise non-decreasing in MJD.",
-      "evidence": ["phase0/evidence/VA-GPS2UTC-001.json"],
+      "evidence": [
+        "phase0/evidence/VA-GPS2UTC-001.json"
+      ],
       "severity": "medium",
       "impact": "Interpolation at a duplicated abscissa is implementation-dependent; two conforming readers may differ by up to 1 ns. No duplicate falls inside the candidate window, so the pilot is unaffected, but the defect is latent for other epochs.",
       "workaround": "None needed for this pilot; the candidate window is clean.",
       "proposed_response": "Report upstream to the IPTA repository maintainers.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1", "verification": "VA-GPS2UTC-001"}
+      "links": {
+        "profile": "v0.0.1",
+        "verification": "VA-GPS2UTC-001"
+      }
     },
     {
-      "id": "FTRO-DEF-017", "version": "1.0.0", "class": "source_evidence",
-      "domain": "pulsar", "dataset": "doi:10.25919/j4xr-wp05",
+      "id": "FTRO-DEF-017",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "pulsar",
+      "dataset": "doi:10.25919/j4xr-wp05",
       "title": "TT(BIPM2021) values at the candidate epoch are extrapolated, not published BIPM values",
       "failed_step": "Evidencing the terrestrial-time realisation applied at the TOA epoch.",
       "known_fact": "TT(BIPM20xx) is an annually published BIPM realisation.",
       "observed": "`tai2tt_bipm2021.clk` header states: 'BIPM extrapolation using the formula: 32.184 + 27667.5ns - 0.01(MJD - 59579.0)ns'. The candidate epoch MJD 59630.4675 lies 51.5 days after the extrapolation reference epoch MJD 59579. The tabulated values at MJD 59629 and 59639 reproduce the formula exactly, confirming extrapolation rather than measurement. The table extends to MJD 99999.",
-      "evidence": ["data/raw/ppta/tai2tt_bipm2021.clk"],
+      "evidence": [
+        "data/raw/ppta/tai2tt_bipm2021.clk"
+      ],
       "severity": "medium",
       "impact": "The terrestrial-time leg at the candidate epoch is a linear extrapolation with no stated uncertainty, superseded by every later BIPM realisation. Bitemporally this is a living series consumed at an a-priori state, and it must not be displayed as a measured BIPM value.",
       "workaround": "Record the extrapolation formula and its reference epoch as the evidence, not a BIPM publication.",
       "proposed_response": "Compare against the published TT(BIPM2022+) values for the same epoch and quantify the divergence in Phase 3.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-018", "version": "1.0.0", "class": "rights",
-      "domain": "vlbi", "dataset": "CDDIS IVS archive",
+      "id": "FTRO-DEF-018",
+      "version": "1.1.0",
+      "class": "rights",
+      "domain": "vlbi",
+      "dataset": "CDDIS IVS archive",
       "title": "CDDIS returns an Earthdata login page with HTTP 200 instead of an authentication error",
       "failed_step": "Anonymous retrieval of the IVS master schedule from CDDIS.",
       "known_fact": "A retrieval that requires authentication should signal it, conventionally with HTTP 401 or 403.",
       "observed": "GET https://cddis.nasa.gov/archive/vlbi/ivsdata/master/2022/master2022.txt returned HTTP 200 with 10,980 bytes of Earthdata Login HTML, whose <title> is 'Earthdata Login'. The bytes checksum cleanly and would pass a naive size-and-checksum retrieval test.",
-      "evidence": ["labnotes/2026-08-25-session-01-phase0.md"],
+      "evidence": [
+        "labnotes/2026-08-25-session-01-phase0.md"
+      ],
       "severity": "high",
       "impact": "A federation retrieval procedure that validates only status code and checksum will silently pin a login page as if it were data, then propagate that checksum as evidence. This affects FTRO's own tooling: src/ftro/pin_igs.py has the same weakness and is recorded here as a known limitation.",
-      "workaround": "IVS session metadata was obtained from https://ivscc.gsfc.nasa.gov/sessions/2022/ instead. Retrieval procedures must add content-type and content-shape validation.",
-      "proposed_response": "Add a soft-auth-wall detector to all FTRO retrieval procedures before Phase 1; record CDDIS as access_class = registered.",
-      "disposition": "open",
-      "links": {"profile": "v0.0.1", "software": "src/ftro/pin_igs.py"}
+      "workaround": "IVS session metadata was obtained from https://ivscc.gsfc.nasa.gov/sessions/2022/ instead, and the vgosDB itself from OPAR (see FTRO-DEF-025).",
+      "proposed_response": "RESOLVED for FTRO tooling 2026-08-25: src/ftro/pin_igs.py and src/ftro/pin_vgosdb.py now perform content-shape validation (HTML/auth-marker detection, magic-byte checks, archive-structure checks) and emit retrieval_validation=content_validated. A regression test against the live CDDIS URL confirms the validator rejects the Earthdata login page that status-and-checksum alone accepted. Profile v0.0.1 §9.2 requires content_validated before evidence_state=resolvable. The CDDIS behaviour itself is unchanged and remains reportable upstream; the PPTA leg is still pinned at status_and_checksum only.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.1",
+        "software": "src/ftro/pin_igs.py"
+      }
     },
     {
-      "id": "FTRO-DEF-019", "version": "1.0.0", "class": "source_evidence",
-      "domain": "gnss", "dataset": "IGS operational products",
+      "id": "FTRO-DEF-019",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "gnss",
+      "dataset": "IGS operational products",
       "title": "Product availability time is mirror-derived, not provider-declared",
       "failed_step": "Recording a provider-authoritative first-availability time for the bitemporal resolver.",
       "known_fact": "Task card section 10 requires release time and first availability time as distinct primitives; section 13.3 requires resolver fixtures keyed on knowledge date.",
       "observed": "The pinned artifacts carry only the BKG mirror's HTTP Last-Modified header, e.g. igr21980 at 2022-02-21T17:30:12Z and igs21980 at 2022-03-13T11:46:51Z. These are mirror file times, which approximate but are not identical to IGS release times. No IGS-declared release timestamp was located for these artifacts.",
-      "evidence": ["phase0/reports/igs-artifact-pins.json"],
+      "evidence": [
+        "phase0/reports/igs-artifact-pins.json"
+      ],
       "severity": "medium",
       "impact": "The bitemporal resolver fixtures are keyed on an approximation. The Rapid-to-Final ordering (about 1 day against about 21 days) is robust, but a knowledge date within hours of a boundary is not decidable from this evidence.",
       "workaround": "Record availability as mirror-derived with evidence_state = resolvable and an explicit provenance note.",
       "proposed_response": "Seek an IGS-authoritative product release log for GPS weeks 2198-2199.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1", "software": "src/ftro/pin_igs.py"}
+      "links": {
+        "profile": "v0.0.1",
+        "software": "src/ftro/pin_igs.py"
+      }
     },
     {
-      "id": "FTRO-DEF-020", "version": "1.0.0", "class": "source_evidence",
-      "domain": "gnss", "dataset": "IGS operational products",
+      "id": "FTRO-DEF-020",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "gnss",
+      "dataset": "IGS operational products",
       "title": "High-rate 30 s clock products are absent from the mirror used",
       "failed_step": "Pinning the clock artifact at the cadence a sub-daily alignment would require.",
       "known_fact": "IGS Final clock products are published at 5-minute cadence (.clk) and, for many weeks, 30-second cadence (.clk_30s).",
       "observed": "The BKG mirror listing for GPS weeks 2198 and 2199 contains .sp3, .clk and .erp only. No .clk_30s and no .sum summary files are present.",
-      "evidence": ["phase0/reports/igs-artifact-pins.json"],
+      "evidence": [
+        "phase0/reports/igs-artifact-pins.json"
+      ],
       "severity": "low",
       "impact": "Sub-5-minute GNSS clock interpolation cannot be evidenced from this data centre. Given that the optical leg's own time tags are quantised at 86.4 ms (FTRO-DEF-002), this is not currently the binding constraint.",
       "workaround": "Use the 5-minute Final clocks; record the cadence limit in the alignment certificate.",
       "proposed_response": "Locate a mirror carrying .clk_30s for these weeks if sub-5-minute alignment is later required.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-021", "version": "1.0.0", "class": "schema",
-      "domain": "cross-domain", "dataset": "FTRO profile v0.0.1",
+      "id": "FTRO-DEF-021",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.1",
       "title": "No vocabulary yet exists for a quantised time coordinate whose precision is coarser than its sampling interval",
       "failed_step": "Expressing FTRO-DEF-002 in the minimum record fields of task card section 10.",
       "known_fact": "Section 10 requires 'sampling interval, integration interval, estimator window and validity mask as distinct fields' and 'coordinate-time scale, timestamp format and physical realisation of the timestamp'.",
       "observed": "There is no field for the numerical resolution of the recorded time coordinate as serialised, which is distinct from the sampling interval and from the timestamp realisation. The optical leg needs all three: 1 s sampling, 86.4 ms serialisation quantum, unresolved physical realisation.",
-      "evidence": ["profile/ftro-graph-profile-v0.0.1.md"],
+      "evidence": [
+        "profile/ftro-graph-profile-v0.0.1.md"
+      ],
       "severity": "medium",
       "impact": "Without this field the achieved-resolution figure in an alignment certificate cannot be traced to its cause.",
       "workaround": "Profile v0.0.1 adds `time_coordinate_quantum` and `time_coordinate_quantum_evidence` as a candidate FTRO extension.",
       "proposed_response": "Retain through Phase 6 and decide whether to freeze.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-022", "version": "1.0.0", "class": "execution",
-      "domain": "optical", "dataset": "INRIM/tintervals",
+      "id": "FTRO-DEF-022",
+      "version": "1.1.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "INRIM/tintervals",
       "title": "Pinned processing-evidence commit post-dates the data it is cited to explain by 19 months",
       "failed_step": "Treating the pinned tintervals commit as the software that produced the archive.",
       "known_fact": "Task card section 5.1 lists INRIM/tintervals at commit 2064db12777df78bc87f68f7710a47176192c2e1 as 'Processing evidence'.",
-      "observed": "That commit is dated 2026-08-16T16:00:18Z with message 'Prepare documentation for 0.3.0'. The archive's data files were generated on 2025-01-20 and 2024-04-22. The pinned commit therefore cannot be the software that produced them.",
-      "evidence": ["phase0/evidence/identities.json"],
+      "observed": "That commit is dated 2026-08-16T16:00:18Z with message 'Prepare documentation for 0.3.0'. The archive's data files were generated on 2025-01-20 and 2024-04-22. The pinned revision therefore cannot be the software that produced them; an earlier revision of the same tool is not excluded, and none is pinned.",
+      "evidence": [
+        "phase0/evidence/identities.json"
+      ],
       "severity": "medium",
       "impact": "The pin is valid as a snapshot of a related tool but must not be presented as the generating software. Its role is contextual, not causal.",
       "workaround": "Record tintervals with edge type `contextualized_by`, not `generated_by`.",
       "proposed_response": "Ask the depositors which tintervals revision was used; correct the card's section 5.1 wording in v0.4.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1"}
+      "links": {
+        "profile": "v0.0.1"
+      }
     },
     {
-      "id": "FTRO-DEF-023", "version": "1.0.0", "class": "policy",
-      "domain": "cross-domain", "dataset": "pilot window MJD 59630-59640",
+      "id": "FTRO-DEF-023",
+      "version": "1.1.0",
+      "class": "policy",
+      "domain": "cross-domain",
+      "dataset": "pilot window MJD 59630-59640",
       "title": "Candidate window contains no four-domain simultaneous support",
       "failed_step": "Task card section 2: constructing a four-domain walking skeleton for a common interval.",
       "known_fact": "The card proposes MJD 59630-59640 as a candidate, explicitly 'retained as test interval, not guaranteed overlap'.",
-      "observed": "Computed supports inside the window: GNSS 240.000 h (continuous), optical 197.075 h (upper bound), VLBI 123.500 h, pulsar 1.067 h (one observation, MJD 59630.445127-59630.489608). The pulsar support is disjoint from both optical (gap 31.174 h) and VLBI. Four-domain intersection is empty; optical+VLBI+GNSS intersect over 118.575 h.",
-      "evidence": ["phase0/reports/four-domain-intersection.json"],
+      "observed": "Computed supports inside the window: GNSS 240.000 h (daily product validity, upper bound), optical 133.112 h (EXACT union of 7,398 contiguous valid runs merged into 1,353 disjoint intervals), VLBI 123.500 h (scheduled session intervals, upper bound), pulsar 1.067 h (one observation, MJD 59630.445127-59630.489608). The pulsar support is disjoint from optical (gap 31.174 h) and from VLBI, but lies wholly inside GNSS product validity: gnss n pulsar = 1.067 h. Every THREE- and FOUR-domain combination containing the pulsar is therefore empty, as are the two pairs optical n pulsar and VLBI n pulsar. optical n VLBI n GNSS intersect over 82.013 h.",
+      "evidence": [
+        "phase0/reports/four-domain-intersection.json"
+      ],
       "severity": "high",
-      "impact": "Simultaneity across four domains is NOT DEMONSTRATED for this window. Per sections 6 and 20 the interval is not widened and no substitute dataset is introduced. The object continues as an ancestry and federation skeleton, and the alignment certificate will carry status no_common_support.",
+      "impact": "Simultaneity across four domains is NOT DEMONSTRATED for this window. Per §6 and §20 the interval is not widened and no substitute dataset is introduced. Because the VLBI and GNSS legs are upper bounds, refining them into exact per-observation support can only remove overlap, so the no_common_support result is robust under these conservative envelopes. The object continues as an ancestry and federation skeleton and the alignment certificate carries status no_common_support.",
       "workaround": "None applied by design.",
       "proposed_response": "Record as a pilot outcome. Any future window change is a new, versioned selection decision, not an amendment to this one.",
       "disposition": "open",
-      "links": {"profile": "v0.0.1", "selection_note": "phase0/selection-note-v0.1.md"}
+      "links": {
+        "profile": "v0.0.1",
+        "selection_note": "phase0/selection-note-v0.1.md"
+      }
+    },
+    {
+      "id": "FTRO-DEF-024",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "optical",
+      "dataset": "doi:10.5281/zenodo.17107692",
+      "title": "SELF-DIRECTED: FTRO composed a snapshot identity for a leg where the provider supplies one",
+      "failed_step": "Establishing concept and snapshot identity for the optical leg (task card §10, §11.3).",
+      "known_fact": "Task card §10 requires an FTRO-composed snapshot identity only 'when a provider supplies no immutable snapshot identifier'. Zenodo supplies a concept DOI (10.5281/zenodo.17107692) and a version DOI (10.5281/zenodo.17107693), asserted in four independent record fields: conceptdoi, conceptrecid, links.parent_doi vs links.self_doi, and metadata.relations.version[0].parent.pid_value.",
+      "observed": "Phase 0 recorded concept_id as the VERSION DOI, snapshot_kind as 'ftro_composed', and justified this with the note 'The record declares no version string (metadata.version is null), so concept and snapshot are not separable by provider metadata alone.' That reasoning is wrong in three ways: metadata.version is ABSENT rather than null; a human-readable version string has no bearing on PID separability; and the concept DOI was present in the cached record the pipeline had already read. The string '17107692' appeared nowhere in the repository.",
+      "evidence": [
+        "phase0/evidence/identities.json",
+        "data/raw/zenodo-17107693/record.json",
+        "labnotes/2026-08-26-session-02-review-corrections.md"
+      ],
+      "severity": "high",
+      "impact": "A false positive against task card §10's own precondition: FTRO invented an identity where the provider had supplied one, in the very leg used to demonstrate the two-level identity model. Had it stood, any consumer reconciling FTRO's identity against Zenodo's would have found no common identifier. This is the mirror image of the failure the project exists to catch -- not missing evidence, but available evidence not read.",
+      "workaround": "None needed; corrected in place.",
+      "proposed_response": "Corrected 2026-08-25: concept_id is now the concept DOI, snapshot_id the version DOI, snapshot_kind 'provider_immutable'. Added a rule to the profile: before composing an FTRO identity, record which provider fields were checked and found absent.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.1"
+      }
+    },
+    {
+      "id": "FTRO-DEF-025",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "vlbi",
+      "dataset": "IVS session R11040 vgosDB",
+      "title": "SELF-DIRECTED: a leg was recorded unresolved without canvassing alternative data centres",
+      "failed_step": "Establishing whether the R11040 vgosDB is publicly retrievable.",
+      "known_fact": "IVS distributes session data through several data centres. CDDIS requires an Earthdata login; OPAR (Observatoire de Paris) serves the same archives anonymously.",
+      "observed": "Phase 0 tried CDDIS, hit the soft authentication wall (FTRO-DEF-018), and recorded evidence_state = unresolved for the VLBI data products, reporting that credentials or a non-CDDIS route were needed. OPAR was not tried. It serves https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz anonymously: 19,610,760 bytes, SHA-256 0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54, validated as a gzip/tar vgosDB with 296 members.",
+      "evidence": [
+        "phase0/reports/vlbi-vgosdb-pin.json",
+        "src/ftro/pin_vgosdb.py"
+      ],
+      "severity": "high",
+      "impact": "An access-class conclusion was drawn from a single data centre. 'unresolved' asserted unavailability that was not established, which is exactly the kind of unsupported null the typed-incompleteness model is meant to prevent. Corrected: the vgosDB is now pinned and content-validated; the downstream analysis-centre product and IERS EOP series remain unresolved.",
+      "workaround": "None needed; corrected in place.",
+      "proposed_response": "Corrected 2026-08-25. Rule adopted: access_class may only be recorded after enumerating the provider's listed distribution channels, and the enumeration must be recorded.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.1",
+        "software": "src/ftro/pin_vgosdb.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-026",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "vlbi",
+      "dataset": "IVS session R11040 vgosDB",
+      "title": "A single vgosDB archive checksum does not pin which internal wrapper version was consumed",
+      "failed_step": "Assigning one snapshot identity to 'the R11040 vgosDB'.",
+      "known_fact": "A snapshot identity must name the immutable state actually consumed (task card §11.3).",
+      "observed": "The archive contains SEVEN wrapper files spanning FIVE internal versions (V001-V005) from THREE analysis centres (MPI, GSFC, IVS): V001_iMPI, V002_iGSFC, V003_iGSFC, V004_iGSFC, V004_iIVS, V005_iGSFC, V005_iIVS. The byte checksum pins the container, not the wrapper version a downstream analysis used. Separately, the HTTP Last-Modified is 2025-12-15T16:46:58Z, so this is a re-release rather than a frozen 2022 artifact.",
+      "evidence": [
+        "phase0/reports/vlbi-vgosdb-pin.json#wrappers",
+        "phase0/reports/vlbi-vgosdb-pin.json#internal_version_note"
+      ],
+      "severity": "medium",
+      "impact": "Two chains citing the same archive checksum may still have consumed different wrapper versions produced by different analysis centres. The profile's two-level identity is insufficient here: a third level (intra-archive version) is required. The 2025 Last-Modified also means the checksum pins THIS retrieval, not the session as released in 2022.",
+      "workaround": "Record the wrapper inventory alongside the archive checksum, as the pin report does.",
+      "proposed_response": "Add an intra-archive component to snapshot identity in the profile, and require any VLBI chain to name its wrapper version. Carry to Phase 6 freeze review.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.1"
+      }
+    },
+    {
+      "id": "FTRO-DEF-027",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "FTRO Phase-0 tooling",
+      "title": "SELF-DIRECTED: a headline verification count was not reproducible from any committed script",
+      "failed_step": "Supporting the FTRO-DEF-002 quantisation claim from committed evidence.",
+      "known_fact": "Task card §8.2 requires that no step depend on an undocumented manual convention, and decision D-003 records that retrieval and analysis are implemented as committed scripts.",
+      "observed": "Phase 0 reported the quantisation as 'verified on 1,564,882 of 1,564,882 sampled values' in five documents. That figure came from an ad-hoc interactive command that read only the first 40 .dat files; no committed script performed a decimal-place or 1e-6-multiple test, and the cited evidence pointer (sample_spacing_histogram_s) does not contain it. Separately, that histogram is truncated to the 20 most common spacings, covering 8,999,974 of 9,018,038 intervals, so it could not support an exceptionless claim either.",
+      "evidence": [
+        "src/ftro/analyse_optical.py#mjd_quantum_check",
+        "phase0/reports/optical-inventory-summary.json#sample_spacing_coverage"
+      ],
+      "severity": "high",
+      "impact": "A quantitative claim in the strongest optical finding rested on an unrecorded sample of 0.44% of the corpus while reading as an exhaustive census. The underlying finding survives -- the committed test now covers 9,018,290 of 9,018,290 values with 0 exceptions -- but the evidence discipline failed, in the same class of error this ledger exists to record.",
+      "workaround": "None; the test is now implemented and the counts regenerated.",
+      "proposed_response": "Corrected 2026-08-25: analyse_optical.py emits mjd_quantum_check and sample_spacing_coverage. Rule adopted: a number quoted in a finding must be traceable to a key in a committed report, and evidence pointers must name that key.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.1",
+        "software": "src/ftro/analyse_optical.py"
+      }
     }
-  ]
+  ],
+  "revised": "2026-08-25",
+  "revision_note": "Revised after external review of the Phase-0 commit fdbf2b9. Entries 001-023 retain their identifiers; 002, 005, 012, 018, 022 and 023 are revised in place with incremented versions. Entries 024-027 are new, three of them self-directed against FTRO's own work."
 }
