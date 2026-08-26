@@ -79,6 +79,9 @@ def main():
         checked += 1
         if v_now is None:
             problems.append((path, f"declared version {v_was} was removed"))
+        elif v_was is None:
+            # The document gained a version. Nothing to advance from; not a fault.
+            print(f"ok   {path} (none) -> {v_now}")
         elif v_now == v_was:
             problems.append((path, f"content changed but version is still {v_now}"))
         else:

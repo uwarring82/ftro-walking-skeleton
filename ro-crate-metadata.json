@@ -405,7 +405,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "129429",
+      "contentSize": "131199",
       "name": "deficiency-log.json"
     },
     {
@@ -415,7 +415,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "130605",
+      "contentSize": "132404",
       "name": "deficiency-log.md"
     },
     {
@@ -774,7 +774,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "70117"
+      "contentSize": "72037"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -1007,7 +1007,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "3988"
+      "contentSize": "4151"
     },
     {
       "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md",
@@ -1156,7 +1156,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3775"
+      "contentSize": "4156"
     },
     {
       "@id": "phase0/reports/audit-2026-08-26.md",
@@ -1166,7 +1166,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2104"
+      "contentSize": "2693"
     },
     {
       "@id": "labnotes/2026-08-26-session-12-consolidation.md",
@@ -1176,7 +1176,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "8224"
+      "contentSize": "8884"
     },
     {
       "@id": "src/ftro/schema.py",

@@ -1214,6 +1214,30 @@ class TestVersionGate(unittest.TestCase):
         self.assertEqual(r.returncode, 1, "the version gate did not detect content drift")
         self.assertIn("content changed but version is still", r.stderr)
 
+    def test_gaining_a_version_is_not_a_fault(self):
+        """A previously unversioned document that gains a version has nothing to advance from.
+
+        Found by running the gate against HEAD~1 after the consolidation commit: the
+        branch was unguarded and raised AttributeError.
+        """
+        def mutate(work):
+            t = os.path.join(work, "ledgers", "source-ledger.md")
+            with open(t, encoding="utf-8") as fh:
+                body = fh.read()
+            with open(t, "w", encoding="utf-8") as fh:
+                fh.write(body.replace("**Version:** 0.4.0 · ", "", 1))
+        work = self._mutated_repo(mutate)
+        env = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
+               "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+        subprocess.run(["git", "commit", "--quiet", "-am", "drop version"],
+                       cwd=work, capture_output=True, timeout=120, env=env)
+        with open(os.path.join(work, "ledgers", "source-ledger.md"), "w",
+                  encoding="utf-8") as fh:
+            fh.write(self.BASELINE)
+        r = self._run(work)
+        self.assertEqual(r.returncode, 0, f"gaining a version was treated as a fault: {r.stderr}")
+        self.assertNotIn("Traceback", r.stderr)
+
     def test_version_downgrade_is_detected(self):
         def mutate(work):
             t = os.path.join(work, "ledgers", "source-ledger.md")

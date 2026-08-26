@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.13.0  
+**Version:** 0.14.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (37), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (35), low (3), medium (23)  
-**By domain:** cross-domain (24), gnss (5), optical (20), pulsar (8), vlbi (6)  
-**By disposition:** open (24), resolved (39)  
-**By responsible party:** ftro (39), provider (24)  
-**By finding type:** assurance_gap (7), current_defect (16), external_evidence_gap (17), latent_regression (22), recorded_outcome (1)  
-**By affects:** blocks_workflow (11), changes_result (12), maintenance_only (8), no_present_effect (32)  
+**By class:** execution (38), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (35), low (3), medium (24)  
+**By domain:** cross-domain (25), gnss (5), optical (20), pulsar (8), vlbi (6)  
+**By disposition:** open (24), resolved (40)  
+**By responsible party:** ftro (40), provider (24)  
+**By finding type:** assurance_gap (7), current_defect (17), external_evidence_gap (17), latent_regression (22), recorded_outcome (1)  
+**By affects:** blocks_workflow (11), changes_result (12), maintenance_only (9), no_present_effect (32)  
 
-**Total entries:** 63 · **self-directed:** 39
+**Total entries:** 64 · **self-directed:** 40
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries that could change the Phase-0 result and are not external evidence gaps.**
 >
@@ -85,6 +85,7 @@
 | [`FTRO-DEF-052`](#ftro-def-052) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the discovery suffix list advertised formats the pattern could not parse |
 | [`FTRO-DEF-056`](#ftro-def-056) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: container-shape checks ran only when the container was already the right type |
 | [`FTRO-DEF-057`](#ftro-def-057) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the 'nothing was fetched' test measured 'nothing was cached' |
+| [`FTRO-DEF-064`](#ftro-def-064) | execution | medium | current_defect | maintenance_only | **self** | SELF-DIRECTED: the git-based version gate crashed on a document that gains a version |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | external_evidence_gap | changes_result | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | current_defect | no_present_effect | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | external_evidence_gap | no_present_effect | provider | High-rate 30 s clock products are absent from the mirror used |
@@ -2280,5 +2281,40 @@
 **Workaround.** None.
 
 **Proposed response.** Adopted 2026-08-26. Rule (D-080): freeze the acceptance scope and pre-register the audit before the next fix round.
+
+---
+
+### FTRO-DEF-064
+
+**SELF-DIRECTED: the git-based version gate crashed on a document that gains a version**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO version gate` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Running check_versions.py --check --base HEAD~1 after the consolidation commit.
+
+**Known fact or required evidence.** A previously unversioned document that gains a version has no prior version to advance from.
+
+**Observed.** The rewritten gate handled content-change, downgrade and removal but fell through to the ordering comparison when the previous version was absent, raising AttributeError on None.split(). Found by running the gate against HEAD~1 immediately after committing it -- the fault model's M12 covered only the three cases I had thought of.
+
+**Evidence.**
+
+- `src/ftro/check_versions.py`
+- `phase0/audit-fault-model-v1.0.md`
+
+**Impact.** A maintenance command crashed rather than reporting. No committed artifact was affected. Notable as the first finding located by our own pre-registered process rather than by review, and as the first exercise of the amend-then-rerun rule: the fault model is now v1.1.0 with M12a-M12c enumerated.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. The gate accepts a gained version and a test covers it. Rule reinforced: enumerate a state machine's transitions, not the cases that come to mind.
 
 ---

@@ -1,7 +1,9 @@
 # Phase-0 Audit Fault Model v1.0
 
-**Document ID:** FTRO-AUD-001 · **Version:** 1.0.0 · **Date:** 2026-08-26 · **Licence:** CC BY 4.0
+**Document ID:** FTRO-AUD-001 · **Version:** 1.1.0 · **Date:** 2026-08-26 · **Licence:** CC BY 4.0
 **Status:** Pre-registered. Run once, report all results including zero findings.
+**v1.1.0** adds M12a–M12c after M12c was found unguarded by running the gate against `HEAD~1` —
+the amend-then-rerun path the reporting rule prescribes.
 
 Pre-registered so an audit has a defined end. The previous protocol had an implicit "find five"
 stopping rule, which cannot terminate: once familiar branches are covered it moves to another
@@ -32,6 +34,9 @@ failing test) or recorded as an accepted gap.
 | M10 | Halve every run's span, preserving topology | `analyse_optical` | rejected by C7 |
 | M11 | Move a precondition check after the action it guards | any pinner | rejected by the urlopen spy |
 | M12 | Edit a versioned artifact without bumping its version | any | rejected by C10 |
+| M12a | Downgrade a version | any | rejected by C10 |
+| M12b | Remove a declared version | any | rejected by C10 |
+| M12c | Add a version to a previously unversioned document | any | **accepted**: nothing to advance from |
 | M13 | Reorder README steps so a step consumes an artifact no prior step produces | README | rejected by W2 |
 
 ### A note on M7 and M8

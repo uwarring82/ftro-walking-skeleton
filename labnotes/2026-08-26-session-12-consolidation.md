@@ -121,6 +121,16 @@ Two are recorded as *no effect* or *impossible* rather than *detected*, and that
 deliberate: the defect was removed rather than caught. A mutation that now propagates coherently is
 a legitimate parameter change.
 
+**Then the process found something itself.** Running `check_versions.py --check --base HEAD~1`
+immediately after committing surfaced `FTRO-DEF-064`: a document that *gains* a version hit an
+unguarded branch and raised `AttributeError`. My M12 had enumerated the three cases that came to
+mind, not the state machine's transitions.
+
+That is the first finding located by our own pre-registered process rather than by review, and the
+first exercise of the amend-then-rerun rule — the fault model is now v1.1.0 with M12a–M12c
+enumerated. It is also a small vindication of the reset: a bounded checklist, run and then amended,
+caught a real defect and stopped.
+
 One honest caveat, filed rather than claimed: `PULSAR_OBS_START_UTC` is still a hand-written
 literal. Single-sourced, but not derived from the pinned `.tim`. Detecting an unauthorised edit to
 it is a code-review concern, and the "derive, don't store" treatment is Phase-1 work.

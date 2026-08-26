@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -1718,6 +1718,33 @@
       "disposition": "resolved",
       "links": {
         "software": "phase0/acceptance-contract-v1.0.md"
+      }
+    },
+    {
+      "id": "FTRO-DEF-064",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO version gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "SELF-DIRECTED: the git-based version gate crashed on a document that gains a version",
+      "failed_step": "Running check_versions.py --check --base HEAD~1 after the consolidation commit.",
+      "known_fact": "A previously unversioned document that gains a version has no prior version to advance from.",
+      "observed": "The rewritten gate handled content-change, downgrade and removal but fell through to the ordering comparison when the previous version was absent, raising AttributeError on None.split(). Found by running the gate against HEAD~1 immediately after committing it -- the fault model's M12 covered only the three cases I had thought of.",
+      "evidence": [
+        "src/ftro/check_versions.py",
+        "phase0/audit-fault-model-v1.0.md"
+      ],
+      "severity": "medium",
+      "impact": "A maintenance command crashed rather than reporting. No committed artifact was affected. Notable as the first finding located by our own pre-registered process rather than by review, and as the first exercise of the amend-then-rerun rule: the fault model is now v1.1.0 with M12a-M12c enumerated.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. The gate accepts a gained version and a test covers it. Rule reinforced: enumerate a state machine's transitions, not the cases that come to mind.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/check_versions.py"
       }
     }
   ],
