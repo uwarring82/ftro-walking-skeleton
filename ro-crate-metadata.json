@@ -151,6 +151,9 @@
         },
         {
           "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-09-review-corrections-8.md"
         }
       ],
       "isBasedOn": [
@@ -400,7 +403,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "87087",
+      "contentSize": "97506",
       "name": "deficiency-log.json"
     },
     {
@@ -410,7 +413,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "87610",
+      "contentSize": "98210",
       "name": "deficiency-log.md"
     },
     {
@@ -440,7 +443,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "14387",
+      "contentSize": "15831",
       "name": "decision-ledger.md"
     },
     {
@@ -589,7 +592,7 @@
       "name": "pin_vgosdb.py",
       "description": "Retrieves and pins an IVS vgosDB from OPAR with content-shape validation and wrapper-version inventory.",
       "encodingFormat": "text/x-python",
-      "contentSize": "11640",
+      "contentSize": "12072",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -713,7 +716,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2799",
+      "contentSize": "2935",
       "name": "README.md"
     },
     {
@@ -733,6 +736,21 @@
         },
         {
           "@id": "tests/fixtures/login_page.html"
+        },
+        {
+          "@id": "tests/fixtures/mini-archive/AAA_x-BBB_y/2022-02-25_AAA_x-BBB_y.dat"
+        },
+        {
+          "@id": "tests/fixtures/mini-archive/AAA_x-BBB_y/AAA_x-BBB_y.yml"
+        },
+        {
+          "@id": "tests/fixtures/mini-archive/CCC_z-DDD_w/2022-02-25_CCC_z-DDD_w.dat"
+        },
+        {
+          "@id": "tests/fixtures/mini-archive/CCC_z-DDD_w/CCC_z-DDD_w.yml"
+        },
+        {
+          "@id": "tests/fixtures/mini-archive/expected-runs.json"
         },
         {
           "@id": "tests/fixtures/not_vgosdb.tgz"
@@ -765,7 +783,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "47504"
+      "contentSize": "60592"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -867,7 +885,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "7767"
+      "contentSize": "7841"
     },
     {
       "@id": "src/ftro/refresh_crate.py",
@@ -998,7 +1016,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "6823"
+      "contentSize": "8400"
     },
     {
       "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md",
@@ -1018,7 +1036,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2652"
+      "contentSize": "2791"
     },
     {
       "@id": "src/ftro/pinning.py",
@@ -1034,7 +1052,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "6103"
+      "contentSize": "8483"
     },
     {
       "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md",
@@ -1045,6 +1063,61 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "7516"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-09-review-corrections-8.md",
+      "@type": "File",
+      "name": "2026-08-26-session-09-review-corrections-8.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "8705"
+    },
+    {
+      "@id": "tests/fixtures/mini-archive/AAA_x-BBB_y/2022-02-25_AAA_x-BBB_y.dat",
+      "@type": "File",
+      "name": "2022-02-25_AAA_x-BBB_y.dat",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "4074"
+    },
+    {
+      "@id": "tests/fixtures/mini-archive/AAA_x-BBB_y/AAA_x-BBB_y.yml",
+      "@type": "File",
+      "name": "AAA_x-BBB_y.yml",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "62"
+    },
+    {
+      "@id": "tests/fixtures/mini-archive/CCC_z-DDD_w/2022-02-25_CCC_z-DDD_w.dat",
+      "@type": "File",
+      "name": "2022-02-25_CCC_z-DDD_w.dat",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "6034"
+    },
+    {
+      "@id": "tests/fixtures/mini-archive/CCC_z-DDD_w/CCC_z-DDD_w.yml",
+      "@type": "File",
+      "name": "CCC_z-DDD_w.yml",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "62"
+    },
+    {
+      "@id": "tests/fixtures/mini-archive/expected-runs.json",
+      "@type": "File",
+      "name": "expected-runs.json",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "50"
     }
   ]
 }

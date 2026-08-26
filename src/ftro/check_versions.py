@@ -62,22 +62,35 @@ EXCLUSIONS = {
         "this registry itself; its version field is a false positive from the versions it "
         "records, and tracking it would be self-referential",
 }
-SEARCH_ROOTS = ("phase0", "ledgers", "profile", "charter")
+# Discovery must cover the whole repository, not a chosen few directories: root
+# codemeta.json could previously change under the same version unnoticed
+# (FTRO-DEF-045).
+SEARCH_ROOTS = (".",)
+SKIP_DIRS = {".git", "data", "__pycache__", "LICENSES", "tests", "Task Cards", ".github"}
+TRACKED_SUFFIXES = (".md", ".json", ".cff", ".yaml", ".yml")
 
 
 def discover_versioned(roots=SEARCH_ROOTS):
-    """Every tracked-directory document that declares a version in its first 4 KB."""
+    """Every repository document that declares a version in its first 4 KB."""
     found = {}
     for root in roots:
-        for dirpath, _dirs, files in os.walk(root):
+        for dirpath, dirs, files in os.walk(root):
+            dirs[:] = [d for d in dirs if d not in SKIP_DIRS and not d.startswith(".")]
             for fn in sorted(files):
-                if not fn.endswith((".md", ".json")):
+                if not fn.endswith(TRACKED_SUFFIXES):
                     continue
-                path = os.path.join(dirpath, fn)
+                path = os.path.normpath(os.path.join(dirpath, fn))
                 v = declared_version(path)
                 if v:
                     found[path] = v
     return found
+
+
+def _version_tuple(v):
+    try:
+        return tuple(int(x) for x in v.split("."))
+    except (AttributeError, ValueError):
+        return None
 
 
 def audit(registry):
@@ -121,30 +134,51 @@ def main():
         problems.append((path, f"declares version {v} but is not in the registry; "
                                f"add it or record an explicit exclusion"))
 
-    if update:
-        # --update re-records a DELIBERATE bump. It must not be usable to launder a
-        # content change made under the same version: the first version replaced both
-        # fields unconditionally, so `--check` then passed on unbumped drift
-        # (FTRO-DEF-039).
-        laundered = []
+    if update or register_new:
+        # --update re-records a DELIBERATE bump; --register adds NEWLY DISCOVERED
+        # artifacts. Neither may weaken a check. The first version let --register
+        # disable the laundering refusal entirely, and its update loop only iterated
+        # existing entries, so --register could not actually register anything
+        # (FTRO-DEF-044).
+        refusals = []
         for path, cur in current.items():
             rec = registry.get(path)
-            if rec and cur["version"] == rec["version"] and cur["sha256"] != rec["sha256"]:
-                laundered.append(path)
-        if laundered and not register_new:
-            for path in laundered:
-                print(f"REFUSED {path}: content changed but version is still "
-                      f"{current[path]['version']}. Bump the version, then --update.",
-                      file=sys.stderr)
+            if rec is None:
+                continue                       # new: handled by --register below
+            if cur["version"] == rec["version"] and cur["sha256"] != rec["sha256"]:
+                refusals.append((path, f"content changed but version is still "
+                                       f"{cur['version']}. Bump the version, then --update."))
+                continue
+            new_v, old_v = _version_tuple(cur["version"]), _version_tuple(rec["version"])
+            if new_v and old_v and new_v < old_v:
+                refusals.append((path, f"version went backwards: {rec['version']} -> "
+                                       f"{cur['version']}"))
+        if refusals:
+            for path, why in refusals:
+                print(f"REFUSED {path}: {why}", file=sys.stderr)
             return 1
-        for path, cur in current.items():
-            registry[path] = {"version": cur["version"], "sha256": cur["sha256"]}
+
+        added, rerecorded = [], []
+        if register_new:
+            for path, v in sorted(discover_versioned().items()):
+                if path in registry or path in EXCLUSIONS:
+                    continue
+                registry[path] = {"version": v, "sha256": content_digest(path)}
+                added.append(path)
+        if update:
+            for path, cur in current.items():
+                if path in registry:
+                    registry[path] = {"version": cur["version"], "sha256": cur["sha256"]}
+                    rerecorded.append(path)
+
         with open(REGISTRY, encoding="utf-8") as fh:
             doc = json.load(fh)
         doc["artifacts"] = registry
         with open(REGISTRY, "w", encoding="utf-8") as fh:
             json.dump(doc, fh, indent=2)
-        print(f"re-recorded {len(registry)} artifacts")
+        for path in added:
+            print(f"registered {path} v{registry[path]['version']}")
+        print(f"registered {len(added)} new, re-recorded {len(rerecorded)}")
         return 0
 
     for path, rec in sorted(registry.items()):

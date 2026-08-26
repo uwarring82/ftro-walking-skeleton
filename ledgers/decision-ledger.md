@@ -1,6 +1,6 @@
 # FTRO Decision Ledger
 
-**Version:** 0.5.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+**Version:** 0.6.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
 
 > **Version history.** 0.1.0 (`fdbf2b9`) · 0.2.0 (D-021…D-028, `2c31279`–`0b41929`, unversioned at the time) · **0.3.0** (D-029…D-047). D-039a required every versioned artifact to be bumped when it changes; this ledger and the source ledger were then changed twice without a bump ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v3.0.0). `src/ftro/check_versions.py` now enforces it.
 
@@ -49,6 +49,13 @@ task card §23; this ledger records choices made *while executing* it.
 | D-056 | The command that maintains a gate must not be able to satisfy it | `--update` recorded flagged drift as the new truth ([`FTRO-DEF-039`](deficiency-log.md#ftro-def-039)) | 08 |
 | D-057 | A rule quantified over "every X" requires an executable enumeration of X and a stated exclusion policy | "Every versioned artifact" meant twelve files I had listed ([`FTRO-DEF-040`](deficiency-log.md#ftro-def-040)) | 08 |
 | D-058 | Every failure mode a contract names must have a test, transport included | A transport failure produced a traceback and no record at all ([`FTRO-DEF-041`](deficiency-log.md#ftro-def-041)) | 08 |
+| D-059 | Validate the **shape** of a precondition, not its presence | `{"x": null}` passed preflight as an expectation ([`FTRO-DEF-042`](deficiency-log.md#ftro-def-042)) | 09 |
+| D-060 | In Python an integer check must exclude `bool` explicitly | `isinstance(False, int)` is True, so JSON `false` passed as zero ([`FTRO-DEF-043`](deficiency-log.md#ftro-def-043)) | 09 |
+| D-061 | A maintenance flag adds capability, never removes a check | `--register` disabled the laundering refusal and could not register ([`FTRO-DEF-044`](deficiency-log.md#ftro-def-044)) | 09 |
+| D-062 | Excluding a file from one gate obliges covering it with another | Generated files were excluded from version tracking with no freshness check ([`FTRO-DEF-045`](deficiency-log.md#ftro-def-045)) | 09 |
+| D-063 | A regression test must **execute** the code path, not read its committed output | Restoring the broken revision left all 70 tests green ([`FTRO-DEF-046`](deficiency-log.md#ftro-def-046)) | 09 |
+| D-064 | Assert the specific diagnostic, never a bare non-zero exit | The unmutated consumer already exits 1 on a clean archive ([`FTRO-DEF-047`](deficiency-log.md#ftro-def-047)) | 09 |
+| D-065 | **Superseded claim:** deriving `identities.json` from pin reports fixes identity drift only, not numerical regression | It would have propagated the wrong sensitivity value and removed the contradiction that exposed it; that class needs an independent oracle | 09 |
 | D-039a | **Extended 05:** the version-bump rule binds every versioned artifact, not only the profile | `identities.json` had four byte-distinct states under one label ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v2.0.0) | 05 |
 | D-034 | Wrapper states keyed by member digest, never filename | 7 filenames collapse to 5 distinct byte sequences; filename keying invents two states and attributes bytes to a centre that produced none | 03 |
 | D-035 | Route enumeration gates the dataset-level negative, not `access_class` | `access_class` is a property of a retrieval path, so one content-validated anonymous retrieval settles it for that path. Enumeration is required before asserting `unresolved` | 03 |

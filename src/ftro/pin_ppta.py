@@ -115,7 +115,8 @@ def main():
         ok, reason = validate(t["kind"], body)
         exp = expected.get(t["name"])
         checksum_match = None if exp is None else (sha256 == exp)
-        verified = ok and (checksum_match is not False)
+        verified = ok and (checksum_match is True
+                           or (checksum_match is None and args.allow_unpinned))
 
         if verified:
             tmp = os.path.join(args.cache, t["name"] + ".part")

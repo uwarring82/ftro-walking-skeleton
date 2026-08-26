@@ -11,12 +11,12 @@
       "sha256": "531962537358fae0fff488512857888d9fffaad0f7d65a252309e9e6a6f9eecd"
     },
     "ledgers/deficiency-log.json": {
-      "version": "0.8.0",
-      "sha256": "a9d7e28f9ef2ee7f90f3e2982f1561ac0f2e537a1750d008aa5e5b0071b95b6e"
+      "version": "0.9.0",
+      "sha256": "52d14367e34fcae2c0709da981774ac44437155c694252f541854a8d1c39954d"
     },
     "ledgers/decision-ledger.md": {
-      "version": "0.5.0",
-      "sha256": "9ff634cb493d277b50bf7243cf685b8fbbf484762d1c3bcec237bdfce5fe5cb2"
+      "version": "0.6.0",
+      "sha256": "bfef2a78885cf2a9cbd01b41efee3e90fa72d77d57b6bbc0450b61f4cdb8d36c"
     },
     "ledgers/source-ledger.md": {
       "version": "0.4.0",
@@ -57,6 +57,10 @@
     "phase0/applicability/AA-PPTA-TIMINGMODEL-001.md": {
       "version": "1.0.0",
       "sha256": "6015691f62b33fff3684af2ef2db4223580342a522c6886f3c2af10292fa0068"
+    },
+    "codemeta.json": {
+      "version": "0.1.0",
+      "sha256": "9eefde2c48454e6f7c43111f5ae0657236609b20da8afa151dbd7786e147420d"
     }
   }
 }

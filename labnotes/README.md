@@ -43,3 +43,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-26 | 06 | [Fifth external review — the fix reproduced the defect inside the fix](2026-08-26-session-06-review-corrections-5.md) |
 | 2026-08-26 | 07 | [Sixth external review — the boundary, not another layer](2026-08-26-session-07-review-corrections-6.md) |
 | 2026-08-26 | 08 | [Seventh external review — a wrong number, published, past every gate](2026-08-26-session-08-review-corrections-7.md) |
+| 2026-08-26 | 09 | [Eighth external review — a regression test that could not fail](2026-08-26-session-09-review-corrections-8.md) |

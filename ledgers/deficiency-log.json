@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.8.0",
+  "version": "0.9.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -1049,8 +1049,157 @@
       "links": {
         "software": "src/ftro/pin_vgosdb.py"
       }
+    },
+    {
+      "id": "FTRO-DEF-042",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO retrieval tooling",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: preflight checked key membership, so a null digest passed as an expectation",
+      "failed_step": "Refusing to fetch without a well-formed expected digest.",
+      "known_fact": "An expectation is a 64-character hex digest. None, an empty string or a truncated value is not one.",
+      "observed": "pinning.preflight() tested only `n not in expected`. With {\"vgosdb_min.tgz\": null} the vgosDB pinner exited 0, cached bytes, promoted the official report and minted an identity carrying expected_sha256: null. pin_vgosdb and pin_ppta additionally treated checksum_match is None as success, so 'not checked' read as 'verified'. IGS and the evidence pinner rejected the same case, but only AFTER fetching -- which is not preflight.",
+      "evidence": [
+        "src/ftro/pinning.py#valid_digest",
+        "tests/test_retrieval_validation.py#TestPreflightDigestValidation"
+      ],
+      "severity": "high",
+      "impact": "The preflight boundary could be crossed by a registry entry that was present but meaningless, and the resulting identity recorded a null expectation as though verified. Every expectation is now validated as 64 lowercase hex before any retrieval, a malformed entry is fatal even under --allow-unpinned, and an unchecked digest counts as verified only when --allow-unpinned was explicitly passed.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-059): validate the SHAPE of a precondition, not its presence.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pinning.py#valid_digest"
+      }
+    },
+    {
+      "id": "FTRO-DEF-043",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO consumer gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the consumer gate accepted JSON false as integer zero and ignored per-pin state",
+      "failed_step": "Refusing to derive science from a report that is not a clean success.",
+      "known_fact": "In Python bool is a subclass of int, so isinstance(False, int) is True.",
+      "observed": "assert_report_usable() type-checked counters with isinstance(value, int), so n_failed: false was accepted as zero. It also accepted a per-pin retrieval_validation of content_rejected, an absent or contradictory per-pin sha256, and n_pinned: 56 on a report carrying 57 pins.",
+      "evidence": [
+        "src/ftro/pinning.py#assert_report_usable",
+        "tests/test_retrieval_validation.py#TestConsumerGate"
+      ],
+      "severity": "high",
+      "impact": "A report could pass the gate by declaring false where zero was required, or by contradicting itself internally. The gate now rejects bool for integer fields, requires n_pinned to equal the number of pins, requires both digests to be well formed and mutually consistent, and rejects a per-pin validation state that contradicts the report-level one.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-060): in Python, an int check must exclude bool explicitly.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pinning.py#assert_report_usable"
+      }
+    },
+    {
+      "id": "FTRO-DEF-044",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO version gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: --register was an escape hatch that also could not register anything",
+      "failed_step": "Adding a newly discovered versioned artifact to the registry.",
+      "known_fact": "D-056: the command that maintains a gate must not be able to satisfy it.",
+      "observed": "--register only disabled the same-version laundering refusal, so check 1 -> update --register 0 -> check 0 made drift invisible. And because the update loop iterated only EXISTING registry entries, --register could not add a newly discovered document: it exited 0 while the next check still failed. Ordinary --update also accepted a version downgrade.",
+      "evidence": [
+        "src/ftro/check_versions.py",
+        "tests/test_retrieval_validation.py#TestRegisterSemantics"
+      ],
+      "severity": "high",
+      "impact": "The maintenance command both weakened the gate and failed at its stated purpose. --register now adds only newly discovered artifacts, neither flag can bypass the same-version refusal, and a version that moves backwards is refused.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-061): a maintenance flag adds capability, never removes a check.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/check_versions.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-045",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO version gate and generated documents",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: discovery covered four directories, and excluded generated files had no compensating check",
+      "failed_step": "Applying the version rule to every versioned artifact.",
+      "known_fact": "D-057: a rule quantified over 'every X' requires an executable enumeration of X.",
+      "observed": "discover_versioned() walked only phase0/, ledgers/, profile/ and charter/ for .md and .json, so root codemeta.json could change under an unchanged version unnoticed. Separately, generated documents were excluded from version tracking with no freshness check: editing the optical summary and regenerating produced a byte-different v0.2.0 document while the version check, the crate check and all 70 tests passed.",
+      "evidence": [
+        "src/ftro/check_versions.py#discover_versioned",
+        "tests/test_retrieval_validation.py#TestGeneratedFileFreshness"
+      ],
+      "severity": "medium",
+      "impact": "The enumeration added in the previous round was itself incomplete, and an exclusion had been granted without a compensating control. Discovery now walks the whole repository with an explicit skip list, and a test asserts that every file excluded as 'generated' has a freshness check that regenerates and compares it.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-062): excluding a file from one gate obliges covering it with another.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/check_versions.py#discover_versioned"
+      }
+    },
+    {
+      "id": "FTRO-DEF-046",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "FTRO test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the tests guarding the sensitivity computation only read its output",
+      "failed_step": "Protecting the segmentation computation against regression.",
+      "known_fact": "FTRO-DEF-037 was a source regression: a contract change applied to one caller of two.",
+      "observed": "The tests added to prevent recurrence read only the committed JSON. Restoring the broken 615afe2 revision of optical_sensitivity.py, or making Resegmenter.runs() raise, left all 70 tests green -- they protected coherence after manual regeneration, not the code. The test named 'invariant and computed' also trusted two summary fields, so changing a variant row to overlap passed while the summaries stayed untouched.",
+      "evidence": [
+        "tests/fixtures/mini-archive/",
+        "tests/test_retrieval_validation.py#TestSegmentationOracle"
+      ],
+      "severity": "high",
+      "impact": "A regression test that cannot fail on the regression it names. Now: a synthetic archive of known construction (one comparison with a 23-tick gap, one with 23, 40 and 60) whose expected run counts are derived from tick arithmetic and cross-checked against a recorded manifest; both the in-process and subprocess segmentation paths are executed against it; and the two are asserted equal run-for-run, which is the redundancy check that would have caught FTRO-DEF-037 with no committed report in existence. Invariance is recomputed from every variant row rather than read from a summary. Verified: reintroducing the 615afe2 bug fails 9 tests; injecting an exception into runs() errors 9.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-063): a regression test must execute the code path, not read its committed output.",
+      "disposition": "resolved",
+      "links": {
+        "software": "tests/fixtures/mini-archive/"
+      }
+    },
+    {
+      "id": "FTRO-DEF-047",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: a mutation test asserted only a non-zero exit, which the unmutated run also produces",
+      "failed_step": "Verifying that the production consumer rejects a malformed report.",
+      "known_fact": "A mutation test must distinguish the mutation's effect from every other cause of failure.",
+      "observed": "test_production_consumer_rejects_a_stripped_report asserted only assertNotEqual(returncode, 0). On a clean archive the unmodified consumer already exits 1 because the raw optical data are absent, so a change that bypassed the gate entirely would still have passed.",
+      "evidence": [
+        "tests/test_retrieval_validation.py"
+      ],
+      "severity": "medium",
+      "impact": "A self-confirming test: it would have passed with the gate removed. It now asserts the specific diagnostic -- 'is not a clean success' and the named absent field -- so only the intended rejection satisfies it.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-064): assert the specific diagnostic, never a bare non-zero exit.",
+      "disposition": "resolved",
+      "links": {
+        "software": "tests/test_retrieval_validation.py"
+      }
     }
   ],
-  "revised": "2026-08-25",
-  "revision_note": "Revised across seven review rounds. 001-023 s01; 024-027 s02; 028-029 s03; 030-033 s04; 034-035 s05; 036 s06; 037-041 s07. DEF-031 v4.0.0, DEF-033 v4.0.0, DEF-035 v3.0.0 and DEF-036 v2.0.0 record successive partial fixes. Seventeen entries are self-directed."
+  "revised": "2026-08-26",
+  "revision_note": "Revised across eight review rounds. 001-023 s01; 024-027 s02; 028-029 s03; 030-033 s04; 034-035 s05; 036 s06; 037-041 s07; 042-047 s08. Several entries carry v2-v4 revisions recording successive partial fixes. Twenty-three entries are self-directed."
 }

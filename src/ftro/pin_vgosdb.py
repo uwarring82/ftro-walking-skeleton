@@ -53,8 +53,11 @@ def main():
     dest = os.path.join(args.cache, name)
     retrieved = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
-    req = urllib.request.Request(args.url, headers={"User-Agent": "FTRO-walking-skeleton/0.1"})
     try:
+        # Request() construction is inside the try: a malformed URL raises here, and a
+        # failure that escapes the handler leaves no .rejected record at all.
+        req = urllib.request.Request(args.url,
+                                     headers={"User-Agent": "FTRO-walking-skeleton/0.1"})
         with urllib.request.urlopen(req, timeout=300) as resp:
             headers, body, status = dict(resp.headers), resp.read(), resp.status
     except Exception as exc:                                     # noqa: BLE001
@@ -126,7 +129,10 @@ def main():
 
     # Tri-state: None means "not checked", never a silent pass.
     checksum_match = None if args.expect_sha256 is None else (sha256 == args.expect_sha256)
-    verified = ok and (checksum_match is not False)
+    # An unchecked digest is only acceptable when the operator explicitly asked for a
+    # first pin. Otherwise "not checked" must not read as "verified".
+    verified = ok and (checksum_match is True
+                       or (checksum_match is None and args.allow_unpinned))
 
     # Rejected bytes must never occupy the product filename in the cache.
     if verified:

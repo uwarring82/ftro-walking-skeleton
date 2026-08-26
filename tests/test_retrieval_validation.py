@@ -830,16 +830,116 @@ class TestConsumerGate(unittest.TestCase):
                                cwd=REPO, capture_output=True, text=True, timeout=600)
             self.assertNotEqual(r.returncode, 0,
                                 "the production consumer accepted a report missing n_failed")
+            # Assert the SPECIFIC gate diagnostic. A bare non-zero exit is
+            # self-confirming: on a clean archive the consumer already exits 1 because
+            # the raw optical data are absent, so bypassing the gate would still pass
+            # (FTRO-DEF-047).
+            combined = r.stdout + r.stderr
+            self.assertIn("is not a clean success", combined,
+                          f"exited non-zero for some other reason:\n{combined[-800:]}")
+            self.assertIn("n_failed absent", combined)
         finally:
             shutil.copy(backup, target)
 
 
-class TestSensitivityAgreesWithMainComputation(unittest.TestCase):
-    """The scan's shipped-tolerance row must equal the main computation.
+MINI_ARCHIVE = os.path.join(FIXTURES, "mini-archive")
 
-    They share a convention, so disagreement means one of them is wrong. Nothing compared
-    them, and an adapter passing MJDs to a tick-based function published 171.442704 h
-    against the main computation's 133.111920 h (FTRO-DEF-037).
+
+class TestSegmentationOracle(unittest.TestCase):
+    """Execute both segmentation paths against a synthetic archive of KNOWN structure.
+
+    FTRO-DEF-046: the previous class only read the committed JSON, so replacing
+    optical_sensitivity.py with the broken revision -- or making Resegmenter.runs() raise
+    -- left every test green. It protected coherence after manual regeneration, not the
+    code. These tests run the real callers.
+
+    The fixture is built so the answer is known independently of either implementation:
+    comparison AAA has two 40-sample groups separated by 23 ticks; comparison CCC has
+    three 30-sample groups separated by 23 and 60 ticks. Ticks 13-22 are empty by
+    construction, exactly as in the real archive, so 1.5 s must split at 23 ticks and
+    2.0 s must not.
+    """
+
+    # Derived from the fixture's construction, not from running the code: comparison AAA
+    # has one 23-tick gap, CCC has gaps of 23, 40 and 60 ticks, and a tolerance of T
+    # seconds floors to int(T / 0.0864) ticks.
+    TICK_S = 0.0864
+    FIXTURE_GAPS = {"AAA": [23], "CCC": [23, 40, 60]}
+    TOLERANCES = (1.1, 1.5, 2.0, 5.0)
+
+    @classmethod
+    def setUpClass(cls):
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+        cls.available = os.path.isdir(MINI_ARCHIVE)
+        cls.EXPECTED_RUNS = {
+            tol: sum(1 + sum(1 for g in gaps if g > int(tol / cls.TICK_S + 1e-9))
+                     for gaps in cls.FIXTURE_GAPS.values())
+            for tol in cls.TOLERANCES}
+
+    def test_fixture_is_present(self):
+        self.assertTrue(self.available, "tests/fixtures/mini-archive is required")
+
+    def test_expectations_match_the_recorded_fixture_manifest(self):
+        """Cross-check the derivation against the manifest written when the fixture was built."""
+        path = os.path.join(MINI_ARCHIVE, "expected-runs.json")
+        with open(path, encoding="utf-8") as fh:
+            recorded = json.load(fh)
+        self.assertEqual({str(k): v for k, v in self.EXPECTED_RUNS.items()}, recorded)
+
+    def test_resegmenter_reproduces_the_known_structure(self):
+        """The in-process path -- the one the adapter bug broke."""
+        from optical_sensitivity import Resegmenter
+        r = Resegmenter(MINI_ARCHIVE, src=os.path.join(REPO, "src/ftro/analyse_optical.py"))
+        for tol, expected in sorted(self.EXPECTED_RUNS.items()):
+            with self.subTest(tolerance=tol):
+                self.assertEqual(len(r.runs(tol)), expected,
+                                 f"in-process segmentation wrong at {tol} s")
+
+    def test_subprocess_path_reproduces_the_known_structure(self):
+        """The independent path: shell out exactly as an operator would."""
+        from optical_sensitivity import Resegmenter
+        r = Resegmenter(MINI_ARCHIVE, src=os.path.join(REPO, "src/ftro/analyse_optical.py"))
+        tmp = tempfile.mkdtemp(prefix="ftro-oracle-")
+        self.addCleanup(shutil.rmtree, tmp, True)
+        for tol, expected in sorted(self.EXPECTED_RUNS.items()):
+            with self.subTest(tolerance=tol):
+                out = os.path.join(tmp, f"inv-{tol}.json")
+                self.assertEqual(len(r.subprocess_runs(tol, out)), expected,
+                                 f"subprocess segmentation wrong at {tol} s")
+
+    def test_the_two_paths_agree_run_for_run(self):
+        """Redundancy: two independent implementations of the same convention.
+
+        This is the check that would have caught FTRO-DEF-037 without any committed
+        report existing: the adapter bug made the in-process path disagree with the
+        subprocess path at every tolerance.
+        """
+        from optical_sensitivity import Resegmenter
+        r = Resegmenter(MINI_ARCHIVE, src=os.path.join(REPO, "src/ftro/analyse_optical.py"))
+        tmp = tempfile.mkdtemp(prefix="ftro-oracle2-")
+        self.addCleanup(shutil.rmtree, tmp, True)
+        for tol in sorted(self.EXPECTED_RUNS):
+            with self.subTest(tolerance=tol):
+                inproc = sorted((a, b, n) for a, b, n, _c, _f in r.runs(tol))
+                shelled = sorted((a, b, n) for a, b, n, _c, _f
+                                 in r.subprocess_runs(tol, os.path.join(tmp, f"x{tol}.json")))
+                self.assertEqual(inproc, shelled,
+                                 "in-process and subprocess segmentation disagree")
+
+    def test_tolerances_actually_differentiate(self):
+        """A tolerance scan that returns one answer everywhere is broken by construction."""
+        from optical_sensitivity import Resegmenter
+        r = Resegmenter(MINI_ARCHIVE, src=os.path.join(REPO, "src/ftro/analyse_optical.py"))
+        counts = {tol: len(r.runs(tol)) for tol in self.EXPECTED_RUNS}
+        self.assertGreater(len(set(counts.values())), 1,
+                           f"every tolerance produced the same run count: {counts}")
+
+
+class TestSensitivityAgreesWithMainComputation(unittest.TestCase):
+    """The committed report must be internally coherent, and its summaries derived.
+
+    Complements TestSegmentationOracle: that one checks the code, this one checks the
+    artifact the code produced.
     """
 
     def setUp(self):
@@ -862,7 +962,6 @@ class TestSensitivityAgreesWithMainComputation(unittest.TestCase):
                                        msg="scan and main computation disagree")
 
     def test_scan_run_counts_are_not_degenerate(self):
-        """All tolerances collapsing to one value is the signature of the adapter bug."""
         scan = self.report["optical_support_sensitivity"]["gap_tolerance_scan"]
         counts = {k: v["n_runs"] for k, v in scan.items()}
         self.assertGreater(len(set(counts.values())), 1,
@@ -870,11 +969,28 @@ class TestSensitivityAgreesWithMainComputation(unittest.TestCase):
         self.assertGreater(min(counts.values()), 1000,
                            f"run counts implausibly low, suggesting no splitting: {counts}")
 
-    def test_four_domain_status_is_invariant_and_computed(self):
+    def test_invariance_is_derived_from_every_variant_row(self):
+        """Do not trust the summary fields: recompute them from the rows.
+
+        The previous version asserted two summary booleans, so changing a variant row to
+        `overlap` passed while the summaries stayed untouched (FTRO-DEF-046).
+        """
         sens = self.report["optical_support_sensitivity"]
-        self.assertTrue(sens["four_domain_status_invariant"])
-        self.assertEqual(set(sens["four_domain_status_over_all_variants"]),
-                         {"no_common_support"})
+        statuses, checked = set(), 0
+        for group in ("gap_tolerance_scan", "sample_credit", "uniform_tag_shift"):
+            for name, row in sens.get(group, {}).items():
+                if not isinstance(row, dict) or "four_domain_status" not in row:
+                    continue
+                with self.subTest(group=group, variant=name):
+                    self.assertEqual(row["four_domain_status"], "no_common_support")
+                    self.assertEqual(row.get("four_domain_h"), 0.0)
+                statuses.add(row["four_domain_status"])
+                checked += 1
+        self.assertGreaterEqual(checked, 10, f"only {checked} variant rows carried a status")
+        self.assertEqual(statuses, {"no_common_support"})
+        # The summaries must AGREE with what the rows say, not stand in for them.
+        self.assertEqual(set(sens["four_domain_status_over_all_variants"]), statuses)
+        self.assertIs(sens["four_domain_status_invariant"], len(statuses) == 1)
 
 
 class TestVersionGate(unittest.TestCase):
@@ -945,6 +1061,143 @@ class TestVersionGate(unittest.TestCase):
         r = self._run(work)
         self.assertEqual(r.returncode, 1, "an unrecorded version bump was not detected")
         self.assertIn("registry recorded", r.stderr)
+
+
+class TestGeneratedFileFreshness(unittest.TestCase):
+    """Generated documents are excluded from version tracking, so they need their own check.
+
+    FTRO-DEF-045: changing the source and regenerating produced a byte-different document
+    under an unchanged version while the version check, the crate check and every test
+    passed. Excluding a file from one gate obliges you to cover it with another.
+    """
+
+    GENERATED = {
+        "ledgers/deficiency-log.md": ["src/ftro/render_deficiencies.py"],
+        "phase0/optical-validity-intervals.md": ["src/ftro/render_validity_intervals.py"],
+    }
+
+    def test_generated_documents_are_current(self):
+        for target, cmd in self.GENERATED.items():
+            with self.subTest(target=target):
+                path = os.path.join(REPO, target)
+                with open(path, "rb") as fh:
+                    before = hashlib.sha256(fh.read()).hexdigest()
+                r = subprocess.run([sys.executable] + cmd, cwd=REPO,
+                                   capture_output=True, text=True, timeout=300)
+                self.assertEqual(r.returncode, 0, r.stderr)
+                with open(path, "rb") as fh:
+                    after = hashlib.sha256(fh.read()).hexdigest()
+                self.assertEqual(before, after,
+                                 f"{target} is stale: regenerating it changes the bytes")
+
+    def test_every_excluded_generated_file_has_a_freshness_check(self):
+        """An exclusion without a compensating check is a hole, not a policy."""
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+        import check_versions
+        generated = {p for p, why in check_versions.EXCLUSIONS.items()
+                     if "generated" in why.lower()}
+        uncovered = generated - set(self.GENERATED)
+        self.assertEqual(uncovered, set(),
+                         f"excluded as generated but no freshness check: {uncovered}")
+
+
+class TestPreflightDigestValidation(unittest.TestCase):
+    """A registry entry must be a digest, not merely a key (FTRO-DEF-042)."""
+
+    def setUp(self):
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+        self.tmp = tempfile.mkdtemp(prefix="ftro-pf-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+
+    def test_malformed_expectations_are_rejected(self):
+        import pinning
+        good = "a" * 64
+        for bad in (None, "", "abc", "A" * 64, 12345, "g" * 64, good[:63]):
+            with self.subTest(value=bad):
+                with self.assertRaises(SystemExit):
+                    pinning.preflight({"x": bad}, ["x"], what="thing")
+
+    def test_a_well_formed_digest_is_accepted(self):
+        import pinning
+        self.assertEqual(pinning.preflight({"x": "a" * 64}, ["x"], what="thing"), [])
+
+    def test_allow_unpinned_does_not_excuse_a_malformed_entry(self):
+        """--allow-unpinned means 'not recorded yet', not 'recorded as garbage'."""
+        import pinning
+        with self.assertRaises(SystemExit):
+            pinning.preflight({"x": None}, ["x"], allow_unpinned=True, what="thing")
+
+    def test_null_expectation_stops_the_pinner_before_retrieval(self):
+        reg = os.path.join(self.tmp, "reg.json")
+        with open(reg, "w", encoding="utf-8") as fh:
+            json.dump({"vgosdb": {"vgosdb_min.tgz": None}}, fh)
+        out = os.path.join(self.tmp, "pin.json")
+        cache = os.path.join(self.tmp, "cache")
+        r = subprocess.run(
+            [sys.executable, "src/ftro/pin_vgosdb.py",
+             "--url", "file://" + os.path.join(FIXTURES, "vgosdb_min.tgz"),
+             "--session", "R11040", "--cache", cache, "--out", out, "--expect", reg],
+            cwd=REPO, capture_output=True, text=True, timeout=120)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("64-character hex", r.stderr + r.stdout)
+        self.assertFalse(os.path.exists(out), "a null expectation minted an identity")
+        self.assertFalse(os.path.isdir(cache) and os.listdir(cache),
+                         "a null expectation cached bytes")
+
+
+class TestRegisterSemantics(unittest.TestCase):
+    """--register adds new artifacts and never weakens a check (FTRO-DEF-044)."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="ftro-reg-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        self.work = os.path.join(self.tmp, "repo")
+        shutil.copytree(REPO, self.work, symlinks=True,
+                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
+
+    def _run(self, *flags):
+        return subprocess.run([sys.executable, "src/ftro/check_versions.py", *flags],
+                              cwd=self.work, capture_output=True, text=True, timeout=120)
+
+    def test_register_does_not_launder_same_version_drift(self):
+        with open(os.path.join(self.work, "ledgers", "source-ledger.md"), "a",
+                  encoding="utf-8") as fh:
+            fh.write("\n<!-- drift -->\n")
+        self.assertEqual(self._run("--check").returncode, 1)
+        self.assertEqual(self._run("--update", "--register").returncode, 1,
+                         "--register laundered same-version drift")
+        self.assertEqual(self._run("--check").returncode, 1,
+                         "drift became invisible")
+
+    def test_register_actually_registers_a_new_document(self):
+        with open(os.path.join(self.work, "phase0", "brand-new.md"), "w",
+                  encoding="utf-8") as fh:
+            fh.write("# New\n\n**Version:** 1.0.0\n")
+        self.assertEqual(self._run("--check").returncode, 1)
+        r = self._run("--register")
+        self.assertEqual(r.returncode, 0, r.stderr)
+        self.assertIn("brand-new.md", r.stdout)
+        self.assertEqual(self._run("--check").returncode, 0,
+                         "--register reported success without registering")
+
+    def test_version_downgrade_is_refused(self):
+        target = os.path.join(self.work, "ledgers", "decision-ledger.md")
+        with open(target, encoding="utf-8") as fh:
+            body = fh.read()
+        m = re.search(r"\*\*Version:\*\* ([0-9]+\.[0-9]+\.[0-9]+)", body)
+        with open(target, "w", encoding="utf-8") as fh:
+            fh.write(body.replace(m.group(0), "**Version:** 0.0.1", 1))
+        r = self._run("--update")
+        self.assertEqual(r.returncode, 1, "a version downgrade was accepted")
+        self.assertIn("went backwards", r.stderr)
+
+    def test_discovery_covers_the_repository_root(self):
+        """Discovery limited to a few subdirectories missed root codemeta.json."""
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+        import check_versions
+        found = check_versions.discover_versioned()
+        self.assertIn("codemeta.json", found,
+                      "root-level versioned files are not discovered")
 
 
 if __name__ == "__main__":

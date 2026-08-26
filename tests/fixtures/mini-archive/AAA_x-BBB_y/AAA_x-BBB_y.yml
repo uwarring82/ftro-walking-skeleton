@@ -1,0 +1,4 @@
+- name: AAA_x-BBB_y
+  numrhoBA: '1'
+  denrhoBA: '1'
+  sB: 1.0
