@@ -325,7 +325,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "17007",
+      "contentSize": "17033",
       "name": "VA-GPS2UTC-001.json"
     },
     {
@@ -405,7 +405,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "131199",
+      "contentSize": "139070",
       "name": "deficiency-log.json"
     },
     {
@@ -415,7 +415,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "132404",
+      "contentSize": "140429",
       "name": "deficiency-log.md"
     },
     {
@@ -543,7 +543,7 @@
       "name": "four_domain_intersection.py",
       "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
       "encodingFormat": "text/x-python",
-      "contentSize": "14524",
+      "contentSize": "14527",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -774,7 +774,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "72037"
+      "contentSize": "73920"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -1007,7 +1007,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "4151"
+      "contentSize": "4540"
     },
     {
       "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md",
@@ -1033,7 +1033,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "13512"
+      "contentSize": "9026"
     },
     {
       "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md",
@@ -1146,7 +1146,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5943"
+      "contentSize": "7241"
     },
     {
       "@id": "phase0/audit-fault-model-v1.0.md",
@@ -1166,7 +1166,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2693"
+      "contentSize": "4953"
     },
     {
       "@id": "labnotes/2026-08-26-session-12-consolidation.md",
@@ -1176,7 +1176,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "8884"
+      "contentSize": "10447"
     },
     {
       "@id": "src/ftro/schema.py",

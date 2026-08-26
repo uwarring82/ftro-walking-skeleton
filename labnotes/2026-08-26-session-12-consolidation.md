@@ -137,6 +137,29 @@ it is a code-review concern, and the "derive, don't store" treatment is Phase-1 
 
 ---
 
+## 04a — The first bounded audit failed, and that is the result
+
+The reviewer ran the frozen checklist. It **failed**: C3, C8 and C10, plus M11 recorded as detected
+when it was not, plus two contracts worded more broadly than the code.
+
+That is the protocol working. It produced a finite, specific result and **stopped** instead of
+searching outward for a fifth finding. Five entries filed
+([`FTRO-DEF-065`](../ledgers/deficiency-log.md#ftro-def-065)–`069`), all fixed, then the *same*
+checklist rerun.
+
+The one that matters most: **M11 was a false pass.** The spy covered only the null-registry route,
+so an operator I had reported as detected was not. A false PASS in a pre-registered checklist is
+worse than a missing check, because it is believed. The audit report is amended in place rather
+than reissued, so the wrong result stays visible.
+
+Two corrections were to the *contracts*, not the code — C1 claimed more than `--allow-unpinned`
+permits, and C6 said "every domain support" when optical is varied per variant by design. A
+contract that overstates its implementation fails on wording, which is the cheapest kind of failure
+to have.
+
+Run 2: all registered operators behaved as declared, no new findings, C1–C8 and C10–C12 green.
+**That is the first clean audit; exit condition 5 needs two.** C9 remains outstanding.
+
 ## 05 — Method notes to self
 
 - **Fix classes, not instances.** Eight rounds of `if field not in doc` were one missing schema.
@@ -149,6 +172,9 @@ it is a code-review concern, and the "derive, don't store" treatment is Phase-1 
 - **Bound the scope, then test the bound.** An unbounded acceptance condition has no "done" state,
   however good the work is.
 - **A count that only rises cannot measure progress.**
+- **A false pass is worse than a gap.** M11 was reported detected and was not; the checklist
+  believed itself. Amend such a result in place, never quietly.
+- **A failing audit is a working audit** if it is finite and stops.
 
 ---
 

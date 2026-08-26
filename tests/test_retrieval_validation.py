@@ -1309,6 +1309,50 @@ class TestPreflightDigestValidation(unittest.TestCase):
         with self.assertRaises(SystemExit):
             pinning.preflight({"x": None}, ["x"], allow_unpinned=True, what="thing")
 
+    def _spy_run(self, extra_argv, registry_body):
+        """Run pin_vgosdb in-process with urlopen spied, returning the recorded calls."""
+        import importlib
+        import urllib.request
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+        calls = []
+        real = urllib.request.urlopen
+
+        def spy(*a, **kw):
+            calls.append(a[0])
+            return real(*a, **kw)
+
+        pv = importlib.import_module("pin_vgosdb")
+        urllib.request.urlopen = spy
+        self.addCleanup(setattr, urllib.request, "urlopen", real)
+        reg = os.path.join(self.tmp, "spy-registry.json")
+        with open(reg, "w", encoding="utf-8") as fh:
+            json.dump(registry_body, fh)
+        argv = sys.argv
+        sys.argv = ["pin_vgosdb.py",
+                    "--url", "file://" + os.path.join(FIXTURES, "vgosdb_min.tgz"),
+                    "--session", "R11040",
+                    "--cache", os.path.join(self.tmp, "spycache"),
+                    "--out", os.path.join(self.tmp, "spy.json"),
+                    "--expect", reg] + extra_argv
+        try:
+            with self.assertRaises(SystemExit):
+                pv.main()
+        finally:
+            sys.argv = argv
+        return calls
+
+    def test_no_request_when_an_explicit_digest_is_malformed(self):
+        """M11 over its REGISTERED scope, not just the null-registry route.
+
+        The spy previously covered only the registry path, so moving explicit
+        --expect-sha256 validation behind urlopen() left every test green and the audit
+        recorded M11 as detected when it was not (FTRO-DEF-066).
+        """
+        calls = self._spy_run(["--expect-sha256", "abc"],
+                              {"vgosdb": {"vgosdb_min.tgz": "a" * 64}})
+        self.assertEqual(calls, [],
+                         "an invalid explicit digest was validated only after retrieval")
+
     def test_no_request_is_issued_when_preflight_fails(self):
         """Count REQUESTS, not cached bytes.
 

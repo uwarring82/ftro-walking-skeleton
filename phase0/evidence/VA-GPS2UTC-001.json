@@ -3,7 +3,7 @@
   "procedure_id": "VP-GPS2UTC-001",
   "procedure_version": "1.0.0",
   "subject": "gps2utc.clk supplies C0'-derived GPS->UTC corrections over MJD [59630.0, 59640.0]",
-  "artifact": "data/raw/evidence/gps2utc.clk",
+  "artifact": "data/raw/evidence/pulsar-clock-corrections--gps2utc.clk",
   "artifact_sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
   "expected_sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
   "checksum_match": true,

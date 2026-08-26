@@ -55,9 +55,13 @@ def main():
 
     changed = _git("diff", "--name-only", base)
     if changed is None:
-        print("not a git repository, or the base ref is unknown; nothing to compare",
-              file=sys.stderr)
-        return 0
+        # FAIL CLOSED. An extracted `git archive` has no git metadata, so this returned
+        # success and a versioned file could be edited without a bump in exactly the
+        # environment the contract requires the gate to run in (FTRO-DEF-067).
+        print(f"no git context: cannot diff against {base!r}. The version gate cannot "
+              f"verify anything here. Run it from a checkout, or initialise a baseline "
+              f"repository in the export.", file=sys.stderr)
+        return 1 if check else 0
 
     problems, checked = [], 0
     for path in sorted(set(changed.split())):

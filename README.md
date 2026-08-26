@@ -168,11 +168,20 @@ python3 src/ftro/check_versions.py --check   # changed artifacts declare a new v
 python3 src/ftro/refresh_crate.py --check    # RO-Crate sizes match disk
 ```
 
-**Reproducibility scope.** Steps 1, 2, 5 and 6 are deterministic: over the same pinned local
-inputs they reproduce their committed outputs byte-for-byte. Steps 3 and 4 are network
-retrievals that stamp a fresh `retrieved_utc`, so their outputs differ on each run by
-construction — the *pinned digests* they record are what must match, and they are asserted in
-[`identities.json`](phase0/evidence/identities.json).
+**Reproducibility scope.** Steps **2, 5 and 6** are byte-deterministic: over the same pinned
+local inputs they reproduce their committed outputs byte-for-byte.
+
+Every step that performs a retrieval — **1, 3 and 4** — stamps a fresh `retrieved_utc` and so
+cannot reproduce its committed report byte-for-byte, by construction. What must match is the
+*pinned digest*, asserted against
+[`expected-digests.json`](phase0/evidence/expected-digests.json). An earlier version of this
+paragraph listed step 1 as deterministic, which was false
+([`FTRO-DEF-068`](ledgers/deficiency-log.md#ftro-def-068)).
+
+**Step 2** is byte-deterministic and its committed record now names the path step 1 writes, so the
+documented command reproduces [`VA-GPS2UTC-001.json`](phase0/evidence/VA-GPS2UTC-001.json) exactly.
+It previously recorded a different path, so the documented command produced the same verdict under
+a different `artifact` field.
 
 **Retrieval validation.** `pin_igs.py`, `pin_vgosdb.py` and `pin_ppta.py` validate content
 *shape*, not just HTTP status and checksum — a status-and-checksum retrieval will happily pin an

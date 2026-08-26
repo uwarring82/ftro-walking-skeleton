@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -1746,10 +1746,144 @@
       "links": {
         "software": "src/ftro/check_versions.py"
       }
+    },
+    {
+      "id": "FTRO-DEF-065",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO consumer gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "SELF-DIRECTED: C3 claimed one declaration while the consumer kept a parallel hand-written validator",
+      "failed_step": "Applying one schema at producer and consumer, as contract C3 states.",
+      "known_fact": "C3: one declared schema, checked by the producer before promotion and by the consumer before use.",
+      "observed": "promote() called schema.PIN_REPORT, but assert_report_usable() retained its earlier hand-written checks. Removing generator, per-pin retrieved_utc or per-pin retrieval_procedure was rejected by the schema and ACCEPTED by the production consumer, so the 'same declaration' claim was false. Found by the first bounded audit.",
+      "evidence": [
+        "src/ftro/pinning.py",
+        "src/ftro/schema.py"
+      ],
+      "severity": "high",
+      "impact": "The hand-written copy is deleted rather than aligned; the consumer now calls schema.validate directly, so producer and consumer cannot drift. All three mutations are rejected.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule reinforced (D-076): where a contract says 'one declaration', delete the second one.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pinning.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-066",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect",
+      "title": "SELF-DIRECTED: M11's coverage was narrower than its registered scope, so the audit result was wrong",
+      "failed_step": "Detecting a precondition moved behind the action it guards.",
+      "known_fact": "A pre-registered operator must be exercised over the scope it claims.",
+      "observed": "The urlopen spy covered only the null-registry route. Moving explicit --expect-sha256 validation behind urlopen() left all 96 tests green, so the audit report's M11 'detected' was incorrect -- a false PASS in a pre-registered checklist, which is worse than a missing check because it is believed.",
+      "evidence": [
+        "tests/test_retrieval_validation.py",
+        "phase0/reports/audit-2026-08-26.md"
+      ],
+      "severity": "high",
+      "impact": "The spy now covers both routes. The mutation fails. The audit report is corrected rather than reissued, so the false pass stays visible in the record.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-083): an operator's coverage must match its registered scope, and a corrected audit result is amended in place, never silently replaced.",
+      "disposition": "resolved",
+      "links": {
+        "software": "tests/test_retrieval_validation.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-067",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO version gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "SELF-DIRECTED: the version gate failed OPEN in the environment its contract requires",
+      "failed_step": "Verifying versions from a clean export.",
+      "known_fact": "C10 requires the gate to run from a clean export; the exit condition requires all contracts green there.",
+      "observed": "An extracted git archive has no git metadata, so the gate could not obtain a diff and returned success. A versioned file edited without a bump in that environment produced 'nothing to compare, exit=0'. The gate reported success precisely where it could verify nothing.",
+      "evidence": [
+        "src/ftro/check_versions.py"
+      ],
+      "severity": "high",
+      "impact": "The gate now fails closed under --check when no git context is available, and says why. C10's wording states the requirement explicitly.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-084): a gate that cannot verify must fail, not pass.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/check_versions.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-068",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO documentation",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "no_present_effect",
+      "title": "SELF-DIRECTED: the README claimed byte-determinism for a step that stamps a timestamp",
+      "failed_step": "Stating which pipeline steps are reproducible.",
+      "known_fact": "A step that mints retrieved_utc cannot reproduce its output byte-for-byte.",
+      "observed": "The README listed step 1 among the deterministic steps, but pin_evidence_repos stamps retrieved_utc, so two runs over identical digests differ. Step 2 separately did not reproduce its committed verification activity, because the documented input path differed from the artifact field recorded in it.",
+      "evidence": [
+        "README.md",
+        "phase0/evidence/VA-GPS2UTC-001.json"
+      ],
+      "severity": "medium",
+      "impact": "The scope is corrected: steps 2, 5 and 6 are byte-deterministic; retrieval steps 1, 3 and 4 are not, by construction, and are covered by C1 and C2 instead. VA-GPS2UTC-001 was regenerated against the path step 1 writes, so step 2 now reproduces exactly rather than being documented as an exception.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule reinforced: a documented property is a claim and needs the same evidence as a finding.",
+      "disposition": "resolved",
+      "links": {
+        "software": "README.md"
+      }
+    },
+    {
+      "id": "FTRO-DEF-069",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO acceptance contract",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "SELF-DIRECTED: two contracts were worded more broadly than the code they describe",
+      "failed_step": "Stating a contract that is true of the implementation.",
+      "known_fact": "A contract must describe what the code does, or it fails on wording rather than on behaviour.",
+      "observed": "C1 said every pinner refuses anything outside the registry, which is false while --allow-unpinned exists as a deliberate first-pin escape. C6 said main and sensitivity share one construction of EVERY domain support, but optical is constructed per variant by design -- varying it is the scan. C6's four-way comparison was also one-sided, omitting abs(), so a sensitivity value BELOW main would not have been flagged.",
+      "evidence": [
+        "phase0/acceptance-contract-v1.0.md",
+        "src/ftro/four_domain_intersection.py"
+      ],
+      "severity": "medium",
+      "impact": "Both contracts reworded to describe the implementation, with the escape hatch and the optical exception stated explicitly. The four-way comparison is now two-sided. Committed values were unaffected, so this was a latent asymmetry rather than a wrong result.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26 in contract v1.1.",
+      "disposition": "resolved",
+      "links": {
+        "software": "phase0/acceptance-contract-v1.0.md"
+      }
     }
   ],
   "revised": "2026-08-26",
-  "revision_note": "Revised across eleven review rounds. Round 11 froze the Phase-0 acceptance scope, retriaged every entry on finding_type and affects, and consolidated rather than adding guards. Thirty-nine entries are self-directed.",
+  "revision_note": "Revised across twelve rounds. Entries 065-069 come from the FIRST BOUNDED AUDIT against the frozen Phase-0 contract -- an audit that failed on C3, C8, C10 and M11 and then stopped, which is the protocol working. Forty-four entries are self-directed.",
   "triage_axes": {
     "finding_type": {
       "current_defect": "today's committed behaviour is wrong or a documented workflow fails",

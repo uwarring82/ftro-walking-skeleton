@@ -125,16 +125,6 @@ def promote(report, out_path, ok, validate_schema=True):
     return True
 
 
-# Fields a report MUST declare for a consumer to trust it, with their required values.
-# Absence is a failure, not a zero: the first version used `.get()` truthiness, so a
-# report that simply omitted n_failed or retrieval_validation was accepted (FTRO-DEF-038).
-REQUIRED_REPORT_STATE = {
-    "retrieval_validation": ("content_validated",),
-    "n_failed": (0,),
-    "n_without_expected_digest": (0,),
-}
-
-
 def _registry_digests(registry_path, section):
     try:
         with open(registry_path, encoding="utf-8") as fh:
@@ -161,91 +151,14 @@ def assert_report_usable(path, what="report", registry=None, section=None, key=N
     """
     with open(path, encoding="utf-8") as fh:
         doc = json.load(fh)
-    problems = []
-
-    for field, allowed in REQUIRED_REPORT_STATE.items():
-        if field not in doc:
-            problems.append(f"{field} absent (absence is not evidence of success)")
-            continue
-        value = doc[field]
-        exemplar = allowed[0]
-        if isinstance(exemplar, int):
-            # bool is a subclass of int, so isinstance(False, int) is True and JSON
-            # `false` was accepted as zero (FTRO-DEF-043).
-            if isinstance(value, bool) or not isinstance(value, int):
-                problems.append(f"{field}={value!r} is {type(value).__name__}, expected int")
-                continue
-        elif isinstance(exemplar, str) and not isinstance(value, str):
-            problems.append(f"{field}={value!r} is {type(value).__name__}, expected str")
-            continue
-        if value not in allowed:
-            problems.append(f"{field}={value!r}, expected one of {allowed}")
-
-    # Container shape, explicitly. The coherence checks below previously ran only when a
-    # field was ALREADY a list, so failures: {} and uncovered_by_registry: "ghost" both
-    # passed, and adding pins: {} to a single-pin report was ignored (FTRO-DEF-056).
-    if "pins" in doc:
-        if not isinstance(doc["pins"], list):
-            problems.append(f"pins is {type(doc['pins']).__name__}, expected list")
-            pins = []
-        else:
-            pins = doc["pins"]
-            for i, p in enumerate(pins):
-                if not isinstance(p, dict):
-                    problems.append(f"pins[{i}] is {type(p).__name__}, expected object")
-            pins = [p for p in pins if isinstance(p, dict)]
-    elif "sha256" in doc:
-        pins = [doc]
-    else:
-        problems.append("report declares neither a pins list nor a single pin")
-        pins = []
-    if not pins and "pins" not in doc and "sha256" not in doc:
-        pass
-    elif not pins:
-        problems.append("report contains no usable pins")
-    # A declared count that disagrees with the pins is a report describing something
-    # other than itself.
-    # n_pinned must be PRESENT and a true int. Absence passed; 57.0 == 57 and True == 1
-    # both compared equal, so a float or a boolean satisfied the count (FTRO-DEF-050).
-    if "n_pinned" not in doc:
-        problems.append("n_pinned absent (absence is not evidence of a complete report)")
-    elif isinstance(doc["n_pinned"], bool) or not isinstance(doc["n_pinned"], int):
-        problems.append(f"n_pinned={doc['n_pinned']!r} is {type(doc['n_pinned']).__name__}, "
-                        f"expected int")
-    elif doc["n_pinned"] != len(pins):
-        problems.append(f"n_pinned={doc['n_pinned']} but the report carries {len(pins)} pins")
-
-    # A zero counter beside a non-empty list is a report contradicting itself.
-    for lst, counter in (("failures", "n_failed"),
-                         ("uncovered_by_registry", "n_without_expected_digest")):
-        if lst not in doc:
-            problems.append(f"{lst} absent (its counter {counter} is required, so the list is too)")
-        elif not isinstance(doc[lst], list):
-            problems.append(f"{lst} is {type(doc[lst]).__name__}, expected list")
-        elif len(doc[lst]) != doc.get(counter, 0):
-            problems.append(f"{lst} has {len(doc[lst])} entries but {counter}="
-                            f"{doc.get(counter)!r}")
-
-    for p in pins:
-        label = p.get("name") or p.get("key") or p.get("session") or "<unnamed>"
-        if p.get("checksum_match") is not True:
-            problems.append(f"pin {label}: checksum_match={p.get('checksum_match')!r}, "
-                            f"expected True")
-        if not valid_digest(p.get("expected_sha256")):
-            problems.append(f"pin {label}: expected_sha256={p.get('expected_sha256')!r} "
-                            f"is not a 64-character hex digest")
-        if not valid_digest(p.get("sha256")):
-            problems.append(f"pin {label}: sha256={p.get('sha256')!r} "
-                            f"is not a 64-character hex digest")
-        elif valid_digest(p.get("expected_sha256")) and p["sha256"] != p["expected_sha256"]:
-            problems.append(f"pin {label}: sha256 disagrees with expected_sha256 while "
-                            f"checksum_match claims True")
-        # Profile §9.2 requires retrieval_validation on EVERY record. Permitting its
-        # absence inside pins repeated the DEF-034 failure one level down.
-        if "retrieval_validation" not in p:
-            problems.append(f"pin {label}: retrieval_validation absent")
-        elif p["retrieval_validation"] != "content_validated":
-            problems.append(f"pin {label}: retrieval_validation={p['retrieval_validation']!r}")
+    # ONE declaration. C3 required producer and consumer to apply the same schema; the
+    # consumer kept a parallel hand-written validator, so removing `generator`,
+    # `retrieved_utc` or `retrieval_procedure` was rejected by the schema and accepted
+    # here (FTRO-DEF-065). The hand-written copy is deleted rather than aligned.
+    doc_for_schema = doc if isinstance(doc.get("pins"), list) else dict(doc, pins=[doc])
+    problems = list(schema.validate(doc_for_schema, schema.PIN_REPORT))
+    pins = doc_for_schema["pins"] if isinstance(doc_for_schema.get("pins"), list) else []
+    pins = [p for p in pins if isinstance(p, dict)]
 
     # Completeness against the expected registry: which artifacts must be present, and
     # what their digests must be. A self-consistent report is not necessarily a complete

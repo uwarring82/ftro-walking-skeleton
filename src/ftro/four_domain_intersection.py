@@ -197,7 +197,7 @@ def main():
         for k, v in three.items():
             if abs(v["total_hours"] - shipped["three_domain_h"][k]) > 5e-4:
                 recon["disagreements"].append(f"three-domain {k}")
-        if (total_h(four) - shipped["four_domain_h"]) > 5e-4:
+        if abs(total_h(four) - shipped["four_domain_h"]) > 5e-4:
             recon["disagreements"].append("four_domain")
         if gap and shipped.get("pulsar_optical_gap_h") is not None \
                 and abs(gap["gap_hours"] - shipped["pulsar_optical_gap_h"]) > 5e-4:

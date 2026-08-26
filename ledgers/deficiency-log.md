@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.14.0  
+**Version:** 0.15.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (38), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (35), low (3), medium (24)  
-**By domain:** cross-domain (25), gnss (5), optical (20), pulsar (8), vlbi (6)  
-**By disposition:** open (24), resolved (40)  
-**By responsible party:** ftro (40), provider (24)  
-**By finding type:** assurance_gap (7), current_defect (17), external_evidence_gap (17), latent_regression (22), recorded_outcome (1)  
-**By affects:** blocks_workflow (11), changes_result (12), maintenance_only (9), no_present_effect (32)  
+**By class:** execution (43), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (38), low (3), medium (26)  
+**By domain:** cross-domain (30), gnss (5), optical (20), pulsar (8), vlbi (6)  
+**By disposition:** open (24), resolved (45)  
+**By responsible party:** ftro (45), provider (24)  
+**By finding type:** assurance_gap (8), current_defect (20), external_evidence_gap (17), latent_regression (23), recorded_outcome (1)  
+**By affects:** blocks_workflow (11), changes_result (12), maintenance_only (11), no_present_effect (35)  
 
-**Total entries:** 64 · **self-directed:** 40
+**Total entries:** 69 · **self-directed:** 45
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries that could change the Phase-0 result and are not external evidence gaps.**
 >
@@ -62,6 +62,9 @@
 | [`FTRO-DEF-061`](#ftro-def-061) | execution | high | latent_regression | changes_result | **self** | SELF-DIRECTED: main and sensitivity computations carried duplicate domain constants |
 | [`FTRO-DEF-062`](#ftro-def-062) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: a credit function assumed sorted input its caller happened to provide |
 | [`FTRO-DEF-063`](#ftro-def-063) | execution | high | assurance_gap | maintenance_only | **self** | SELF-DIRECTED: the review protocol had no terminating condition |
+| [`FTRO-DEF-065`](#ftro-def-065) | execution | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: C3 claimed one declaration while the consumer kept a parallel hand-written validator |
+| [`FTRO-DEF-066`](#ftro-def-066) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: M11's coverage was narrower than its registered scope, so the audit result was wrong |
+| [`FTRO-DEF-067`](#ftro-def-067) | execution | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: the version gate failed OPEN in the environment its contract requires |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -86,6 +89,8 @@
 | [`FTRO-DEF-056`](#ftro-def-056) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: container-shape checks ran only when the container was already the right type |
 | [`FTRO-DEF-057`](#ftro-def-057) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the 'nothing was fetched' test measured 'nothing was cached' |
 | [`FTRO-DEF-064`](#ftro-def-064) | execution | medium | current_defect | maintenance_only | **self** | SELF-DIRECTED: the git-based version gate crashed on a document that gains a version |
+| [`FTRO-DEF-068`](#ftro-def-068) | execution | medium | current_defect | no_present_effect | **self** | SELF-DIRECTED: the README claimed byte-determinism for a step that stamps a timestamp |
+| [`FTRO-DEF-069`](#ftro-def-069) | execution | medium | assurance_gap | no_present_effect | **self** | SELF-DIRECTED: two contracts were worded more broadly than the code they describe |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | external_evidence_gap | changes_result | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | current_defect | no_present_effect | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | external_evidence_gap | no_present_effect | provider | High-rate 30 s clock products are absent from the mirror used |
@@ -2316,5 +2321,179 @@
 **Workaround.** None.
 
 **Proposed response.** Corrected 2026-08-26. The gate accepts a gained version and a test covers it. Rule reinforced: enumerate a state machine's transitions, not the cases that come to mind.
+
+---
+
+### FTRO-DEF-065
+
+**SELF-DIRECTED: C3 claimed one declaration while the consumer kept a parallel hand-written validator**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO consumer gate` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Applying one schema at producer and consumer, as contract C3 states.
+
+**Known fact or required evidence.** C3: one declared schema, checked by the producer before promotion and by the consumer before use.
+
+**Observed.** promote() called schema.PIN_REPORT, but assert_report_usable() retained its earlier hand-written checks. Removing generator, per-pin retrieved_utc or per-pin retrieval_procedure was rejected by the schema and ACCEPTED by the production consumer, so the 'same declaration' claim was false. Found by the first bounded audit.
+
+**Evidence.**
+
+- `src/ftro/pinning.py`
+- `src/ftro/schema.py`
+
+**Impact.** The hand-written copy is deleted rather than aligned; the consumer now calls schema.validate directly, so producer and consumer cannot drift. All three mutations are rejected.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule reinforced (D-076): where a contract says 'one declaration', delete the second one.
+
+---
+
+### FTRO-DEF-066
+
+**SELF-DIRECTED: M11's coverage was narrower than its registered scope, so the audit result was wrong**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO test suite` |
+| Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Detecting a precondition moved behind the action it guards.
+
+**Known fact or required evidence.** A pre-registered operator must be exercised over the scope it claims.
+
+**Observed.** The urlopen spy covered only the null-registry route. Moving explicit --expect-sha256 validation behind urlopen() left all 96 tests green, so the audit report's M11 'detected' was incorrect -- a false PASS in a pre-registered checklist, which is worse than a missing check because it is believed.
+
+**Evidence.**
+
+- `tests/test_retrieval_validation.py`
+- `phase0/reports/audit-2026-08-26.md`
+
+**Impact.** The spy now covers both routes. The mutation fails. The audit report is corrected rather than reissued, so the false pass stays visible in the record.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-083): an operator's coverage must match its registered scope, and a corrected audit result is amended in place, never silently replaced.
+
+---
+
+### FTRO-DEF-067
+
+**SELF-DIRECTED: the version gate failed OPEN in the environment its contract requires**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO version gate` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Verifying versions from a clean export.
+
+**Known fact or required evidence.** C10 requires the gate to run from a clean export; the exit condition requires all contracts green there.
+
+**Observed.** An extracted git archive has no git metadata, so the gate could not obtain a diff and returned success. A versioned file edited without a bump in that environment produced 'nothing to compare, exit=0'. The gate reported success precisely where it could verify nothing.
+
+**Evidence.**
+
+- `src/ftro/check_versions.py`
+
+**Impact.** The gate now fails closed under --check when no git context is available, and says why. C10's wording states the requirement explicitly.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-084): a gate that cannot verify must fail, not pass.
+
+---
+
+### FTRO-DEF-068
+
+**SELF-DIRECTED: the README claimed byte-determinism for a step that stamps a timestamp**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO documentation` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `no_present_effect` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Stating which pipeline steps are reproducible.
+
+**Known fact or required evidence.** A step that mints retrieved_utc cannot reproduce its output byte-for-byte.
+
+**Observed.** The README listed step 1 among the deterministic steps, but pin_evidence_repos stamps retrieved_utc, so two runs over identical digests differ. Step 2 separately did not reproduce its committed verification activity, because the documented input path differed from the artifact field recorded in it.
+
+**Evidence.**
+
+- `README.md`
+- `phase0/evidence/VA-GPS2UTC-001.json`
+
+**Impact.** The scope is corrected: steps 2, 5 and 6 are byte-deterministic; retrieval steps 1, 3 and 4 are not, by construction, and are covered by C1 and C2 instead. VA-GPS2UTC-001 was regenerated against the path step 1 writes, so step 2 now reproduces exactly rather than being documented as an exception.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule reinforced: a documented property is a claim and needs the same evidence as a finding.
+
+---
+
+### FTRO-DEF-069
+
+**SELF-DIRECTED: two contracts were worded more broadly than the code they describe**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO acceptance contract` |
+| Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Stating a contract that is true of the implementation.
+
+**Known fact or required evidence.** A contract must describe what the code does, or it fails on wording rather than on behaviour.
+
+**Observed.** C1 said every pinner refuses anything outside the registry, which is false while --allow-unpinned exists as a deliberate first-pin escape. C6 said main and sensitivity share one construction of EVERY domain support, but optical is constructed per variant by design -- varying it is the scan. C6's four-way comparison was also one-sided, omitting abs(), so a sensitivity value BELOW main would not have been flagged.
+
+**Evidence.**
+
+- `phase0/acceptance-contract-v1.0.md`
+- `src/ftro/four_domain_intersection.py`
+
+**Impact.** Both contracts reworded to describe the implementation, with the escape hatch and the optical exception stated explicitly. The four-way comparison is now two-sided. Committed values were unaffected, so this was a latent asymmetry rather than a wrong result.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26 in contract v1.1.
 
 ---
