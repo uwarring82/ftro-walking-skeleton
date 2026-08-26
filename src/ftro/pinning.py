@@ -21,6 +21,8 @@ import os
 import re
 import sys
 
+import schema
+
 SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
@@ -88,12 +90,26 @@ def preflight(expected, names, allow_unpinned=False, what="artifact"):
     return missing
 
 
-def promote(report, out_path, ok):
+def promote(report, out_path, ok, validate_schema=True):
     """Write the report atomically, promoting to out_path only on complete success.
+
+    A successful report is validated against the SAME declaration the consumer applies,
+    so a producer cannot promote something its consumer will reject. That mismatch had
+    to be found by review twice (FTRO-DEF-058, -059); it is now impossible by
+    construction.
 
     On failure the report is written beside the official path with a .rejected suffix so
     the evidence survives, and the official path is left untouched.
     """
+    if ok and validate_schema:
+        doc = report if isinstance(report.get("pins"), list) else dict(report, pins=[report])
+        problems = schema.validate(doc, schema.PIN_REPORT)
+        if problems:
+            ok = False
+            report = dict(report, schema_problems=problems[:10])
+            print("NOT PROMOTED: report does not satisfy the shared schema: "
+                  + "; ".join(problems[:4]), file=sys.stderr)
+
     os.makedirs(os.path.dirname(out_path) or ".", exist_ok=True)
     if not ok:
         rejected = out_path + ".rejected"

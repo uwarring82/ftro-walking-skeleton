@@ -23,6 +23,7 @@
 
 import datetime
 import json
+import re
 import os
 import sys
 
@@ -31,6 +32,21 @@ import pinning  # noqa: E402
 from optical_sensitivity import build_sensitivity  # noqa: E402
 
 W0, W1 = 59630.0, 59640.0
+GPS_EPOCH_MJD = 44244
+
+# igsWWWWD.ext.Z -- Final product, GPS week WWWW, day-of-week D (7 = weekly summary).
+IGS_FINAL_NAME = re.compile(r"^igs(\d{4})(\d)\.(sp3|clk|erp)\.Z$")
+
+
+def igs_day_from_name(name):
+    """MJD covered by an IGS FINAL daily product, or None. Derived, never trusted."""
+    m = IGS_FINAL_NAME.match(name or "")
+    if not m:
+        return None
+    week, dow = int(m.group(1)), int(m.group(2))
+    if dow > 6:                      # day 7 is the weekly ERP summary, not a daily product
+        return None
+    return GPS_EPOCH_MJD + week * 7 + dow
 ARCHIVE_ROOT = "data/raw/zenodo-17107693/extracted"
 OPTICAL_INVENTORY = "data/work/optical-inventory.json"
 OPTICAL_SUMMARY = "phase0/reports/optical-inventory-summary.json"
@@ -108,7 +124,13 @@ def main():
     pulsar = [(p0, p0 + PULSAR_TOBS_S / 86400.0)]
 
     # GNSS: IGS daily Final products, each covering one UTC day.
-    days = sorted({p["mjd"] for p in igs["pins"] if p["mjd"] and p["series"] == "igs"})
+    #
+    # series and mjd are DERIVED from the filename, which the registry binds by digest.
+    # They were previously read from report fields that nothing authenticated, so
+    # relabelling all 57 pins as "igr" -- without touching a name or a digest -- passed
+    # every gate and drove GNSS support from 240 h to 0 h (FTRO-DEF-060). A field that is
+    # not stored cannot be forged.
+    days = sorted({d for d in (igs_day_from_name(p["name"]) for p in igs["pins"]) if d})
     gnss = merge([(float(d), float(d) + 1.0) for d in days])
 
     domains = {"optical": optical, "pulsar": pulsar, "vlbi": vlbi, "gnss": gnss}
@@ -118,7 +140,14 @@ def main():
     # The earlier in-line block re-merged an inventory already segmented at 1.5 s and
     # pooled across comparisons and files, so it could never split a run and could join
     # unrelated series. See FTRO-DEF-030.
-    sensitivity = build_sensitivity(ARCHIVE_ROOT, ivs_sessions, igs)
+    # Domain supports are built ONCE and passed in. Main and sensitivity previously
+    # carried separate copies of the pulsar constants, so changing one produced a main
+    # `overlap` while every sensitivity row still said no_common_support, with all tests
+    # and both gates green (FTRO-DEF-061).
+    sensitivity = build_sensitivity(ARCHIVE_ROOT, ivs_sessions, igs,
+                                    pulsar_support=pulsar, gnss_support=gnss,
+                                    vlbi_support=vlbi)
+
 
     pairwise = {}
     keys = sorted(clipped)
@@ -153,8 +182,33 @@ def main():
         gap = {"pulsar_support_end_mjd": pe, "optical_support_start_mjd": os_,
                "gap_days": round(os_ - pe, 6), "gap_hours": round((os_ - pe) * 24, 3)}
 
+    # Reconcile: the sensitivity row at the SHIPPED convention must reproduce the main
+    # computation for every quantity, not just the two that used to be compared.
+    shipped = sensitivity["gap_tolerance_scan"].get(str(inv.get("gap_tolerance_s")))
+    recon = {"checked": False}
+    if shipped:
+        recon = {"checked": True, "tolerance": inv.get("gap_tolerance_s"), "disagreements": []}
+        for k, v in clipped.items():
+            if abs(total_h(v) - shipped["domain_h"][k]) > 5e-4:
+                recon["disagreements"].append(f"domain {k}")
+        for k, v in pairwise.items():
+            if abs(v["total_hours"] - shipped["pairwise_h"][k]) > 5e-4:
+                recon["disagreements"].append(f"pairwise {k}")
+        for k, v in three.items():
+            if abs(v["total_hours"] - shipped["three_domain_h"][k]) > 5e-4:
+                recon["disagreements"].append(f"three-domain {k}")
+        if (total_h(four) - shipped["four_domain_h"]) > 5e-4:
+            recon["disagreements"].append("four_domain")
+        if gap and shipped.get("pulsar_optical_gap_h") is not None \
+                and abs(gap["gap_hours"] - shipped["pulsar_optical_gap_h"]) > 5e-4:
+            recon["disagreements"].append("pulsar_optical_gap")
+        if recon["disagreements"]:
+            raise SystemExit("main computation and sensitivity disagree at the shipped "
+                             f"convention: {recon['disagreements']}. One of them is wrong.")
+
     report = {
         "generator": "src/ftro/four_domain_intersection.py",
+        "main_vs_sensitivity_reconciliation": recon,
         "candidate_window_mjd": [W0, W1],
         "method_note": ("The four legs are not computed on a common basis. Optical is the union "
                         "of RECORDED TIMESTAMP SPANS of contiguous flag-in-{1,2} runs under a "

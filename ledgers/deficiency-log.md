@@ -2,80 +2,92 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.11.0  
+**Version:** 0.13.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (31), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (29), low (3), medium (23)  
-**By domain:** cross-domain (22), gnss (3), optical (19), pulsar (8), vlbi (5)  
-**By disposition:** open (24), resolved (33)  
-**By responsible party:** ftro (33), provider (24)  
+**By class:** execution (37), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (35), low (3), medium (23)  
+**By domain:** cross-domain (24), gnss (5), optical (20), pulsar (8), vlbi (6)  
+**By disposition:** open (24), resolved (39)  
+**By responsible party:** ftro (39), provider (24)  
+**By finding type:** assurance_gap (7), current_defect (16), external_evidence_gap (17), latent_regression (22), recorded_outcome (1)  
+**By affects:** blocks_workflow (11), changes_result (12), maintenance_only (8), no_present_effect (32)  
 
-**Total entries:** 57 · **self-directed:** 33 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035, FTRO-DEF-036, FTRO-DEF-037, FTRO-DEF-038, FTRO-DEF-039, FTRO-DEF-040, FTRO-DEF-041, FTRO-DEF-042, FTRO-DEF-043, FTRO-DEF-044, FTRO-DEF-045, FTRO-DEF-046, FTRO-DEF-047, FTRO-DEF-048, FTRO-DEF-049, FTRO-DEF-050, FTRO-DEF-051, FTRO-DEF-052, FTRO-DEF-053, FTRO-DEF-054, FTRO-DEF-055, FTRO-DEF-056, FTRO-DEF-057)
+**Total entries:** 63 · **self-directed:** 39
 
-| ID | Class | Sev. | Domain | Party | Title |
-| --- | --- | --- | --- | --- | --- |
-| [`FTRO-DEF-003`](#ftro-def-003) | source_evidence | critical | optical | provider | ref_osc, interval, lag and weighting are absent from every comparison, leaving the time-tag realisation unresolved |
-| [`FTRO-DEF-004`](#ftro-def-004) | source_evidence | critical | optical | provider | Comparator output is formally ambiguous between two documented physical interpretations |
-| [`FTRO-DEF-001`](#ftro-def-001) | source_evidence | high | optical | provider | Validity-flag vocabulary is documented but degenerate: every sample carries flag=1 |
-| [`FTRO-DEF-002`](#ftro-def-002) | source_evidence | high | optical | provider | Published MJD time tags are quantised to 86.4 ms, coarser than the sampling interval they represent |
-| [`FTRO-DEF-007`](#ftro-def-007) | execution | high | optical | provider | Named generating scripts are not present in the archive and no environment specification is supplied |
-| [`FTRO-DEF-011`](#ftro-def-011) | source_evidence | high | pulsar | provider | Timing model requests TT(BIPM2020) but the release ships a TT(BIPM2021) clock file |
-| [`FTRO-DEF-012`](#ftro-def-012) | source_evidence | high | pulsar | provider | The selected timing model declares no Earth-orientation artifact, and none is identified in the retrieved release inventory |
-| [`FTRO-DEF-014`](#ftro-def-014) | rights | high | pulsar | provider | PPTA DR3 is CC BY-SA 4.0, incompatible with the CC BY 4.0 assigned to FTRO metadata outputs |
-| [`FTRO-DEF-018`](#ftro-def-018) | rights | high | vlbi | **self** | CDDIS returns an Earthdata login page with HTTP 200 instead of an authentication error |
-| [`FTRO-DEF-023`](#ftro-def-023) | policy | high | cross-domain | provider | Candidate window contains no four-domain simultaneous support |
-| [`FTRO-DEF-024`](#ftro-def-024) | source_evidence | high | optical | **self** | SELF-DIRECTED: FTRO composed a snapshot identity for a leg where the provider supplies one |
-| [`FTRO-DEF-025`](#ftro-def-025) | source_evidence | high | vlbi | **self** | SELF-DIRECTED: a leg was recorded unresolved without canvassing alternative data centres |
-| [`FTRO-DEF-027`](#ftro-def-027) | execution | high | optical | **self** | SELF-DIRECTED: a headline verification count was not reproducible from any committed script |
-| [`FTRO-DEF-029`](#ftro-def-029) | execution | high | cross-domain | **self** | SELF-DIRECTED: a conformance rule was introduced and violated in the same commit |
-| [`FTRO-DEF-030`](#ftro-def-030) | execution | high | optical | **self** | SELF-DIRECTED: the convention-sensitivity scan could not perform the reanalysis it reported |
-| [`FTRO-DEF-031`](#ftro-def-031) | execution | high | cross-domain | **self** | SELF-DIRECTED: the committed test suite did not exercise the behaviour it was written to protect |
-| [`FTRO-DEF-032`](#ftro-def-032) | execution | high | pulsar | **self** | SELF-DIRECTED: four artifacts asserted evidence_state=resolvable under validation the profile forbids |
-| [`FTRO-DEF-034`](#ftro-def-034) | execution | high | cross-domain | **self** | SELF-DIRECTED: the §9.2 conformance test exempted every record that omitted the field |
-| [`FTRO-DEF-035`](#ftro-def-035) | execution | high | cross-domain | **self** | SELF-DIRECTED: projection-only verification -- tests checked a hand-corrected manifest while its generators drifted |
-| [`FTRO-DEF-037`](#ftro-def-037) | execution | high | optical | **self** | SELF-DIRECTED: a contract change updated one caller of two, and the report published a wrong number |
-| [`FTRO-DEF-038`](#ftro-def-038) | execution | high | cross-domain | **self** | SELF-DIRECTED: the consumer gate and its tests both equated an absent field with success |
-| [`FTRO-DEF-042`](#ftro-def-042) | execution | high | cross-domain | **self** | SELF-DIRECTED: preflight checked key membership, so a null digest passed as an expectation |
-| [`FTRO-DEF-043`](#ftro-def-043) | execution | high | cross-domain | **self** | SELF-DIRECTED: the consumer gate accepted JSON false as integer zero and ignored per-pin state |
-| [`FTRO-DEF-044`](#ftro-def-044) | execution | high | cross-domain | **self** | SELF-DIRECTED: --register was an escape hatch that also could not register anything |
-| [`FTRO-DEF-046`](#ftro-def-046) | execution | high | optical | **self** | SELF-DIRECTED: the tests guarding the sensitivity computation only read its output |
-| [`FTRO-DEF-048`](#ftro-def-048) | execution | high | optical | **self** | SELF-DIRECTED: the segmentation oracle validated topology, not extent |
-| [`FTRO-DEF-049`](#ftro-def-049) | execution | high | cross-domain | **self** | SELF-DIRECTED: generated-file version enforcement did not exist |
-| [`FTRO-DEF-050`](#ftro-def-050) | execution | high | cross-domain | **self** | SELF-DIRECTED: the consumer permitted absent per-pin state and incoherent counters |
-| [`FTRO-DEF-053`](#ftro-def-053) | execution | high | optical | **self** | SELF-DIRECTED: the oracle fixture contained no gap at a scientifically active tolerance boundary |
-| [`FTRO-DEF-054`](#ftro-def-054) | execution | high | gnss | **self** | SELF-DIRECTED: the runtime consumer verified a report's self-description, not its completeness |
-| [`FTRO-DEF-055`](#ftro-def-055) | execution | high | cross-domain | **self** | SELF-DIRECTED: generated-version enforcement had two laundering paths |
-| [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | optical | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
-| [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | optical | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
-| [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | optical | provider | One comparison was produced by a different pipeline at a different epoch |
-| [`FTRO-DEF-013`](#ftro-def-013) | source_evidence | medium | pulsar | provider | Timing model's fit metadata does not correspond to the co-located TOA file |
-| [`FTRO-DEF-015`](#ftro-def-015) | source_evidence | medium | pulsar | provider | One data release, two DOIs, ~42% duplicated content and no manifest of the split |
-| [`FTRO-DEF-016`](#ftro-def-016) | source_evidence | medium | pulsar | provider | Pinned gps2utc.clk contains 64 duplicate MJD abscissae with differing ordinates |
-| [`FTRO-DEF-017`](#ftro-def-017) | source_evidence | medium | pulsar | provider | TT(BIPM2021) values at the candidate epoch are extrapolated, not published BIPM values |
-| [`FTRO-DEF-019`](#ftro-def-019) | source_evidence | medium | gnss | provider | Product availability time is mirror-derived, not provider-declared |
-| [`FTRO-DEF-021`](#ftro-def-021) | schema | medium | cross-domain | provider | No vocabulary yet exists for a quantised time coordinate whose precision is coarser than its sampling interval |
-| [`FTRO-DEF-022`](#ftro-def-022) | execution | medium | optical | provider | Pinned processing-evidence commit post-dates the data it is cited to explain by 19 months |
-| [`FTRO-DEF-026`](#ftro-def-026) | source_evidence | medium | vlbi | provider | A vgosDB archive checksum does not record which wrapper member a chain consumed |
-| [`FTRO-DEF-028`](#ftro-def-028) | source_evidence | medium | vlbi | provider | The published vgosDB was silently reprocessed in 2025 with no version signal outside its wrappers |
-| [`FTRO-DEF-033`](#ftro-def-033) | schema | medium | cross-domain | **self** | SELF-DIRECTED: version labels stopped identifying a constraint state |
-| [`FTRO-DEF-036`](#ftro-def-036) | execution | medium | optical | **self** | SELF-DIRECTED: the spacing analysis differenced binary floats and invented a distinct spacing |
-| [`FTRO-DEF-039`](#ftro-def-039) | execution | medium | cross-domain | **self** | SELF-DIRECTED: --update could legalise an unbumped content change |
-| [`FTRO-DEF-040`](#ftro-def-040) | execution | medium | cross-domain | **self** | SELF-DIRECTED: 'every versioned artifact' was a manual list with no completeness check |
-| [`FTRO-DEF-041`](#ftro-def-041) | execution | medium | vlbi | **self** | SELF-DIRECTED: a transport failure produced a traceback instead of a rejected report |
-| [`FTRO-DEF-045`](#ftro-def-045) | execution | medium | cross-domain | **self** | SELF-DIRECTED: discovery covered four directories, and excluded generated files had no compensating check |
-| [`FTRO-DEF-047`](#ftro-def-047) | execution | medium | cross-domain | **self** | SELF-DIRECTED: a mutation test asserted only a non-zero exit, which the unmutated run also produces |
-| [`FTRO-DEF-051`](#ftro-def-051) | execution | medium | cross-domain | **self** | SELF-DIRECTED: an explicit digest bypassed preflight, and a trailing newline validated |
-| [`FTRO-DEF-052`](#ftro-def-052) | execution | medium | cross-domain | **self** | SELF-DIRECTED: the discovery suffix list advertised formats the pattern could not parse |
-| [`FTRO-DEF-056`](#ftro-def-056) | execution | medium | cross-domain | **self** | SELF-DIRECTED: container-shape checks ran only when the container was already the right type |
-| [`FTRO-DEF-057`](#ftro-def-057) | execution | medium | cross-domain | **self** | SELF-DIRECTED: the 'nothing was fetched' test measured 'nothing was cached' |
-| [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | optical | provider | Declared coverage begins 1.8 days before the first actual sample |
-| [`FTRO-DEF-010`](#ftro-def-010) | schema | low | optical | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
-| [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | gnss | provider | High-rate 30 s clock products are absent from the mirror used |
+> **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries that could change the Phase-0 result and are not external evidence gaps.**
+>
+> Currently: **0** — the remaining result-bearing entries are provider evidence gaps and the recorded null itself, which are the deliverable rather than software failures.
+
+| ID | Class | Sev. | Type | Affects | Party | Title |
+| --- | --- | --- | --- | --- | --- | --- |
+| [`FTRO-DEF-003`](#ftro-def-003) | source_evidence | critical | external_evidence_gap | changes_result | provider | ref_osc, interval, lag and weighting are absent from every comparison, leaving the time-tag realisation unresolved |
+| [`FTRO-DEF-004`](#ftro-def-004) | source_evidence | critical | external_evidence_gap | changes_result | provider | Comparator output is formally ambiguous between two documented physical interpretations |
+| [`FTRO-DEF-001`](#ftro-def-001) | source_evidence | high | external_evidence_gap | changes_result | provider | Validity-flag vocabulary is documented but degenerate: every sample carries flag=1 |
+| [`FTRO-DEF-002`](#ftro-def-002) | source_evidence | high | external_evidence_gap | changes_result | provider | Published MJD time tags are quantised to 86.4 ms, coarser than the sampling interval they represent |
+| [`FTRO-DEF-007`](#ftro-def-007) | execution | high | current_defect | blocks_workflow | provider | Named generating scripts are not present in the archive and no environment specification is supplied |
+| [`FTRO-DEF-011`](#ftro-def-011) | source_evidence | high | external_evidence_gap | changes_result | provider | Timing model requests TT(BIPM2020) but the release ships a TT(BIPM2021) clock file |
+| [`FTRO-DEF-012`](#ftro-def-012) | source_evidence | high | external_evidence_gap | changes_result | provider | The selected timing model declares no Earth-orientation artifact, and none is identified in the retrieved release inventory |
+| [`FTRO-DEF-014`](#ftro-def-014) | rights | high | current_defect | blocks_workflow | provider | PPTA DR3 is CC BY-SA 4.0, incompatible with the CC BY 4.0 assigned to FTRO metadata outputs |
+| [`FTRO-DEF-018`](#ftro-def-018) | rights | high | current_defect | blocks_workflow | **self** | CDDIS returns an Earthdata login page with HTTP 200 instead of an authentication error |
+| [`FTRO-DEF-023`](#ftro-def-023) | policy | high | recorded_outcome | changes_result | provider | Candidate window contains no four-domain simultaneous support |
+| [`FTRO-DEF-024`](#ftro-def-024) | source_evidence | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: FTRO composed a snapshot identity for a leg where the provider supplies one |
+| [`FTRO-DEF-025`](#ftro-def-025) | source_evidence | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: a leg was recorded unresolved without canvassing alternative data centres |
+| [`FTRO-DEF-027`](#ftro-def-027) | execution | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: a headline verification count was not reproducible from any committed script |
+| [`FTRO-DEF-029`](#ftro-def-029) | execution | high | assurance_gap | no_present_effect | **self** | SELF-DIRECTED: a conformance rule was introduced and violated in the same commit |
+| [`FTRO-DEF-030`](#ftro-def-030) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the convention-sensitivity scan could not perform the reanalysis it reported |
+| [`FTRO-DEF-031`](#ftro-def-031) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the committed test suite did not exercise the behaviour it was written to protect |
+| [`FTRO-DEF-032`](#ftro-def-032) | execution | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: four artifacts asserted evidence_state=resolvable under validation the profile forbids |
+| [`FTRO-DEF-034`](#ftro-def-034) | execution | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: the §9.2 conformance test exempted every record that omitted the field |
+| [`FTRO-DEF-035`](#ftro-def-035) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: projection-only verification -- tests checked a hand-corrected manifest while its generators drifted |
+| [`FTRO-DEF-037`](#ftro-def-037) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: a contract change updated one caller of two, and the report published a wrong number |
+| [`FTRO-DEF-038`](#ftro-def-038) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the consumer gate and its tests both equated an absent field with success |
+| [`FTRO-DEF-042`](#ftro-def-042) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: preflight checked key membership, so a null digest passed as an expectation |
+| [`FTRO-DEF-043`](#ftro-def-043) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the consumer gate accepted JSON false as integer zero and ignored per-pin state |
+| [`FTRO-DEF-044`](#ftro-def-044) | execution | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: --register was an escape hatch that also could not register anything |
+| [`FTRO-DEF-046`](#ftro-def-046) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the tests guarding the sensitivity computation only read its output |
+| [`FTRO-DEF-048`](#ftro-def-048) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the segmentation oracle validated topology, not extent |
+| [`FTRO-DEF-049`](#ftro-def-049) | execution | high | assurance_gap | no_present_effect | **self** | SELF-DIRECTED: generated-file version enforcement did not exist |
+| [`FTRO-DEF-050`](#ftro-def-050) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the consumer permitted absent per-pin state and incoherent counters |
+| [`FTRO-DEF-053`](#ftro-def-053) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the oracle fixture contained no gap at a scientifically active tolerance boundary |
+| [`FTRO-DEF-054`](#ftro-def-054) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the runtime consumer verified a report's self-description, not its completeness |
+| [`FTRO-DEF-055`](#ftro-def-055) | execution | high | assurance_gap | maintenance_only | **self** | SELF-DIRECTED: generated-version enforcement had two laundering paths |
+| [`FTRO-DEF-058`](#ftro-def-058) | execution | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: pin_igs could promote a report its own consumer rejects |
+| [`FTRO-DEF-059`](#ftro-def-059) | execution | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: the committed vgosDB report was rejected by the shared consumer gate |
+| [`FTRO-DEF-060`](#ftro-def-060) | execution | high | latent_regression | changes_result | **self** | SELF-DIRECTED: scientific meaning was read from unauthenticated report fields |
+| [`FTRO-DEF-061`](#ftro-def-061) | execution | high | latent_regression | changes_result | **self** | SELF-DIRECTED: main and sensitivity computations carried duplicate domain constants |
+| [`FTRO-DEF-062`](#ftro-def-062) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: a credit function assumed sorted input its caller happened to provide |
+| [`FTRO-DEF-063`](#ftro-def-063) | execution | high | assurance_gap | maintenance_only | **self** | SELF-DIRECTED: the review protocol had no terminating condition |
+| [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
+| [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
+| [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
+| [`FTRO-DEF-013`](#ftro-def-013) | source_evidence | medium | external_evidence_gap | changes_result | provider | Timing model's fit metadata does not correspond to the co-located TOA file |
+| [`FTRO-DEF-015`](#ftro-def-015) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | One data release, two DOIs, ~42% duplicated content and no manifest of the split |
+| [`FTRO-DEF-016`](#ftro-def-016) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | Pinned gps2utc.clk contains 64 duplicate MJD abscissae with differing ordinates |
+| [`FTRO-DEF-017`](#ftro-def-017) | source_evidence | medium | external_evidence_gap | changes_result | provider | TT(BIPM2021) values at the candidate epoch are extrapolated, not published BIPM values |
+| [`FTRO-DEF-019`](#ftro-def-019) | source_evidence | medium | external_evidence_gap | maintenance_only | provider | Product availability time is mirror-derived, not provider-declared |
+| [`FTRO-DEF-021`](#ftro-def-021) | schema | medium | current_defect | no_present_effect | provider | No vocabulary yet exists for a quantised time coordinate whose precision is coarser than its sampling interval |
+| [`FTRO-DEF-022`](#ftro-def-022) | execution | medium | current_defect | no_present_effect | provider | Pinned processing-evidence commit post-dates the data it is cited to explain by 19 months |
+| [`FTRO-DEF-026`](#ftro-def-026) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | A vgosDB archive checksum does not record which wrapper member a chain consumed |
+| [`FTRO-DEF-028`](#ftro-def-028) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | The published vgosDB was silently reprocessed in 2025 with no version signal outside its wrappers |
+| [`FTRO-DEF-033`](#ftro-def-033) | schema | medium | assurance_gap | maintenance_only | **self** | SELF-DIRECTED: version labels stopped identifying a constraint state |
+| [`FTRO-DEF-036`](#ftro-def-036) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the spacing analysis differenced binary floats and invented a distinct spacing |
+| [`FTRO-DEF-039`](#ftro-def-039) | execution | medium | current_defect | maintenance_only | **self** | SELF-DIRECTED: --update could legalise an unbumped content change |
+| [`FTRO-DEF-040`](#ftro-def-040) | execution | medium | assurance_gap | no_present_effect | **self** | SELF-DIRECTED: 'every versioned artifact' was a manual list with no completeness check |
+| [`FTRO-DEF-041`](#ftro-def-041) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: a transport failure produced a traceback instead of a rejected report |
+| [`FTRO-DEF-045`](#ftro-def-045) | execution | medium | assurance_gap | no_present_effect | **self** | SELF-DIRECTED: discovery covered four directories, and excluded generated files had no compensating check |
+| [`FTRO-DEF-047`](#ftro-def-047) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: a mutation test asserted only a non-zero exit, which the unmutated run also produces |
+| [`FTRO-DEF-051`](#ftro-def-051) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: an explicit digest bypassed preflight, and a trailing newline validated |
+| [`FTRO-DEF-052`](#ftro-def-052) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the discovery suffix list advertised formats the pattern could not parse |
+| [`FTRO-DEF-056`](#ftro-def-056) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: container-shape checks ran only when the container was already the right type |
+| [`FTRO-DEF-057`](#ftro-def-057) | execution | medium | latent_regression | no_present_effect | **self** | SELF-DIRECTED: the 'nothing was fetched' test measured 'nothing was cached' |
+| [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | external_evidence_gap | changes_result | provider | Declared coverage begins 1.8 days before the first actual sample |
+| [`FTRO-DEF-010`](#ftro-def-010) | schema | low | current_defect | no_present_effect | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
+| [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | external_evidence_gap | no_present_effect | provider | High-rate 30 s clock products are absent from the mirror used |
 
 ## Entries
 
@@ -90,6 +102,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -123,6 +137,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.1.0 |
 
@@ -157,6 +173,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -190,6 +208,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -223,6 +243,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
 | Responsible party | `provider` |
 | Version | 1.1.0 |
 
@@ -256,6 +278,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `blocks_workflow` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -288,6 +312,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -320,6 +346,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -352,6 +380,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -384,6 +414,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107693` |
 | Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -416,6 +448,8 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -450,6 +484,8 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.1.0 |
 
@@ -483,6 +519,8 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -516,6 +554,8 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -549,6 +589,8 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `blocks_workflow` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -582,6 +624,8 @@
 | Domain | pulsar |
 | Dataset | `IPTA/pulsar-clock-corrections` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -614,6 +658,8 @@
 | Domain | pulsar |
 | Dataset | `doi:10.25919/j4xr-wp05` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -646,6 +692,8 @@
 | Domain | vlbi |
 | Dataset | `CDDIS IVS archive` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.2.0 |
 
@@ -678,6 +726,8 @@
 | Domain | gnss |
 | Dataset | `IGS operational products` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `maintenance_only` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -710,6 +760,8 @@
 | Domain | gnss |
 | Dataset | `IGS operational products` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -742,6 +794,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO profile v0.0.1` |
 | Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -774,6 +828,8 @@
 | Domain | optical |
 | Dataset | `INRIM/tintervals` |
 | Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 1.1.0 |
 
@@ -806,6 +862,8 @@
 | Domain | cross-domain |
 | Dataset | `pilot window MJD 59630-59640` |
 | Disposition | `open` |
+| Finding type | `recorded_outcome` |
+| Affects | `changes_result` |
 | Responsible party | `provider` |
 | Version | 1.1.0 |
 
@@ -813,7 +871,7 @@
 
 **Known fact or required evidence.** The card proposes MJD 59630-59640 as a candidate, explicitly 'retained as test interval, not guaranteed overlap'.
 
-**Observed.** Computed supports inside the window: GNSS 240.000 h (daily product validity, upper bound), optical 133.112 h (EXACT union of 7,398 contiguous valid runs merged into 1,353 disjoint intervals), VLBI 123.500 h (scheduled session intervals, upper bound), pulsar 1.067 h (one observation, MJD 59630.445127-59630.489608). The pulsar support is disjoint from optical (gap 31.174 h) and from VLBI, but lies wholly inside GNSS product validity: gnss n pulsar = 1.067 h. Every THREE- and FOUR-domain combination containing the pulsar is therefore empty, as are the two pairs optical n pulsar and VLBI n pulsar. optical n VLBI n GNSS intersect over 82.013 h.
+**Observed.** Computed supports inside the window: GNSS 240.000 h (daily product validity, upper bound), optical 133.112 h (EXACT union of 7,398 contiguous valid runs merged into 1,353 disjoint intervals), VLBI 123.500 h (scheduled session intervals, upper bound), pulsar 1.067 h (one observation, MJD 59630.445127-59630.489608). The pulsar support is disjoint from optical (gap 31.174 h) and from VLBI, but lies wholly inside GNSS product validity: gnss n pulsar = 1.067 h. Every THREE- and FOUR-domain combination containing the pulsar is therefore empty, as are the two pairs optical n pulsar and VLBI n pulsar. optical n VLBI n GNSS intersect over 82.013 h. CLASSIFICATION: this entry records the pilot's RESULT, not a defect to be fixed. It is retained in the ledger because card §6 requires the empty intersection to be reported rather than repaired, and it is excluded from the convergence measure for the same reason.
 
 **Evidence.**
 
@@ -838,6 +896,8 @@
 | Domain | optical |
 | Dataset | `doi:10.5281/zenodo.17107692` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -872,6 +932,8 @@
 | Domain | vlbi |
 | Dataset | `IVS session R11040 vgosDB` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.1.0 |
 
@@ -905,6 +967,8 @@
 | Domain | vlbi |
 | Dataset | `IVS session R11040 vgosDB` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 2.0.0 |
 
@@ -939,6 +1003,8 @@
 | Domain | optical |
 | Dataset | `FTRO Phase-0 tooling` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -972,6 +1038,8 @@
 | Domain | vlbi |
 | Dataset | `IVS session R11040 vgosDB` |
 | Disposition | `open` |
+| Finding type | `external_evidence_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `provider` |
 | Version | 1.0.0 |
 
@@ -1005,6 +1073,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO profile v0.0.1 and phase0/evidence/identities.json` |
 | Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 2.0.0 |
 
@@ -1038,6 +1108,8 @@
 | Domain | optical |
 | Dataset | `FTRO Phase-0 tooling` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1071,6 +1143,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 4.0.0 |
 
@@ -1105,6 +1179,8 @@
 | Domain | pulsar |
 | Dataset | `FTRO profile v0.0.1 and the PPTA leg` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1138,6 +1214,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO profile and ledger version labels` |
 | Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 4.0.0 |
 
@@ -1171,6 +1249,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO test suite and profile §9.2` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1204,6 +1284,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO tooling and reference manifest` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 3.0.0 |
 
@@ -1237,6 +1319,8 @@
 | Domain | optical |
 | Dataset | `FTRO Phase-0 tooling` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 2.0.0 |
 
@@ -1270,6 +1354,8 @@
 | Domain | optical |
 | Dataset | `FTRO Phase-0 tooling` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1304,6 +1390,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO consumer gate and test suite` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1337,6 +1425,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO version gate` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1370,6 +1460,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO versioned-artifact registry` |
 | Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1403,6 +1495,8 @@
 | Domain | vlbi |
 | Dataset | `FTRO retrieval tooling` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1436,6 +1530,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO retrieval tooling` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1469,6 +1565,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO consumer gate` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1502,6 +1600,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO version gate` |
 | Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1535,6 +1635,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO version gate and generated documents` |
 | Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1568,6 +1670,8 @@
 | Domain | optical |
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1601,6 +1705,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1633,6 +1739,8 @@
 | Domain | optical |
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1666,6 +1774,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO version gate` |
 | Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1699,6 +1809,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO consumer gate` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1732,6 +1844,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO retrieval tooling` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1765,6 +1879,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO version gate` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1797,6 +1913,8 @@
 | Domain | optical |
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1830,6 +1948,8 @@
 | Domain | gnss |
 | Dataset | `FTRO consumer gate` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1863,6 +1983,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO version gate` |
 | Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1895,6 +2017,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO consumer gate` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1928,6 +2052,8 @@
 | Domain | cross-domain |
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
 | Version | 1.0.0 |
 
@@ -1946,5 +2072,213 @@
 **Workaround.** None.
 
 **Proposed response.** Corrected 2026-08-26. Rule adopted (D-075): assert the action you mean to forbid, not a side effect that usually accompanies it.
+
+---
+
+### FTRO-DEF-058
+
+**SELF-DIRECTED: pin_igs could promote a report its own consumer rejects**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | gnss |
+| Dataset | `FTRO retrieval tooling` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Producing a report that satisfies the consumer contract.
+
+**Known fact or required evidence.** A producer and its consumer must agree on the report contract.
+
+**Observed.** --series accepted duplicates, so `--series igs igr igs` exited 0 and promoted 79 pins of which only 57 were unique -- a report the consumer's duplicate check rejects. The duplicate mutation test was self-confirming: after appending pin 58 it set n_pinned=59, so the count mismatch fired before duplicate detection.
+
+**Evidence.**
+
+- `src/ftro/pin_igs.py`
+- `src/ftro/schema.py`
+
+**Impact.** Series are deduped, and promote() now validates the SAME declared schema the consumer applies, so a producer cannot emit something its consumer rejects. That class of mismatch is now impossible by construction rather than caught by review.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26 by consolidation. Rule adopted (D-076): producer and consumer validate one declaration; the producer validates before promotion.
+
+---
+
+### FTRO-DEF-059
+
+**SELF-DIRECTED: the committed vgosDB report was rejected by the shared consumer gate**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | vlbi |
+| Dataset | `FTRO retrieval tooling` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Emitting a report that satisfies the shared contract.
+
+**Known fact or required evidence.** Every committed report must pass the gate every consumer applies.
+
+**Observed.** pin_vgosdb emitted the counters n_failed and n_without_expected_digest but not the failures and uncovered_by_registry lists they count, so the committed report failed the gate introduced one commit earlier. A producer/consumer mismatch shipped in the repository.
+
+**Evidence.**
+
+- `src/ftro/pin_vgosdb.py`
+- `src/ftro/schema.py`
+
+**Impact.** The pinner emits both lists; all four committed reports now satisfy the shared schema, and promotion enforces it.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26 by consolidation.
+
+---
+
+### FTRO-DEF-060
+
+**SELF-DIRECTED: scientific meaning was read from unauthenticated report fields**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | gnss |
+| Dataset | `FTRO analysis path` |
+| Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `changes_result` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Binding the meaning of an authenticated artifact, not only its bytes.
+
+**Known fact or required evidence.** The registry binds a pin by name and digest; anything else in the record is unbound.
+
+**Observed.** four_domain_intersection derived GNSS support from report-supplied `series` and `mjd`. Relabelling all 57 pins as `igr`, without changing a name or a digest, passed every gate and all 99 tests while changing GNSS support from 240 h to 0 h and without_pulsar from 82.0134 h to 0.
+
+**Evidence.**
+
+- `src/ftro/four_domain_intersection.py`
+
+**Impact.** series and mjd are now DERIVED from the filename, which the registry binds by digest. A field that is not stored cannot be forged; the relabel mutation now has no effect at all.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-077): derive semantics from authenticated names rather than binding more fields.
+
+---
+
+### FTRO-DEF-061
+
+**SELF-DIRECTED: main and sensitivity computations carried duplicate domain constants**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO analysis path` |
+| Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `changes_result` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Keeping the main computation and its sensitivity scan consistent.
+
+**Known fact or required evidence.** Two computations of the same quantity must have one source.
+
+**Observed.** The pulsar observation constants were duplicated across four_domain_intersection and optical_sensitivity. Changing only the main start produced a main `overlap` with 13 intervals and 1.0559 h while every embedded sensitivity row still read no_common_support, with all 99 tests and both gates green.
+
+**Evidence.**
+
+- `src/ftro/optical_sensitivity.py`
+- `src/ftro/four_domain_intersection.py`
+
+**Impact.** Domain supports are built once and passed in; build_sensitivity now RAISES if a caller omits them. Every domain, pair, triple, four-way result and gap is reconciled at the shipped convention, and the run fails on disagreement. The duplication is removed rather than policed.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-078): remove the duplication rather than reconciling it, where the architecture permits.
+
+---
+
+### FTRO-DEF-062
+
+**SELF-DIRECTED: a credit function assumed sorted input its caller happened to provide**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | optical |
+| Dataset | `FTRO analysis path` |
+| Disposition | `resolved` |
+| Finding type | `latent_regression` |
+| Affects | `no_present_effect` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Owning a function's preconditions.
+
+**Known fact or required evidence.** A precondition that lives in the caller is not a precondition.
+
+**Observed.** per_sample_nominal_credit assumed sorted input while window_stamps_us happened to sort. Removing that one sort passed all tests while changing optical credit from 130.684083 h to 15.488280 h and optical-VLBI from 80.450043 h to 10.008253 h.
+
+**Evidence.**
+
+- `src/ftro/optical_sensitivity.py`
+
+**Impact.** The function sorts its own input. Removing the caller's sort now has no effect.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-079): a function owns its preconditions.
+
+---
+
+### FTRO-DEF-063
+
+**SELF-DIRECTED: the review protocol had no terminating condition**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO process` |
+| Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Determining when Phase 0 is complete.
+
+**Known fact or required evidence.** An acceptance condition must be finite and stated before it is tested.
+
+**Observed.** Ten rounds produced 33 self-directed findings with a flat discovery rate. Three causes: a verifier regress with no declared trusted base (73% of code was verification); five distinct finding types entering one ledger with equal weight; and an append-only count that can only rise, so totals could not show convergence. 'Proper functionality' was never bounded, so each round searched further outward with no zero-findings outcome available.
+
+**Evidence.**
+
+- `phase0/acceptance-contract-v1.0.md`
+- `phase0/audit-fault-model-v1.0.md`
+
+**Impact.** Phase 0 now has a frozen 12-contract scope, a stated trusted computing base, a finite exit condition, a pre-registered fault model executed once, and a convergence measure that can reach zero: open entries bearing on the result that are software defects rather than external evidence gaps. That measure now reads ZERO. The trusted base was shrunk by deleting the 275-line version state machine in favour of git, and the eight-entry absent-field family was retired by one declarative schema.
+
+**Workaround.** None.
+
+**Proposed response.** Adopted 2026-08-26. Rule (D-080): freeze the acceptance scope and pre-register the audit before the next fix round.
 
 ---

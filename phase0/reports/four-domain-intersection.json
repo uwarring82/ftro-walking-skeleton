@@ -1,5 +1,10 @@
 {
   "generator": "src/ftro/four_domain_intersection.py",
+  "main_vs_sensitivity_reconciliation": {
+    "checked": true,
+    "tolerance": 1.5,
+    "disagreements": []
+  },
   "candidate_window_mjd": [
     59630.0,
     59640.0
@@ -31,13 +36,13 @@
       "1.1": {
         "domain_h": {
           "optical": 133.11192,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.11192,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.013424,
@@ -52,7 +57,7 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 1353,
         "n_runs": 7398,
         "n_samples": 1023950
@@ -60,13 +65,13 @@
       "1.5": {
         "domain_h": {
           "optical": 133.11192,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.11192,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.013424,
@@ -81,7 +86,7 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 1353,
         "n_runs": 7398,
         "n_samples": 1023950
@@ -89,13 +94,13 @@
       "2.0": {
         "domain_h": {
           "optical": 133.116888,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.116888,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.016184,
@@ -110,7 +115,7 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 1346,
         "n_runs": 7139,
         "n_samples": 1023950
@@ -118,13 +123,13 @@
       "5.0": {
         "domain_h": {
           "optical": 133.567344,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.567344,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.23276,
@@ -139,7 +144,7 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 941,
         "n_runs": 4826,
         "n_samples": 1023950
@@ -149,13 +154,13 @@
       "run_span_plus_trailing_gate": {
         "domain_h": {
           "optical": 133.496073,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.496073,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.182577,
@@ -170,20 +175,20 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 1382,
         "note": "Each RUN extended 1 s past its last tag -- what the previous 'nominal_1s_sample_credit' row computed. Credits one gate per RUN, not per SAMPLE, and inherits the contiguity rule."
       },
       "per_run_nominal_block": {
         "domain_h": {
           "optical": 133.496567,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.496567,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.182929,
@@ -198,20 +203,20 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 1379,
         "note": "Each run repacked as n contiguous 1 s gates from its first tag. Totals n x 1 s per run but relocates tags, so it is a bookkeeping figure, not a support claim."
       },
       "per_sample_nominal_1s_credit": {
         "domain_h": {
           "optical": 130.684083,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 130.684083,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 80.450043,
@@ -226,7 +231,7 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 276468,
         "n_samples": 1023950,
         "naive_sum_h": 284.430556,
@@ -237,13 +242,13 @@
       "-1s": {
         "domain_h": {
           "optical": 133.11192,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.11192,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.013702,
@@ -258,19 +263,19 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174147,
+        "pulsar_optical_gap_h": 31.174138,
         "optical_n_intervals": 1353
       },
       "+0s": {
         "domain_h": {
           "optical": 133.11192,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.11192,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.013424,
@@ -285,19 +290,19 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174425,
+        "pulsar_optical_gap_h": 31.174416,
         "optical_n_intervals": 1353
       },
       "+1s": {
         "domain_h": {
           "optical": 133.11192,
-          "pulsar": 1.067528,
+          "pulsar": 1.067544,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
           "gnss|optical": 133.11192,
-          "gnss|pulsar": 1.067528,
+          "gnss|pulsar": 1.067544,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
           "optical|vlbi": 82.013146,
@@ -312,7 +317,7 @@
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
-        "pulsar_optical_gap_h": 31.174702,
+        "pulsar_optical_gap_h": 31.174694,
         "optical_n_intervals": 1353
       }
     },

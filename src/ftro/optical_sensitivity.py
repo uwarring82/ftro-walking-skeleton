@@ -204,7 +204,13 @@ def per_run_nominal_block(runs):
 
 
 def per_sample_nominal_credit(stamps_us):
-    """Union of [t, t+1 s) over EVERY valid tag. Independent of the contiguity rule."""
+    """Union of [t, t+1 s) over every tag. Sorts its own input.
+
+    This silently assumed sorted input while the only caller happened to sort. Removing
+    that one sort changed optical credit from 130.684083 h to 15.488280 h with every test
+    green (FTRO-DEF-062). A precondition that lives in the caller is not a precondition.
+    """
+    stamps_us = sorted(stamps_us)
     out = []
     for m in stamps_us:
         if out and m <= out[-1][1]:
@@ -238,16 +244,21 @@ def four_domain(optical, vlbi, gnss, pulsar):
 
 
 def build_sensitivity(root, ivs_sessions, igs_pins, src="src/ftro/analyse_optical.py",
+                      pulsar_support=None, gnss_support=None, vlbi_support=None,
                       cross_check_dir=None):
     seg = Resegmenter(root, src)
 
-    vlbi = isect(merge([(to_us(s["mjd_start"]), to_us(s["mjd_end"])) for s in ivs_sessions]),
-                 WINDOW)
-    days = sorted({p["mjd"] for p in igs_pins["pins"] if p["mjd"] and p["series"] == "igs"})
-    gnss = isect(merge([(int(d) * US_PER_DAY, (int(d) + 1) * US_PER_DAY) for d in days]), WINDOW)
-    dt = __import__("datetime").datetime.fromisoformat(PULSAR_OBS_START_UTC)
-    p0 = round((dt - __import__("datetime").datetime(1858, 11, 17)).total_seconds() * US_PER_S)
-    pulsar = isect([(p0, p0 + round(PULSAR_TOBS_S * US_PER_S))], WINDOW)
+    # Non-optical supports are supplied by the caller so that main and sensitivity cannot
+    # diverge. They were built independently here from duplicated constants, so changing
+    # only the main pulsar epoch produced a main `overlap` while every sensitivity row
+    # still read no_common_support, with all tests and both gates green (FTRO-DEF-061).
+    if vlbi_support is None or gnss_support is None or pulsar_support is None:
+        raise ValueError("build_sensitivity requires vlbi_support, gnss_support and "
+                         "pulsar_support from the caller; deriving them here duplicated "
+                         "the main computation's constants (FTRO-DEF-061)")
+    vlbi = isect(merge([(to_us(a), to_us(b)) for a, b in vlbi_support]), WINDOW)
+    gnss = isect(merge([(to_us(a), to_us(b)) for a, b in gnss_support]), WINDOW)
+    pulsar = isect(merge([(to_us(a), to_us(b)) for a, b in pulsar_support]), WINDOW)
 
     def variant(optical, **extra):
         return {**four_domain(optical, vlbi, gnss, pulsar),

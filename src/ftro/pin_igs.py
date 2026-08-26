@@ -134,6 +134,16 @@ def main():
     os.makedirs(args.cache, exist_ok=True)
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
 
+    # Duplicate --series values produced duplicate targets, so `--series igs igr igs`
+    # promoted 79 pins of which only 57 were unique -- a report the consumer rejects
+    # (FTRO-DEF-058).
+    seen_series, series = set(), []
+    for x in args.series:
+        if x not in seen_series:
+            seen_series.add(x)
+            series.append(x)
+    args.series = series
+
     targets = []
     weeks = set()
     for mjd in range(int(args.mjd_start), int(args.mjd_end) + 1):
@@ -194,6 +204,7 @@ def main():
             "md5": hashlib.md5(body).hexdigest(),
             "last_modified": headers.get("Last-Modified"),
             "etag": headers.get("ETag"),
+            "retrieval_procedure": f"GET {url}",
             "content_type": content_type,
             "expected_sha256": exp,
             "checksum_match": checksum_match,

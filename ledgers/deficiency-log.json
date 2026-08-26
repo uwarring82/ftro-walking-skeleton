@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.11.0",
+  "version": "0.13.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -43,7 +43,9 @@
         "software": "src/ftro/analyse_optical.py"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-002",
@@ -70,7 +72,9 @@
         "software": "src/ftro/analyse_optical.py"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-003",
@@ -95,7 +99,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-004",
@@ -120,7 +126,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-005",
@@ -145,7 +153,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-006",
@@ -169,7 +179,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-007",
@@ -193,7 +205,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-008",
@@ -217,7 +231,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-009",
@@ -241,7 +257,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-010",
@@ -265,7 +283,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "current_defect",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-011",
@@ -292,7 +312,9 @@
         "assessment": "AA-PPTA-CLKREALISATION-001"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-012",
@@ -317,7 +339,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-013",
@@ -343,7 +367,9 @@
         "assessment": "AA-PPTA-TIMINGMODEL-001"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-014",
@@ -369,7 +395,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-015",
@@ -394,7 +422,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-016",
@@ -419,7 +449,9 @@
         "verification": "VA-GPS2UTC-001"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-017",
@@ -443,7 +475,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-018",
@@ -468,7 +502,9 @@
         "software": "src/ftro/pin_igs.py"
       },
       "responsible_party": "ftro",
-      "self_directed": true
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-019",
@@ -493,7 +529,9 @@
         "software": "src/ftro/pin_igs.py"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "maintenance_only"
     },
     {
       "id": "FTRO-DEF-020",
@@ -517,7 +555,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-021",
@@ -541,7 +581,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "current_defect",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-022",
@@ -565,7 +607,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "current_defect",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-023",
@@ -576,7 +620,7 @@
       "title": "Candidate window contains no four-domain simultaneous support",
       "failed_step": "Task card section 2: constructing a four-domain walking skeleton for a common interval.",
       "known_fact": "The card proposes MJD 59630-59640 as a candidate, explicitly 'retained as test interval, not guaranteed overlap'.",
-      "observed": "Computed supports inside the window: GNSS 240.000 h (daily product validity, upper bound), optical 133.112 h (EXACT union of 7,398 contiguous valid runs merged into 1,353 disjoint intervals), VLBI 123.500 h (scheduled session intervals, upper bound), pulsar 1.067 h (one observation, MJD 59630.445127-59630.489608). The pulsar support is disjoint from optical (gap 31.174 h) and from VLBI, but lies wholly inside GNSS product validity: gnss n pulsar = 1.067 h. Every THREE- and FOUR-domain combination containing the pulsar is therefore empty, as are the two pairs optical n pulsar and VLBI n pulsar. optical n VLBI n GNSS intersect over 82.013 h.",
+      "observed": "Computed supports inside the window: GNSS 240.000 h (daily product validity, upper bound), optical 133.112 h (EXACT union of 7,398 contiguous valid runs merged into 1,353 disjoint intervals), VLBI 123.500 h (scheduled session intervals, upper bound), pulsar 1.067 h (one observation, MJD 59630.445127-59630.489608). The pulsar support is disjoint from optical (gap 31.174 h) and from VLBI, but lies wholly inside GNSS product validity: gnss n pulsar = 1.067 h. Every THREE- and FOUR-domain combination containing the pulsar is therefore empty, as are the two pairs optical n pulsar and VLBI n pulsar. optical n VLBI n GNSS intersect over 82.013 h. CLASSIFICATION: this entry records the pilot's RESULT, not a defect to be fixed. It is retained in the ledger because card §6 requires the empty intersection to be reported rather than repaired, and it is excluded from the convergence measure for the same reason.",
       "evidence": [
         "phase0/reports/four-domain-intersection.json"
       ],
@@ -590,7 +634,9 @@
         "selection_note": "phase0/selection-note-v0.1.md"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "recorded_outcome",
+      "affects": "changes_result"
     },
     {
       "id": "FTRO-DEF-024",
@@ -616,7 +662,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "ftro",
-      "self_directed": true
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only"
     },
     {
       "id": "FTRO-DEF-025",
@@ -642,7 +690,9 @@
         "software": "src/ftro/pin_vgosdb.py"
       },
       "responsible_party": "ftro",
-      "self_directed": true
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-026",
@@ -668,7 +718,9 @@
         "profile": "v0.0.1"
       },
       "responsible_party": "provider",
-      "self_directed": false
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-027",
@@ -694,7 +746,9 @@
         "software": "src/ftro/analyse_optical.py"
       },
       "responsible_party": "ftro",
-      "self_directed": true
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-028",
@@ -719,7 +773,9 @@
       "disposition": "open",
       "links": {
         "profile": "v0.0.1"
-      }
+      },
+      "finding_type": "external_evidence_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-029",
@@ -745,7 +801,9 @@
       "links": {
         "profile": "v0.0.1",
         "software": "tests/test_retrieval_validation.py"
-      }
+      },
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-030",
@@ -770,7 +828,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/optical_sensitivity.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-031",
@@ -796,7 +856,9 @@
       "disposition": "resolved",
       "links": {
         "software": "tests/test_retrieval_validation.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-032",
@@ -822,7 +884,9 @@
       "links": {
         "profile": "v0.0.2",
         "software": "src/ftro/pin_ppta.py"
-      }
+      },
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow"
     },
     {
       "id": "FTRO-DEF-033",
@@ -847,7 +911,9 @@
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.2"
-      }
+      },
+      "finding_type": "assurance_gap",
+      "affects": "maintenance_only"
     },
     {
       "id": "FTRO-DEF-034",
@@ -872,7 +938,9 @@
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.3"
-      }
+      },
+      "finding_type": "current_defect",
+      "affects": "maintenance_only"
     },
     {
       "id": "FTRO-DEF-035",
@@ -897,7 +965,9 @@
       "disposition": "resolved",
       "links": {
         "software": "tests/test_retrieval_validation.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-036",
@@ -922,7 +992,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/analyse_optical.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-037",
@@ -948,7 +1020,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/optical_sensitivity.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-038",
@@ -973,7 +1047,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pinning.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-039",
@@ -998,7 +1074,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
-      }
+      },
+      "finding_type": "current_defect",
+      "affects": "maintenance_only"
     },
     {
       "id": "FTRO-DEF-040",
@@ -1023,7 +1101,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
-      }
+      },
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-041",
@@ -1048,7 +1128,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pin_vgosdb.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-042",
@@ -1073,7 +1155,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pinning.py#valid_digest"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-043",
@@ -1098,7 +1182,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pinning.py#assert_report_usable"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-044",
@@ -1123,7 +1209,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
-      }
+      },
+      "finding_type": "current_defect",
+      "affects": "maintenance_only"
     },
     {
       "id": "FTRO-DEF-045",
@@ -1148,7 +1236,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py#discover_versioned"
-      }
+      },
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-046",
@@ -1173,7 +1263,9 @@
       "disposition": "resolved",
       "links": {
         "software": "tests/fixtures/mini-archive/"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-047",
@@ -1197,7 +1289,9 @@
       "disposition": "resolved",
       "links": {
         "software": "tests/test_retrieval_validation.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-048",
@@ -1222,7 +1316,9 @@
       "disposition": "resolved",
       "links": {
         "software": "tests/test_retrieval_validation.py#independent_runs"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-049",
@@ -1247,7 +1343,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
-      }
+      },
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-050",
@@ -1272,7 +1370,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pinning.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-051",
@@ -1297,7 +1397,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pin_vgosdb.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-052",
@@ -1321,7 +1423,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-053",
@@ -1346,7 +1450,9 @@
       "disposition": "resolved",
       "links": {
         "software": "tests/fixtures/mini-archive/EEE_b-FFF_b/"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-054",
@@ -1371,7 +1477,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pinning.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-055",
@@ -1395,7 +1503,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
-      }
+      },
+      "finding_type": "assurance_gap",
+      "affects": "maintenance_only"
     },
     {
       "id": "FTRO-DEF-056",
@@ -1420,7 +1530,9 @@
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/pinning.py"
-      }
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
     },
     {
       "id": "FTRO-DEF-057",
@@ -1444,9 +1556,187 @@
       "disposition": "resolved",
       "links": {
         "software": "tests/test_retrieval_validation.py"
+      },
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect"
+    },
+    {
+      "id": "FTRO-DEF-058",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "gnss",
+      "dataset": "FTRO retrieval tooling",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "SELF-DIRECTED: pin_igs could promote a report its own consumer rejects",
+      "failed_step": "Producing a report that satisfies the consumer contract.",
+      "known_fact": "A producer and its consumer must agree on the report contract.",
+      "observed": "--series accepted duplicates, so `--series igs igr igs` exited 0 and promoted 79 pins of which only 57 were unique -- a report the consumer's duplicate check rejects. The duplicate mutation test was self-confirming: after appending pin 58 it set n_pinned=59, so the count mismatch fired before duplicate detection.",
+      "evidence": [
+        "src/ftro/pin_igs.py",
+        "src/ftro/schema.py"
+      ],
+      "severity": "high",
+      "impact": "Series are deduped, and promote() now validates the SAME declared schema the consumer applies, so a producer cannot emit something its consumer rejects. That class of mismatch is now impossible by construction rather than caught by review.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26 by consolidation. Rule adopted (D-076): producer and consumer validate one declaration; the producer validates before promotion.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pin_igs.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-059",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "vlbi",
+      "dataset": "FTRO retrieval tooling",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "SELF-DIRECTED: the committed vgosDB report was rejected by the shared consumer gate",
+      "failed_step": "Emitting a report that satisfies the shared contract.",
+      "known_fact": "Every committed report must pass the gate every consumer applies.",
+      "observed": "pin_vgosdb emitted the counters n_failed and n_without_expected_digest but not the failures and uncovered_by_registry lists they count, so the committed report failed the gate introduced one commit earlier. A producer/consumer mismatch shipped in the repository.",
+      "evidence": [
+        "src/ftro/pin_vgosdb.py",
+        "src/ftro/schema.py"
+      ],
+      "severity": "high",
+      "impact": "The pinner emits both lists; all four committed reports now satisfy the shared schema, and promotion enforces it.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26 by consolidation.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pin_vgosdb.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-060",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "gnss",
+      "dataset": "FTRO analysis path",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "latent_regression",
+      "affects": "changes_result",
+      "title": "SELF-DIRECTED: scientific meaning was read from unauthenticated report fields",
+      "failed_step": "Binding the meaning of an authenticated artifact, not only its bytes.",
+      "known_fact": "The registry binds a pin by name and digest; anything else in the record is unbound.",
+      "observed": "four_domain_intersection derived GNSS support from report-supplied `series` and `mjd`. Relabelling all 57 pins as `igr`, without changing a name or a digest, passed every gate and all 99 tests while changing GNSS support from 240 h to 0 h and without_pulsar from 82.0134 h to 0.",
+      "evidence": [
+        "src/ftro/four_domain_intersection.py"
+      ],
+      "severity": "high",
+      "impact": "series and mjd are now DERIVED from the filename, which the registry binds by digest. A field that is not stored cannot be forged; the relabel mutation now has no effect at all.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-077): derive semantics from authenticated names rather than binding more fields.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/four_domain_intersection.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-061",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO analysis path",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "latent_regression",
+      "affects": "changes_result",
+      "title": "SELF-DIRECTED: main and sensitivity computations carried duplicate domain constants",
+      "failed_step": "Keeping the main computation and its sensitivity scan consistent.",
+      "known_fact": "Two computations of the same quantity must have one source.",
+      "observed": "The pulsar observation constants were duplicated across four_domain_intersection and optical_sensitivity. Changing only the main start produced a main `overlap` with 13 intervals and 1.0559 h while every embedded sensitivity row still read no_common_support, with all 99 tests and both gates green.",
+      "evidence": [
+        "src/ftro/optical_sensitivity.py",
+        "src/ftro/four_domain_intersection.py"
+      ],
+      "severity": "high",
+      "impact": "Domain supports are built once and passed in; build_sensitivity now RAISES if a caller omits them. Every domain, pair, triple, four-way result and gap is reconciled at the shipped convention, and the run fails on disagreement. The duplication is removed rather than policed.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-078): remove the duplication rather than reconciling it, where the architecture permits.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/optical_sensitivity.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-062",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "FTRO analysis path",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "latent_regression",
+      "affects": "no_present_effect",
+      "title": "SELF-DIRECTED: a credit function assumed sorted input its caller happened to provide",
+      "failed_step": "Owning a function's preconditions.",
+      "known_fact": "A precondition that lives in the caller is not a precondition.",
+      "observed": "per_sample_nominal_credit assumed sorted input while window_stamps_us happened to sort. Removing that one sort passed all tests while changing optical credit from 130.684083 h to 15.488280 h and optical-VLBI from 80.450043 h to 10.008253 h.",
+      "evidence": [
+        "src/ftro/optical_sensitivity.py"
+      ],
+      "severity": "high",
+      "impact": "The function sorts its own input. Removing the caller's sort now has no effect.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-079): a function owns its preconditions.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/optical_sensitivity.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-063",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO process",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "maintenance_only",
+      "title": "SELF-DIRECTED: the review protocol had no terminating condition",
+      "failed_step": "Determining when Phase 0 is complete.",
+      "known_fact": "An acceptance condition must be finite and stated before it is tested.",
+      "observed": "Ten rounds produced 33 self-directed findings with a flat discovery rate. Three causes: a verifier regress with no declared trusted base (73% of code was verification); five distinct finding types entering one ledger with equal weight; and an append-only count that can only rise, so totals could not show convergence. 'Proper functionality' was never bounded, so each round searched further outward with no zero-findings outcome available.",
+      "evidence": [
+        "phase0/acceptance-contract-v1.0.md",
+        "phase0/audit-fault-model-v1.0.md"
+      ],
+      "severity": "high",
+      "impact": "Phase 0 now has a frozen 12-contract scope, a stated trusted computing base, a finite exit condition, a pre-registered fault model executed once, and a convergence measure that can reach zero: open entries bearing on the result that are software defects rather than external evidence gaps. That measure now reads ZERO. The trusted base was shrunk by deleting the 275-line version state machine in favour of git, and the eight-entry absent-field family was retired by one declarative schema.",
+      "workaround": "None.",
+      "proposed_response": "Adopted 2026-08-26. Rule (D-080): freeze the acceptance scope and pre-register the audit before the next fix round.",
+      "disposition": "resolved",
+      "links": {
+        "software": "phase0/acceptance-contract-v1.0.md"
       }
     }
   ],
   "revised": "2026-08-26",
-  "revision_note": "Revised across ten review rounds. 001-023 s01; 024-027 s02; 028-029 s03; 030-033 s04; 034-035 s05; 036 s06; 037-041 s07; 042-047 s08; 048-052 s09; 053-057 s10. Thirty-three entries are self-directed."
+  "revision_note": "Revised across eleven review rounds. Round 11 froze the Phase-0 acceptance scope, retriaged every entry on finding_type and affects, and consolidated rather than adding guards. Thirty-nine entries are self-directed.",
+  "triage_axes": {
+    "finding_type": {
+      "current_defect": "today's committed behaviour is wrong or a documented workflow fails",
+      "latent_regression": "a fault outside the present test contract; found by injected mutation, not by observed misbehaviour",
+      "assurance_gap": "a normative clause with no executable check",
+      "external_evidence_gap": "provider evidence is missing or opaque; research incompleteness, not software failure",
+      "recorded_outcome": "a scientific outcome recorded per the task card, not a defect: nothing is to be fixed"
+    },
+    "affects": {
+      "changes_result": "bears on the Phase-0 scientific conclusion",
+      "blocks_workflow": "prevents a documented workflow from completing",
+      "maintenance_only": "affects repository upkeep, not results or workflows",
+      "no_present_effect": "no effect on any current artifact or claim"
+    },
+    "note": "Added after review round 10. An append-only count can only rise, so entry totals cannot measure convergence. These axes separate 'the result is wrong' from 'I can invent a mutation the tests do not detect' -- previously both entered the ledger with equal weight, which made progress unreadable."
+  }
 }

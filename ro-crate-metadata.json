@@ -63,9 +63,6 @@
           "@id": "phase0/reports/igs-artifact-pins.json"
         },
         {
-          "@id": "phase0/reports/support-intersection.json"
-        },
-        {
           "@id": "phase0/reports/ivs-sessions-candidate-window.json"
         },
         {
@@ -147,9 +144,6 @@
           "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md"
         },
         {
-          "@id": "phase0/evidence/versioned-artifacts.json"
-        },
-        {
           "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md"
         },
         {
@@ -160,6 +154,18 @@
         },
         {
           "@id": "labnotes/2026-08-26-session-11-review-corrections-10.md"
+        },
+        {
+          "@id": "phase0/acceptance-contract-v1.0.md"
+        },
+        {
+          "@id": "phase0/audit-fault-model-v1.0.md"
+        },
+        {
+          "@id": "phase0/reports/audit-2026-08-26.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-12-consolidation.md"
         }
       ],
       "isBasedOn": [
@@ -329,7 +335,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "15370",
+      "contentSize": "15484",
       "name": "four-domain-intersection.json"
     },
     {
@@ -349,18 +355,8 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "62361",
+      "contentSize": "68574",
       "name": "igs-artifact-pins.json"
-    },
-    {
-      "@id": "phase0/reports/support-intersection.json",
-      "@type": "File",
-      "encodingFormat": "application/json",
-      "license": {
-        "@id": "https://creativecommons.org/licenses/by/4.0/"
-      },
-      "contentSize": "7317",
-      "name": "support-intersection.json"
     },
     {
       "@id": "phase0/reports/ivs-sessions-candidate-window.json",
@@ -409,7 +405,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "114150",
+      "contentSize": "129429",
       "name": "deficiency-log.json"
     },
     {
@@ -419,7 +415,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "115144",
+      "contentSize": "130605",
       "name": "deficiency-log.md"
     },
     {
@@ -449,7 +445,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "18101",
+      "contentSize": "19521",
       "name": "decision-ledger.md"
     },
     {
@@ -476,9 +472,6 @@
         },
         {
           "@id": "src/ftro/check_versions.py"
-        },
-        {
-          "@id": "src/ftro/compute_overlap.py"
         },
         {
           "@id": "src/ftro/four_domain_intersection.py"
@@ -511,6 +504,9 @@
           "@id": "src/ftro/render_validity_intervals.py"
         },
         {
+          "@id": "src/ftro/schema.py"
+        },
+        {
           "@id": "src/ftro/summarise_optical.py"
         },
         {
@@ -539,23 +535,6 @@
       }
     },
     {
-      "@id": "src/ftro/compute_overlap.py",
-      "@type": [
-        "File",
-        "SoftwareSourceCode"
-      ],
-      "name": "compute_overlap.py",
-      "description": "Intersects optical valid runs with candidate VLBI session supports.",
-      "encodingFormat": "text/x-python",
-      "contentSize": "3039",
-      "programmingLanguage": {
-        "@id": "#python-3.13"
-      },
-      "license": {
-        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
-      }
-    },
-    {
       "@id": "src/ftro/four_domain_intersection.py",
       "@type": [
         "File",
@@ -564,7 +543,7 @@
       "name": "four_domain_intersection.py",
       "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
       "encodingFormat": "text/x-python",
-      "contentSize": "11600",
+      "contentSize": "14524",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -581,7 +560,7 @@
       "name": "pin_igs.py",
       "description": "Retrieves and pins IGS products with full digests and content-shape validation.",
       "encodingFormat": "text/x-python",
-      "contentSize": "11705",
+      "contentSize": "12128",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -598,7 +577,7 @@
       "name": "pin_vgosdb.py",
       "description": "Retrieves and pins an IVS vgosDB from OPAR with content-shape validation and wrapper-version inventory.",
       "encodingFormat": "text/x-python",
-      "contentSize": "12477",
+      "contentSize": "12789",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -615,7 +594,7 @@
       "name": "render_deficiencies.py",
       "description": "Renders ledgers/deficiency-log.json to Markdown.",
       "encodingFormat": "text/x-python",
-      "contentSize": "2742",
+      "contentSize": "3668",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -685,7 +664,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "8085",
+      "contentSize": "8134",
       "name": "vlbi-vgosdb-pin.json"
     },
     {
@@ -722,7 +701,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3212",
+      "contentSize": "3333",
       "name": "README.md"
     },
     {
@@ -795,7 +774,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "74043"
+      "contentSize": "70117"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -881,7 +860,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "15051"
+      "contentSize": "15794"
     },
     {
       "@id": "src/ftro/pin_ppta.py",
@@ -1028,7 +1007,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "12543"
+      "contentSize": "3988"
     },
     {
       "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md",
@@ -1039,16 +1018,6 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "8623"
-    },
-    {
-      "@id": "phase0/evidence/versioned-artifacts.json",
-      "@type": "File",
-      "name": "versioned-artifacts.json",
-      "encodingFormat": "application/json",
-      "license": {
-        "@id": "https://creativecommons.org/licenses/by/4.0/"
-      },
-      "contentSize": "3151"
     },
     {
       "@id": "src/ftro/pinning.py",
@@ -1064,7 +1033,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "12769"
+      "contentSize": "13512"
     },
     {
       "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md",
@@ -1168,6 +1137,62 @@
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "contentSize": "62"
+    },
+    {
+      "@id": "phase0/acceptance-contract-v1.0.md",
+      "@type": "File",
+      "name": "acceptance-contract-v1.0.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5943"
+    },
+    {
+      "@id": "phase0/audit-fault-model-v1.0.md",
+      "@type": "File",
+      "name": "audit-fault-model-v1.0.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3775"
+    },
+    {
+      "@id": "phase0/reports/audit-2026-08-26.md",
+      "@type": "File",
+      "name": "audit-2026-08-26.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2104"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-12-consolidation.md",
+      "@type": "File",
+      "name": "2026-08-26-session-12-consolidation.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "8224"
+    },
+    {
+      "@id": "src/ftro/schema.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "schema.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "4555"
     }
   ]
 }

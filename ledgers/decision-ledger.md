@@ -1,6 +1,6 @@
 # FTRO Decision Ledger
 
-**Version:** 0.8.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+**Version:** 0.9.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
 
 > **Version history.** 0.1.0 (`fdbf2b9`) · 0.2.0 (D-021…D-028, `2c31279`–`0b41929`, unversioned at the time) · **0.3.0** (D-029…D-047). D-039a required every versioned artifact to be bumped when it changes; this ledger and the source ledger were then changed twice without a bump ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v3.0.0). `src/ftro/check_versions.py` now enforces it.
 
@@ -55,6 +55,13 @@ task card §23; this ledger records choices made *while executing* it.
 | D-062 | Excluding a file from one gate obliges covering it with another | Generated files were excluded from version tracking with no freshness check ([`FTRO-DEF-045`](deficiency-log.md#ftro-def-045)) | 09 |
 | D-063 | A regression test must **execute** the code path, not read its committed output | Restoring the broken revision left all 70 tests green ([`FTRO-DEF-046`](deficiency-log.md#ftro-def-046)) | 09 |
 | D-064 | Assert the specific diagnostic, never a bare non-zero exit | The unmutated consumer already exits 1 on a clean archive ([`FTRO-DEF-047`](deficiency-log.md#ftro-def-047)) | 09 |
+| D-082 | Deleted artifacts get a tombstone in the session note; append-only lab notes are never edited to repair a dead link | `compute_overlap.py` and `versioned-artifacts.json` were deleted in session 12, dangling two historical references | 12 |
+| D-076 | Producer and consumer validate ONE declaration; the producer validates before promotion | `pin_igs` promoted a report its own consumer rejected ([`FTRO-DEF-058`](deficiency-log.md#ftro-def-058)) | 12 |
+| D-077 | Derive semantics from authenticated names rather than binding more fields | Relabelling `series` drove GNSS support to 0 h past every gate ([`FTRO-DEF-060`](deficiency-log.md#ftro-def-060)) | 12 |
+| D-078 | Remove duplication rather than reconciling it, where the architecture permits | Main and sensitivity carried separate pulsar constants ([`FTRO-DEF-061`](deficiency-log.md#ftro-def-061)) | 12 |
+| D-079 | A function owns its preconditions | A credit function assumed a sort its caller happened to do ([`FTRO-DEF-062`](deficiency-log.md#ftro-def-062)) | 12 |
+| D-080 | Freeze the acceptance scope and pre-register the audit before the next fix round | Ten rounds, flat discovery rate, no terminating condition ([`FTRO-DEF-063`](deficiency-log.md#ftro-def-063)) | 12 |
+| D-081 | Declare a trusted computing base; shrink it in preference to verifying it | The version state machine produced four defects the thing it replaced did not have | 12 |
 | D-071 | A fixture must exercise every threshold the production code branches on, at the boundary and one beyond it | No 58-tick gap meant `int` vs `round` was invisible while changing the 5 s row by 1,883 runs ([`FTRO-DEF-053`](deficiency-log.md#ftro-def-053)) | 11 |
 | D-072 | A runtime gate must compare against an external expectation, not the artifact's own account of itself | A 57-pin report truncated to one, with `n_pinned: 1`, was accepted ([`FTRO-DEF-054`](deficiency-log.md#ftro-def-054)) | 11 |
 | D-073 | A special-cased class of artifact obeys the general state machine, not a weakened copy | Generated files had three version-laundering paths ([`FTRO-DEF-055`](deficiency-log.md#ftro-def-055)) | 11 |

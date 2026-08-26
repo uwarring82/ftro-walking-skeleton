@@ -169,6 +169,10 @@ def main():
         "n_pinned": 1 if verified else 0,
         "n_failed": 0 if verified else 1,
         "n_without_expected_digest": 0 if args.expect_sha256 else 1,
+        # The lists their counters count. Emitting only the counters produced a report
+        # the shared consumer gate rejected (FTRO-DEF-059).
+        "failures": [] if verified else [{"url": args.url, "reason": "see rejected_reason"}],
+        "uncovered_by_registry": [] if args.expect_sha256 else [name],
         "content_checks": checks,
         "content_valid": ok,
         "n_members": len(members),

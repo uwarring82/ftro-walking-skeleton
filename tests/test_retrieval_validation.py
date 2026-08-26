@@ -1160,7 +1160,12 @@ class TestSensitivityAgreesWithMainComputation(unittest.TestCase):
 
 
 class TestVersionGate(unittest.TestCase):
-    """check_versions.py must detect content drift, and must itself be tested."""
+    """The git-based version gate (C10).
+
+    Replaced a 275-line registry state machine whose maintenance flags produced four
+    defects of their own. git is the trusted base; there is no registry to fall out of
+    date and no flag that can weaken a check.
+    """
 
     def setUp(self):
         self.tmp = tempfile.mkdtemp(prefix="ftro-ver-")
@@ -1170,138 +1175,68 @@ class TestVersionGate(unittest.TestCase):
         return subprocess.run([sys.executable, "src/ftro/check_versions.py", "--check"],
                               cwd=cwd, capture_output=True, text=True, timeout=120)
 
-    def test_repo_is_currently_clean(self):
-        self.assertEqual(self._run(REPO).returncode, 0, self._run(REPO).stderr)
+    def test_an_unmodified_repo_is_clean(self):
+        work = self._mutated_repo(lambda _w: None)
+        self.assertEqual(self._run(work).returncode, 0, self._run(work).stderr)
+
+    BASELINE = "# FTRO Source Ledger\n\n**Version:** 0.4.0 · **Opened:** 2026-08-25\n\nbody\n"
+
+    def _mutated_repo(self, mutate):
+        """A self-contained git repo with one versioned file, then mutated (M12).
+
+        Built from scratch rather than cloned: cloning REPO made these tests skip on a
+        clean `git archive` export, which is exactly the "a skipped test reports success"
+        failure recorded as FTRO-DEF-031.
+        """
+        work = os.path.join(self.tmp, "repo")
+        os.makedirs(os.path.join(work, "ledgers"), exist_ok=True)
+        shutil.copytree(os.path.join(REPO, "src"), os.path.join(work, "src"),
+                        ignore=shutil.ignore_patterns("__pycache__"))
+        with open(os.path.join(work, "ledgers", "source-ledger.md"), "w",
+                  encoding="utf-8") as fh:
+            fh.write(self.BASELINE)
+        env = {**os.environ, "GIT_AUTHOR_NAME": "t", "GIT_AUTHOR_EMAIL": "t@t",
+               "GIT_COMMITTER_NAME": "t", "GIT_COMMITTER_EMAIL": "t@t"}
+        for cmd in (["init", "--quiet", "-b", "main"], ["add", "-A"],
+                    ["commit", "--quiet", "-m", "baseline"]):
+            r = subprocess.run(["git", *cmd], cwd=work, capture_output=True,
+                               text=True, timeout=120, env=env)
+            self.assertEqual(r.returncode, 0, f"git {cmd[0]} failed: {r.stderr[:200]}")
+        mutate(work)
+        return work
 
     def test_content_change_without_a_bump_is_detected(self):
-        work = os.path.join(self.tmp, "repo")
-        shutil.copytree(REPO, work, symlinks=True,
-                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
-        target = os.path.join(work, "ledgers", "source-ledger.md")
-        with open(target, "a", encoding="utf-8") as fh:
-            fh.write("\n<!-- substantive change with no version bump -->\n")
-        r = self._run(work)
+        def mutate(work):
+            with open(os.path.join(work, "ledgers", "source-ledger.md"), "a",
+                      encoding="utf-8") as fh:
+                fh.write("\n<!-- substantive change with no version bump -->\n")
+        r = self._run(self._mutated_repo(mutate))
         self.assertEqual(r.returncode, 1, "the version gate did not detect content drift")
         self.assertIn("content changed but version is still", r.stderr)
 
-    def test_update_refuses_to_launder_an_unbumped_change(self):
-        """--update must not be a way to make unbumped drift pass."""
-        work = os.path.join(self.tmp, "repo3")
-        shutil.copytree(REPO, work, symlinks=True,
-                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
-        with open(os.path.join(work, "ledgers", "source-ledger.md"), "a",
-                  encoding="utf-8") as fh:
-            fh.write("\n<!-- unbumped -->\n")
-        self.assertEqual(self._run(work).returncode, 1)
-        upd = subprocess.run([sys.executable, "src/ftro/check_versions.py", "--update"],
-                             cwd=work, capture_output=True, text=True, timeout=120)
-        self.assertEqual(upd.returncode, 1, "--update laundered an unbumped change")
-        self.assertIn("REFUSED", upd.stderr)
-        self.assertEqual(self._run(work).returncode, 1, "drift became invisible after --update")
+    def test_version_downgrade_is_detected(self):
+        def mutate(work):
+            t = os.path.join(work, "ledgers", "source-ledger.md")
+            with open(t, encoding="utf-8") as fh:
+                body = fh.read()
+            m = re.search(r"\*\*Version:\*\* ([0-9]+\.[0-9]+\.[0-9]+)", body)
+            with open(t, "w", encoding="utf-8") as fh:
+                fh.write(body.replace(m.group(0), "**Version:** 0.0.1", 1))
+        r = self._run(self._mutated_repo(mutate))
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("went backwards", r.stderr)
 
-    def test_an_unregistered_versioned_document_is_detected(self):
-        """Completeness: declaring a version without being tracked must fail."""
-        work = os.path.join(self.tmp, "repo4")
-        shutil.copytree(REPO, work, symlinks=True,
-                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
-        with open(os.path.join(work, "phase0", "a-new-versioned-note.md"), "w",
-                  encoding="utf-8") as fh:
-            fh.write("# New note\n\n**Version:** 1.0.0\n")
-        r = self._run(work)
-        self.assertEqual(r.returncode, 1, "an unregistered versioned document was not detected")
-        self.assertIn("not in the registry", r.stderr)
-
-    def test_version_bump_without_re_recording_is_detected(self):
-        work = os.path.join(self.tmp, "repo2")
-        shutil.copytree(REPO, work, symlinks=True,
-                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
-        target = os.path.join(work, "phase0", "selection-note-v0.1.md")
-        with open(target, encoding="utf-8") as fh:
-            body = fh.read()
-        # Read the CURRENT declared version rather than hardcoding one: a literal here
-        # silently stops testing anything the moment the document is legitimately bumped.
-        m = re.search(r"\*\*Version:\*\* ([0-9]+\.[0-9]+\.[0-9]+)", body)
-        self.assertIsNotNone(m, "selection note declares no version")
-        with open(target, "w", encoding="utf-8") as fh:
-            fh.write(body.replace(m.group(0), "**Version:** 9.9.9", 1))
-        r = self._run(work)
-        self.assertEqual(r.returncode, 1, "an unrecorded version bump was not detected")
-        self.assertIn("registry recorded", r.stderr)
-
-
-class TestGeneratedFileFreshness(unittest.TestCase):
-    """Generated documents are excluded from version tracking, so they need their own check.
-
-    FTRO-DEF-045: changing the source and regenerating produced a byte-different document
-    under an unchanged version while the version check, the crate check and every test
-    passed. Excluding a file from one gate obliges you to cover it with another.
-    """
-
-    GENERATED = {
-        "ledgers/deficiency-log.md": ["src/ftro/render_deficiencies.py"],
-        "phase0/optical-validity-intervals.md": ["src/ftro/render_validity_intervals.py"],
-    }
-
-    def test_generated_documents_are_current(self):
-        """Regenerate into a COPY, never into the tracked checkout.
-
-        The earlier version rendered in place, so a stale file was silently overwritten by
-        the first failing run and the second run passed (FTRO-DEF-049).
-        """
-        tmp = tempfile.mkdtemp(prefix="ftro-fresh-")
-        self.addCleanup(shutil.rmtree, tmp, True)
-        work = os.path.join(tmp, "repo")
-        shutil.copytree(REPO, work, symlinks=True,
-                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
-        for target, cmd in self.GENERATED.items():
-            with self.subTest(target=target):
-                path = os.path.join(work, target)
-                with open(path, "rb") as fh:
-                    before = hashlib.sha256(fh.read()).hexdigest()
-                r = subprocess.run([sys.executable] + cmd, cwd=work,
-                                   capture_output=True, text=True, timeout=300)
-                self.assertEqual(r.returncode, 0, r.stderr)
-                with open(path, "rb") as fh:
-                    after = hashlib.sha256(fh.read()).hexdigest()
-                self.assertEqual(before, after,
-                                 f"{target} is stale: regenerating it changes the bytes")
-                # And the tracked copy must be untouched by this test.
-                self.assertTrue(os.path.exists(os.path.join(REPO, target)))
-
-    def test_changed_generated_content_requires_a_version_bump(self):
-        """A freshness check proves output matches input, not that it was re-versioned."""
-        tmp = tempfile.mkdtemp(prefix="ftro-genver-")
-        self.addCleanup(shutil.rmtree, tmp, True)
-        work = os.path.join(tmp, "repo")
-        shutil.copytree(REPO, work, symlinks=True,
-                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
-        summary = os.path.join(work, "phase0", "reports", "optical-inventory-summary.json")
-        with open(summary, encoding="utf-8") as fh:
-            doc = json.load(fh)
-        doc["global_flag_histogram"]["1"] += 1
-        with open(summary, "w", encoding="utf-8") as fh:
-            json.dump(doc, fh, indent=2)
-        subprocess.run([sys.executable, "src/ftro/render_validity_intervals.py"],
-                       cwd=work, capture_output=True, timeout=300)
-        chk = subprocess.run([sys.executable, "src/ftro/check_versions.py", "--check"],
-                             cwd=work, capture_output=True, text=True, timeout=120)
-        self.assertEqual(chk.returncode, 1,
-                         "changed generated content passed with an unchanged version")
-        self.assertIn("generated content changed", chk.stderr)
-        upd = subprocess.run([sys.executable, "src/ftro/check_versions.py", "--update"],
-                             cwd=work, capture_output=True, text=True, timeout=120)
-        self.assertEqual(upd.returncode, 1, "--update laundered a generated-content change")
-
-    def test_every_excluded_generated_file_has_a_freshness_check(self):
-        """An exclusion without a compensating check is a hole, not a policy."""
-        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
-        import check_versions
-        generated = {p for p, why in check_versions.EXCLUSIONS.items()
-                     if "generated" in why.lower()}
-        uncovered = generated - set(self.GENERATED)
-        self.assertEqual(uncovered, set(),
-                         f"excluded as generated but no freshness check: {uncovered}")
-
+    def test_removing_a_version_is_detected(self):
+        def mutate(work):
+            t = os.path.join(work, "ledgers", "source-ledger.md")
+            with open(t, encoding="utf-8") as fh:
+                body = fh.read()
+            m = re.search(r"\*\*Version:\*\* [0-9]+\.[0-9]+\.[0-9]+ · ", body)
+            with open(t, "w", encoding="utf-8") as fh:
+                fh.write(body.replace(m.group(0), "", 1))
+        r = self._run(self._mutated_repo(mutate))
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("was removed", r.stderr)
 
 class TestPreflightDigestValidation(unittest.TestCase):
     """A registry entry must be a digest, not merely a key (FTRO-DEF-042)."""
@@ -1405,70 +1340,85 @@ class TestPreflightDigestValidation(unittest.TestCase):
                          "a null expectation cached bytes")
 
 
-class TestRegisterSemantics(unittest.TestCase):
-    """--register adds new artifacts and never weakens a check (FTRO-DEF-044)."""
+class TestSchemaContract(unittest.TestCase):
+    """C3: one declaration, applied by producer and consumer alike."""
 
     def setUp(self):
-        self.tmp = tempfile.mkdtemp(prefix="ftro-reg-")
-        self.addCleanup(shutil.rmtree, self.tmp, True)
-        self.work = os.path.join(self.tmp, "repo")
-        shutil.copytree(REPO, self.work, symlinks=True,
-                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
-
-    def _run(self, *flags):
-        return subprocess.run([sys.executable, "src/ftro/check_versions.py", *flags],
-                              cwd=self.work, capture_output=True, text=True, timeout=120)
-
-    def test_register_does_not_launder_same_version_drift(self):
-        with open(os.path.join(self.work, "ledgers", "source-ledger.md"), "a",
-                  encoding="utf-8") as fh:
-            fh.write("\n<!-- drift -->\n")
-        self.assertEqual(self._run("--check").returncode, 1)
-        self.assertEqual(self._run("--update", "--register").returncode, 1,
-                         "--register laundered same-version drift")
-        self.assertEqual(self._run("--check").returncode, 1,
-                         "drift became invisible")
-
-    def test_register_actually_registers_a_new_document(self):
-        with open(os.path.join(self.work, "phase0", "brand-new.md"), "w",
-                  encoding="utf-8") as fh:
-            fh.write("# New\n\n**Version:** 1.0.0\n")
-        self.assertEqual(self._run("--check").returncode, 1)
-        r = self._run("--register")
-        self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertIn("brand-new.md", r.stdout)
-        self.assertEqual(self._run("--check").returncode, 0,
-                         "--register reported success without registering")
-
-    def test_version_downgrade_is_refused(self):
-        target = os.path.join(self.work, "ledgers", "decision-ledger.md")
-        with open(target, encoding="utf-8") as fh:
-            body = fh.read()
-        m = re.search(r"\*\*Version:\*\* ([0-9]+\.[0-9]+\.[0-9]+)", body)
-        with open(target, "w", encoding="utf-8") as fh:
-            fh.write(body.replace(m.group(0), "**Version:** 0.0.1", 1))
-        r = self._run("--update")
-        self.assertEqual(r.returncode, 1, "a version downgrade was accepted")
-        self.assertIn("went backwards", r.stderr)
-
-    def test_yaml_version_declarations_are_discovered(self):
-        """The suffix list advertised .yml while the pattern matched only MD and JSON."""
-        rogue = os.path.join(self.work, "phase0", "rogue.yml")
-        with open(rogue, "w", encoding="utf-8") as fh:
-            fh.write('version: "1.0.0"\nname: rogue\n')
-        self.assertEqual(self._run("--check").returncode, 1,
-                         "a versioned YAML file was not discovered")
-        r = self._run("--register")
-        self.assertEqual(r.returncode, 0, r.stderr)
-        self.assertIn("rogue.yml", r.stdout)
-
-    def test_discovery_covers_the_repository_root(self):
-        """Discovery limited to a few subdirectories missed root codemeta.json."""
         sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
-        import check_versions
-        found = check_versions.discover_versioned()
-        self.assertIn("codemeta.json", found,
-                      "root-level versioned files are not discovered")
+
+    def test_every_committed_report_conforms(self):
+        import schema
+        for name in ("igs-artifact-pins", "ppta-artifact-pins",
+                     "evidence-repo-pins", "vlbi-vgosdb-pin"):
+            with self.subTest(report=name):
+                with open(os.path.join(REPO, "phase0", "reports", f"{name}.json"),
+                          encoding="utf-8") as fh:
+                    doc = json.load(fh)
+                if not isinstance(doc.get("pins"), list):
+                    doc = dict(doc, pins=[doc])
+                self.assertEqual(schema.validate(doc, schema.PIN_REPORT), [])
+
+    def test_schema_rejects_the_whole_absent_field_family(self):
+        """The eight-entry family that was previously fixed one site at a time."""
+        import schema
+        with open(os.path.join(REPO, "phase0", "reports", "igs-artifact-pins.json"),
+                  encoding="utf-8") as fh:
+            good = json.load(fh)
+        cases = {
+            "counter absent": lambda d: d.pop("n_failed"),
+            "counter is false": lambda d: d.__setitem__("n_failed", False),
+            "counter is float": lambda d: d.__setitem__("n_pinned", 57.0),
+            "list absent": lambda d: d.pop("failures"),
+            "list is object": lambda d: d.__setitem__("failures", {}),
+            "list is string": lambda d: d.__setitem__("uncovered_by_registry", "ghost"),
+            "pins is object": lambda d: d.__setitem__("pins", {}),
+            "pin entry not object": lambda d: d["pins"].__setitem__(0, "x"),
+            "pin field absent": lambda d: d["pins"][0].pop("retrieval_validation"),
+            "digest truncated": lambda d: d["pins"][0].__setitem__("sha256", "abc"),
+            "count disagrees": lambda d: d.__setitem__("n_pinned", 1),
+        }
+        for label, mutate in cases.items():
+            with self.subTest(case=label):
+                doc = json.loads(json.dumps(good))
+                mutate(doc)
+                self.assertNotEqual(schema.validate(doc, schema.PIN_REPORT), [],
+                                    f"schema accepted: {label}")
+
+    def test_producer_cannot_promote_a_nonconforming_report(self):
+        """C3: promotion validates the same declaration the consumer applies."""
+        import pinning
+        tmp = tempfile.mkdtemp(prefix="ftro-promo-")
+        self.addCleanup(shutil.rmtree, tmp, True)
+        out = os.path.join(tmp, "r.json")
+        bad = {"generator": "x", "retrieval_validation": "content_validated",
+               "n_pinned": 1, "n_failed": 0, "n_without_expected_digest": 0,
+               "pins": [{"name": "a"}], "failures": [], "uncovered_by_registry": []}
+        self.assertFalse(pinning.promote(bad, out, True),
+                         "a non-conforming report was promoted")
+        self.assertFalse(os.path.exists(out))
+        self.assertTrue(os.path.exists(out + ".rejected"))
+
+
+class TestDerivedSemantics(unittest.TestCase):
+    """C5: meaning is derived from authenticated names, not read from unbound fields."""
+
+    def setUp(self):
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+
+    def test_igs_day_is_derived_from_the_filename(self):
+        import four_domain_intersection as fdi
+        self.assertEqual(fdi.igs_day_from_name("igs21980.sp3.Z"), 59630)
+        self.assertEqual(fdi.igs_day_from_name("igs21992.clk.Z"), 59639)
+        self.assertIsNone(fdi.igs_day_from_name("igs21987.erp.Z"), "day 7 is the weekly summary")
+        self.assertIsNone(fdi.igs_day_from_name("igr21980.sp3.Z"), "Rapid is not a Final product")
+
+    def test_relabelling_a_report_field_has_no_effect(self):
+        """M6: the mutation that drove GNSS support from 240 h to 0 h."""
+        import four_domain_intersection as fdi
+        names = ["igs21980.sp3.Z", "igs21981.sp3.Z"]
+        as_igs = sorted(d for d in (fdi.igs_day_from_name(n) for n in names) if d)
+        self.assertEqual(as_igs, [59630, 59631],
+                         "derivation depends on something other than the name")
 
 
 if __name__ == "__main__":

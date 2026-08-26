@@ -75,8 +75,12 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 57 classified deficiencies** across all five classes, 33 resolved. **Thirty-three are
-self-directed** — against FTRO's own tooling, evidence discipline, test suite and profile
+**4. 63 classified deficiencies**, 39 resolved, 39 self-directed. Each carries a `finding_type`
+and an `affects` axis, because an append-only count cannot show convergence. The measure that can:
+**open entries bearing on the result that are software defects rather than provider evidence gaps
+— currently zero.** Every remaining result-bearing entry is provider incompleteness, which is the
+deliverable. Scope and exit condition: [Phase-0 acceptance contract](phase0/acceptance-contract-v1.0.md).
+**Thirty-nine are self-directed** — against FTRO's own tooling, evidence discipline, test suite and profile
 conformance. Every entry carries a machine-readable `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as successive
 fixes proved partial.
 
@@ -98,6 +102,7 @@ that failing to demonstrate shared ancestry is a valid scientific result, not a 
 | Why the optical ancestry chain fails | [Optical time-tag ancestry note](phase0/optical-timetag-ancestry-note.md) |
 | What is pinned, and to what checksum | [Source ledger](ledgers/source-ledger.md) · [`identities.json`](phase0/evidence/identities.json) |
 | Who may reuse what | [Rights ledger](ledgers/rights-ledger.md) |
+| **Scope, contracts and exit condition** | [Phase-0 acceptance contract](phase0/acceptance-contract-v1.0.md) |
 | Governance and principles | [Access Charter v0.1](charter/access-charter-v0.1.md) |
 | The vocabulary (nothing frozen yet) | [Graph profile v0.0.3](profile/ftro-graph-profile-v0.0.3.md) |
 
@@ -159,7 +164,7 @@ python3 src/ftro/render_deficiencies.py
 python3 src/ftro/render_validity_intervals.py
 
 # 7. Conformance gates
-python3 src/ftro/check_versions.py --check   # no artifact changed without a version bump
+python3 src/ftro/check_versions.py --check   # changed artifacts declare a new version
 python3 src/ftro/refresh_crate.py --check    # RO-Crate sizes match disk
 ```
 
@@ -226,7 +231,8 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | `4a5b80a` | Seventh external review — see [session 08](labnotes/2026-08-26-session-08-review-corrections-7.md). A contract change updated one caller of two, and the sensitivity scan **published a wrong number past every gate** (`FTRO-DEF-037`); the consumer gate and its tests both accepted an absent field as success (`FTRO-DEF-038`); `--update` could silence the version gate (`FTRO-DEF-039`). |
 | `5f0244f` | Eighth external review — see [session 09](labnotes/2026-08-26-session-09-review-corrections-8.md). The tests guarding the sensitivity computation **only read its output**, so restoring the broken revision left all 70 green (`FTRO-DEF-046`). There is now an executing oracle over a synthetic fixture, with both segmentation paths asserted equal run-for-run. Preflight validated presence not shape (`FTRO-DEF-042`); `isinstance(False, int)` let JSON `false` pass as zero (`FTRO-DEF-043`). **86 tests**, zero skips. |
 | `aaeae6f` | Ninth external review — see [session 10](labnotes/2026-08-26-session-10-review-corrections-9.md). The oracle constrained **topology, not extent**: halving every run's span changed optical support by 40% and passed all 86 tests (`FTRO-DEF-048`). It now uses a segmenter written independently of `src/`, and a manifest of full run tuples. **94 tests**, zero skips. |
-| this | Tenth external review — see [session 11](labnotes/2026-08-26-session-11-review-corrections-10.md). The oracle fixture contained **no gap at a live tolerance boundary**, so `int`→`round` passed all 94 tests while changing the 5 s row by 1,883 runs (`FTRO-DEF-053`). The runtime gate read the report's own account of itself (`FTRO-DEF-054`). **99 tests**, zero skips. |
+| `3e6face` | Tenth external review — see [session 11](labnotes/2026-08-26-session-11-review-corrections-10.md). The oracle fixture contained **no gap at a live tolerance boundary**, so `int`→`round` passed all 94 tests while changing the 5 s row by 1,883 runs (`FTRO-DEF-053`). The runtime gate read the report's own account of itself (`FTRO-DEF-054`). **99 tests**, zero skips. |
+| this | **Consolidation.** Ten review rounds had a flat discovery rate because the acceptance scope was unbounded and every gate added unverified surface. This round *shrinks* the codebase: one declarative schema retires the 8-entry absent-field family; `series`/`mjd` are derived from authenticated names; domain supports are built once; the 275-line version state machine is replaced by git (101 lines). Phase 0 now has a [frozen contract](phase0/acceptance-contract-v1.0.md), a [pre-registered fault model](phase0/audit-fault-model-v1.0.md) executed once with 13/13 as expected, and a finite exit condition. |
 
 ## Next — Phase 1
 
