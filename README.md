@@ -75,7 +75,7 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 47 classified deficiencies** across all five classes, 23 resolved. **Twenty-three are
+**4. 52 classified deficiencies** across all five classes, 28 resolved. **Twenty-eight are
 self-directed** — against FTRO's own tooling, evidence discipline, test suite and profile
 conformance. Every entry carries a machine-readable `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as successive
 fixes proved partial.
@@ -224,7 +224,8 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | `99fe720` | Fifth external review — see [session 06](labnotes/2026-08-26-session-06-review-corrections-5.md). The digest registry was committed but **not connected** (57/57 IGS pins had `expected_sha256: null`), and the reconciliation test could not detect drift. Now **39 tests**, all 65 digests enforced, and the reconciliation verified by injected mutation. Spacing analysis moved to exact integer ticks: `1.987199 s` was a float artefact (`FTRO-DEF-036`). |
 | `615afe2` | Sixth external review — see [session 07](labnotes/2026-08-26-session-07-review-corrections-6.md). Retrieval now **preflights** the digest registry before fetching and **promotes reports only on complete success**; consumers refuse a non-clean report; the version gate checks content digests rather than a hard-coded mirror of the version string; segmentation moved to integer ticks. The manual mutation table is now **12 committed tests**. |
 | `4a5b80a` | Seventh external review — see [session 08](labnotes/2026-08-26-session-08-review-corrections-7.md). A contract change updated one caller of two, and the sensitivity scan **published a wrong number past every gate** (`FTRO-DEF-037`); the consumer gate and its tests both accepted an absent field as success (`FTRO-DEF-038`); `--update` could silence the version gate (`FTRO-DEF-039`). |
-| this | Eighth external review — see [session 09](labnotes/2026-08-26-session-09-review-corrections-8.md). The tests guarding the sensitivity computation **only read its output**, so restoring the broken revision left all 70 green (`FTRO-DEF-046`). There is now an executing oracle over a synthetic fixture, with both segmentation paths asserted equal run-for-run. Preflight validated presence not shape (`FTRO-DEF-042`); `isinstance(False, int)` let JSON `false` pass as zero (`FTRO-DEF-043`). **86 tests**, zero skips. |
+| `5f0244f` | Eighth external review — see [session 09](labnotes/2026-08-26-session-09-review-corrections-8.md). The tests guarding the sensitivity computation **only read its output**, so restoring the broken revision left all 70 green (`FTRO-DEF-046`). There is now an executing oracle over a synthetic fixture, with both segmentation paths asserted equal run-for-run. Preflight validated presence not shape (`FTRO-DEF-042`); `isinstance(False, int)` let JSON `false` pass as zero (`FTRO-DEF-043`). **86 tests**, zero skips. |
+| this | Ninth external review — see [session 10](labnotes/2026-08-26-session-10-review-corrections-9.md). The oracle constrained **topology, not extent**: halving every run's span changed optical support by 40% and passed all 86 tests (`FTRO-DEF-048`). It now uses a segmenter written independently of `src/`, and a manifest of full run tuples. **94 tests**, zero skips. |
 
 ## Next — Phase 1
 

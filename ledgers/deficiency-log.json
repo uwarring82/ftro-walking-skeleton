@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -1198,8 +1198,132 @@
       "links": {
         "software": "tests/test_retrieval_validation.py"
       }
+    },
+    {
+      "id": "FTRO-DEF-048",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "FTRO test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the segmentation oracle validated topology, not extent",
+      "failed_step": "Guarding the segmentation computation against regression.",
+      "known_fact": "An oracle must be independent of the code it checks, and must constrain the QUANTITY the downstream result depends on -- here run extent, not merely run count.",
+      "observed": "Both routes the oracle called 'independent' -- Resegmenter.runs() and subprocess_runs() -- invoke the same analyse_optical.contiguous_runs(). The external manifest recorded four run COUNTS only. Halving every run's span while preserving topology therefore changed optical support from 133.1119 h to 81.6907 h and optical-VLBI from 82.0134 h to 52.194 h, left all four run counts identical, and passed all 86 tests. The variant test separately accepted a renamed 5.0 row and four_domain_n_intervals: 1.",
+      "evidence": [
+        "tests/test_retrieval_validation.py#independent_runs",
+        "tests/fixtures/mini-archive/expected-runs.json"
+      ],
+      "severity": "high",
+      "impact": "The oracle could detect a broken ADAPTER -- the defect it was written for -- and nothing else. Now: an independent segmenter written from the specification in the test file, a manifest of full run TUPLES (comparison, file, tick_start, tick_end, n_samples) plus total spans, and assertions that the production segmenter, both sensitivity routes and the manifest all agree tuple for tuple. Variant keys are asserted explicitly so a renamed row cannot drop a variant. Verified: the span-halving mutation now fails 12 tests.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-066): an oracle must constrain extent, not only topology, and must not call the implementation it checks.",
+      "disposition": "resolved",
+      "links": {
+        "software": "tests/test_retrieval_validation.py#independent_runs"
+      }
+    },
+    {
+      "id": "FTRO-DEF-049",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO version gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: generated-file version enforcement did not exist",
+      "failed_step": "Ensuring a changed generated document receives a new version.",
+      "known_fact": "D-062: excluding a file from one gate obliges covering it with another.",
+      "observed": "The compensating control added last round was a FRESHNESS check: it proves output matches current input, not that changed output was re-versioned. Editing the optical summary and regenerating produced different content still declaring v0.2.0, and the version check, crate check and all tests passed -- exactly the scenario FTRO-DEF-045 claimed to have fixed. The test also rendered into the tracked checkout, so a stale file was overwritten by the first failing run and the second run passed.",
+      "evidence": [
+        "src/ftro/check_versions.py",
+        "tests/test_retrieval_validation.py"
+      ],
+      "severity": "high",
+      "impact": "A control that measured the wrong property, and a test that repaired the condition it was meant to detect. Generated documents now have their CONTENT registered under __generated__ with their declared version; a content change under an unchanged version fails --check and is refused by --update. The freshness test renders into a copied tree.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-067): a compensating control must measure the property the original gate measured, and a test must never repair the state it inspects.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/check_versions.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-050",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO consumer gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the consumer permitted absent per-pin state and incoherent counters",
+      "failed_step": "Refusing a report that is not a clean success.",
+      "known_fact": "Profile 9.2 requires retrieval_validation on EVERY record, pins included.",
+      "observed": "assert_report_usable() explicitly permitted a pin with no retrieval_validation -- the FTRO-DEF-034 failure one level down, in the gate written after it. n_pinned could be absent entirely; 57.0 satisfied a 57-pin report because float equals int, and true satisfied a single-pin report because True equals 1. A non-empty failures or uncovered_by_registry list could coexist with a zero counter. None of the branches added for FTRO-DEF-043 was exercised by a test.",
+      "evidence": [
+        "src/ftro/pinning.py",
+        "tests/test_retrieval_validation.py"
+      ],
+      "severity": "high",
+      "impact": "The gate could be satisfied by a report that contradicted itself. Per-pin retrieval_validation is now required; n_pinned must be present and a true int matching the pin count; every failure list must agree with its counter. Each branch has a mutation test.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-068): every branch of a conformance predicate needs its own mutation test, or it is untested code.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pinning.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-051",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO retrieval tooling",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: an explicit digest bypassed preflight, and a trailing newline validated",
+      "failed_step": "Validating a precondition before any retrieval.",
+      "known_fact": "D-059: validate the shape of a precondition, not its presence.",
+      "observed": "pin_vgosdb validated only registry-derived expectations, so --expect-sha256 abc fetched and parsed the archive before rejecting it -- the explicit argument was not a precondition at all. Separately valid_digest() used re.match with a trailing dollar anchor, which in Python also accepts a trailing newline, so a digest read from a file with its newline intact validated and the consumer accepted a report whose actual and expected digests both carried the suffix.",
+      "evidence": [
+        "src/ftro/pin_vgosdb.py",
+        "src/ftro/pinning.py"
+      ],
+      "severity": "medium",
+      "impact": "A precondition enforced on one input path and not the other is not a precondition. The explicit argument is now validated before the request is constructed, and valid_digest uses fullmatch.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-069): validate every input path to a precondition, and prefer fullmatch to match with an anchor.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pin_vgosdb.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-052",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO version gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the discovery suffix list advertised formats the pattern could not parse",
+      "failed_step": "Discovering every versioned document.",
+      "known_fact": "D-057: a rule over 'every X' requires an executable enumeration of X.",
+      "observed": "TRACKED_SUFFIXES listed .yaml, .yml and .cff while VERSION_RE matched only Markdown and JSON syntax. A phase0/rogue.yml declaring version 1.0.0 produced check 0, register 0 new, check 0 -- the completeness claim covered file types the scanner could not read.",
+      "evidence": [
+        "src/ftro/check_versions.py"
+      ],
+      "severity": "medium",
+      "impact": "The enumeration silently under-covered the population it claimed. The pattern now parses YAML and CFF version declarations as well, and a test asserts a versioned YAML file is discovered and registrable.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-070): a capability list is a claim; it needs a test per entry.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/check_versions.py"
+      }
     }
   ],
   "revised": "2026-08-26",
-  "revision_note": "Revised across eight review rounds. 001-023 s01; 024-027 s02; 028-029 s03; 030-033 s04; 034-035 s05; 036 s06; 037-041 s07; 042-047 s08. Several entries carry v2-v4 revisions recording successive partial fixes. Twenty-three entries are self-directed."
+  "revision_note": "Revised across nine review rounds. 001-023 s01; 024-027 s02; 028-029 s03; 030-033 s04; 034-035 s05; 036 s06; 037-041 s07; 042-047 s08; 048-052 s09. Twenty-eight entries are self-directed."
 }

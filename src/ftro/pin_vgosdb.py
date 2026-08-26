@@ -43,6 +43,12 @@ def main():
 
     # PREFLIGHT: succeeding with no expectation at all was a fail-open path.
     name = os.path.basename(args.url)
+    # An explicitly supplied digest is a precondition too. It was validated only after
+    # fetching and parsing the archive (FTRO-DEF-051).
+    if args.expect_sha256 is not None and not pinning.valid_digest(args.expect_sha256):
+        raise pinning.PreflightError(
+            f"preflight: --expect-sha256 {args.expect_sha256!r} is not a 64-character hex "
+            f"digest. Nothing was fetched.")
     if args.expect_sha256 is None:
         section = pinning.load_section(args.expect, "vgosdb", required=not args.allow_unpinned)
         pinning.preflight(section, [name], allow_unpinned=args.allow_unpinned,

@@ -154,6 +154,9 @@
         },
         {
           "@id": "labnotes/2026-08-26-session-09-review-corrections-8.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-10-review-corrections-9.md"
         }
       ],
       "isBasedOn": [
@@ -403,7 +406,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "97506",
+      "contentSize": "106086",
       "name": "deficiency-log.json"
     },
     {
@@ -413,7 +416,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "98210",
+      "contentSize": "106951",
       "name": "deficiency-log.md"
     },
     {
@@ -443,7 +446,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "15831",
+      "contentSize": "17004",
       "name": "decision-ledger.md"
     },
     {
@@ -592,7 +595,7 @@
       "name": "pin_vgosdb.py",
       "description": "Retrieves and pins an IVS vgosDB from OPAR with content-shape validation and wrapper-version inventory.",
       "encodingFormat": "text/x-python",
-      "contentSize": "12072",
+      "contentSize": "12477",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -716,7 +719,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2935",
+      "contentSize": "3072",
       "name": "README.md"
     },
     {
@@ -783,7 +786,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "60592"
+      "contentSize": "67902"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -1016,7 +1019,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "8400"
+      "contentSize": "10966"
     },
     {
       "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md",
@@ -1036,7 +1039,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2791"
+      "contentSize": "3151"
     },
     {
       "@id": "src/ftro/pinning.py",
@@ -1052,7 +1055,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "8483"
+      "contentSize": "9738"
     },
     {
       "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md",
@@ -1117,7 +1120,17 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "50"
+      "contentSize": "4743"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-10-review-corrections-9.md",
+      "@type": "File",
+      "name": "2026-08-26-session-10-review-corrections-9.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "7293"
     }
   ]
 }

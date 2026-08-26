@@ -22,7 +22,21 @@ import re
 import sys
 
 REGISTRY = "phase0/evidence/versioned-artifacts.json"
-VERSION_RE = re.compile(r'(?:\*\*Version:\*\*|"version"\s*:)\s*"?([0-9]+\.[0-9]+\.[0-9]+)')
+
+# Generated documents are excluded from content tracking (regenerating them is not an
+# edit), but they still declare a version, and changed OUTPUT must still advance it.
+# A freshness check alone proves output matches current input, not that a changed output
+# was re-versioned (FTRO-DEF-049).
+GENERATED = {
+    "ledgers/deficiency-log.md": ["src/ftro/render_deficiencies.py"],
+    "phase0/optical-validity-intervals.md": ["src/ftro/render_validity_intervals.py"],
+}
+# Markdown (**Version:** x.y.z), JSON ("version": "x.y.z") and YAML/CFF (version: x.y.z).
+# The suffix list previously advertised .yaml/.yml/.cff while the pattern matched neither,
+# so a versioned YAML file was silently untracked (FTRO-DEF-052).
+VERSION_RE = re.compile(
+    r'(?:\*\*Version:\*\*|"version"\s*:|^\s*version\s*:)\s*[\"\']?([0-9]+\.[0-9]+\.[0-9]+)',
+    re.MULTILINE)
 
 
 def declared_version(path):
@@ -97,6 +111,10 @@ def audit(registry):
     """Return (problems, current) without mutating anything."""
     problems, current = [], {}
     for path, rec in sorted(registry.items()):
+        if path == "__generated__":
+            continue
+        if path == "__generated__":
+            continue
         if not os.path.exists(path):
             problems.append((path, "registered but missing from the working tree"))
             continue
@@ -126,6 +144,21 @@ def main():
         registry = json.load(fh)["artifacts"]
 
     problems, current = audit(registry)
+
+    # Generated documents: their CONTENT is registered separately, so a regeneration that
+    # changes the bytes must come with a version advance.
+    gen = registry.get("__generated__", {})
+    for path in sorted(GENERATED):
+        if not os.path.exists(path):
+            problems.append((path, "registered as generated but missing"))
+            continue
+        got_v, got_d = declared_version(path), content_digest(path)
+        rec = gen.get(path)
+        if rec is None:
+            problems.append((path, "generated document not registered; run --register"))
+        elif got_d != rec["sha256"] and got_v == rec["version"]:
+            problems.append((path, f"generated content changed but version is still {got_v}: "
+                                   f"recorded {rec['sha256'][:12]}, now {got_d[:12]}"))
 
     # Completeness: a document that declares a version must be tracked.
     for path, v in sorted(discover_versioned().items()):
@@ -158,6 +191,18 @@ def main():
                 print(f"REFUSED {path}: {why}", file=sys.stderr)
             return 1
 
+        gen_reg = registry.setdefault("__generated__", {})
+        for path in sorted(GENERATED):
+            if not os.path.exists(path):
+                continue
+            v, dgst = declared_version(path), content_digest(path)
+            rec = gen_reg.get(path)
+            if rec and rec["sha256"] != dgst and rec["version"] == v and not register_new:
+                print(f"REFUSED {path}: generated content changed but version is still {v}. "
+                      f"Bump the version in its generator, then --update.", file=sys.stderr)
+                return 1
+            gen_reg[path] = {"version": v, "sha256": dgst}
+
         added, rerecorded = [], []
         if register_new:
             for path, v in sorted(discover_versioned().items()):
@@ -182,6 +227,11 @@ def main():
         return 0
 
     for path, rec in sorted(registry.items()):
+        if path == "__generated__":
+            for gpath, grec in sorted(rec.items()):
+                if not any(p == gpath for p, _ in problems):
+                    print(f"ok   {gpath} v{grec['version']} (generated)")
+            continue
         if not any(p == path for p, _ in problems):
             print(f"ok   {path} v{rec['version']}")
     for path, why in problems:

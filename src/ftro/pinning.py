@@ -21,12 +21,16 @@ import os
 import re
 import sys
 
-SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
+SHA256_RE = re.compile(r"[0-9a-f]{64}")
 
 
 def valid_digest(value):
-    """A digest is 64 lowercase hex characters. None, "", or a short string is not one."""
-    return isinstance(value, str) and bool(SHA256_RE.match(value))
+    """A digest is EXACTLY 64 lowercase hex characters.
+
+    fullmatch, not match: `re.match` with a trailing `$` also accepts a trailing newline,
+    so a digest read from a file with its newline intact validated (FTRO-DEF-051).
+    """
+    return isinstance(value, str) and bool(SHA256_RE.fullmatch(value))
 
 
 class PreflightError(SystemExit):
@@ -152,8 +156,22 @@ def assert_report_usable(path, what="report"):
         problems.append("report contains no pins")
     # A declared count that disagrees with the pins is a report describing something
     # other than itself.
-    if "n_pinned" in doc and doc["n_pinned"] != len(pins):
+    # n_pinned must be PRESENT and a true int. Absence passed; 57.0 == 57 and True == 1
+    # both compared equal, so a float or a boolean satisfied the count (FTRO-DEF-050).
+    if "n_pinned" not in doc:
+        problems.append("n_pinned absent (absence is not evidence of a complete report)")
+    elif isinstance(doc["n_pinned"], bool) or not isinstance(doc["n_pinned"], int):
+        problems.append(f"n_pinned={doc['n_pinned']!r} is {type(doc['n_pinned']).__name__}, "
+                        f"expected int")
+    elif doc["n_pinned"] != len(pins):
         problems.append(f"n_pinned={doc['n_pinned']} but the report carries {len(pins)} pins")
+
+    # A zero counter beside a non-empty list is a report contradicting itself.
+    for lst, counter in (("failures", "n_failed"),
+                         ("uncovered_by_registry", "n_without_expected_digest")):
+        if isinstance(doc.get(lst), list) and len(doc[lst]) != doc.get(counter, 0):
+            problems.append(f"{lst} has {len(doc[lst])} entries but {counter}="
+                            f"{doc.get(counter)!r}")
 
     for p in pins:
         label = p.get("name") or p.get("key") or p.get("session") or "<unnamed>"
@@ -169,10 +187,12 @@ def assert_report_usable(path, what="report"):
         elif valid_digest(p.get("expected_sha256")) and p["sha256"] != p["expected_sha256"]:
             problems.append(f"pin {label}: sha256 disagrees with expected_sha256 while "
                             f"checksum_match claims True")
-        # A per-pin validation state may not contradict the report-level one.
-        prv = p.get("retrieval_validation")
-        if prv is not None and prv != "content_validated":
-            problems.append(f"pin {label}: retrieval_validation={prv!r}")
+        # Profile §9.2 requires retrieval_validation on EVERY record. Permitting its
+        # absence inside pins repeated the DEF-034 failure one level down.
+        if "retrieval_validation" not in p:
+            problems.append(f"pin {label}: retrieval_validation absent")
+        elif p["retrieval_validation"] != "content_validated":
+            problems.append(f"pin {label}: retrieval_validation={p['retrieval_validation']!r}")
 
     if problems:
         raise SystemExit(f"{what} at {path} is not a clean success: {'; '.join(problems[:6])}"

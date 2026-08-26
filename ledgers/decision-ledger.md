@@ -1,6 +1,6 @@
 # FTRO Decision Ledger
 
-**Version:** 0.6.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+**Version:** 0.7.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
 
 > **Version history.** 0.1.0 (`fdbf2b9`) · 0.2.0 (D-021…D-028, `2c31279`–`0b41929`, unversioned at the time) · **0.3.0** (D-029…D-047). D-039a required every versioned artifact to be bumped when it changes; this ledger and the source ledger were then changed twice without a bump ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v3.0.0). `src/ftro/check_versions.py` now enforces it.
 
@@ -55,6 +55,11 @@ task card §23; this ledger records choices made *while executing* it.
 | D-062 | Excluding a file from one gate obliges covering it with another | Generated files were excluded from version tracking with no freshness check ([`FTRO-DEF-045`](deficiency-log.md#ftro-def-045)) | 09 |
 | D-063 | A regression test must **execute** the code path, not read its committed output | Restoring the broken revision left all 70 tests green ([`FTRO-DEF-046`](deficiency-log.md#ftro-def-046)) | 09 |
 | D-064 | Assert the specific diagnostic, never a bare non-zero exit | The unmutated consumer already exits 1 on a clean archive ([`FTRO-DEF-047`](deficiency-log.md#ftro-def-047)) | 09 |
+| D-066 | An oracle must constrain **extent**, not only topology, and must not call the implementation it checks | Halving every run's span preserved all counts, changed support by 40%, and passed 86 tests ([`FTRO-DEF-048`](deficiency-log.md#ftro-def-048)) | 10 |
+| D-067 | A compensating control must measure the property the original gate measured; a test must never repair the state it inspects | A freshness check replaced version enforcement, and rendered into the tracked checkout ([`FTRO-DEF-049`](deficiency-log.md#ftro-def-049)) | 10 |
+| D-068 | Every branch of a conformance predicate needs its own mutation test, or it is untested code | None of the DEF-043 branches was exercised ([`FTRO-DEF-050`](deficiency-log.md#ftro-def-050)) | 10 |
+| D-069 | Validate every input path to a precondition; prefer `fullmatch` to `match` with an anchor | An explicit `--expect-sha256` was checked only after fetching, and `$` accepted a trailing newline ([`FTRO-DEF-051`](deficiency-log.md#ftro-def-051)) | 10 |
+| D-070 | A capability list is a claim; it needs a test per entry | `.yml` was advertised and unparseable ([`FTRO-DEF-052`](deficiency-log.md#ftro-def-052)) | 10 |
 | D-065 | **Superseded claim:** deriving `identities.json` from pin reports fixes identity drift only, not numerical regression | It would have propagated the wrong sensitivity value and removed the contradiction that exposed it; that class needs an independent oracle | 09 |
 | D-039a | **Extended 05:** the version-bump rule binds every versioned artifact, not only the profile | `identities.json` had four byte-distinct states under one label ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v2.0.0) | 05 |
 | D-034 | Wrapper states keyed by member digest, never filename | 7 filenames collapse to 5 distinct byte sequences; filename keying invents two states and attributes bytes to a centre that produced none | 03 |
