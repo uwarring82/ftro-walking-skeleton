@@ -87,7 +87,7 @@
       1.9872
     ],
     "n_distinct_tick_spacings": 1161,
-    "note": "Computed over ALL adjacent pairs, not the truncated top-20 histogram. The two dominant spacings are 0.9504 s (11 quanta) and 1.0368 s (12 quanta); the next distinct value is reported above and is 23 quanta, i.e. a float-representation twin of 1.9872 s. Nothing lies strictly between, so any gap tolerance in (1.0368, next) segments identically -- which is why 1.1 s and 1.5 s give identical runs. Compare against the rounded literal 1.9872 with care: round(x, 6) yields both 1.9872 and 1.987199 for the same physical spacing."
+    "note": "Computed over ALL adjacent pairs in exact integer ticks, not over the truncated top-20 histogram and not in floating point. The two dominant spacings are 11 and 12 ticks (0.9504 s and 1.0368 s). Ticks 13-22 are EMPTY -- zero of the 9,018,038 adjacent pairs -- and the next populated value is 23 ticks = 1.9872 s exactly. Any gap tolerance strictly between 12 and 23 ticks therefore segments identically, which is why 1.1 s and 1.5 s give identical runs. This is a falsifiable statement about an empty band; the earlier form compared against the next observed value and so could not fail. Float arithmetic previously reported the boundary as 1.987199 s, an artefact (FTRO-DEF-036)."
   },
   "mjd_quantum_check": {
     "quantum_days": 1e-06,

@@ -27,6 +27,7 @@ import os
 import sys
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import pinning  # noqa: E402
 from optical_sensitivity import build_sensitivity  # noqa: E402
 
 W0, W1 = 59630.0, 59640.0
@@ -76,7 +77,10 @@ def total_h(ivs):
 
 def main():
     ivs_sessions = json.load(open(IVS_SESSIONS, encoding="utf-8"))
-    igs = json.load(open(IGS_PINS, encoding="utf-8"))
+    # Consumer gate: a report that is not a clean success must not become science.
+    # This module used to read the IGS report unconditionally, so a failed pinning run
+    # produced normal GNSS support (FTRO-DEF-031 v4.0.0).
+    igs = pinning.assert_report_usable(IGS_PINS, what="IGS pin report")
 
     # Optical: EXACT union of every contiguous valid run across all comparisons.
     # Falls back to per-comparison envelopes (an upper bound) only if the full

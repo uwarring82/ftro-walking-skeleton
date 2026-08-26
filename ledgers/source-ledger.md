@@ -1,6 +1,6 @@
 # FTRO Source Ledger
 
-**Version:** 0.3.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+**Version:** 0.4.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
 
 > **v0.2.0** corrects the optical identity to the provider's own concept/version DOIs, restores
 > full 64-character digests, and pins the VLBI vgosDB. Digests below are abbreviated head…tail for

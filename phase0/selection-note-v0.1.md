@@ -1,7 +1,7 @@
 # Phase-0 Selection Note v0.1
 
 **Document ID:** FTRO-SEL-001
-**Version:** 0.3.0
+**Version:** 0.4.0
 **Date:** 2026-08-25
 **Task card:** FTRO-WS-001 v0.3, §21 Phase 0 and §22
 **Status:** Gate 0 passed — VLBI downstream products carried forward as an explicit open item (§6)

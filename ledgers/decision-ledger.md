@@ -1,6 +1,6 @@
 # FTRO Decision Ledger
 
-**Version:** 0.3.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+**Version:** 0.4.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
 
 > **Version history.** 0.1.0 (`fdbf2b9`) · 0.2.0 (D-021…D-028, `2c31279`–`0b41929`, unversioned at the time) · **0.3.0** (D-029…D-047). D-039a required every versioned artifact to be bumped when it changes; this ledger and the source ledger were then changed twice without a bump ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v3.0.0). `src/ftro/check_versions.py` now enforces it.
 
@@ -38,6 +38,12 @@ task card §23; this ledger records choices made *while executing* it.
 | D-044 | Expected-digest manifests are committed, not left in gitignored `data/work/` | The documented cold path enforced nothing while recording `checksum_match: true` | 05 |
 | D-045 | A pinner refuses to run without an expectation file unless `--allow-unpinned` is passed explicitly | An absent expectation was silently an empty map | 05 |
 | D-046 | Evidence artifacts are retrieved and content-validated, not asserted resolvable from commit metadata | `tintervals` was `resolvable` with no checksummed file at all | 05 |
+| D-048 | Registry coverage is **preflighted before any byte is fetched** | `pin_igs.py` checked coverage after caching all 57 files and building their pins ([`FTRO-DEF-031`](deficiency-log.md#ftro-def-031) v4.0.0) | 07 |
+| D-049 | A report reaches its official path only on **complete success**; a failed run is preserved as `.rejected` and leaves the official path untouched | A failed run overwrote the report a scientific consumer then read as normal input | 07 |
+| D-050 | Scientific consumers **reject** a report that is not a clean success | `four_domain_intersection.py` read the IGS report without checking `n_failed`, validation state or per-pin checksums | 07 |
+| D-051 | A version gate compares **content digests**, not a hard-coded copy of the version string | The first gate agreed with itself by construction and never detected drift ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v4.0.0) | 07 |
+| D-052 | A mutation table demonstrated by hand becomes **committed tests** | Session 06's table proved things no committed test asserted ([`FTRO-DEF-035`](deficiency-log.md#ftro-def-035) v3.0.0) | 07 |
+| D-053 | Where a serialised quantity is exactly representable in integers, **every** comparison uses integers — not only the census | `contiguous_runs()` still compared binary floats after the census was made exact | 07 |
 | D-039a | **Extended 05:** the version-bump rule binds every versioned artifact, not only the profile | `identities.json` had four byte-distinct states under one label ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v2.0.0) | 05 |
 | D-034 | Wrapper states keyed by member digest, never filename | 7 filenames collapse to 5 distinct byte sequences; filename keying invents two states and attributes bytes to a centre that produced none | 03 |
 | D-035 | Route enumeration gates the dataset-level negative, not `access_class` | `access_class` is a property of a retrieval path, so one content-validated anonymous retrieval settles it for that path. Enumeration is required before asserting `unresolved` | 03 |

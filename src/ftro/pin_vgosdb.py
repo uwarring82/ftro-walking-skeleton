@@ -20,6 +20,9 @@ import sys
 import tarfile
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import pinning
+
 GZIP_MAGIC = b"\x1f\x8b"
 HTML_MARKERS = (b"<!DOCTYPE html", b"<!doctype html", b"<html", b"<HTML")
 
@@ -32,10 +35,22 @@ def main():
     ap.add_argument("--cache", default="data/raw/vlbi")
     ap.add_argument("--out", default="phase0/reports/vlbi-vgosdb-pin.json")
     ap.add_argument("--expect-sha256", default=None)
+    ap.add_argument("--expect", default="phase0/evidence/expected-digests.json",
+                    help="sectioned digest registry; the vgosdb section is enforced")
+    ap.add_argument("--allow-unpinned", action="store_true",
+                    help="permit retrieval with no expected digest (establishes a first pin)")
     args = ap.parse_args()
 
+    # PREFLIGHT: succeeding with no expectation at all was a fail-open path.
+    name = os.path.basename(args.url)
+    if args.expect_sha256 is None:
+        section = pinning.load_section(args.expect, "vgosdb", required=not args.allow_unpinned)
+        pinning.preflight(section, [name], allow_unpinned=args.allow_unpinned,
+                          what="vgosDB archive")
+        args.expect_sha256 = section.get(name)
+
     os.makedirs(args.cache, exist_ok=True)
-    dest = os.path.join(args.cache, os.path.basename(args.url))
+    dest = os.path.join(args.cache, name)
     retrieved = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
     req = urllib.request.Request(args.url, headers={"User-Agent": "FTRO-walking-skeleton/0.1"})
@@ -175,8 +190,7 @@ def main():
     else:
         pin["bytes_written_to_cache"] = True
 
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    json.dump(pin, open(args.out, "w", encoding="utf-8"), indent=2)
+    pinning.promote(pin, args.out, verified)
     print(json.dumps({k: pin[k] for k in
                       ("size_bytes", "sha256", "checksum_match", "content_valid",
                        "last_modified", "n_members", "n_wrapper_filenames",

@@ -20,6 +20,8 @@ from decimal import Decimal
 
 CANDIDATE_MJD_START = 59630.0   # 2022-02-20
 CANDIDATE_MJD_END = 59640.0     # 2022-03-02
+W0_TICK = int(CANDIDATE_MJD_START * 1_000_000)
+W1_TICK = int(CANDIDATE_MJD_END * 1_000_000)
 # Documented flag vocabulary, pinned from INRIM/optical-link-data-format (see source ledger).
 DOCUMENTED_FLAGS = {0: "invalid", 1: "valid but experimental", 2: "valid"}
 NOMINAL_SAMPLING_S = 1.0
@@ -83,21 +85,32 @@ def parse_dat(path):
     return header, rows, malformed
 
 
-def contiguous_runs(mjds, flags, keep, gap_tol_s):
-    """Group consecutive samples whose flag is in `keep` into runs, splitting on gaps."""
+def contiguous_runs(ticks, flags, keep, gap_tol_s):
+    """Group consecutive samples whose flag is in `keep` into runs, splitting on gaps.
+
+    Operates on integer microday ticks. The tolerance is converted to ticks ONCE, by
+    flooring, so the comparison is exact integer arithmetic.
+
+    This previously differenced binary-float MJDs against a float tolerance. At an exact
+    23-tick tolerance (1.9872 s) that put 231 of the 259 in-window 23-tick gaps just above
+    the threshold and 28 just below -- a boundary that depended on representation error
+    rather than on the data. The published tolerances (1.1, 1.5, 2.0, 5.0 s) all sit far
+    from any populated boundary, so no published figure changes; the arithmetic is now
+    exact regardless (FTRO-DEF-036 v2.0.0).
+    """
+    tol_ticks = int(gap_tol_s / TICK_SECONDS + 1e-9)   # 1.5 s -> 17 ticks; 1.9872 s -> 23
     runs = []
     start = prev = None
     n = 0
-    tol_days = gap_tol_s / SEC_PER_DAY
-    for mjd, fl in zip(mjds, flags):
+    for tick, fl in zip(ticks, flags):
         if fl in keep:
             if start is None:
-                start, prev, n = mjd, mjd, 1
-            elif (mjd - prev) > tol_days:
+                start, prev, n = tick, tick, 1
+            elif (tick - prev) > tol_ticks:
                 runs.append((start, prev, n))
-                start, prev, n = mjd, mjd, 1
+                start, prev, n = tick, tick, 1
             else:
-                prev, n = mjd, n + 1
+                prev, n = tick, n + 1
         else:
             if start is not None:
                 runs.append((start, prev, n))
@@ -194,15 +207,17 @@ def main():
 
             # valid support intersecting the candidate window (flags 1 and 2 = "valid")
             if fmax >= CANDIDATE_MJD_START and fmin <= CANDIDATE_MJD_END:
-                w = [(m, f) for m, f in zip(mjds, flags)
-                     if CANDIDATE_MJD_START <= m <= CANDIDATE_MJD_END]
+                w = [(t, f) for t, f in zip(ticks, flags)
+                     if W0_TICK <= t <= W1_TICK]
                 if w:
-                    runs = contiguous_runs([m for m, _ in w], [f for _, f in w],
+                    runs = contiguous_runs([t for t, _ in w], [f for _, f in w],
                                            keep={1, 2}, gap_tol_s=args.gap_tolerance_s)
-                    for s, e, n in runs:
+                    for s_, e_, n in runs:
                         valid_runs_in_window.append(
-                            {"file": fn, "mjd_start": s, "mjd_end": e, "n_samples": n,
-                             "span_s": round((e - s) * SEC_PER_DAY, 3)})
+                            {"file": fn,
+                             "mjd_start": s_ / 1_000_000, "mjd_end": e_ / 1_000_000,
+                             "tick_start": s_, "tick_end": e_, "n_samples": n,
+                             "span_s": round((e_ - s_) * TICK_SECONDS, 3)})
 
         # YAML-vs-column uncertainty consistency, reported without coercion
         consistency = {}
@@ -270,14 +285,16 @@ def main():
                 round(12 * TICK_SECONDS, 4),
                 round(min((k for k in tick_spacings if k > 12), default=0) * TICK_SECONDS, 4)],
             "n_distinct_tick_spacings": len(tick_spacings),
-            "note": ("Computed over ALL adjacent pairs, not the truncated top-20 histogram. "
-                     "The two dominant spacings are 0.9504 s (11 quanta) and 1.0368 s (12 "
-                     "quanta); the next distinct value is reported above and is 23 quanta, i.e. "
-                     "a float-representation twin of 1.9872 s. Nothing lies strictly between, so "
-                     "any gap tolerance in (1.0368, next) segments identically -- which is why "
-                     "1.1 s and 1.5 s give identical runs. Compare against the rounded literal "
-                     "1.9872 with care: round(x, 6) yields both 1.9872 and 1.987199 for the same "
-                     "physical spacing."),
+            "note": ("Computed over ALL adjacent pairs in exact integer ticks, not over the "
+                     "truncated top-20 histogram and not in floating point. The two dominant "
+                     "spacings are 11 and 12 ticks (0.9504 s and 1.0368 s). Ticks 13-22 are "
+                     "EMPTY -- zero of the 9,018,038 adjacent pairs -- and the next populated "
+                     "value is 23 ticks = 1.9872 s exactly. Any gap tolerance strictly between "
+                     "12 and 23 ticks therefore segments identically, which is why 1.1 s and "
+                     "1.5 s give identical runs. This is a falsifiable statement about an empty "
+                     "band; the earlier form compared against the next observed value and so "
+                     "could not fail. Float arithmetic previously reported the boundary as "
+                     "1.987199 s, an artefact (FTRO-DEF-036)."),
         },
         "sample_spacing_coverage": {
             "n_spacings_total": spacings_total,

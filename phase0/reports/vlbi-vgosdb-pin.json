@@ -7,7 +7,7 @@
   "content_type": "application/x-gzip",
   "last_modified": "Mon, 15 Dec 2025 16:46:58 GMT",
   "etag": "\"12b3c88-646005c046480\"",
-  "retrieved_utc": "2026-08-25T23:24:11.136602+00:00",
+  "retrieved_utc": "2026-08-26T06:17:03.823084+00:00",
   "retrieval_procedure": "GET https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz",
   "size_bytes": 19610760,
   "sha256": "0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",

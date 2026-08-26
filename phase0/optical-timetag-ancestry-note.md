@@ -1,6 +1,6 @@
 # Optical Time-Tag Ancestry Note
 
-**Document ID:** FTRO-OTA-001 · **Version:** 0.2.0 · **Date:** 2026-08-25
+**Document ID:** FTRO-OTA-001 · **Version:** 0.3.0 · **Date:** 2026-08-25
 **Task card:** FTRO-WS-001 v0.3 §5.1, §15.1, §22.6 · **Licence:** CC BY 4.0
 
 > **The question.** Card §5.1: *"identify what physically realises the one-second MJD

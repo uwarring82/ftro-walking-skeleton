@@ -30,176 +30,176 @@
     "gap_tolerance_scan": {
       "1.1": {
         "domain_h": {
-          "optical": 133.11192,
+          "optical": 171.442704,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.11192,
+          "gnss|optical": 171.442704,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.013424,
+          "optical|vlbi": 117.995208,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.013424,
+          "without_pulsar": 117.995208,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174425,
-        "optical_n_intervals": 1353,
-        "n_runs": 7398,
+        "optical_n_intervals": 9,
+        "n_runs": 34,
         "n_samples": 1023950
       },
       "1.5": {
         "domain_h": {
-          "optical": 133.11192,
+          "optical": 171.442704,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.11192,
+          "gnss|optical": 171.442704,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.013424,
+          "optical|vlbi": 117.995208,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.013424,
+          "without_pulsar": 117.995208,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174425,
-        "optical_n_intervals": 1353,
-        "n_runs": 7398,
+        "optical_n_intervals": 9,
+        "n_runs": 34,
         "n_samples": 1023950
       },
       "2.0": {
         "domain_h": {
-          "optical": 133.116888,
+          "optical": 171.442704,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.116888,
+          "gnss|optical": 171.442704,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.016184,
+          "optical|vlbi": 117.995208,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.016184,
+          "without_pulsar": 117.995208,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174425,
-        "optical_n_intervals": 1346,
-        "n_runs": 7139,
+        "optical_n_intervals": 9,
+        "n_runs": 34,
         "n_samples": 1023950
       },
       "5.0": {
         "domain_h": {
-          "optical": 133.567344,
+          "optical": 171.442704,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.567344,
+          "gnss|optical": 171.442704,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.23276,
+          "optical|vlbi": 117.995208,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.23276,
+          "without_pulsar": 117.995208,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174425,
-        "optical_n_intervals": 941,
-        "n_runs": 4826,
+        "optical_n_intervals": 9,
+        "n_runs": 34,
         "n_samples": 1023950
       }
     },
     "sample_credit": {
       "run_span_plus_trailing_gate": {
         "domain_h": {
-          "optical": 133.496073,
+          "optical": 171.445204,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.496073,
+          "gnss|optical": 171.445204,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.182577,
+          "optical|vlbi": 117.996597,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.182577,
+          "without_pulsar": 117.996597,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174425,
-        "optical_n_intervals": 1382,
+        "optical_n_intervals": 9,
         "note": "Each RUN extended 1 s past its last tag -- what the previous 'nominal_1s_sample_credit' row computed. Credits one gate per RUN, not per SAMPLE, and inherits the contiguity rule."
       },
       "per_run_nominal_block": {
         "domain_h": {
-          "optical": 133.496567,
+          "optical": 145.4703,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.496567,
+          "gnss|optical": 145.4703,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.182929,
+          "optical|vlbi": 98.668884,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.182929,
+          "without_pulsar": 98.668884,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174425,
-        "optical_n_intervals": 1379,
+        "optical_n_intervals": 11,
         "note": "Each run repacked as n contiguous 1 s gates from its first tag. Totals n x 1 s per run but relocates tags, so it is a bookkeeping figure, not a support claim."
       },
       "per_sample_nominal_1s_credit": {
@@ -236,84 +236,84 @@
     "uniform_tag_shift": {
       "-1s": {
         "domain_h": {
-          "optical": 133.11192,
+          "optical": 171.442704,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.11192,
+          "gnss|optical": 171.442704,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.013702,
+          "optical|vlbi": 117.995486,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.013702,
+          "without_pulsar": 117.995486,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174147,
-        "optical_n_intervals": 1353
+        "optical_n_intervals": 9
       },
       "+0s": {
         "domain_h": {
-          "optical": 133.11192,
+          "optical": 171.442704,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.11192,
+          "gnss|optical": 171.442704,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.013424,
+          "optical|vlbi": 117.995208,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.013424,
+          "without_pulsar": 117.995208,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174425,
-        "optical_n_intervals": 1353
+        "optical_n_intervals": 9
       },
       "+1s": {
         "domain_h": {
-          "optical": 133.11192,
+          "optical": 171.442704,
           "pulsar": 1.067528,
           "vlbi": 123.499992,
           "gnss": 240.0
         },
         "pairwise_h": {
-          "gnss|optical": 133.11192,
+          "gnss|optical": 171.442704,
           "gnss|pulsar": 1.067528,
           "gnss|vlbi": 123.499992,
           "optical|pulsar": 0.0,
-          "optical|vlbi": 82.013146,
+          "optical|vlbi": 117.99493,
           "pulsar|vlbi": 0.0
         },
         "three_domain_h": {
           "without_gnss": 0.0,
           "without_optical": 0.0,
-          "without_pulsar": 82.013146,
+          "without_pulsar": 117.99493,
           "without_vlbi": 0.0
         },
         "four_domain_h": 0.0,
         "four_domain_n_intervals": 0,
         "four_domain_status": "no_common_support",
         "pulsar_optical_gap_h": 31.174702,
-        "optical_n_intervals": 1353
+        "optical_n_intervals": 9
       }
     },
     "four_domain_status_over_all_variants": [

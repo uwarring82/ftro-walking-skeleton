@@ -1,35 +1,32 @@
 #!/usr/bin/env python3
 # SPDX-License-Identifier: Apache-2.0
-# Assert that every versioned artifact has had its version bumped since it last changed.
-#
-# D-039 required this; D-039a extended it to every versioned artifact; the same commit
-# then changed two ledgers without bumping either (FTRO-DEF-033 v3.0.0). A versioning
-# rule with no check is the failure mode this repository has recorded four times.
-#
-#   python3 src/ftro/check_versions.py            # report
-#   python3 src/ftro/check_versions.py --check    # non-zero if any artifact is stale
+"""Assert that no versioned artifact has changed since its version was last set.
 
+The first version of this gate stored `set_at: "HEAD"` and never used it: it compared each
+document's declared version against a hard-coded copy of the same string, so the two agreed
+by construction. Changing a document's content without bumping its version passed. A
+working-tree change produced only a non-failing note, and no test invoked the checker at
+all (FTRO-DEF-033 v4.0.0).
+
+This version stores a CONTENT DIGEST taken when the version was set. Any content change
+without a version bump is then detectable, because the digest no longer matches.
+
+    python3 src/ftro/check_versions.py --check    # non-zero if any artifact is stale
+    python3 src/ftro/check_versions.py --update   # re-record digests after a deliberate bump
+"""
+
+import hashlib
 import json
+import os
 import re
-import subprocess
 import sys
 
-# artifact -> the commit at which its CURRENT version was set.
-VERSIONED = {
-    "profile/ftro-graph-profile-v0.0.3.md": {"version": "0.0.3", "set_at": "HEAD"},
-    "phase0/evidence/identities.json": {"version": "0.2.0", "set_at": "HEAD"},
-    "ledgers/deficiency-log.json": {"version": "0.6.0", "set_at": "HEAD"},
-    "ledgers/decision-ledger.md": {"version": "0.3.0", "set_at": "HEAD"},
-    "ledgers/source-ledger.md": {"version": "0.3.0", "set_at": "HEAD"},
-    "ledgers/rights-ledger.md": {"version": "0.1.0", "set_at": "HEAD"},
-    "phase0/selection-note-v0.1.md": {"version": "0.3.0", "set_at": "HEAD"},
-    "phase0/evidence/expected-digests.json": {"version": "0.2.0", "set_at": "HEAD"},
-}
-
+REGISTRY = "phase0/evidence/versioned-artifacts.json"
 VERSION_RE = re.compile(r'(?:\*\*Version:\*\*|"version"\s*:)\s*"?([0-9]+\.[0-9]+\.[0-9]+)')
 
 
 def declared_version(path):
+    """The version the document declares in its own header."""
     try:
         with open(path, encoding="utf-8") as fh:
             head = fh.read(4096)
@@ -39,31 +36,66 @@ def declared_version(path):
     return m.group(1) if m else None
 
 
+def content_digest(path):
+    """Digest of the whole file, so any substantive change is visible."""
+    h = hashlib.sha256()
+    with open(path, "rb") as fh:
+        for chunk in iter(lambda: fh.read(1 << 20), b""):
+            h.update(chunk)
+    return h.hexdigest()
+
+
+def audit(registry):
+    """Return (problems, current) without mutating anything."""
+    problems, current = [], {}
+    for path, rec in sorted(registry.items()):
+        if not os.path.exists(path):
+            problems.append((path, "registered but missing from the working tree"))
+            continue
+        got_v, got_d = declared_version(path), content_digest(path)
+        current[path] = {"version": got_v, "sha256": got_d}
+        if got_v is None:
+            problems.append((path, "no version declared in the first 4 KB"))
+            continue
+        if got_v != rec["version"]:
+            problems.append((path, f"declares {got_v}, registry recorded {rec['version']}; "
+                                   f"run --update after a deliberate bump"))
+        elif got_d != rec["sha256"]:
+            problems.append((path, f"content changed but version is still {got_v}: "
+                                   f"recorded {rec['sha256'][:12]}, now {got_d[:12]}"))
+    return problems, current
+
+
 def main():
     check = "--check" in sys.argv
-    problems = []
-    for path, meta in sorted(VERSIONED.items()):
-        got = declared_version(path)
-        if got is None:
-            problems.append((path, "no version declared in the first 4 KB"))
-        elif got != meta["version"]:
-            problems.append((path, f"declares {got}, registry expects {meta['version']}"))
-        else:
-            print(f"ok   {path} v{got}")
-    # Any versioned artifact modified in the working tree but not re-registered.
-    try:
-        changed = subprocess.run(["git", "diff", "--name-only", "HEAD"],
-                                 capture_output=True, text=True, timeout=60).stdout.split()
-    except Exception:                                            # noqa: BLE001
-        changed = []
-    for path in changed:
-        if path in VERSIONED:
-            print(f"note {path} modified since HEAD - confirm its version was bumped")
+    update = "--update" in sys.argv
+    if not os.path.exists(REGISTRY):
+        print(f"no registry at {REGISTRY}; run --update to create it", file=sys.stderr)
+        return 2
+    with open(REGISTRY, encoding="utf-8") as fh:
+        registry = json.load(fh)["artifacts"]
+
+    problems, current = audit(registry)
+
+    if update:
+        for path, cur in current.items():
+            registry[path] = {"version": cur["version"], "sha256": cur["sha256"]}
+        with open(REGISTRY, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        doc["artifacts"] = registry
+        with open(REGISTRY, "w", encoding="utf-8") as fh:
+            json.dump(doc, fh, indent=2)
+        print(f"re-recorded {len(registry)} artifacts")
+        return 0
+
+    for path, rec in sorted(registry.items()):
+        if not any(p == path for p, _ in problems):
+            print(f"ok   {path} v{rec['version']}")
     for path, why in problems:
         print(f"STALE {path}: {why}", file=sys.stderr)
-    if check:
-        return 1 if problems else 0
-    return 0
+    if problems:
+        print(f"{len(problems)} versioned artifact(s) stale", file=sys.stderr)
+    return 1 if (check and problems) else 0
 
 
 if __name__ == "__main__":

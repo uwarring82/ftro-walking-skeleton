@@ -17,6 +17,9 @@ import re
 import sys
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import pinning
+
 HTML_MARKERS = (b"<!DOCTYPE html", b"<!doctype html", b"<html", b"<HTML")
 
 # Inner-format signatures. A markdown spec that does not define the columns it is cited
@@ -69,10 +72,11 @@ def main():
     # Expectations come from the committed registry, not from literals in this file. The
     # tintervals digest was hard-coded None here even after being committed, so the
     # documented command rejected it and exited 1 (FTRO-DEF-031 v3.0.0).
-    registry = {}
-    if os.path.exists(args.expect):
-        with open(args.expect, encoding="utf-8") as fh:
-            registry = json.load(fh).get("evidence_repos", {})
+    registry = pinning.load_section(args.expect, "evidence_repos",
+                                    required=not args.allow_unpinned)
+    # PREFLIGHT before any fetch; no fallback to literals in this file.
+    uncovered = pinning.preflight(registry, [t["key"] for t in TARGETS],
+                                  allow_unpinned=args.allow_unpinned, what="evidence artifact")
 
     os.makedirs(args.cache, exist_ok=True)
     pins, failures = [], []
@@ -89,7 +93,7 @@ def main():
 
         sha256 = hashlib.sha256(body).hexdigest()
         ok, reason = validate(t["kind"], body)
-        exp = registry.get(t["key"]) or t.get("expect_sha256")
+        exp = registry.get(t["key"])
         checksum_match = None if exp is None else (sha256 == exp)
         if checksum_match is None and not args.allow_unpinned:
             failures.append({**t, "url": url, "sha256": sha256,
@@ -121,15 +125,16 @@ def main():
             "pinned_file": t["path"], "pinned_file_sha256": sha256,
         })
 
+    ok = bool(pins) and not failures and not uncovered
     report = {"generator": "src/ftro/pin_evidence_repos.py",
+              "n_without_expected_digest": len(uncovered), "uncovered_by_registry": uncovered,
               "retrieval_validation": "content_validated" if not failures else "content_validation_incomplete",
               "n_pinned": len(pins), "n_failed": len(failures), "pins": pins, "failures": failures}
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    json.dump(report, open(args.out, "w", encoding="utf-8"), indent=2)
-    print(f"pinned {len(pins)}, failed {len(failures)} -> {args.out}")
+    pinning.promote(report, args.out, ok)
+    print(f"pinned {len(pins)}, failed {len(failures)}, uncovered {len(uncovered)} -> {args.out}")
     for f in failures:
         print(f"REJECTED {f['key']}: {f['error']}", file=sys.stderr)
-    return 0 if (pins and not failures) else 1
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

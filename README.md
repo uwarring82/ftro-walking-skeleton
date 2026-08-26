@@ -75,10 +75,10 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 36 classified deficiencies** across all five classes, 13 resolved. **Twelve are
+**4. 36 classified deficiencies** across all five classes, 12 resolved. **Twelve are
 self-directed** — against FTRO's own tooling, evidence discipline, test suite and profile
-conformance. Every entry carries a machine-readable `responsible_party`. Three (`FTRO-DEF-031`,
-`-033`, `-035`) were **reopened** after successive fixes proved partial.
+conformance. Every entry carries a machine-readable `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as successive
+fixes proved partial.
 
 **5. Platform conformance is separate from scientific demonstration.** The platform worked as far
 as it was exercised: each gap it encountered was located, typed and — where the bytes were
@@ -122,10 +122,19 @@ data/        Retrieved provider bytes — gitignored, never redistributed
 Python 3.13, standard library only — no third-party dependencies.
 
 ```bash
-# 0. Run the regression suite (no network, no provider bytes needed for most of it)
+# 0. Regression suite (no network; deterministic fixtures)
 python3 -m unittest discover -s tests -v
 
-# 1. Optical: retrieve, verify, analyse
+# 1. Pin the git-hosted evidence artifacts (writes data/raw/evidence/)
+python3 src/ftro/pin_evidence_repos.py
+
+# 2. Verify the pinned GPS->UTC artifact (procedure VP-GPS2UTC-001)
+python3 src/ftro/verify_gps2utc.py \
+  --file data/raw/evidence/pulsar-clock-corrections--gps2utc.clk \
+  --mjd-start 59630 --mjd-end 59640 \
+  --expect-sha256 7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a
+
+# 3. Optical: retrieve, verify, analyse
 curl -L -o "ROCIT campaign results.zip" \
   "https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content"
 md5 "ROCIT campaign results.zip"     # 4ae290f559c90b462991286c933a1147
@@ -135,33 +144,22 @@ python3 src/ftro/analyse_optical.py \
 python3 src/ftro/summarise_optical.py \
   data/work/optical-inventory.json phase0/reports/optical-inventory-summary.json
 
-# 2. Verify the pinned GPS→UTC artifact (procedure VP-GPS2UTC-001)
-python3 src/ftro/verify_gps2utc.py --file data/raw/evidence/gps2utc.clk \
-  --mjd-start 59630 --mjd-end 59640 \
-  --expect-sha256 7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a
-
-# 3. Pin the IGS artifacts, enforcing the committed digests
+# 4. Pin the remaining legs. Each PREFLIGHTS the committed digest registry before
+#    fetching, and promotes its report only on complete success.
 python3 src/ftro/pin_igs.py \
-  --expect-sha256-manifest phase0/evidence/expected-digests.json \
-  --expect-section igs --require-expectations
-
-# 4. Pin the R11040 vgosDB from OPAR (content-validated)
-python3 src/ftro/pin_vgosdb.py \
-  --expect-sha256 0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54
-
-# 4b. Pin the PPTA artifacts and the git-hosted evidence repositories
+  --expect-sha256-manifest phase0/evidence/expected-digests.json --expect-section igs
+python3 src/ftro/pin_vgosdb.py
 python3 src/ftro/pin_ppta.py
-python3 src/ftro/pin_evidence_repos.py
 
-# 5. Compute the four-domain intersection (needs step 1's full inventory)
+# 5. Compute the four-domain intersection (refuses a non-clean IGS report)
 python3 src/ftro/four_domain_intersection.py
 
-# 6. Regenerate the derived Markdown from its JSON sources of truth
+# 6. Regenerate derived Markdown from its JSON sources of truth
 python3 src/ftro/render_deficiencies.py
 python3 src/ftro/render_validity_intervals.py
 
-# 7. Conformance checks
-python3 src/ftro/check_versions.py --check   # versioned artifacts are current
+# 7. Conformance gates
+python3 src/ftro/check_versions.py --check   # no artifact changed without a version bump
 python3 src/ftro/refresh_crate.py --check    # RO-Crate sizes match disk
 ```
 
@@ -223,7 +221,8 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | `0b41929` | Second external review — see [session 03](labnotes/2026-08-25-session-03-review-corrections-2.md). Conformance rule violated by its own commit (`FTRO-DEF-029`); tools fail closed; profile §5.2 retracted. |
 | `1b77a72` | Third external review — see [session 04](labnotes/2026-08-25-session-04-review-corrections-3.md). The sensitivity scan could not perform the reanalysis it reported (`FTRO-DEF-030`) and is reimplemented by re-segmentation; the test suite skipped its own fail-closed coverage on a clean clone (`FTRO-DEF-031`); the §9.2 conformance contradiction is resolved by validating rather than downgrading (`FTRO-DEF-032`); profile bumped because a drifting version label identifies no constraint state (`FTRO-DEF-033`). |
 | `11ea11c` | Fourth external review — see [session 05](labnotes/2026-08-25-session-05-review-corrections-4.md). **Projection-only verification** named and fixed: the §9.2 check exempted every record that omitted the field (`FTRO-DEF-034`), and `pin_ppta.py` emitted four identities that differed from the manifest it was built to support (`FTRO-DEF-035`). Generators now declare canonical identities and are reconciled by test; the suite runs with zero skips on a clean export; expected digests are committed. |
-| this | Fifth external review — see [session 06](labnotes/2026-08-26-session-06-review-corrections-5.md). The digest registry was committed but **not connected** (57/57 IGS pins had `expected_sha256: null`), and the reconciliation test could not detect drift. Now **39 tests**, all 65 digests enforced, and the reconciliation verified by injected mutation. Spacing analysis moved to exact integer ticks: `1.987199 s` was a float artefact (`FTRO-DEF-036`). |
+| `99fe720` | Fifth external review — see [session 06](labnotes/2026-08-26-session-06-review-corrections-5.md). The digest registry was committed but **not connected** (57/57 IGS pins had `expected_sha256: null`), and the reconciliation test could not detect drift. Now **39 tests**, all 65 digests enforced, and the reconciliation verified by injected mutation. Spacing analysis moved to exact integer ticks: `1.987199 s` was a float artefact (`FTRO-DEF-036`). |
+| this | Sixth external review — see [session 07](labnotes/2026-08-26-session-07-review-corrections-6.md). Retrieval now **preflights** the digest registry before fetching and **promotes reports only on complete success**; consumers refuse a non-clean report; the version gate checks content digests rather than a hard-coded mirror of the version string; segmentation moved to integer ticks. The manual mutation table is now **12 committed tests**. **57 tests**, zero skips. |
 
 ## Next — Phase 1
 

@@ -19,6 +19,9 @@ import re
 import sys
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+import pinning
+
 COLLECTION = 59423
 HTML_MARKERS = (b"<!DOCTYPE html", b"<!doctype html", b"<html", b"<HTML")
 
@@ -90,15 +93,10 @@ def main():
 
     # An absent expectation file used to be silently treated as an empty map, so the
     # documented cold path enforced nothing while recording checksum_match: true.
-    expected = {}
-    if os.path.exists(args.expect):
-        raw = json.load(open(args.expect, encoding="utf-8"))
-        expected = {k: (v["sha256"] if isinstance(v, dict) else v)
-                    for k, v in raw.get("ppta", raw).items()}
-    elif not args.allow_unpinned:
-        print(f"no expectation file at {args.expect}; rerun with --allow-unpinned to "
-              f"establish a first pin", file=sys.stderr)
-        return 2
+    expected = pinning.load_section(args.expect, "ppta", required=not args.allow_unpinned)
+    # PREFLIGHT: an individual missing expectation is a failure, not a null field.
+    uncovered = pinning.preflight(expected, [t["name"] for t in TARGETS],
+                                  allow_unpinned=args.allow_unpinned, what="PPTA artifact")
 
     os.makedirs(args.cache, exist_ok=True)
     pins, failures = [], []
@@ -143,17 +141,18 @@ def main():
             "composition_justification": COMPOSITION_WHY,
         })
 
+    ok = bool(pins) and not failures and not uncovered
     report = {"generator": "src/ftro/pin_ppta.py", "collection": COLLECTION,
+              "n_without_expected_digest": len(uncovered), "uncovered_by_registry": uncovered,
               "data_rights": "CC-BY-SA-4.0", "redistribution_mode": "link_only",
               "retrieval_validation": "content_validated" if not failures else "content_validation_incomplete",
               "n_pinned": len(pins), "n_failed": len(failures),
               "pins": pins, "failures": failures}
-    os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
-    json.dump(report, open(args.out, "w", encoding="utf-8"), indent=2)
-    print(f"pinned {len(pins)}, failed {len(failures)} -> {args.out}")
+    pinning.promote(report, args.out, ok)
+    print(f"pinned {len(pins)}, failed {len(failures)}, uncovered {len(uncovered)} -> {args.out}")
     for f in failures:
         print(f"REJECTED {f['name']}: {f['error']}", file=sys.stderr)
-    return 0 if (pins and not failures) else 1
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

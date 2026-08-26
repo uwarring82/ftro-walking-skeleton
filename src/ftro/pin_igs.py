@@ -18,7 +18,11 @@ import os
 import sys
 import urllib.request
 
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+
+import pinning
 import unixz
+
 
 # Content-shape validation (FTRO-DEF-018). A retrieval that checks only HTTP status and
 # byte checksum will happily pin an authentication interstitial as if it were data --
@@ -116,24 +120,16 @@ def main():
                     help="sectioned digest registry; a listed-but-mismatched file fails")
     ap.add_argument("--expect-section", default="igs",
                     help="section of the registry to enforce")
-    ap.add_argument("--require-expectations", action="store_true",
-                    help="fail if any pinned artifact has no expected digest in the registry")
+    ap.add_argument("--allow-unpinned", action="store_true",
+                    help="permit targets absent from the registry (establishes a first pin)")
     args = ap.parse_args()
 
     # The registry is SECTIONED ({"igs": {...}, "ppta": {...}, ...}). An earlier version
     # looked names up at the root, so all 57 artifacts pinned with expected_sha256 null
     # while the report still read as enforced (FTRO-DEF-031 v3.0.0).
-    expected = {}
-    if args.expect_sha256_manifest:
-        with open(args.expect_sha256_manifest, encoding="utf-8") as fh:
-            registry = json.load(fh)
-        section = registry.get(args.expect_section)
-        if section is None:
-            raise SystemExit(f"registry has no section {args.expect_section!r}; "
-                             f"sections present: {sorted(k for k, v in registry.items() if isinstance(v, dict))}")
-        expected = {k: (v["sha256"] if isinstance(v, dict) else v) for k, v in section.items()}
-        if not expected:
-            raise SystemExit(f"section {args.expect_section!r} is empty")
+    expected = pinning.load_section(args.expect_sha256_manifest, args.expect_section,
+                                    required=not args.allow_unpinned) \
+        if args.expect_sha256_manifest else {}
 
     os.makedirs(args.cache, exist_ok=True)
     os.makedirs(os.path.dirname(args.out), exist_ok=True)
@@ -153,6 +149,10 @@ def main():
     for wk in sorted(weeks):
         targets.append({"week": wk, "dow": 7, "mjd": None, "series": "igs",
                         "kind": "erp", "name": f"igs{wk}7.erp.Z"})
+
+    # PREFLIGHT: nothing is fetched until every target is covered by the registry.
+    uncovered = pinning.preflight(expected, [t["name"] for t in targets],
+                                  allow_unpinned=args.allow_unpinned, what="IGS artifact")
 
     pins, failures = [], []
     for t in targets:
@@ -208,14 +208,11 @@ def main():
         })
 
     unexpected = [p["name"] for p in pins if p.get("expected_sha256") is None]
-    if args.require_expectations and unexpected:
-        failures.append({"name": "<registry coverage>",
-                         "error": f"{len(unexpected)} artifacts had no expected digest: "
-                                  f"{unexpected[:5]}{'...' if len(unexpected) > 5 else ''}"})
 
     report = {
         "generator": "src/ftro/pin_igs.py",
         "n_without_expected_digest": len(unexpected),
+        "uncovered_by_registry": unexpected,
         "base_url": args.base,
         "data_centre": "BKG (Bundesamt für Kartographie und Geodäsie) IGS mirror, anonymous HTTP",
         "candidate_window_mjd": [args.mjd_start, args.mjd_end],
@@ -231,13 +228,12 @@ def main():
         "pins": pins,
         "failures": failures,
     }
-    with open(args.out, "w", encoding="utf-8") as fh:
-        json.dump(report, fh, indent=2)
-    print(f"pinned {len(pins)}, failed {len(failures)} -> {args.out}")
-    if failures:
-        for f in failures:
-            print(f"REJECTED {f['name']}: {f['error']}", file=sys.stderr)
-    return 0 if (pins and not failures) else 1
+    ok = bool(pins) and not failures and not unexpected
+    pinning.promote(report, args.out, ok)
+    print(f"pinned {len(pins)}, failed {len(failures)}, uncovered {len(unexpected)} -> {args.out}")
+    for f in failures:
+        print(f"REJECTED {f['name']}: {f['error']}", file=sys.stderr)
+    return 0 if ok else 1
 
 
 if __name__ == "__main__":

@@ -2,7 +2,7 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.6.0  
+**Version:** 0.7.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
@@ -1051,13 +1051,13 @@
 | Dataset | `FTRO test suite` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 3.0.0 |
+| Version | 4.0.0 |
 
 **Failed step.** Regression-testing fail-closed retrieval on a clean clone.
 
 **Known fact or required evidence.** A test that skips is not a test. FTRO-DEF-027 established that a claim must be traceable to committed, runnable code.
 
-**Observed.** On a clean git archive export the suite reported 'OK (skipped=3)': all three fail-closed tests depended on gitignored data/raw/evidence/gps2utc.clk and skipped without it, so the fail-closed behaviour was never exercised. Neither pinner was tested end-to-end. The fixture tests/fixtures/genuine.sp3.Z was literal fake payload behind a 1f9d prefix that real uncompress rejects, and the validator checked only the first two bytes -- so 'content_validated' meant no more than 'non-empty, non-HTML, right first two bytes'. One test ignored the subprocess return code and could read a stale file from a fixed /tmp path. The README meanwhile described a regression test running 'against the live CDDIS URL' that does not exist as committed code. CORRECTION (v2.0.0): the first fix was incomplete. A clean export still reported 'OK (skipped=3)' -- the three provider-dependent tests remained skippable and no test invoked any pinner end-to-end, so session 04's claims 'nothing skips' and '26 tests passing on a clean clone' were false. The cold path was also unenforced: both expected-digest manifests lived in gitignored data/work/, the documented IGS command passed no manifest, and pin_ppta.py treated an absent expectation file as an empty map while still recording checksum_match. CORRECTION (v3.0.0): the second fix was ALSO incomplete. The 65 committed expectations were not enforced: pin_igs.py loaded the sectioned registry but looked names up at its root, so all 57 IGS artifacts pinned with expected_sha256 null while the report still read as enforced; pin_evidence_repos.py hard-coded the tintervals expectation as None even after its digest was committed, so the documented command rejected it and exited 1; pin_igs.py wrote to data/work/igs-pins.json while the intersection consumed the committed report; and the test named 'cover every pinned artifact' checked 4 of 65.
+**Observed.** On a clean git archive export the suite reported 'OK (skipped=3)': all three fail-closed tests depended on gitignored data/raw/evidence/gps2utc.clk and skipped without it, so the fail-closed behaviour was never exercised. Neither pinner was tested end-to-end. The fixture tests/fixtures/genuine.sp3.Z was literal fake payload behind a 1f9d prefix that real uncompress rejects, and the validator checked only the first two bytes -- so 'content_validated' meant no more than 'non-empty, non-HTML, right first two bytes'. One test ignored the subprocess return code and could read a stale file from a fixed /tmp path. The README meanwhile described a regression test running 'against the live CDDIS URL' that does not exist as committed code. CORRECTION (v2.0.0): the first fix was incomplete. A clean export still reported 'OK (skipped=3)' -- the three provider-dependent tests remained skippable and no test invoked any pinner end-to-end, so session 04's claims 'nothing skips' and '26 tests passing on a clean clone' were false. The cold path was also unenforced: both expected-digest manifests lived in gitignored data/work/, the documented IGS command passed no manifest, and pin_ppta.py treated an absent expectation file as an empty map while still recording checksum_match. CORRECTION (v3.0.0): the second fix was ALSO incomplete. The 65 committed expectations were not enforced: pin_igs.py loaded the sectioned registry but looked names up at its root, so all 57 IGS artifacts pinned with expected_sha256 null while the report still read as enforced; pin_evidence_repos.py hard-coded the tintervals expectation as None even after its digest was committed, so the documented command rejected it and exited 1; pin_igs.py wrote to data/work/igs-pins.json while the intersection consumed the committed report; and the test named 'cover every pinned artifact' checked 4 of 65. CORRECTION (v4.0.0): the third fix was ALSO incomplete, and in a more dangerous way. pin_igs.py checked registry coverage only AFTER cache() and pin construction, so an uncovered expectation still cached all 57 files, emitted a snapshot with null expectation fields, and wrote the FAILED report to the official path -- which four_domain_intersection.py then consumed without checking n_failed, retrieval_validation, n_without_expected_digest or per-pin checksum state, producing normal GNSS support. pin_ppta.py accepted a missing individual expectation; pin_vgosdb.py succeeded with no expectation at all; pin_evidence_repos.py fell back to source-code literals when a registry key was missing.
 
 **Evidence.**
 
@@ -1065,11 +1065,11 @@
 - `src/ftro/unixz.py`
 - `tests/fixtures/`
 
-**Impact.** The suite created an appearance of enforcement without the substance, which is worse than no suite. Now: a pure-stdlib Unix-compress decoder verified byte-identical to system gzip on a real 253 KB IGS artifact; validate_content actually decompresses and checks inner format; fail-closed tests use local fixtures and temporary directories so nothing skips or reads stale state; 26 tests pass on a clean clone.
+**Impact.** The suite created an appearance of enforcement without the substance, which is worse than no suite. Now: a pure-stdlib Unix-compress decoder verified byte-identical to system gzip on a real 253 KB IGS artifact; validate_content actually decompresses and checks inner format; fail-closed tests use local fixtures and temporary directories so nothing skips or reads stale state; 57 tests pass on a clean clone, with zero skips.
 
 **Workaround.** None.
 
-**Proposed response.** Corrected across three rounds. Round 3 (2026-08-26): pin_igs.py takes --expect-section and fails on an absent or empty section, plus --require-expectations to reject any artifact the registry does not cover; it now writes to phase0/reports/ where its consumers read. pin_evidence_repos.py reads the evidence_repos section instead of literals. A new TestDigestRegistryChain asserts the registry and reports agree on WHICH artifacts exist across all four sections, that the count is exactly 65, and that every pin records its expectation as enforced rather than merely equal.
+**Proposed response.** Corrected across four rounds. Round 4 (2026-08-26) introduces src/ftro/pinning.py, a shared contract with three rules: PREFLIGHT (registry coverage checked before any byte is fetched), ATOMIC PROMOTION (the report reaches the official path only on complete success; a failed run is preserved as .rejected and leaves the official path untouched), and NO EXPECTATION NO IDENTITY. All four pinners use it, and pinning.assert_report_usable() gates the scientific consumer. Verified: an uncovered expectation now fetches nothing, caches nothing and leaves the report unchanged; a failed report causes four_domain_intersection.py to exit non-zero.
 
 ---
 
@@ -1118,13 +1118,13 @@
 | Dataset | `FTRO profile and ledger version labels` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 3.0.0 |
+| Version | 4.0.0 |
 
 **Failed step.** Declaring conformance 'to the FTRO profile v0.0.1' across three commits.
 
 **Known fact or required evidence.** Task card §9.1 requires each manifest to declare conformance to the pinned base AND the FTRO profile BY VERSION. A version label must therefore identify a unique constraint state.
 
-**Observed.** profile/ftro-graph-profile-v0.0.3.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints. CORRECTION (v2.0.0): the first fix bumped the profile only. phase0/evidence/identities.json -- named in this entry's own scope -- had four byte-distinct states at fdbf2b9, 2c31279, 0b41929 and 1b77a72 while remaining version 0.1.0 throughout, so the entry was marked resolved while half its own scope was untouched. CORRECTION (v3.0.0): D-039a extended the rule to every versioned artifact and the same commit then changed both ledgers without bumping decision-ledger v0.1.0 or source-ledger v0.2.0. The entry also still described the current profile as v0.0.2 after it had become v0.0.3.
+**Observed.** profile/ftro-graph-profile-v0.0.3.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints. CORRECTION (v2.0.0): the first fix bumped the profile only. phase0/evidence/identities.json -- named in this entry's own scope -- had four byte-distinct states at fdbf2b9, 2c31279, 0b41929 and 1b77a72 while remaining version 0.1.0 throughout, so the entry was marked resolved while half its own scope was untouched. CORRECTION (v3.0.0): D-039a extended the rule to every versioned artifact and the same commit then changed both ledgers without bumping decision-ledger v0.1.0 or source-ledger v0.2.0. The entry also still described the current profile as v0.0.2 after it had become v0.0.3. CORRECTION (v4.0.0): the gate built in round 3 could not perform the check it existed for. It stored set_at: 'HEAD' and never used it, comparing each document's declared version against a hard-coded copy of the same string -- so the two agreed by construction and a content change without a version bump passed. Working-tree changes produced only a non-failing note, and no test invoked the checker. The same commit demonstrated the miss: identities.json changed its vgosDB retrieval time and optical-validity-intervals.md changed its spacing evidence, both without a bump, and the latter was not even registered.
 
 **Evidence.**
 
@@ -1135,7 +1135,7 @@
 
 **Workaround.** Cite the commit hash alongside the version label until the profile freezes.
 
-**Proposed response.** Corrected round 3 (2026-08-26): every versioned document carries a version and a version_history, and src/ftro/check_versions.py plus a test assert that a document changed since its recorded version-set commit has had its version bumped.
+**Proposed response.** Corrected round 4 (2026-08-26): check_versions.py records a CONTENT DIGEST per artifact in phase0/evidence/versioned-artifacts.json, taken when the version was set, so any change without a bump is detectable. Twelve artifacts registered, --update re-records after a deliberate bump, and TestVersionGate asserts both failure modes -- content drift and an unrecorded bump -- against a copied tree.
 
 ---
 
@@ -1184,13 +1184,13 @@
 | Dataset | `FTRO tooling and reference manifest` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 2.0.0 |
+| Version | 3.0.0 |
 
 **Failed step.** Keeping the generated and curated views of an identity in agreement.
 
 **Known fact or required evidence.** Task card §3: human and machine views share one source of truth. A generator and the manifest it feeds must therefore agree.
 
-**Observed.** src/ftro/pin_ppta.py, added to close FTRO-DEF-032, emitted snapshot identities of the form ftro:snapshot:ppta/dr3/<name>@sha256:... while the canonical manifest used ftro:snapshot:ppta/dr3/<dir>/<name>@sha256:... -- all four differed. It emitted no concept_id and none of the profile §5.1 composition fields, so every identity it produced was non-conforming. DEF-029 was therefore closed only in the manually curated manifest, and no test compared the two views. CORRECTION (v2.0.0): the first fix reproduced the defect inside the fix. The reconciliation test read STORED reports rather than running the generators, skipped concepts absent from the manifest instead of failing, and compared a field only when both copies already carried it. Removing a snapshot_id, adding a rogue concept or deleting the generated §5.1 fields all left the suite green. All six end-to-end tests invoked only pin_vgosdb, whose generated identity itself lacked the profile-required retrieval_procedure.
+**Observed.** src/ftro/pin_ppta.py, added to close FTRO-DEF-032, emitted snapshot identities of the form ftro:snapshot:ppta/dr3/<name>@sha256:... while the canonical manifest used ftro:snapshot:ppta/dr3/<dir>/<name>@sha256:... -- all four differed. It emitted no concept_id and none of the profile §5.1 composition fields, so every identity it produced was non-conforming. DEF-029 was therefore closed only in the manually curated manifest, and no test compared the two views. CORRECTION (v2.0.0): the first fix reproduced the defect inside the fix. The reconciliation test read STORED reports rather than running the generators, skipped concepts absent from the manifest instead of failing, and compared a field only when both copies already carried it. Removing a snapshot_id, adding a rogue concept or deleting the generated §5.1 fields all left the suite green. All six end-to-end tests invoked only pin_vgosdb, whose generated identity itself lacked the profile-required retrieval_procedure. CORRECTION (v3.0.0): the round-2 reconciliation still tested stored projections. All subprocess pinner tests invoked only vgosDB; retrieved_utc equality was explicitly skipped, so 'not-a-timestamp' passed while seven of eight records already disagreed; composition fields were checked only if the REPORT identified itself as ftro_composed, so relabelling its own kind escaped §5.1; the digest test never asserted report.expected_sha256 == registry digest, so zeroing the registry while keeping checksum_match true passed; vgosDB enforcement was explicitly skipped; and a missing top-level retrieval_validation was permitted as None. A combined vgosDB mutation -- null expectation and checksum state, invalid retrieval time, changed snapshot kind, deleted §5.1 fields -- passed the entire 39-test suite.
 
 **Evidence.**
 
@@ -1201,7 +1201,7 @@
 
 **Workaround.** None.
 
-**Proposed response.** Corrected round 2 (2026-08-26). GENERATOR_REPORTS declares which generator is authoritative for which concept, so a concept no generator produces cannot escape reconciliation and a report entry naming an unknown concept cannot be skipped. Six tests reject MISSING, UNKNOWN and MISMATCHED records on every edge, require reconciled fields on BOTH sides, and assert no curated content_validated record claims generated provenance without a report entry. Verified by injected mutation: removing a snapshot_id, adding a rogue concept, dropping the generated §5.1 fields, deleting a pin and corrupting a digest each fail the suite.
+**Proposed response.** Corrected round 3 (2026-08-26). Every enumerated fail-open branch is closed: retrieved_utc must parse as ISO-8601 on both sides; snapshot_kind must AGREE with the manifest before §5.1 is evaluated; every pin's expected_sha256 must EQUAL the registry digest, vgosDB included; a committed report must declare content_validated with no failures and no uncovered expectations. The manual mutation table is now twelve committed tests in TestMutationsAreDetected, each copying the committed views into a temporary tree, mutating one, and asserting the suite rejects it -- including the exact combined vgosDB mutation that previously passed. 57 tests, zero skips.
 
 ---
 
@@ -1217,13 +1217,13 @@
 | Dataset | `FTRO Phase-0 tooling` |
 | Disposition | `resolved` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 **Failed step.** Characterising the inter-sample spacing distribution of the optical archive.
 
 **Known fact or required evidence.** Every MJD token in the archive is an exact multiple of 1e-6 d, so spacings are exact integer multiples of one 86.4 ms tick and can be computed without rounding.
 
-**Observed.** analyse_optical.py computed spacings as round((b - a) * 86400, 6) over binary floats, from session 01 through 11ea11c. That split the single physical 23-tick spacing into two apparent values, 1.9872 (6,235 occurrences) and 1.987199 (528), and inflated the distinct-spacing count from 1,161 to 1,237. The exhaustive evidence key added in session 05 then reported 1.987199 as the next spacing above 1.0368 s -- an artefact, not a measurement. Its n_strictly_between was also tautologically zero, because the upper endpoint was defined as the next observed value.
+**Observed.** analyse_optical.py computed spacings as round((b - a) * 86400, 6) over binary floats, from session 01 through 11ea11c. That split the single physical 23-tick spacing into two apparent values, 1.9872 (6,235 occurrences) and 1.987199 (528), and inflated the distinct-spacing count from 1,161 to 1,237. The exhaustive evidence key added in session 05 then reported 1.987199 as the next spacing above 1.0368 s -- an artefact, not a measurement. Its n_strictly_between was also tautologically zero, because the upper endpoint was defined as the next observed value. CORRECTION (v2.0.0): the census was made exact but contiguous_runs() still compared binary-float MJD differences against a float tolerance. At an exact 1.9872 s tolerance, 231 of the 259 in-window 23-tick gaps evaluated above the threshold and 28 below -- a segmentation boundary decided by representation error. The published tolerances all sit far from any populated boundary, so no published figure changes. The generated evidence also retained an obsolete 'float-representation twin' note contradicting its own exact representation.
 
 **Evidence.**
 
@@ -1234,6 +1234,6 @@
 
 **Workaround.** None.
 
-**Proposed response.** Corrected 2026-08-26: spacings are computed in integer microday ticks throughout; the histogram is emitted in both ticks and seconds. Rule adopted (D-047): where a serialised quantity is exactly representable in integers, compute in integers.
+**Proposed response.** Corrected round 2 (2026-08-26): contiguous_runs() operates on integer microday ticks with the tolerance converted once by flooring, so segmentation is exact integer arithmetic. The obsolete note is replaced by the empty-band statement. The four-domain result is unchanged at 82.0134 h optical-VLBI and no_common_support.
 
 ---

@@ -142,6 +142,12 @@
         },
         {
           "@id": "labnotes/2026-08-26-session-06-review-corrections-5.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md"
+        },
+        {
+          "@id": "phase0/evidence/versioned-artifacts.json"
         }
       ],
       "isBasedOn": [
@@ -311,7 +317,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "15370",
+      "contentSize": "15359",
       "name": "four-domain-intersection.json"
     },
     {
@@ -321,7 +327,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "86566",
+      "contentSize": "87094",
       "name": "optical-inventory-summary.json"
     },
     {
@@ -331,7 +337,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "62330",
+      "contentSize": "62361",
       "name": "igs-artifact-pins.json"
     },
     {
@@ -391,7 +397,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "74460",
+      "contentSize": "77558",
       "name": "deficiency-log.json"
     },
     {
@@ -401,7 +407,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "74866",
+      "contentSize": "77870",
       "name": "deficiency-log.md"
     },
     {
@@ -431,7 +437,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "11841",
+      "contentSize": "13183",
       "name": "decision-ledger.md"
     },
     {
@@ -481,6 +487,9 @@
           "@id": "src/ftro/pin_vgosdb.py"
         },
         {
+          "@id": "src/ftro/pinning.py"
+        },
+        {
           "@id": "src/ftro/refresh_crate.py"
         },
         {
@@ -509,7 +518,7 @@
       "name": "analyse_optical.py",
       "description": "Parses the extracted optical archive; emits flag histograms, per-run support, the MJD quantisation census and spacing-coverage statistics.",
       "encodingFormat": "text/x-python",
-      "contentSize": "14531",
+      "contentSize": "15631",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -543,7 +552,7 @@
       "name": "four_domain_intersection.py",
       "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
       "encodingFormat": "text/x-python",
-      "contentSize": "11243",
+      "contentSize": "11518",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -560,7 +569,7 @@
       "name": "pin_igs.py",
       "description": "Retrieves and pins IGS products with full digests and content-shape validation.",
       "encodingFormat": "text/x-python",
-      "contentSize": "12070",
+      "contentSize": "11705",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -577,7 +586,7 @@
       "name": "pin_vgosdb.py",
       "description": "Retrieves and pins an IVS vgosDB from OPAR with content-shape validation and wrapper-version inventory.",
       "encodingFormat": "text/x-python",
-      "contentSize": "9803",
+      "contentSize": "10517",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -701,7 +710,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2528",
+      "contentSize": "2657",
       "name": "README.md"
     },
     {
@@ -753,7 +762,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "25843"
+      "contentSize": "38840"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -823,7 +832,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "6656"
+      "contentSize": "6721"
     },
     {
       "@id": "src/ftro/optical_sensitivity.py",
@@ -855,7 +864,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "7724"
+      "contentSize": "7767"
     },
     {
       "@id": "src/ftro/refresh_crate.py",
@@ -934,7 +943,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4086"
+      "contentSize": "4151"
     },
     {
       "@id": "phase0/evidence/expected-digests.json",
@@ -960,7 +969,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "6584"
+      "contentSize": "6905"
     },
     {
       "@id": "labnotes/2026-08-26-session-06-review-corrections-5.md",
@@ -986,7 +995,43 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "2760"
+      "contentSize": "3879"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md",
+      "@type": "File",
+      "name": "2026-08-26-session-07-review-corrections-6.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "8623"
+    },
+    {
+      "@id": "phase0/evidence/versioned-artifacts.json",
+      "@type": "File",
+      "name": "versioned-artifacts.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2127"
+    },
+    {
+      "@id": "src/ftro/pinning.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "pinning.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "4762"
     }
   ]
 }

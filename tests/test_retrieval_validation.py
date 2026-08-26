@@ -13,6 +13,9 @@
 import io
 import json
 import os
+import re
+import datetime
+import hashlib
 import shutil
 import subprocess
 import sys
@@ -49,7 +52,6 @@ class TestContentShapeValidation(unittest.TestCase):
 
     def test_login_page_would_pass_status_and_checksum(self):
         """The point of the finding: the bytes are stable and checksum cleanly."""
-        import hashlib
         body = fixture("login_page.html")
         self.assertEqual(len(hashlib.sha256(body).hexdigest()), 64)
         self.assertGreater(len(body), 0)
@@ -238,22 +240,65 @@ class TestPinnerEndToEnd(unittest.TestCase):
         self.tmp = tempfile.mkdtemp(prefix="ftro-e2e-")
         self.addCleanup(shutil.rmtree, self.tmp, True)
 
-    def _pin_vgosdb(self, fixture_name, expect=None):
+    def _registry(self, fixture_name, digest="auto"):
+        """Write a fixture-scoped digest registry, so preflight has something to enforce."""
+        if digest == "auto":
+            digest = hashlib.sha256(fixture(fixture_name)).hexdigest()
+        path = os.path.join(self.tmp, "registry.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump({"vgosdb": {fixture_name: digest} if digest else {}}, fh)
+        return path
+
+    def _pin_vgosdb(self, fixture_name, expect=None, registry="auto", allow_unpinned=False,
+                    out_name="pin.json"):
         url = "file://" + os.path.join(FIXTURES, fixture_name)
-        out = os.path.join(self.tmp, "pin.json")
+        out = os.path.join(self.tmp, out_name)
         args = [sys.executable, "src/ftro/pin_vgosdb.py", "--url", url, "--session", "R11040",
                 "--cache", os.path.join(self.tmp, "cache"), "--out", out]
+        if registry is not None:
+            args += ["--expect", self._registry(fixture_name,
+                                                "auto" if registry == "auto" else registry)]
         if expect:
             args += ["--expect-sha256", expect]
+        if allow_unpinned:
+            args += ["--allow-unpinned"]
         r = subprocess.run(args, cwd=REPO, capture_output=True, text=True, timeout=120)
+        # On failure the report is NOT promoted to `out`; the evidence is preserved
+        # beside it with a .rejected suffix.
         rec = None
-        if os.path.exists(out):
-            with open(out, encoding="utf-8") as fh:
-                rec = json.load(fh)
+        for candidate in (out, out + ".rejected"):
+            if os.path.exists(candidate):
+                with open(candidate, encoding="utf-8") as fh:
+                    rec = json.load(fh)
+                break
         return r, rec
+
+    def test_preflight_refuses_an_uncovered_target_and_fetches_nothing(self):
+        """Registry coverage is checked BEFORE retrieval, not after caching."""
+        r, rec = self._pin_vgosdb("vgosdb_min.tgz", registry=None)
+        self.assertEqual(r.returncode, 1)
+        self.assertIn("preflight", r.stderr.lower() + r.stdout.lower())
+        self.assertIsNone(rec, "a preflight failure must not write a report")
+        self.assertFalse(os.path.exists(os.path.join(self.tmp, "cache", "vgosdb_min.tgz")),
+                         "a preflight failure must not cache bytes")
+
+    def test_failed_run_does_not_overwrite_an_existing_report(self):
+        """Atomic promotion: the official path survives a failed run."""
+        ok, _ = self._pin_vgosdb("vgosdb_min.tgz", out_name="official.json")
+        self.assertEqual(ok.returncode, 0, ok.stderr)
+        official = os.path.join(self.tmp, "official.json")
+        before = hashlib.sha256(open(official, "rb").read()).hexdigest()
+        bad, _ = self._pin_vgosdb("not_vgosdb.tgz", out_name="official.json", registry=None,
+                                  allow_unpinned=True)
+        self.assertEqual(bad.returncode, 1)
+        after = hashlib.sha256(open(official, "rb").read()).hexdigest()
+        self.assertEqual(before, after, "a failed run overwrote the official report")
+        self.assertTrue(os.path.exists(official + ".rejected"),
+                        "the rejected report should be preserved beside it")
 
     def test_pins_a_valid_vgosdb_end_to_end(self):
         r, rec = self._pin_vgosdb("vgosdb_min.tgz")
+        self.assertEqual(rec["expected_sha256"], rec["sha256"])
         self.assertEqual(r.returncode, 0, r.stderr)
         self.assertTrue(rec["content_valid"])
         self.assertIn("snapshot_id", rec)
@@ -266,6 +311,8 @@ class TestPinnerEndToEnd(unittest.TestCase):
         self.assertFalse(rec["content_valid"])
         self.assertNotIn("snapshot_id", rec, "a rejected retrieval must mint no identity")
         self.assertFalse(rec["bytes_written_to_cache"])
+        self.assertFalse(os.path.exists(os.path.join(self.tmp, "pin.json")),
+                         "a rejected report must not be promoted to the official path")
 
     def test_rejects_html_served_as_an_archive(self):
         r, rec = self._pin_vgosdb("login_page.html")
@@ -273,7 +320,7 @@ class TestPinnerEndToEnd(unittest.TestCase):
         self.assertNotIn("snapshot_id", rec)
 
     def test_fails_closed_on_digest_mismatch_end_to_end(self):
-        r, rec = self._pin_vgosdb("vgosdb_min.tgz", expect="0" * 64)
+        r, rec = self._pin_vgosdb("vgosdb_min.tgz", expect="0" * 64, registry="0" * 64)
         self.assertEqual(r.returncode, 1, "digest mismatch must be fatal")
         self.assertIs(rec["checksum_match"], False)
         self.assertNotIn("snapshot_id", rec)
@@ -281,7 +328,6 @@ class TestPinnerEndToEnd(unittest.TestCase):
                          "unverified bytes must not occupy the product filename")
 
     def test_succeeds_on_matching_digest_end_to_end(self):
-        import hashlib
         digest = hashlib.sha256(fixture("vgosdb_min.tgz")).hexdigest()
         r, rec = self._pin_vgosdb("vgosdb_min.tgz", expect=digest)
         self.assertEqual(r.returncode, 0, r.stderr)
@@ -441,7 +487,17 @@ class TestGeneratorManifestReconciliation(unittest.TestCase):
                         self.assertIn(field, pin, "generator output lacks the field")
                         self.assertIn(field, rec, "manifest record lacks the field")
                         if field == "retrieved_utc":
-                            continue          # timestamps differ per run by construction
+                            # Not compared for equality -- it differs per run by
+                            # construction -- but it must be a real ISO-8601 UTC instant
+                            # on BOTH sides. Skipping it entirely let 'not-a-timestamp'
+                            # through (FTRO-DEF-035 v3.0.0).
+                            for side, val in (("generator", pin[field]), ("manifest", rec[field])):
+                                self.assertIsInstance(val, str, side)
+                                try:
+                                    datetime.datetime.fromisoformat(val)
+                                except ValueError:
+                                    self.fail(f"{side} retrieved_utc is not ISO-8601: {val!r}")
+                            continue
                         self.assertEqual(pin[field], rec[field],
                                          "generator and manifest disagree")
 
@@ -450,10 +506,14 @@ class TestGeneratorManifestReconciliation(unittest.TestCase):
         for path, expected in GENERATOR_REPORTS.items():
             pins = _report_pins(path)
             for cid in expected:
-                pin = pins.get(cid, {})
-                if pin.get("snapshot_kind") != "ftro_composed":
-                    continue
+                pin, rec = pins.get(cid, {}), self.canon.get(cid, {})
                 with self.subTest(report=path, concept=cid):
+                    # snapshot_kind must AGREE with the manifest, so a report cannot exempt
+                    # itself from §5.1 by relabelling its own kind.
+                    self.assertEqual(pin.get("snapshot_kind"), rec.get("snapshot_kind"),
+                                     "generator and manifest disagree on snapshot_kind")
+                    if rec.get("snapshot_kind") != "ftro_composed":
+                        continue
                     self.assertTrue(pin.get("composition_precondition_checked"))
                     self.assertGreater(len((pin.get("composition_justification") or "").strip()), 20)
 
@@ -511,27 +571,208 @@ class TestDigestRegistryChain(unittest.TestCase):
         self.assertEqual(total, 65, f"expected 65 pinned artifacts, reconciled {total}")
 
     def test_reports_record_the_expectation_as_enforced(self):
-        """A digest in the registry must appear as ENFORCED in the report, not merely equal."""
+        """Every pin, vgosDB included, must carry the REGISTRY digest as its expectation."""
         for section, path in self.SECTIONS.items():
-            if section == "vgosdb":
-                continue      # single pin, asserted by its own test
             with open(os.path.join(REPO, path), encoding="utf-8") as fh:
                 doc = json.load(fh)
-            for pin in doc["pins"]:
-                with self.subTest(section=section, name=pin.get("name") or pin.get("key")):
+            pins = doc["pins"] if isinstance(doc.get("pins"), list) else [doc]
+            exp = self.registry.get(section, {})
+            for pin in pins:
+                if section == "evidence_repos":
+                    key = pin["key"]
+                elif section == "vgosdb":
+                    key = os.path.basename(pin["url"])
+                else:
+                    key = pin["name"]
+                with self.subTest(section=section, name=key):
                     self.assertIsNotNone(pin.get("expected_sha256"),
                                          "pinned without an expected digest: the registry "
                                          "exists but was not applied")
+                    # The expectation must BE the registry value, not merely non-null.
+                    self.assertEqual(pin["expected_sha256"], exp.get(key),
+                                     "report expectation does not match the registry")
                     self.assertIs(pin.get("checksum_match"), True)
+                    self.assertEqual(pin.get("sha256"), exp.get(key))
 
     def test_no_report_declares_incomplete_validation(self):
         for section, path in self.SECTIONS.items():
             with open(os.path.join(REPO, path), encoding="utf-8") as fh:
                 doc = json.load(fh)
             with self.subTest(section=section):
-                self.assertIn(doc.get("retrieval_validation"),
-                              ("content_validated", None),
-                              "a report declaring incomplete validation must not be committed")
+                # None was previously permitted, so a report that simply omitted the field
+                # passed. Every committed report must declare content_validated.
+                self.assertEqual(doc.get("retrieval_validation"), "content_validated",
+                                 "a committed report must declare content_validated")
+                self.assertFalse(doc.get("n_failed"), "a failed report must not be committed")
+                self.assertFalse(doc.get("n_without_expected_digest"),
+                                 "a report with uncovered expectations must not be committed")
+
+
+class TestMutationsAreDetected(unittest.TestCase):
+    """The suite must FAIL on each of these. Previously verified by hand; now committed.
+
+    A check that has never been seen to fail has not been verified. Session 06 ran these
+    mutations manually and reported the table in a lab note; a manual table is not a test
+    (FTRO-DEF-035 v3.0.0). Each case copies the repo's committed views into a temporary
+    tree, mutates one, and asserts the relevant test class rejects it.
+    """
+
+    TARGETS = {
+        "ppta": "phase0/reports/ppta-artifact-pins.json",
+        "vgosdb": "phase0/reports/vlbi-vgosdb-pin.json",
+        "identities": "phase0/evidence/identities.json",
+        "registry": "phase0/evidence/expected-digests.json",
+    }
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="ftro-mut-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        for sub in ("phase0/reports", "phase0/evidence", "tests"):
+            os.makedirs(os.path.join(self.tmp, sub), exist_ok=True)
+        for path in list(self.TARGETS.values()) + [
+                "phase0/reports/evidence-repo-pins.json",
+                "phase0/reports/igs-artifact-pins.json"]:
+            shutil.copy(os.path.join(REPO, path), os.path.join(self.tmp, path))
+        shutil.copy(os.path.join(REPO, "tests", "test_retrieval_validation.py"),
+                    os.path.join(self.tmp, "tests", "test_retrieval_validation.py"))
+        os.symlink(os.path.join(REPO, "src"), os.path.join(self.tmp, "src"))
+        os.symlink(os.path.join(FIXTURES), os.path.join(self.tmp, "tests", "fixtures"))
+
+    def _mutate(self, key, fn):
+        path = os.path.join(self.tmp, self.TARGETS[key])
+        with open(path, encoding="utf-8") as fh:
+            doc = json.load(fh)
+        fn(doc)
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(doc, fh, indent=2)
+
+    def _run_suite(self):
+        """Run the reconciliation and chain classes against the mutated tree."""
+        r = subprocess.run(
+            [sys.executable, "-m", "unittest",
+             "tests.test_retrieval_validation.TestGeneratorManifestReconciliation",
+             "tests.test_retrieval_validation.TestDigestRegistryChain",
+             "tests.test_retrieval_validation.TestComposedIdentityConformance"],
+            cwd=self.tmp, capture_output=True, text=True, timeout=300)
+        return r
+
+    def test_unmutated_baseline_passes(self):
+        self.assertEqual(self._run_suite().returncode, 0,
+                         "the copied tree must pass before any mutation is meaningful")
+
+    def _assert_detected(self, key, fn, label):
+        self._mutate(key, fn)
+        r = self._run_suite()
+        self.assertNotEqual(r.returncode, 0, f"mutation NOT detected: {label}")
+
+    def test_removing_a_snapshot_id_is_detected(self):
+        self._assert_detected("ppta", lambda d: d["pins"][0].pop("snapshot_id"),
+                              "removed a snapshot_id")
+
+    def test_a_rogue_concept_is_detected(self):
+        self._assert_detected(
+            "ppta",
+            lambda d: d["pins"].append({**d["pins"][0], "concept_id": "ftro:concept:bogus"}),
+            "added a concept no generator declares")
+
+    def test_dropping_generated_composition_fields_is_detected(self):
+        def drop(d):
+            d["pins"][0].pop("composition_precondition_checked", None)
+            d["pins"][0].pop("composition_justification", None)
+        self._assert_detected("ppta", drop, "dropped the generated §5.1 fields")
+
+    def test_deleting_a_pin_is_detected(self):
+        self._assert_detected("ppta", lambda d: d.__setitem__("pins", d["pins"][1:]),
+                              "deleted a whole pin")
+
+    def test_corrupting_a_digest_is_detected(self):
+        self._assert_detected("ppta", lambda d: d["pins"][0].__setitem__("sha256", "0" * 64),
+                              "corrupted a digest")
+
+    def test_nulling_the_expectation_is_detected(self):
+        def null_exp(d):
+            d["pins"][0]["expected_sha256"] = None
+            d["pins"][0]["checksum_match"] = None
+        self._assert_detected("ppta", null_exp, "nulled an expectation while keeping the digest")
+
+    def test_zeroing_the_registry_digest_is_detected(self):
+        """Changing the registry while keeping checksum_match: true must fail."""
+        def zero(d):
+            first = sorted(d["ppta"])[0]
+            d["ppta"][first] = "0" * 64
+        self._assert_detected("registry", zero, "registry digest no longer matches the report")
+
+    def test_combined_vgosdb_mutation_is_detected(self):
+        """The exact combination that passed the entire suite before this class existed."""
+        def combo(d):
+            d["expected_sha256"] = None
+            d["checksum_match"] = None
+            d["retrieved_utc"] = "not-a-timestamp"
+            d["snapshot_kind"] = "provider_immutable"
+            d.pop("composition_precondition_checked", None)
+            d.pop("composition_justification", None)
+        self._assert_detected("vgosdb", combo, "combined vgosDB mutation")
+
+    def test_relabelling_snapshot_kind_is_detected(self):
+        self._assert_detected("ppta",
+                              lambda d: d["pins"][0].__setitem__("snapshot_kind", "provider_pid"),
+                              "relabelled snapshot_kind to escape §5.1")
+
+    def test_invalid_retrieved_utc_is_detected(self):
+        self._assert_detected("ppta",
+                              lambda d: d["pins"][0].__setitem__("retrieved_utc", "not-a-time"),
+                              "invalid retrieval timestamp")
+
+    def test_declaring_a_failed_report_is_detected(self):
+        self._assert_detected("ppta", lambda d: d.__setitem__("n_failed", 2),
+                              "committed a report declaring failures")
+
+    def test_dropping_top_level_validation_is_detected(self):
+        self._assert_detected("ppta", lambda d: d.pop("retrieval_validation", None),
+                              "omitted the top-level retrieval_validation")
+
+
+class TestVersionGate(unittest.TestCase):
+    """check_versions.py must detect content drift, and must itself be tested."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="ftro-ver-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+
+    def _run(self, cwd):
+        return subprocess.run([sys.executable, "src/ftro/check_versions.py", "--check"],
+                              cwd=cwd, capture_output=True, text=True, timeout=120)
+
+    def test_repo_is_currently_clean(self):
+        self.assertEqual(self._run(REPO).returncode, 0, self._run(REPO).stderr)
+
+    def test_content_change_without_a_bump_is_detected(self):
+        work = os.path.join(self.tmp, "repo")
+        shutil.copytree(REPO, work, symlinks=True,
+                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
+        target = os.path.join(work, "ledgers", "source-ledger.md")
+        with open(target, "a", encoding="utf-8") as fh:
+            fh.write("\n<!-- substantive change with no version bump -->\n")
+        r = self._run(work)
+        self.assertEqual(r.returncode, 1, "the version gate did not detect content drift")
+        self.assertIn("content changed but version is still", r.stderr)
+
+    def test_version_bump_without_re_recording_is_detected(self):
+        work = os.path.join(self.tmp, "repo2")
+        shutil.copytree(REPO, work, symlinks=True,
+                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
+        target = os.path.join(work, "phase0", "selection-note-v0.1.md")
+        with open(target, encoding="utf-8") as fh:
+            body = fh.read()
+        # Read the CURRENT declared version rather than hardcoding one: a literal here
+        # silently stops testing anything the moment the document is legitimately bumped.
+        m = re.search(r"\*\*Version:\*\* ([0-9]+\.[0-9]+\.[0-9]+)", body)
+        self.assertIsNotNone(m, "selection note declares no version")
+        with open(target, "w", encoding="utf-8") as fh:
+            fh.write(body.replace(m.group(0), "**Version:** 9.9.9", 1))
+        r = self._run(work)
+        self.assertEqual(r.returncode, 1, "an unrecorded version bump was not detected")
+        self.assertIn("registry recorded", r.stderr)
 
 
 if __name__ == "__main__":
