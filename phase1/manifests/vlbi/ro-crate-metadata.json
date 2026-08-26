@@ -1,0 +1,377 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "ftro": "https://github.com/uwarring82/ftro-walking-skeleton/ns#"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "about": {
+        "@id": "./"
+      },
+      "description": "Hand-authored FTRO manifest for the vlbi leg. Conformance ASSERTED AND UNVERIFIED."
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "FTRO VLBI leg — IVS-R1 session R11040, 2022-02-28",
+      "description": "Federation record for the VLBI leg. The vgosDB is pinned; the analysis-centre product and the downstream IERS EOP series are unresolved and represented as such.",
+      "datePublished": "2026-08-26",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "ftro:domain": "vlbi",
+      "ftro:conformance_report": {
+        "@id": "#conformance"
+      },
+      "ftro:data_role": "core measurement",
+      "hasPart": [
+        {
+          "@id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54"
+        }
+      ],
+      "mentions": [
+        {
+          "@id": "#assertion-downstream-eop"
+        },
+        {
+          "@id": "#wrapper-selection"
+        }
+      ]
+    },
+    {
+      "@id": "#conformance",
+      "@type": "ftro:ConformanceReport",
+      "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
+      "ftro:profile": "FTRO v0.0.3",
+      "ftro:validator": null,
+      "ftro:validator_version": null,
+      "ftro:validation_result": "not_run",
+      "ftro:note": "No RO-Crate validator obtainable in this environment. FTRO-P1-DEF-001."
+    },
+    {
+      "@id": "ftro:concept:ivs/session/R11040",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IVS-R1 session R11040",
+      "ftro:concept_kind": "ftro_composed",
+      "ftro:composition_precondition_checked": [
+        "OPAR directory listing - no per-file PID",
+        "IVS session listing - no DOI or handle for the vgosDB",
+        "HTTP ETag / Last-Modified - mutable, and this archive is a re-release"
+      ],
+      "ftro:composition_justification": "No IVS data centre mints an immutable per-version PID for a vgosDB archive, so task card §10 composition applies.",
+      "ftro:session_code": "R11040",
+      "ftro:session_type": "IVS-R1",
+      "ftro:db_code": "XA",
+      "ftro:ops_center": "NASA",
+      "ftro:correlator": "BONN",
+      "ftro:analysis_center": "NASA",
+      "ftro:status": "Released",
+      "ftro:support_interval_mjd": [
+        59638.708333,
+        59639.708333
+      ],
+      "ftro:observation_epoch_utc": "2022-02-28T17:00",
+      "ftro:integration_interval_s": 86400,
+      "ftro:access_class": "public (OPAR path); CDDIS path is registered; BKG path not established",
+      "ftro:routes_tried": [
+        {
+          "channel": "CDDIS",
+          "url": "https://cddis.nasa.gov/archive/vlbi/ivsdata/vgosdb/",
+          "protocol": "https",
+          "attempted_utc": "2026-08-25",
+          "outcome": "auth_required",
+          "detail": "Earthdata login returned with HTTP 200 as an HTML interstitial (FTRO-DEF-018)."
+        },
+        {
+          "channel": "BKG",
+          "url": "https://ivs.bkg.bund.de/",
+          "protocol": "https",
+          "attempted_utc": "2026-08-25",
+          "outcome": "unreachable",
+          "detail": "No TCP connection on 443 from two independent networks; access class not established."
+        },
+        {
+          "channel": "OPAR",
+          "url": "https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz",
+          "protocol": "https",
+          "attempted_utc": "2026-08-25",
+          "outcome": "retrieved",
+          "detail": "Anonymous, content-validated. access_class = public for THIS path."
+        }
+      ],
+      "ftro:routes_source": "https://ivscc.gsfc.nasa.gov/products-data/data.html",
+      "ftro:data_rights": null,
+      "ftro:metadata_rights": "public session listing",
+      "ftro:redistribution_mode": "link_only",
+      "ftro:licence_compatibility": "undetermined",
+      "ftro:evidence_state": "resolvable",
+      "ftro:valid_from": "2022-02-28",
+      "ftro:valid_to": "2022-03-01",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "20220228-r11040.tgz",
+      "contentSize": "19610760",
+      "ftro:sha256": "0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
+      "ftro:md5": "f577564a3166a31f4db273ec66a7850e",
+      "ftro:retrieved_utc": "2026-08-26T11:17:13.978767+00:00",
+      "ftro:retrieval_procedure": "GET https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:content_checks": {
+        "gzip_magic": true,
+        "not_html": true,
+        "tar_readable": true,
+        "has_wrappers": true,
+        "has_versioned_wrappers": true,
+        "session_in_paths": true
+      },
+      "ftro:snapshot_kind": "ftro_composed",
+      "ftro:evidence_state": "resolvable",
+      "ftro:first_availability_time": "Mon, 15 Dec 2025 16:46:58 GMT",
+      "ftro:availability_time_source": "mirror_derived",
+      "ftro:volatility_warning": "This archive is a RE-RELEASE, not a frozen 2022 artifact. The internal anchor is the latest wrapper's RunTimeTag (see wrapper_records), which post-dates the session by years; the HTTP Last-Modified is secondary and dates mirror publication rather than the reprocessing act. The bytes may change again; the checksum pins THIS retrieval.",
+      "hasPart": [
+        {
+          "@id": "#wrapper-32c3ef8e"
+        },
+        {
+          "@id": "#wrapper-c9616dd1"
+        },
+        {
+          "@id": "#wrapper-25a19892"
+        },
+        {
+          "@id": "#wrapper-3c52b94f"
+        },
+        {
+          "@id": "#wrapper-3c52b94f"
+        }
+      ],
+      "ftro:valid_from": "2022-02-28",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#wrapper-32c3ef8e",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "20220228-r11040_V001_iMPI_kall.wrp",
+      "ftro:filenames": [
+        "20220228-r11040_V001_iMPI_kall.wrp"
+      ],
+      "ftro:sha256": "32c3ef8e53ca994d02cb9431d4ab95dd0fa80207092acdb176f5d4cae335872a",
+      "contentSize": "2322",
+      "ftro:run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC"
+      ],
+      "ftro:input_wrappers": [],
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#wrapper-c9616dd1",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "20220228-r11040_V002_iGSFC_kall.wrp",
+      "ftro:filenames": [
+        "20220228-r11040_V002_iGSFC_kall.wrp"
+      ],
+      "ftro:sha256": "c9616dd160c1393f5068346a559c78892c795ac2938d29ac1c967883885e29eb",
+      "contentSize": "6015",
+      "ftro:run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC"
+      ],
+      "ftro:input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp"
+      ],
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#wrapper-25a19892",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "20220228-r11040_V003_iGSFC_kall.wrp",
+      "ftro:filenames": [
+        "20220228-r11040_V003_iGSFC_kall.wrp"
+      ],
+      "ftro:sha256": "25a19892113aea2e724ceb17f48c693f6ba2fbb3673b2ca638abfa663d2e7ae8",
+      "contentSize": "6455",
+      "ftro:run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC"
+      ],
+      "ftro:input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp"
+      ],
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#wrapper-3c52b94f",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "20220228-r11040_V004_iGSFC_kall.wrp",
+      "ftro:filenames": [
+        "20220228-r11040_V004_iGSFC_kall.wrp",
+        "20220228-r11040_V004_iIVS_kall.wrp"
+      ],
+      "ftro:sha256": "3c52b94fd87fc394535fe8a489b9fcd5017dba1063b3290d90e79fc6e191c16a",
+      "contentSize": "7246",
+      "ftro:run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC",
+        "2022/03/10 22:28:49 UTC"
+      ],
+      "ftro:input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp",
+        "20220228-r11040_V003_iGSFC_kall.wrp"
+      ],
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#wrapper-310c5815",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "20220228-r11040_V005_iGSFC_kall.wrp",
+      "ftro:filenames": [
+        "20220228-r11040_V005_iGSFC_kall.wrp",
+        "20220228-r11040_V005_iIVS_kall.wrp"
+      ],
+      "ftro:sha256": "310c5815f9bc46f1802e1a27f7addc88f8b7358feb00ac5506dd34c67f18b67d",
+      "contentSize": "7645",
+      "ftro:run_time_tags": [
+        "2022/03/10 19:48:36 UTC",
+        "2022/03/10 19:50:56 UTC",
+        "2022/03/10 19:59:10 UTC",
+        "2022/03/10 19:59:22 UTC",
+        "2022/03/10 22:28:49 UTC",
+        "2025/12/12 21:18:49 UTC"
+      ],
+      "ftro:input_wrappers": [
+        "20220228-r11040_V001_iMPI_kall.wrp",
+        "20220228-r11040_V002_iGSFC_kall.wrp",
+        "20220228-r11040_V003_iGSFC_kall.wrp",
+        "20220228-r11040_V004_iGSFC_kall.wrp"
+      ],
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#wrapper-selection",
+      "@type": "ftro:Assertion",
+      "name": "Which wrapper member did a downstream analysis consume?",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "The archive digest pins the container, not the member. Seven filenames, five distinct byte sequences, produced by MPI and GSFC only -- 'iIVS' is a redesignation. Any chain consuming this session must name the member by path AND digest.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#assertion-downstream-eop",
+      "@type": "ftro:Assertion",
+      "name": "Which IERS EOP product did this session contribute to?",
+      "ftro:edge_class": "contributes_to",
+      "ftro:subject": {
+        "@id": "ftro:concept:ivs/session/R11040"
+      },
+      "ftro:object": null,
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "The analysis-centre product and downstream IERS EOP series are not pinned. This is the IVS end of card §15.1's leading shared-ancestry path; the pulsar end is independently unresolved (FTRO-DEF-012), so the path is blocked at both ends.",
+      "ftro:blocks": "shared-ancestry demonstration via IVS -> IERS EOP -> pulsar",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#re-release",
+      "@type": "ftro:Assertion",
+      "name": "This 2022 session archive contains 2025 reprocessing",
+      "ftro:evidence_state": "resolvable",
+      "ftro:internal_anchor": "V005 RunTimeTag 2025/12/12 21:18:49 UTC (nuSolve 0.8.3)",
+      "ftro:transport_metadata": "HTTP Last-Modified Mon, 15 Dec 2025 16:46:58 GMT",
+      "ftro:note": "The internal RunTimeTag is the anchor; Last-Modified is 3 days later and dates mirror publication, not the reprocessing act (FTRO-DEF-028).",
+      "ftro:valid_from": "2025-12-12",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "https://creativecommons.org/licenses/by/4.0/",
+      "@type": "CreativeWork",
+      "identifier": "CC-BY-4.0"
+    }
+  ]
+}

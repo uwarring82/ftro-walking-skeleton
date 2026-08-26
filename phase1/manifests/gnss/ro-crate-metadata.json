@@ -1,0 +1,324 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "ftro": "https://github.com/uwarring82/ftro-walking-skeleton/ns#"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "about": {
+        "@id": "./"
+      },
+      "description": "Hand-authored FTRO manifest for the gnss leg. Conformance ASSERTED AND UNVERIFIED."
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "FTRO GNSS leg — IGS Final and Rapid products, GPS weeks 2198–2199",
+      "description": "Federation record for the GNSS leg. 57 artifacts pinned with digests enforced. Carries the bitemporal resolver fixture: the same epoch resolves to Rapid or Final depending on the knowledge date.",
+      "datePublished": "2026-08-26",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "ftro:domain": "gnss",
+      "ftro:conformance_report": {
+        "@id": "#conformance"
+      },
+      "ftro:data_role": "ancestry or correction artifact",
+      "hasPart": [
+        {
+          "@id": "ftro:concept:igs/igs/orbit"
+        }
+      ],
+      "mentions": [
+        {
+          "@id": "#policy-operational"
+        },
+        {
+          "@id": "#policy-reprocessing"
+        }
+      ]
+    },
+    {
+      "@id": "#conformance",
+      "@type": "ftro:ConformanceReport",
+      "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
+      "ftro:profile": "FTRO v0.0.3",
+      "ftro:validator": null,
+      "ftro:validator_version": null,
+      "ftro:validation_result": "not_run",
+      "ftro:note": "No RO-Crate validator obtainable in this environment. FTRO-P1-DEF-001."
+    },
+    {
+      "@id": "ftro:concept:igs/igs/orbit",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IGS operational product lines (Final, Rapid), GPS weeks 2198–2199",
+      "ftro:concept_kind": "ftro_composed",
+      "ftro:composition_precondition_checked": [
+        "BKG mirror directory listing (filenames only; no PID, no sidecar metadata)",
+        "IGS product documentation (product line named, but no per-file persistent identifier scheme)",
+        "HTTP ETag / Last-Modified (mirror-local and mutable, not a PID)"
+      ],
+      "ftro:composition_justification": "IGS supplies no per-file immutable persistent identifier for operational products, so both concept and snapshot identities are composed per task card §10.",
+      "ftro:reference_frame": "IGb14",
+      "ftro:reference_frame_note": "IGS20 becomes operational at GPS week 2238 (2022-11-27), after this window",
+      "ftro:n_artifacts_pinned": 57,
+      "ftro:series_counts": {
+        "igs": 24,
+        "igr": 33
+      },
+      "ftro:data_centre": "BKG (Bundesamt für Kartographie und Geodäsie) IGS mirror, anonymous HTTP",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:availability_time_source": "mirror_derived",
+      "ftro:availability_time_note": "last_modified is the BKG mirror's file time, which approximates but is not identical to the IGS release time (FTRO-DEF-019).",
+      "ftro:data_rights": null,
+      "ftro:redistribution_mode": "link_only",
+      "ftro:licence_compatibility": "undetermined",
+      "ftro:access_class": "public",
+      "ftro:evidence_state": "resolvable",
+      "hasPart": [
+        {
+          "@id": "#pin-igs21980.sp3.Z"
+        },
+        {
+          "@id": "#pin-igs21980.clk.Z"
+        }
+      ],
+      "ftro:valid_from": "2022-02-20",
+      "ftro:valid_to": "2022-03-02",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#pin-igs21980.sp3.Z",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "igs21980.sp3.Z",
+      "contentSize": "97301",
+      "ftro:sha256": "4e9a0038bce4c07f50956838b24ab1de121b6f2fbe2a9def678b80e3550b62e7",
+      "ftro:expected_sha256": "4e9a0038bce4c07f50956838b24ab1de121b6f2fbe2a9def678b80e3550b62e7",
+      "ftro:checksum_match": true,
+      "ftro:snapshot_id": "ftro:snapshot:igs/igs21980.sp3.Z@sha256:4e9a0038bce4c07f50956838b24ab1de121b6f2fbe2a9def678b80e3550b62e7",
+      "ftro:series": "igs",
+      "ftro:validity_interval_mjd": [
+        59630,
+        59631
+      ],
+      "ftro:first_availability_time": "Sun, 13 Mar 2022 11:46:51 GMT",
+      "ftro:availability_time_source": "mirror_derived",
+      "ftro:retrieved_utc": "2026-08-26T11:16:46.637431+00:00",
+      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21980.sp3.Z",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
+      "ftro:valid_from": "59630",
+      "ftro:valid_to": "59631",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#pin-igs21980.clk.Z",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "igs21980.clk.Z",
+      "contentSize": "1529327",
+      "ftro:sha256": "11edebb56d87356fb4c0efe5d592aa8f4b178ace90efcd740c49dd6d091799f9",
+      "ftro:expected_sha256": "11edebb56d87356fb4c0efe5d592aa8f4b178ace90efcd740c49dd6d091799f9",
+      "ftro:checksum_match": true,
+      "ftro:snapshot_id": "ftro:snapshot:igs/igs21980.clk.Z@sha256:11edebb56d87356fb4c0efe5d592aa8f4b178ace90efcd740c49dd6d091799f9",
+      "ftro:series": "igs",
+      "ftro:validity_interval_mjd": [
+        59630,
+        59631
+      ],
+      "ftro:first_availability_time": "Sun, 13 Mar 2022 11:46:51 GMT",
+      "ftro:availability_time_source": "mirror_derived",
+      "ftro:retrieved_utc": "2026-08-26T11:16:47.037826+00:00",
+      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21980.clk.Z",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
+      "ftro:valid_from": "59630",
+      "ftro:valid_to": "59631",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#pin-igr21980.sp3.Z",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "igr21980.sp3.Z",
+      "contentSize": "97947",
+      "ftro:sha256": "634b4c2e4517754c4b588a31176432e9514c4aaa8d1d1cfca22c23d6b08fd1b3",
+      "ftro:expected_sha256": "634b4c2e4517754c4b588a31176432e9514c4aaa8d1d1cfca22c23d6b08fd1b3",
+      "ftro:checksum_match": true,
+      "ftro:snapshot_id": "ftro:snapshot:igs/igr21980.sp3.Z@sha256:634b4c2e4517754c4b588a31176432e9514c4aaa8d1d1cfca22c23d6b08fd1b3",
+      "ftro:series": "igr",
+      "ftro:validity_interval_mjd": [
+        59630,
+        59631
+      ],
+      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:30:12 GMT",
+      "ftro:availability_time_source": "mirror_derived",
+      "ftro:retrieved_utc": "2026-08-26T11:16:48.163048+00:00",
+      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igr21980.sp3.Z",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
+      "ftro:valid_from": "59630",
+      "ftro:valid_to": "59631",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#pin-igr21980.clk.Z",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "igr21980.clk.Z",
+      "contentSize": "1037527",
+      "ftro:sha256": "05c6bfbc2dcb68e3227d9f2ce78e8260fb74c03a2f70e3abc2aa242ee1fb23d3",
+      "ftro:expected_sha256": "05c6bfbc2dcb68e3227d9f2ce78e8260fb74c03a2f70e3abc2aa242ee1fb23d3",
+      "ftro:checksum_match": true,
+      "ftro:snapshot_id": "ftro:snapshot:igs/igr21980.clk.Z@sha256:05c6bfbc2dcb68e3227d9f2ce78e8260fb74c03a2f70e3abc2aa242ee1fb23d3",
+      "ftro:series": "igr",
+      "ftro:validity_interval_mjd": [
+        59630,
+        59631
+      ],
+      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:30:12 GMT",
+      "ftro:availability_time_source": "mirror_derived",
+      "ftro:retrieved_utc": "2026-08-26T11:16:48.404288+00:00",
+      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igr21980.clk.Z",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
+      "ftro:valid_from": "59630",
+      "ftro:valid_to": "59631",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#pin-igr21980.erp.Z",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "igr21980.erp.Z",
+      "contentSize": "386",
+      "ftro:sha256": "d26e4bcc27e763daba4fda77e6a01d3f17c39659b6b4729aa2e731945b11bb5b",
+      "ftro:expected_sha256": "d26e4bcc27e763daba4fda77e6a01d3f17c39659b6b4729aa2e731945b11bb5b",
+      "ftro:checksum_match": true,
+      "ftro:snapshot_id": "ftro:snapshot:igs/igr21980.erp.Z@sha256:d26e4bcc27e763daba4fda77e6a01d3f17c39659b6b4729aa2e731945b11bb5b",
+      "ftro:series": "igr",
+      "ftro:validity_interval_mjd": [
+        59630,
+        59631
+      ],
+      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:30:12 GMT",
+      "ftro:availability_time_source": "mirror_derived",
+      "ftro:retrieved_utc": "2026-08-26T11:16:49.260919+00:00",
+      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igr21980.erp.Z",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
+      "ftro:valid_from": "59630",
+      "ftro:valid_to": "59631",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#policy-operational",
+      "@type": "ftro:Policy",
+      "name": "Best operational product for epoch t as known on date d",
+      "ftro:policy_version": "1.0.0",
+      "ftro:issuer": "FTRO",
+      "ftro:publication_date": "2026-08-26",
+      "ftro:human_rule": "Prefer the IGS Final product covering t if it was available on d; otherwise the Rapid.",
+      "ftro:eligible_product_classes": [
+        "igs (Final)",
+        "igr (Rapid)"
+      ],
+      "ftro:tie_breaking": "Final over Rapid at equal availability",
+      "ftro:fixtures": [
+        {
+          "ftro:epoch_mjd": 59630,
+          "ftro:as_of": "2022-02-25",
+          "ftro:selected": "igr21980.sp3.Z",
+          "ftro:reason_code": "final_not_yet_available"
+        },
+        {
+          "ftro:epoch_mjd": 59630,
+          "ftro:as_of": "2022-03-20",
+          "ftro:selected": "igs21980.sp3.Z",
+          "ftro:reason_code": "final_available"
+        }
+      ],
+      "ftro:note": "Real bitemporal fixture: Rapid available 2022-02-21T17:30Z, Final 2022-03-13T11:46Z. Same epoch, same policy, different knowledge date; the historical answer is never overwritten.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#policy-reprocessing",
+      "@type": "ftro:Policy",
+      "name": "Latest homogeneous reprocessing covering interval I as known on date d",
+      "ftro:policy_version": "1.0.0",
+      "ftro:issuer": "FTRO",
+      "ftro:publication_date": "2026-08-26",
+      "ftro:human_rule": "Select the most recent IGS reprocessing campaign whose coverage contains I.",
+      "ftro:fixtures": [
+        {
+          "ftro:interval_mjd": [
+            59630,
+            59640
+          ],
+          "ftro:as_of": "2026-08-26",
+          "ftro:selected": null,
+          "ftro:reason_code": "no_campaign_covers_interval",
+          "ftro:explanation": "repro3 covers 1994–2020; the candidate window is 2022."
+        }
+      ],
+      "ftro:note": "An explained null, not an undifferentiated one (card §10 'nulls require reasons').",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "https://creativecommons.org/licenses/by/4.0/",
+      "@type": "CreativeWork",
+      "identifier": "CC-BY-4.0"
+    }
+  ]
+}

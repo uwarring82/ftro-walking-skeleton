@@ -1,0 +1,143 @@
+{
+  "ledger": "FTRO Phase-1 Deficiency Log",
+  "version": "0.1.0",
+  "opened": "2026-08-26",
+  "phase": "Phase 1",
+  "card": "FTRO-WS-001 v0.3",
+  "note": "Separate from the Phase-0 ledger by the isolation rule: Phase-0 ledger contents feed contracts C11 and C12, and the second bounded audit runs against `main` @ a806bba. The two ledgers merge when Phase 0 closes.",
+  "triage_axes_note": "Same axes as the Phase-0 ledger.",
+  "entries": [
+    {
+      "id": "FTRO-P1-DEF-001",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "all four manifests",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "RO-Crate 1.3 conformance is asserted but unverified: no validator is obtainable",
+      "failed_step": "Card §9.1: record the exact validator and its version in every conformance report.",
+      "known_fact": "§9.1 requires conformance to the pinned base to be validated, and the validator and version recorded.",
+      "observed": "No RO-Crate validator could be obtained in this environment: `rocrate-validator` is not installable here, and the repository takes no third-party dependencies. All four manifests therefore declare `validator: null`, `validation_result: not_run`, and state the reason in the conformance report itself.",
+      "evidence": [
+        "phase1/manifests/optical/ro-crate-metadata.json#conformance"
+      ],
+      "severity": "high",
+      "impact": "The manifests ASSERT conformance to RO-Crate 1.3 and FTRO v0.0.3 and no tool has checked either claim. Per card §9.1, 'RO-Crate-compatible' means validating against the pinned base; on that definition these manifests are not yet demonstrated to be RO-Crate 1.3. Recorded as unverified rather than presented as conformance.",
+      "workaround": "None. The claim is marked not_run in every manifest rather than omitted.",
+      "proposed_response": "Obtain a validator with network access, or write a minimal structural checker for the 1.3 requirements the crates rely on -- accepting that a self-written checker is weaker evidence and must be labelled so.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-002",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Profile §4 cannot be satisfied in the serialisation §9.1 mandates",
+      "failed_step": "Attaching the bitemporal quartet to every edge, as §4 requires.",
+      "known_fact": "§4: every mutable node assertion and EVERY EDGE carries valid_from, valid_to, known_from and known_to. §9.1 pins RO-Crate 1.3, i.e. JSON-LD.",
+      "observed": "In JSON-LD an edge is a property, and a property cannot carry attributes. Writing the optical and pulsar manifests forced a reified `ftro:Edge` node with edge_class, subject and object -- a class the profile does not declare. The requirement as written is unsatisfiable in the mandated serialisation.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.0.md",
+        "phase1/manifests/optical/ro-crate-metadata.json"
+      ],
+      "severity": "high",
+      "impact": "A normative clause that no conforming manifest can satisfy. Found only by writing a manifest, which is precisely why Gate 1 forbids freezing terms first. Both affected manifests use the reified form and are non-conforming against §4 as literally worded.",
+      "workaround": "Reified ftro:Edge nodes, used consistently and documented.",
+      "proposed_response": "Profile v0.0.4: declare ftro:Edge and restate §4 in terms of it. Do not amend until all Phase-1 comparison work is complete (card Gate 1).",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-003",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "§9.1 mandates a conformance report and declares no node class for it",
+      "failed_step": "Recording the validator and version in a typed conformance report.",
+      "known_fact": "§9.1 requires the record; §2 enumerates the node classes.",
+      "observed": "No ConformanceReport class exists, so all four manifests invented `ftro:ConformanceReport`. Similarly `ftro:time_ephemeris` was needed for the .par's TIMEEPH IF99 declaration, which is neither an ephemeris nor a reference frame.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.0.md"
+      ],
+      "severity": "medium",
+      "impact": "Two terms the specification requires in substance but does not declare.",
+      "workaround": "Both used consistently across all four manifests and documented.",
+      "proposed_response": "Profile v0.0.4, per the vocabulary-pressure report §6.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-004",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "Two thirds of the declared vocabulary has never been exercised against a real product",
+      "failed_step": "Establishing which profile terms are validated by use.",
+      "known_fact": "Card §8.1: manifests must be based on real source products, not an abstract ontology exercise.",
+      "observed": "Across four manifests: 8 of 21 edge classes and 13 of 41 node classes were used. 13 edges and 28 node classes are unexercised. Some are unused because the provider evidence is unresolved (contributes_to, uses_tide_model) -- those are needed. Others simply have no instance in these four legs (analysed_with, transferred_via, ContextualSensorSeries).",
+      "evidence": [
+        "phase1/reports/vocabulary-usage.json"
+      ],
+      "severity": "medium",
+      "impact": "Unexercised vocabulary is unvalidated. The profile currently gives no way to tell a term proven against a real product from one that has only ever been written down -- which is the distinction Gate 1's 'nothing is frozen' depends on.",
+      "workaround": "None; recorded.",
+      "proposed_response": "Add an `exercised` marker per term in v0.0.4, populated from this comparison.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-005",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "gnss",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "The profile assumes every domain is a chain; the GNSS leg is only ever consumed",
+      "failed_step": "Applying one minimum record to a leg that has no ancestry of its own here.",
+      "known_fact": "§10 states one minimum record set for every dataset, product or evidence manifest.",
+      "observed": "The GNSS manifest uses ZERO ancestry edges. Its content is pinned artifacts plus two policy objects: within this pilot it is a dependency of other chains, not a chain. Field counts across the four legs are 67 / 64 / 53 / 46, and edge counts 5 / 4 / 1 / 0.",
+      "evidence": [
+        "phase1/reports/vocabulary-usage.json",
+        "phase1/manifests/gnss/ro-crate-metadata.json"
+      ],
+      "severity": "low",
+      "impact": "Not an error -- the GNSS manifest is complete for its role. But a leg whose role is to BE consumed plausibly needs a different minimum record from one that consumes, and the profile does not distinguish them.",
+      "workaround": "None; recorded for the Phase-6 freeze review.",
+      "proposed_response": "Consider a role-conditioned minimum record in v0.0.4 or later.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    }
+  ]
+}

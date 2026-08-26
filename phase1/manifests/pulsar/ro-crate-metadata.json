@@ -1,0 +1,376 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "ftro": "https://github.com/uwarring82/ftro-walking-skeleton/ns#"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "about": {
+        "@id": "./"
+      },
+      "description": "Hand-authored FTRO manifest for the pulsar-timing leg. Conformance ASSERTED AND UNVERIFIED; see ftro:conformance_report."
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "FTRO pulsar-timing leg — PPTA DR3, PSR J0437−4715 at MJD 59630.4675",
+      "description": "Federation record for the pulsar leg. PPTA DR3 is CC BY-SA 4.0, so this manifest records facts and pointers only: identifiers, paths, sizes, digests, epochs and declared parameter values. No provider prose or bytes are redistributed.",
+      "datePublished": "2026-08-26",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "ftro:domain": "pulsar",
+      "ftro:data_role": "core measurement",
+      "hasPart": [
+        {
+          "@id": "ftro:concept:ppta/dr3"
+        }
+      ],
+      "mentions": [
+        {
+          "@id": "#assertion-eop"
+        },
+        {
+          "@id": "#contestation-tt"
+        }
+      ],
+      "ftro:conformance_report": {
+        "@id": "#conformance"
+      }
+    },
+    {
+      "@id": "#conformance",
+      "@type": "ftro:ConformanceReport",
+      "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
+      "ftro:profile": "FTRO v0.0.3",
+      "ftro:validator": null,
+      "ftro:validator_version": null,
+      "ftro:validation_result": "not_run",
+      "ftro:note": "No RO-Crate validator obtainable in this environment. FTRO-P1-DEF-001."
+    },
+    {
+      "@id": "ftro:concept:ppta/dr3",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "Parkes Pulsar Timing Array Third Data Release",
+      "ftro:concept_kind": "ftro_composed",
+      "ftro:composition_precondition_checked": [
+        "CSIRO DAP collection DOIs (two, dataset-level: 10.25919/j4xr-wp05 and 10.25919/axvw-qa43)",
+        "CSIRO DAP parent/series record (none: DAP mints no PID spanning the two collections)",
+        "release README (states the split exists but supplies no identifier for the whole)"
+      ],
+      "ftro:composition_justification": "PPTA DR3 is published as two separately-DOI'd collections sharing 90,884 file paths, with no provider identifier for the release as a whole, so the CONCEPT identity must be composed. See FTRO-DEF-015.",
+      "ftro:member_pids": [
+        "https://doi.org/10.25919/j4xr-wp05",
+        "https://doi.org/10.25919/axvw-qa43"
+      ],
+      "ftro:part_overlap": {
+        "shared_paths": 90884,
+        "part1_only": 18414,
+        "part2_only": 15509
+      },
+      "ftro:data_rights": "CC-BY-SA-4.0",
+      "ftro:metadata_rights": "CC-BY-SA-4.0",
+      "ftro:redistribution_mode": "link_only",
+      "ftro:licence_compatibility": "copyleft_restricted",
+      "ftro:access_class": "public",
+      "ftro:data_coverage": "2004-02-05 to 2022-03-07",
+      "ftro:note": "No single provider PID exists: two separately-DOI'd collections share 90,884 file paths. The concept identity is composed over the pair (FTRO-DEF-015).",
+      "hasPart": [
+        {
+          "@id": "#toa"
+        }
+      ],
+      "ftro:valid_from": "2004-02-05",
+      "ftro:valid_to": "2022-03-07",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#toa",
+      "@type": [
+        "ftro:Observation",
+        "ftro:Record"
+      ],
+      "name": "PSR J0437−4715, scan uwl_220220_104059_b4",
+      "ftro:observation_epoch_mjd": 59630.467530701,
+      "ftro:support_interval_mjd": [
+        59630.445127,
+        59630.489608
+      ],
+      "ftro:integration_interval_s": 3843.1,
+      "ftro:sampling_interval_s": null,
+      "ftro:estimator_window": "template cross-correlation per sub-band",
+      "ftro:validity_mask": null,
+      "ftro:validity_mask_informativeness": "absent",
+      "ftro:coordinate_time_scale": "TCB (declared UNITS)",
+      "ftro:timestamp_format": "MJD, 17 fractional digits",
+      "ftro:timestamp_physical_realisation": "Parkes observatory clock via pks2gps -> GPS -> gps2utc -> UTC",
+      "ftro:station": "Parkes 'Murriyang' 64 m (site code pks)",
+      "ftro:instrument": "UWL front end, Medusa backend",
+      "ftro:n_toas": 10,
+      "ftro:frequency_range_mhz": [
+        979.709,
+        2545.197
+      ],
+      "ftro:uncertainty_range_us": [
+        0.034,
+        0.446
+      ],
+      "ftro:uncertainty_representation": "per-TOA 1-sigma, provider supplied",
+      "ftro:evidence_state": "resolvable",
+      "ftro:data_role": "core measurement",
+      "ftro:valid_from": "2022-02-20",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
+      "@type": [
+        "ftro:CorrectionArtifact",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "pks2gps.clk (Parkes -> GPS)",
+      "ftro:sha256": "c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "Interpolates to -90.444 ns at the TOA epoch between samples at MJD 59630.37155 and 59631.37502. Its own upstream is a narratively described merge of three eras: evidence_state opaque.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#edge-pks2gps",
+      "@type": "ftro:Edge",
+      "ftro:edge_class": "time_referenced_to",
+      "ftro:subject": {
+        "@id": "#toa"
+      },
+      "ftro:object": {
+        "@id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa"
+      },
+      "ftro:evidence_state": "resolvable",
+      "ftro:valid_from": "2022-02-20",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "git:ipta/pulsar-clock-corrections@36dc139a150efde056aa32fa13deac856a7a679d",
+      "@type": [
+        "ftro:CorrectionArtifact",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "gps2utc.clk (GPS -> UTC)",
+      "ftro:sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "C0-prime regime throughout the window, VERIFIED by VP-GPS2UTC-001. +2.800 ns at MJD 59630.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#edge-gps2utc",
+      "@type": "ftro:Edge",
+      "ftro:edge_class": "time_referenced_to",
+      "ftro:subject": {
+        "@id": "#toa"
+      },
+      "ftro:object": {
+        "@id": "git:ipta/pulsar-clock-corrections@36dc139a150efde056aa32fa13deac856a7a679d"
+      },
+      "ftro:evidence_state": "resolvable",
+      "ftro:valid_from": "2022-02-20",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#verification-gps2utc",
+      "@type": "ftro:VerificationActivity",
+      "ftro:procedure_id": "VP-GPS2UTC-001",
+      "ftro:procedure_version": "1.0.0",
+      "ftro:result": "supports",
+      "ftro:subject": {
+        "@id": "#edge-gps2utc"
+      },
+      "ftro:output": "phase0/evidence/VA-GPS2UTC-001.json",
+      "ftro:executed_utc": "2026-08-26",
+      "ftro:agent": "src/ftro/verify_gps2utc.py",
+      "ftro:note": "Displayed as verified because all four card §11.4 conditions hold: pinned evidence, a named versioned procedure, a supporting result with agent and output, and the activity is itself resolvable in the federation.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "ftro:snapshot:ppta/dr3/clock/tai2tt_bipm2021.clk@sha256:047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
+      "@type": [
+        "ftro:CorrectionArtifact",
+        "ftro:TimeScaleRealisation"
+      ],
+      "name": "tai2tt_bipm2021.clk (TAI -> TT(BIPM2021))",
+      "ftro:sha256": "047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
+      "ftro:evidence_state": "resolvable",
+      "ftro:value_is_extrapolated": true,
+      "ftro:extrapolation_formula": "32.184 + 27667.5ns - 0.01(MJD - 59579.0)ns",
+      "ftro:extrapolation_reference_epoch_mjd": 59579.0,
+      "ftro:note": "The value at the candidate epoch is a linear extrapolation 51.5 days past its reference, not a BIPM-published measurement (FTRO-DEF-017).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#contestation-tt",
+      "@type": "ftro:Contestation",
+      "ftro:contestation_state": "open",
+      "name": "The timing model requests TT(BIPM2020); the release ships TT(BIPM2021)",
+      "ftro:competing_assertions": [
+        {
+          "ftro:source": "toas_and_parameters/all/J0437-4715.par",
+          "ftro:claim": "CLK TT(BIPM2020)"
+        },
+        {
+          "ftro:source": "toas_and_parameters/clock/tai2tt_bipm2021.clk",
+          "ftro:claim": "TAI TT(BIPM2021)"
+        }
+      ],
+      "ftro:resolution": null,
+      "ftro:note": "Two artifacts in ONE release assert incompatible realisations of terrestrial time, and no TT(BIPM2020) artifact ships. Both retained; neither corrected; no external artifact substituted (card §20). FTRO-DEF-011, AA-PPTA-CLKREALISATION-001.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#assertion-eop",
+      "@type": "ftro:Assertion",
+      "name": "Which Earth-orientation series was consumed in barycentring?",
+      "ftro:subject": {
+        "@id": "#toa"
+      },
+      "ftro:edge_class": "uses_eop",
+      "ftro:object": null,
+      "ftro:evidence_state": "unresolved",
+      "ftro:contestation_state": "none",
+      "ftro:terminates_at": "unresolved",
+      "ftro:note": "J0437-4715.par contains ZERO occurrences of EOP, UT1, IERS, C04 or polar motion, and the release identifies no EOP artifact. Barycentring requires one, so it came from the production environment -- plausibly an unshipped TEMPO2 runtime, though nothing in the release evidences that. Card §15.1 pre-registered an OPAQUE artifact; the observed state is UNRESOLVED, which is different and more severe, so the expectation is not confirmed. FTRO-DEF-012.",
+      "ftro:scope_of_search": "J0437-4715.par and the part-1 file listing; ~2.77 TB unsearched",
+      "ftro:blocks": "the IVS -> IERS EOP -> pulsar barycentring shared-ancestry path (card §15.1)",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#declared-DE436",
+      "@type": "ftro:Assertion",
+      "ftro:edge_class": "uses_ephemeris",
+      "ftro:subject": {
+        "@id": "#toa"
+      },
+      "ftro:declared_value": "DE436",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "Declared in the .par; no artifact ships with the release.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#declared-IF99",
+      "@type": "ftro:Assertion",
+      "ftro:edge_class": "ftro:time_ephemeris",
+      "ftro:subject": {
+        "@id": "#toa"
+      },
+      "ftro:declared_value": "IF99",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "Declared in the .par; no artifact ships with the release.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#declared-IAU2000B",
+      "@type": "ftro:Assertion",
+      "ftro:edge_class": "uses_reference_frame",
+      "ftro:subject": {
+        "@id": "#toa"
+      },
+      "ftro:declared_value": "IAU2000B (T2CMETHOD)",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "Declared in the .par; no artifact ships with the release.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#applicability-timingmodel",
+      "@type": "ftro:ApplicabilityAssessment",
+      "ftro:assessment_id": "AA-PPTA-TIMINGMODEL-001",
+      "ftro:outcome": "partial",
+      "ftro:assessor": "FTRO Phase-0",
+      "ftro:method": "manual inspection with scripted counting",
+      "ftro:applicable_interval_mjd": [
+        59630.445127,
+        59630.489608
+      ],
+      "ftro:note": "Applicable in interval; NOT verifiable against the shipped TOAs (NTOA 20836 against 11,637 lines, no INCLUDE/JUMP); 5 of 7 declared dependencies unresolved.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#applicability-c0",
+      "@type": "ftro:ApplicabilityAssessment",
+      "ftro:assessment_id": "AA-PARKES-C0C0PRIME-001",
+      "ftro:outcome": "indeterminate",
+      "ftro:note": "gps2utc.clk supplies C0-prime over the window (determined). Whether the Parkes receiver tracked C0 or C0-prime is UNDETERMINED -- the artifact itself warns it 'may or may not resemble what your GPS receiver system uses'.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "https://creativecommons.org/licenses/by/4.0/",
+      "@type": "CreativeWork",
+      "identifier": "CC-BY-4.0"
+    },
+    {
+      "@id": "https://creativecommons.org/licenses/by-sa/4.0/",
+      "@type": "CreativeWork",
+      "identifier": "CC-BY-SA-4.0"
+    }
+  ]
+}

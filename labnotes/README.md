@@ -47,3 +47,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-26 | 10 | [Ninth external review — an oracle that measured the wrong thing](2026-08-26-session-10-review-corrections-9.md) |
 | 2026-08-26 | 11 | [Tenth external review — a fixture that could not see the boundary](2026-08-26-session-11-review-corrections-10.md) |
 | 2026-08-26 | 12 | [Consolidation — bounding Phase 0 so it can be finished](2026-08-26-session-12-consolidation.md) |
+| 2026-08-26 | 13 | [Phase 1 — four hand-authored manifests](2026-08-26-session-13-phase1-manifests.md) *(branch `phase1`)* |

@@ -1,0 +1,350 @@
+{
+  "@context": [
+    "https://w3id.org/ro/crate/1.3/context",
+    {
+      "ftro": "https://github.com/uwarring82/ftro-walking-skeleton/ns#"
+    }
+  ],
+  "@graph": [
+    {
+      "@id": "ro-crate-metadata.json",
+      "@type": "CreativeWork",
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "about": {
+        "@id": "./"
+      },
+      "description": "Hand-authored FTRO manifest for the optical-clock leg. Declares conformance to RO-Crate 1.3 and FTRO profile v0.0.3. NOTE: no RO-Crate validator was available in this environment, so the 1.3 conformance claim is UNVERIFIED -- see ftro:conformance_report."
+    },
+    {
+      "@id": "./",
+      "@type": "Dataset",
+      "name": "FTRO optical-clock leg — ROCIT European fibre subset, MJD 59630–59640",
+      "description": "Federation record for the optical leg of the FTRO walking skeleton. Records identifiers, checksums, evidence, rights and ancestry; contains no provider bytes.",
+      "datePublished": "2026-08-26",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "conformsTo": [
+        {
+          "@id": "https://w3id.org/ro/crate/1.3"
+        },
+        {
+          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
+        }
+      ],
+      "ftro:domain": "optical",
+      "ftro:data_role": "core measurement",
+      "ftro:candidate_window_mjd": [
+        59630.0,
+        59640.0
+      ],
+      "hasPart": [
+        {
+          "@id": "https://doi.org/10.5281/zenodo.17107693"
+        }
+      ],
+      "mentions": [
+        {
+          "@id": "#assertion-timetag-realisation"
+        },
+        {
+          "@id": "#assertion-comparator-interpretation"
+        }
+      ],
+      "ftro:conformance_report": {
+        "@id": "#conformance"
+      }
+    },
+    {
+      "@id": "#conformance",
+      "@type": "ftro:ConformanceReport",
+      "name": "RO-Crate 1.3 + FTRO v0.0.3 conformance report",
+      "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
+      "ftro:profile": "FTRO Reference-Ancestry Graph Profile v0.0.3",
+      "ftro:validator": null,
+      "ftro:validator_version": null,
+      "ftro:validation_result": "not_run",
+      "ftro:note": "Card §9.1 requires the exact validator and version to be recorded in every conformance report. No RO-Crate validator could be obtained in this environment (`rocrate-validator` is not installable here, and the repository takes no third-party dependencies). The conformance claim is therefore ASSERTED AND UNVERIFIED. Recorded as FTRO-P1-DEF-001 rather than presented as conformance."
+    },
+    {
+      "@id": "https://doi.org/10.5281/zenodo.17107692",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "Dataset for \"Coordinated international comparisons between optical clocks connected via fiber and satellite links\" (concept)",
+      "identifier": "10.5281/zenodo.17107692",
+      "ftro:concept_kind": "provider_pid",
+      "ftro:snapshot": {
+        "@id": "https://doi.org/10.5281/zenodo.17107693"
+      },
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "https://doi.org/10.5281/zenodo.17107693",
+      "@type": [
+        "Dataset",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "ROCIT campaign results (version 1)",
+      "identifier": "10.5281/zenodo.17107693",
+      "ftro:snapshot_kind": "provider_immutable",
+      "ftro:snapshot_of": {
+        "@id": "https://doi.org/10.5281/zenodo.17107692"
+      },
+      "contentSize": "83530540",
+      "ftro:md5": "4ae290f559c90b462991286c933a1147",
+      "ftro:sha256": "6168e24a0c29ce0929e9651460f11ea77f151176e1ba3d0fe3428e1e08bd56bd",
+      "ftro:retrieved_utc": "2026-08-25T13:45Z",
+      "ftro:retrieval_procedure": "GET https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:access_class": "public",
+      "ftro:data_rights": "CC-BY-4.0",
+      "ftro:metadata_rights": "CC-BY-4.0",
+      "ftro:evidence_retention_rights": "permitted with attribution",
+      "ftro:redistribution_mode": "copy_permitted",
+      "ftro:licence_compatibility": "compatible",
+      "ftro:provider_release_time": "2025-09-12",
+      "ftro:first_availability_time": "2025-09-12",
+      "ftro:availability_time_source": "provider_declared",
+      "ftro:record_revision": 6,
+      "ftro:observation_epoch_mjd_first": 59631.788542,
+      "ftro:observation_epoch_mjd_last": 59674.999988,
+      "ftro:declared_coverage_mjd": [
+        59630,
+        59675
+      ],
+      "ftro:sampling_interval_s": 1.0,
+      "ftro:integration_interval_s": null,
+      "ftro:estimator_window": null,
+      "ftro:validity_mask": "column 3, values 0/1/2 per the pinned format",
+      "ftro:validity_mask_informativeness": "degenerate",
+      "ftro:validity_mask_observed_values": [
+        1
+      ],
+      "ftro:coordinate_time_scale": "MJD",
+      "ftro:timestamp_format": "decimal MJD, 6 fractional digits",
+      "ftro:timestamp_physical_realisation": null,
+      "ftro:time_coordinate_quantum_s": 0.0864,
+      "ftro:time_coordinate_quantum_evidence": "measured: 9,018,290 of 9,018,290 values are exact multiples of 1e-6 d",
+      "ftro:processing_level": null,
+      "ftro:n_comparisons": 12,
+      "ftro:n_samples": 9018290,
+      "ftro:deficiencies": [
+        "FTRO-DEF-001",
+        "FTRO-DEF-002",
+        "FTRO-DEF-003",
+        "FTRO-DEF-004",
+        "FTRO-DEF-005",
+        "FTRO-DEF-006",
+        "FTRO-DEF-007",
+        "FTRO-DEF-008",
+        "FTRO-DEF-009",
+        "FTRO-DEF-010"
+      ],
+      "ftro:valid_from": "2022-02-21",
+      "ftro:valid_to": "2022-04-06",
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "git:INRIM/optical-link-data-format@689bda77000fec52c401bc0c9c3664d1dd534ecb",
+      "@type": [
+        "SoftwareSourceCode",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "INRIM/optical-link-data-format @ 689bda77",
+      "ftro:concept_id": "https://github.com/INRIM/optical-link-data-format",
+      "ftro:snapshot_kind": "provider_immutable",
+      "ftro:pinned_file": "README.md",
+      "ftro:sha256": "cf93ae7a8f934944230e8555941d9d1e1afac9fa59d3a6d15bacd7befbfcee98",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:commit_date": "2025-01-20T15:39:52Z",
+      "ftro:note": "This commit is dated 2025-01-20T15:39:52Z, approximately 22 minutes before the first archive data file was generated at 2025-01-20T17:01:50+01:00 (16:01:50Z). The format specification and the data were therefore finalised in the same working session.",
+      "ftro:valid_from": "2025-01-20",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#edge-conforms-to",
+      "@type": "ftro:Edge",
+      "ftro:edge_class": "conforms_to",
+      "ftro:subject": {
+        "@id": "https://doi.org/10.5281/zenodo.17107693"
+      },
+      "ftro:object": {
+        "@id": "git:INRIM/optical-link-data-format@689bda77000fec52c401bc0c9c3664d1dd534ecb"
+      },
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "The archive's .dat/.yml layout matches the pinned specification. Direction caution: the format names directories INSTITUTEB_OSCB-INSTITUTEA_OSCA, so the FIRST token is oscillator B.",
+      "ftro:valid_from": "2025-01-20",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#software-a",
+      "@type": [
+        "SoftwareApplication",
+        "ftro:Software"
+      ],
+      "name": "06-procclocks-v3.py",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "Named in the .dat headers but ABSENT from the archive. The transformation that produced the published bytes cannot be re-executed (FTRO-DEF-007).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#edge-generated-a",
+      "@type": "ftro:Edge",
+      "ftro:edge_class": "generated_by",
+      "ftro:subject": {
+        "@id": "https://doi.org/10.5281/zenodo.17107693"
+      },
+      "ftro:object": {
+        "@id": "#software-a"
+      },
+      "ftro:scope": "11 comparisons",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "Generated 2025-01-20. One DOI, two provenance branches ten months apart (FTRO-DEF-008).",
+      "ftro:valid_from": "2025-01-20",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#software-b",
+      "@type": [
+        "SoftwareApplication",
+        "ftro:Software"
+      ],
+      "name": "convert-to-rocit.py",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "Named in the .dat headers but ABSENT from the archive. The transformation that produced the published bytes cannot be re-executed (FTRO-DEF-007).",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#edge-generated-b",
+      "@type": "ftro:Edge",
+      "ftro:edge_class": "generated_by",
+      "ftro:subject": {
+        "@id": "https://doi.org/10.5281/zenodo.17107693"
+      },
+      "ftro:object": {
+        "@id": "#software-b"
+      },
+      "ftro:scope": "NPL-Yb+(E3)-NPL-Sr1 only",
+      "ftro:evidence_state": "unresolved",
+      "ftro:note": "Generated 2024-04-22. One DOI, two provenance branches ten months apart (FTRO-DEF-008).",
+      "ftro:valid_from": "2024-04-22",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "git:INRIM/tintervals@2064db12777df78bc87f68f7710a47176192c2e1",
+      "@type": [
+        "SoftwareSourceCode",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "INRIM/tintervals @ 2064db12",
+      "ftro:concept_id": "https://github.com/INRIM/tintervals",
+      "ftro:pinned_file": "pyproject.toml",
+      "ftro:sha256": "c1054d63703d42cded863d536202be014d3ce5166d1f70bee6f69d89dc81c180",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:commit_date": "2026-08-16T16:00:18Z",
+      "ftro:note": "CAUTION: this commit is dated 2026-08-16T16:00:18Z, about 19 months after the archive's data generation (2025-01-20 and 2024-04-22). THIS REVISION cannot be the software that produced the archive. An earlier revision of the same tool is not excluded, and none is pinned.",
+      "ftro:valid_from": "2026-08-16",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#edge-context-tintervals",
+      "@type": "ftro:Edge",
+      "ftro:edge_class": "contextualized_by",
+      "ftro:subject": {
+        "@id": "https://doi.org/10.5281/zenodo.17107693"
+      },
+      "ftro:object": {
+        "@id": "git:INRIM/tintervals@2064db12777df78bc87f68f7710a47176192c2e1"
+      },
+      "ftro:evidence_state": "resolvable",
+      "ftro:note": "NOT generated_by: the pinned revision post-dates the data by 19 months and cannot be the generating software (FTRO-DEF-022).",
+      "ftro:valid_from": "2026-08-16",
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#assertion-timetag-realisation",
+      "@type": "ftro:Assertion",
+      "name": "What physically realises the one-second MJD time tags?",
+      "ftro:subject": {
+        "@id": "https://doi.org/10.5281/zenodo.17107693"
+      },
+      "ftro:edge_class": "time_referenced_to",
+      "ftro:object": null,
+      "ftro:evidence_state": "unresolved",
+      "ftro:contestation_state": "none",
+      "ftro:verification": null,
+      "ftro:terminates_at": "unresolved",
+      "ftro:note": "The chain terminates one step in. ref_osc, interval, lag and weighting are OPTIONAL in the pinned format and ABSENT from all 12 comparisons, so no station time scale, oscillator or UTC(k) node can be named. The format's own second sentence places time transfer out of scope, so the gap is structurally permitted by it. FTRO-DEF-003.",
+      "ftro:blocks": "shared-ancestry demonstration via the optical time-tag chain (card §15.1)",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#assertion-comparator-interpretation",
+      "@type": "ftro:Assertion",
+      "name": "Which of two documented physical interpretations does the comparator output carry?",
+      "ftro:subject": {
+        "@id": "https://doi.org/10.5281/zenodo.17107693"
+      },
+      "ftro:evidence_state": "unresolved",
+      "ftro:contestation_state": "none",
+      "ftro:competing_readings": [
+        {
+          "ftro:reading": "Ref = A: Delta = rho-tilde(B,A), frequency of B referenced to A",
+          "ftro:reference_oscillator": "oscillator A"
+        },
+        {
+          "ftro:reading": "Ref = local RF: Delta = rho-tilde(B,x) - rho-tilde(A,x)",
+          "ftro:reference_oscillator": "an unnamed local RF reference x"
+        }
+      ],
+      "ftro:note": "All 12 comparisons use rho0 = nu0B/nu0A and sB = nu0B, which matches TWO rows of the pinned format's examples table differing only by ref_osc. The two have different reference oscillators and therefore different time-tag ancestry. Both readings are retained; neither is selected. FTRO-DEF-004.",
+      "ftro:valid_from": null,
+      "ftro:valid_to": null,
+      "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "https://creativecommons.org/licenses/by/4.0/",
+      "@type": "CreativeWork",
+      "name": "Creative Commons Attribution 4.0 International",
+      "identifier": "CC-BY-4.0"
+    }
+  ]
+}
