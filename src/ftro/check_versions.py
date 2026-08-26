@@ -147,6 +147,9 @@ def main():
 
     # Generated documents: their CONTENT is registered separately, so a regeneration that
     # changes the bytes must come with a version advance.
+    # Generated documents run the SAME state machine as tracked ones. The first version
+    # rejected changed content only when the declared version equalled the recorded one,
+    # so a downgrade or a removed version laundered the change (FTRO-DEF-055).
     gen = registry.get("__generated__", {})
     for path in sorted(GENERATED):
         if not os.path.exists(path):
@@ -156,7 +159,14 @@ def main():
         rec = gen.get(path)
         if rec is None:
             problems.append((path, "generated document not registered; run --register"))
-        elif got_d != rec["sha256"] and got_v == rec["version"]:
+            continue
+        if got_v is None:
+            problems.append((path, "generated document declares no version"))
+            continue
+        if got_v != rec["version"]:
+            problems.append((path, f"declares {got_v}, registry recorded {rec['version']}; "
+                                   f"run --update after a deliberate bump"))
+        elif got_d != rec["sha256"]:
             problems.append((path, f"generated content changed but version is still {got_v}: "
                                    f"recorded {rec['sha256'][:12]}, now {got_d[:12]}"))
 
@@ -173,7 +183,7 @@ def main():
         # disable the laundering refusal entirely, and its update loop only iterated
         # existing entries, so --register could not actually register anything
         # (FTRO-DEF-044).
-        refusals = []
+        refusals, added = [], []
         for path, cur in current.items():
             rec = registry.get(path)
             if rec is None:
@@ -191,19 +201,39 @@ def main():
                 print(f"REFUSED {path}: {why}", file=sys.stderr)
             return 1
 
+        # Generated entries obey the same refusals as tracked ones, and --register may
+        # only ADD a missing entry -- it never relaxes a check on an existing one.
         gen_reg = registry.setdefault("__generated__", {})
+        gen_refusals = []
         for path in sorted(GENERATED):
             if not os.path.exists(path):
                 continue
             v, dgst = declared_version(path), content_digest(path)
             rec = gen_reg.get(path)
-            if rec and rec["sha256"] != dgst and rec["version"] == v and not register_new:
-                print(f"REFUSED {path}: generated content changed but version is still {v}. "
-                      f"Bump the version in its generator, then --update.", file=sys.stderr)
-                return 1
-            gen_reg[path] = {"version": v, "sha256": dgst}
+            if v is None:
+                gen_refusals.append((path, "declares no version; a generated document must "
+                                           "declare one before it can be recorded"))
+                continue
+            if rec is None:
+                gen_reg[path] = {"version": v, "sha256": dgst}
+                added.append(path) if register_new else None
+                continue
+            new_v, old_v = _version_tuple(v), _version_tuple(rec["version"])
+            if rec["sha256"] != dgst and v == rec["version"]:
+                gen_refusals.append((path, f"generated content changed but version is still "
+                                           f"{v}. Bump the version in its generator."))
+                continue
+            if new_v and old_v and new_v < old_v:
+                gen_refusals.append((path, f"version went backwards: {rec['version']} -> {v}"))
+                continue
+            if update:
+                gen_reg[path] = {"version": v, "sha256": dgst}
+        if gen_refusals:
+            for path, why in gen_refusals:
+                print(f"REFUSED {path}: {why}", file=sys.stderr)
+            return 1
 
-        added, rerecorded = [], []
+        rerecorded = []
         if register_new:
             for path, v in sorted(discover_versioned().items()):
                 if path in registry or path in EXCLUSIONS:

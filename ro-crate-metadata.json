@@ -157,6 +157,9 @@
         },
         {
           "@id": "labnotes/2026-08-26-session-10-review-corrections-9.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-11-review-corrections-10.md"
         }
       ],
       "isBasedOn": [
@@ -406,7 +409,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "106086",
+      "contentSize": "114150",
       "name": "deficiency-log.json"
     },
     {
@@ -416,7 +419,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "106951",
+      "contentSize": "115144",
       "name": "deficiency-log.md"
     },
     {
@@ -446,7 +449,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "17004",
+      "contentSize": "18101",
       "name": "decision-ledger.md"
     },
     {
@@ -561,7 +564,7 @@
       "name": "four_domain_intersection.py",
       "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
       "encodingFormat": "text/x-python",
-      "contentSize": "11518",
+      "contentSize": "11600",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -719,7 +722,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3072",
+      "contentSize": "3212",
       "name": "README.md"
     },
     {
@@ -751,6 +754,12 @@
         },
         {
           "@id": "tests/fixtures/mini-archive/CCC_z-DDD_w/CCC_z-DDD_w.yml"
+        },
+        {
+          "@id": "tests/fixtures/mini-archive/EEE_b-FFF_b/2022-02-25_EEE_b-FFF_b.dat"
+        },
+        {
+          "@id": "tests/fixtures/mini-archive/EEE_b-FFF_b/EEE_b-FFF_b.yml"
         },
         {
           "@id": "tests/fixtures/mini-archive/expected-runs.json"
@@ -786,7 +795,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "67902"
+      "contentSize": "74043"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -1019,7 +1028,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "10966"
+      "contentSize": "12543"
     },
     {
       "@id": "labnotes/2026-08-26-session-07-review-corrections-6.md",
@@ -1055,7 +1064,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "9738"
+      "contentSize": "12769"
     },
     {
       "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md",
@@ -1120,7 +1129,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "4743"
+      "contentSize": "8945"
     },
     {
       "@id": "labnotes/2026-08-26-session-10-review-corrections-9.md",
@@ -1131,6 +1140,34 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "7293"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-11-review-corrections-10.md",
+      "@type": "File",
+      "name": "2026-08-26-session-11-review-corrections-10.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "7271"
+    },
+    {
+      "@id": "tests/fixtures/mini-archive/EEE_b-FFF_b/2022-02-25_EEE_b-FFF_b.dat",
+      "@type": "File",
+      "name": "2022-02-25_EEE_b-FFF_b.dat",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "8974"
+    },
+    {
+      "@id": "tests/fixtures/mini-archive/EEE_b-FFF_b/EEE_b-FFF_b.yml",
+      "@type": "File",
+      "name": "EEE_b-FFF_b.yml",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "62"
     }
   ]
 }

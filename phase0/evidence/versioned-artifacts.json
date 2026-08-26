@@ -11,12 +11,12 @@
       "sha256": "531962537358fae0fff488512857888d9fffaad0f7d65a252309e9e6a6f9eecd"
     },
     "ledgers/deficiency-log.json": {
-      "version": "0.10.0",
-      "sha256": "2caabff0de50a1afe6b806a629c3967dfc669de82bdff113b6da173c4d632261"
+      "version": "0.11.0",
+      "sha256": "7f600835d44542f57f360786705a7e3bcada9620e11cd745cf026d4058dc4a75"
     },
     "ledgers/decision-ledger.md": {
-      "version": "0.7.0",
-      "sha256": "1d5cd0e4390cd1f5d509078249e1559304ad9c60a001d87eaea77b6b694a75f0"
+      "version": "0.8.0",
+      "sha256": "e6a9b701acb8e51de788ca3818ae7cd634a913fec03c2da01f10f452b85cfe46"
     },
     "ledgers/source-ledger.md": {
       "version": "0.4.0",
@@ -64,8 +64,8 @@
     },
     "__generated__": {
       "ledgers/deficiency-log.md": {
-        "version": "0.10.0",
-        "sha256": "ba050a0e88ca88e38685f6a9cf243b899490dce80b9bfde0746e0a1b494bd974"
+        "version": "0.11.0",
+        "sha256": "617287f59e005baa205e803ce02d1f51b45bcffc31589037026be87d16569f36"
       },
       "phase0/optical-validity-intervals.md": {
         "version": "0.2.0",

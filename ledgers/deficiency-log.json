@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -1322,8 +1322,131 @@
       "links": {
         "software": "src/ftro/check_versions.py"
       }
+    },
+    {
+      "id": "FTRO-DEF-053",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "optical",
+      "dataset": "FTRO test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the oracle fixture contained no gap at a scientifically active tolerance boundary",
+      "failed_step": "Constraining the segmentation threshold against off-by-one error.",
+      "known_fact": "5.0 s floors to 57 ticks and rounds to 58, and the real archive contains 3,143 gaps of exactly 58 ticks.",
+      "observed": "The mini-archive had no 58-tick gap, so replacing int() with round() in contiguous_runs() left all 94 tests green while changing the published 5 s sensitivity row: runs 4,826 -> 2,943, optical 133.567344 -> 134.533680 h, optical-VLBI 82.232760 -> 82.536504 h. The regenerated report passed the tests, the version gate and the crate gate.",
+      "evidence": [
+        "tests/fixtures/mini-archive/EEE_b-FFF_b/",
+        "tests/test_retrieval_validation.py"
+      ],
+      "severity": "high",
+      "impact": "An oracle can only constrain behaviour its fixture exercises. The fixture now embeds gaps at each tolerance's floored threshold T and at T+1 (12/13, 17/18, 23/24, 57/58), with tests asserting that a T gap merges and a T+1 gap splits at every tolerance. Verified: int->round now fails 6 tests, and a > to >= flip fails 12.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-071): a fixture must exercise every threshold the production code branches on, at the boundary and one beyond it.",
+      "disposition": "resolved",
+      "links": {
+        "software": "tests/fixtures/mini-archive/EEE_b-FFF_b/"
+      }
+    },
+    {
+      "id": "FTRO-DEF-054",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "gnss",
+      "dataset": "FTRO consumer gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the runtime consumer verified a report's self-description, not its completeness",
+      "failed_step": "Refusing an incomplete or fabricated report before deriving science from it.",
+      "known_fact": "A report can be internally consistent and still be neither complete nor truthful.",
+      "observed": "assert_report_usable() consulted nothing external. Truncating the IGS report from 57 pins to one and setting n_pinned: 1 was accepted; so was rewriting a pin's actual AND expected digest to the same fabricated value. four_domain_intersection.py then consumed those pins directly. The stored-report test did check registry equality, but the documented workflow runs the tests BEFORE retrieval, so it does not protect a run.",
+      "evidence": [
+        "src/ftro/pinning.py",
+        "src/ftro/four_domain_intersection.py"
+      ],
+      "severity": "high",
+      "impact": "The gate is now bound to the expected-digest registry: it rejects pins missing from the registry, pins unknown to it, duplicate pins, and any pin whose digest disagrees with the registry value. Both accepted mutations now exit 1.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-072): a runtime gate must compare against an external expectation, not the artifact's own account of itself.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pinning.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-055",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO version gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: generated-version enforcement had two laundering paths",
+      "failed_step": "Requiring a version advance for changed generated content.",
+      "known_fact": "D-067: a compensating control must measure the property the original gate measured.",
+      "observed": "The generated check rejected changed content only when the declared version EQUALLED the recorded version, and --register disabled the refusal outright. Verified: same version gave check 1 -> register 0 -> check 0 with all 94 tests passing; a v0.2.0 to v0.1.0 downgrade passed check, update and every test; and removing the version entirely let --update record version: null.",
+      "evidence": [
+        "src/ftro/check_versions.py"
+      ],
+      "severity": "high",
+      "impact": "Generated entries now run the same state machine as tracked ones: a version is required and must be valid, the registry must agree exactly during --check, updates are permitted only on a strict forward change, and --register may only ADD a missing entry. All three laundering paths now end in exit 1.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-073): a special-cased class of artifact must obey the general state machine, not a weakened copy of it.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/check_versions.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-056",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO consumer gate",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: container-shape checks ran only when the container was already the right type",
+      "failed_step": "Validating the structure of a pin report.",
+      "known_fact": "A coherence check guarded by isinstance() is skipped, not failed, when the type is wrong.",
+      "observed": "The failure/uncovered coherence check ran only when each field was ALREADY a list, so failures: {} and uncovered_by_registry: \"ghost\" both passed, and adding pins: {} to a valid single-pin report was ignored. The tests exercised non-empty valid lists only.",
+      "evidence": [
+        "src/ftro/pinning.py",
+        "tests/test_retrieval_validation.py"
+      ],
+      "severity": "medium",
+      "impact": "Shape is now required explicitly: pins must be a list when present, every entry must be an object, and each count-associated field must be present and a list of the correct type. Six container-shape mutations are tested.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-074): validate the type before the invariant; a guard that skips on the wrong type is a fail-open branch.",
+      "disposition": "resolved",
+      "links": {
+        "software": "src/ftro/pinning.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-057",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "FTRO test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "title": "SELF-DIRECTED: the 'nothing was fetched' test measured 'nothing was cached'",
+      "failed_step": "Proving that a preflight failure issues no request.",
+      "known_fact": "Bytes are not cached until verification, so an empty cache does not imply no retrieval.",
+      "observed": "The test observed the diagnostic and the cache directory. Moving retrieval ABOVE the preflight error, while keeping the same message and leaving the cache empty, passed all 94 tests. Production ordering was correct, but nothing enforced it.",
+      "evidence": [
+        "tests/test_retrieval_validation.py"
+      ],
+      "severity": "medium",
+      "impact": "The test now spies on urllib.request.urlopen and asserts zero calls, so the ordering itself is enforced. Verified: injecting a fetch before the preflight now fails. The production-consumer mutation test was also still writing into the tracked checkout, contrary to D-067; it now runs in a copied tree and asserts the tracked report is untouched.",
+      "workaround": "None.",
+      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-075): assert the action you mean to forbid, not a side effect that usually accompanies it.",
+      "disposition": "resolved",
+      "links": {
+        "software": "tests/test_retrieval_validation.py"
+      }
     }
   ],
   "revised": "2026-08-26",
-  "revision_note": "Revised across nine review rounds. 001-023 s01; 024-027 s02; 028-029 s03; 030-033 s04; 034-035 s05; 036 s06; 037-041 s07; 042-047 s08; 048-052 s09. Twenty-eight entries are self-directed."
+  "revision_note": "Revised across ten review rounds. 001-023 s01; 024-027 s02; 028-029 s03; 030-033 s04; 034-035 s05; 036 s06; 037-041 s07; 042-047 s08; 048-052 s09; 053-057 s10. Thirty-three entries are self-directed."
 }

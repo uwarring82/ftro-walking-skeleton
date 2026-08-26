@@ -782,6 +782,29 @@ class TestConsumerGate(unittest.TestCase):
     def test_clean_report_is_accepted(self):
         self._check(self.good)
 
+    def test_registry_binding_rejects_truncation_and_fabrication(self):
+        """Completeness, not self-description (FTRO-DEF-054)."""
+        import pinning
+        reg = os.path.join(REPO, "phase0", "evidence", "expected-digests.json")
+        for label, mutate in (
+                ("truncated to one pin",
+                 lambda d: (d.__setitem__("pins", d["pins"][:1]),
+                            d.__setitem__("n_pinned", 1))),
+                ("fabricated matching digests",
+                 lambda d: (d["pins"][0].__setitem__("sha256", "b" * 64),
+                            d["pins"][0].__setitem__("expected_sha256", "b" * 64))),
+                ("duplicated pin",
+                 lambda d: (d["pins"].append(json.loads(json.dumps(d["pins"][0]))),
+                            d.__setitem__("n_pinned", len(d["pins"]) + 1)))):
+            with self.subTest(case=label):
+                doc = json.loads(json.dumps(self.good))
+                mutate(doc)
+                path = os.path.join(self.tmp, "reg.json")
+                with open(path, "w", encoding="utf-8") as fh:
+                    json.dump(doc, fh)
+                with self.assertRaises(SystemExit):
+                    pinning.assert_report_usable(path, registry=reg, section="igs")
+
     def test_absent_fields_are_rejected(self):
         for field in ("retrieval_validation", "n_failed", "n_without_expected_digest"):
             with self.subTest(removed=field):
@@ -825,6 +848,23 @@ class TestConsumerGate(unittest.TestCase):
                 with self.assertRaises(SystemExit):
                     self._check(doc)
 
+    def test_container_shape_is_required(self):
+        """Wrong-typed containers previously slipped past the coherence checks entirely."""
+        for label, mutate in (
+                ("failures is an object", lambda d: d.__setitem__("failures", {})),
+                ("uncovered is a string",
+                 lambda d: d.__setitem__("uncovered_by_registry", "ghost")),
+                ("pins is an object", lambda d: d.__setitem__("pins", {})),
+                ("failures absent", lambda d: d.pop("failures", None)),
+                ("uncovered absent", lambda d: d.pop("uncovered_by_registry", None)),
+                ("a pin is not an object",
+                 lambda d: d["pins"].__setitem__(0, "not-an-object"))):
+            with self.subTest(case=label):
+                doc = json.loads(json.dumps(self.good))
+                mutate(doc)
+                with self.assertRaises(SystemExit):
+                    self._check(doc)
+
     def test_counters_must_agree_with_their_lists(self):
         for lst, counter in (("failures", "n_failed"),
                              ("uncovered_by_registry", "n_without_expected_digest")):
@@ -847,17 +887,22 @@ class TestConsumerGate(unittest.TestCase):
             self._check(doc)
 
     def test_production_consumer_rejects_a_stripped_report(self):
-        """Mutation-test the real consumer, not only the helper."""
-        target = os.path.join(REPO, "phase0", "reports", "igs-artifact-pins.json")
-        backup = os.path.join(self.tmp, "igs.bak")
-        shutil.copy(target, backup)
-        try:
+        """Mutation-test the real consumer, in a COPIED tree.
+
+        This previously wrote into the tracked checkout, against this repository's own
+        rule that a test must never modify the tree it inspects (D-067).
+        """
+        work = os.path.join(self.tmp, "repo")
+        shutil.copytree(REPO, work, symlinks=True,
+                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
+        target = os.path.join(work, "phase0", "reports", "igs-artifact-pins.json")
+        if True:
             doc = json.loads(json.dumps(self.good))
             doc.pop("n_failed")
             with open(target, "w", encoding="utf-8") as fh:
                 json.dump(doc, fh, indent=2)
             r = subprocess.run([sys.executable, "src/ftro/four_domain_intersection.py"],
-                               cwd=REPO, capture_output=True, text=True, timeout=600)
+                               cwd=work, capture_output=True, text=True, timeout=600)
             self.assertNotEqual(r.returncode, 0,
                                 "the production consumer accepted a report missing n_failed")
             # Assert the SPECIFIC gate diagnostic. A bare non-zero exit is
@@ -868,8 +913,10 @@ class TestConsumerGate(unittest.TestCase):
             self.assertIn("is not a clean success", combined,
                           f"exited non-zero for some other reason:\n{combined[-800:]}")
             self.assertIn("n_failed absent", combined)
-        finally:
-            shutil.copy(backup, target)
+            # The tracked report must be untouched by this test.
+            with open(os.path.join(REPO, "phase0", "reports",
+                                   "igs-artifact-pins.json"), encoding="utf-8") as fh:
+                self.assertIn("n_failed", json.load(fh))
 
 
 MINI_ARCHIVE = os.path.join(FIXTURES, "mini-archive")
@@ -1001,6 +1048,41 @@ class TestSegmentationOracle(unittest.TestCase):
                 got = sorted((c, f, a // 86400, b // 86400, n) for a, b, n, c, f
                              in r.subprocess_runs(tol, os.path.join(tmp, f"i{tol}.json")))
                 self.assertEqual(got, self._independent(tol))
+
+    def test_threshold_boundaries_are_exercised(self):
+        """The fixture must contain gaps at each tolerance's threshold T and at T+1.
+
+        Without them an off-by-one in the threshold is invisible: replacing int() with
+        round() in contiguous_runs() left all 94 tests green while changing the published
+        5 s row from 4,826 runs to 2,943, because 5.0 s floors to 57 ticks and rounds to
+        58, and the real archive has 3,143 gaps of exactly 58 ticks (FTRO-DEF-053).
+        """
+        present = set(self.manifest["boundary_gaps_ticks"])
+        for tol in self.TOLERANCES:
+            t = int(tol / self.TICK_S + 1e-9)
+            with self.subTest(tolerance=tol):
+                self.assertIn(t, present, f"no gap at the threshold {t} ticks")
+                self.assertIn(t + 1, present, f"no gap at threshold+1 = {t + 1} ticks")
+
+    def test_threshold_gap_merges_and_threshold_plus_one_splits(self):
+        """Directly assert the boundary semantics, per tolerance."""
+        for tol in self.TOLERANCES:
+            t = int(tol / self.TICK_S + 1e-9)
+            runs = self._independent(tol)
+            spans = {(c, f): [] for c, f, _s, _e, _n in runs}
+            for c, f, s_, e, _n in runs:
+                spans[(c, f)].append((s_, e))
+            boundary = [v for k, v in spans.items() if k[0].startswith("EEE_")]
+            self.assertTrue(boundary, "boundary comparison missing from the fixture")
+            gaps = []
+            for seq in boundary:
+                seq.sort()
+                gaps += [b[0] - a[1] for a, b in zip(seq, seq[1:])]
+            with self.subTest(tolerance=tol):
+                self.assertTrue(all(g > t for g in gaps),
+                                f"a gap of <= {t} ticks survived as a split at {tol} s")
+                self.assertIn(t + 1, gaps,
+                              f"the threshold+1 gap did not split at {tol} s")
 
     def test_tolerances_actually_differentiate(self):
         counts = {tol: len(self._independent(tol)) for tol in self.TOLERANCES}
@@ -1267,6 +1349,43 @@ class TestPreflightDigestValidation(unittest.TestCase):
         import pinning
         with self.assertRaises(SystemExit):
             pinning.preflight({"x": None}, ["x"], allow_unpinned=True, what="thing")
+
+    def test_no_request_is_issued_when_preflight_fails(self):
+        """Count REQUESTS, not cached bytes.
+
+        The earlier test observed the diagnostic and an empty cache directory -- but bytes
+        are not cached until verification, so moving retrieval before the preflight error
+        kept every test green (FTRO-DEF-057). This spies on urlopen itself.
+        """
+        import importlib
+        import urllib.request
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+        calls = []
+        real = urllib.request.urlopen
+
+        def spy(*a, **kw):
+            calls.append(a[0])
+            return real(*a, **kw)
+
+        pv = importlib.import_module("pin_vgosdb")
+        urllib.request.urlopen = spy
+        self.addCleanup(setattr, urllib.request, "urlopen", real)
+        reg = os.path.join(self.tmp, "spy-registry.json")
+        with open(reg, "w", encoding="utf-8") as fh:
+            json.dump({"vgosdb": {"vgosdb_min.tgz": None}}, fh)
+        argv = sys.argv
+        sys.argv = ["pin_vgosdb.py",
+                    "--url", "file://" + os.path.join(FIXTURES, "vgosdb_min.tgz"),
+                    "--session", "R11040",
+                    "--cache", os.path.join(self.tmp, "spycache"),
+                    "--out", os.path.join(self.tmp, "spy.json"),
+                    "--expect", reg]
+        try:
+            with self.assertRaises(SystemExit):
+                pv.main()
+        finally:
+            sys.argv = argv
+        self.assertEqual(calls, [], "preflight failed but a request was still issued")
 
     def test_null_expectation_stops_the_pinner_before_retrieval(self):
         reg = os.path.join(self.tmp, "reg.json")

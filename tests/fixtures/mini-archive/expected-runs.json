@@ -1,11 +1,21 @@
 {
   "document": "Independently derived expectations for the mini-archive fixture",
-  "note": "Run TUPLES, not counts. Counts alone validate topology only: halving every run's span preserves all four counts while changing the support by 40 percent, and that passed every test (FTRO-DEF-048). Derived by a segmenter written from the specification in this file's generator, independent of analyse_optical.",
+  "note": "Run TUPLES and total spans, not counts: counts validate topology only (FTRO-DEF-048). The EEE_b-FFF_b comparison embeds gaps at each tolerance's floored threshold T and at T+1, so any off-by-one in the threshold -- int versus round, > versus >= -- changes the expected result (FTRO-DEF-053).",
   "tick_seconds": 0.0864,
+  "boundary_gaps_ticks": [
+    12,
+    13,
+    17,
+    18,
+    23,
+    24,
+    57,
+    58
+  ],
   "tolerances": {
     "1.1": {
-      "n_runs": 6,
-      "total_span_ticks": 2328,
+      "n_runs": 14,
+      "total_span_ticks": 4392,
       "runs": [
         {
           "comparison": "AAA_x-BBB_y",
@@ -48,12 +58,68 @@
           "tick_start": 59630701167,
           "tick_end": 59630701515,
           "n_samples": 30
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900000,
+          "tick_end": 59630900468,
+          "n_samples": 40
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900481,
+          "tick_end": 59630900709,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900726,
+          "tick_end": 59630900954,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900972,
+          "tick_end": 59630901200,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901223,
+          "tick_end": 59630901451,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901475,
+          "tick_end": 59630901703,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901760,
+          "tick_end": 59630901988,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630902046,
+          "tick_end": 59630902274,
+          "n_samples": 20
         }
       ]
     },
     "1.5": {
-      "n_runs": 6,
-      "total_span_ticks": 2328,
+      "n_runs": 12,
+      "total_span_ticks": 4422,
       "runs": [
         {
           "comparison": "AAA_x-BBB_y",
@@ -96,12 +162,54 @@
           "tick_start": 59630701167,
           "tick_end": 59630701515,
           "n_samples": 30
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900000,
+          "tick_end": 59630900954,
+          "n_samples": 80
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900972,
+          "tick_end": 59630901200,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901223,
+          "tick_end": 59630901451,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901475,
+          "tick_end": 59630901703,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901760,
+          "tick_end": 59630901988,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630902046,
+          "tick_end": 59630902274,
+          "n_samples": 20
         }
       ]
     },
     "2.0": {
-      "n_runs": 4,
-      "total_span_ticks": 2374,
+      "n_runs": 8,
+      "total_span_ticks": 4509,
       "runs": [
         {
           "comparison": "AAA_x-BBB_y",
@@ -130,12 +238,40 @@
           "tick_start": 59630701167,
           "tick_end": 59630701515,
           "n_samples": 30
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900000,
+          "tick_end": 59630901451,
+          "n_samples": 120
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901475,
+          "tick_end": 59630901703,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630901760,
+          "tick_end": 59630901988,
+          "n_samples": 20
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630902046,
+          "tick_end": 59630902274,
+          "n_samples": 20
         }
       ]
     },
     "5.0": {
-      "n_runs": 3,
-      "total_span_ticks": 2414,
+      "n_runs": 5,
+      "total_span_ticks": 4630,
       "runs": [
         {
           "comparison": "AAA_x-BBB_y",
@@ -157,6 +293,20 @@
           "tick_start": 59630701167,
           "tick_end": 59630701515,
           "n_samples": 30
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630900000,
+          "tick_end": 59630901988,
+          "n_samples": 160
+        },
+        {
+          "comparison": "EEE_b-FFF_b",
+          "file": "2022-02-25_EEE_b-FFF_b.dat",
+          "tick_start": 59630902046,
+          "tick_end": 59630902274,
+          "n_samples": 20
         }
       ]
     }

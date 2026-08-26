@@ -80,7 +80,9 @@ def main():
     # Consumer gate: a report that is not a clean success must not become science.
     # This module used to read the IGS report unconditionally, so a failed pinning run
     # produced normal GNSS support (FTRO-DEF-031 v4.0.0).
-    igs = pinning.assert_report_usable(IGS_PINS, what="IGS pin report")
+    igs = pinning.assert_report_usable(
+        IGS_PINS, what="IGS pin report",
+        registry="phase0/evidence/expected-digests.json", section="igs")
 
     # Optical: EXACT union of every contiguous valid run across all comparisons.
     # Falls back to per-comparison envelopes (an upper bound) only if the full

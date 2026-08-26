@@ -2,20 +2,20 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.10.0  
+**Version:** 0.11.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (26), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (26), low (3), medium (21)  
-**By domain:** cross-domain (19), gnss (2), optical (18), pulsar (8), vlbi (5)  
-**By disposition:** open (24), resolved (28)  
-**By responsible party:** ftro (28), provider (24)  
+**By class:** execution (31), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (29), low (3), medium (23)  
+**By domain:** cross-domain (22), gnss (3), optical (19), pulsar (8), vlbi (5)  
+**By disposition:** open (24), resolved (33)  
+**By responsible party:** ftro (33), provider (24)  
 
-**Total entries:** 52 · **self-directed:** 28 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035, FTRO-DEF-036, FTRO-DEF-037, FTRO-DEF-038, FTRO-DEF-039, FTRO-DEF-040, FTRO-DEF-041, FTRO-DEF-042, FTRO-DEF-043, FTRO-DEF-044, FTRO-DEF-045, FTRO-DEF-046, FTRO-DEF-047, FTRO-DEF-048, FTRO-DEF-049, FTRO-DEF-050, FTRO-DEF-051, FTRO-DEF-052)
+**Total entries:** 57 · **self-directed:** 33 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035, FTRO-DEF-036, FTRO-DEF-037, FTRO-DEF-038, FTRO-DEF-039, FTRO-DEF-040, FTRO-DEF-041, FTRO-DEF-042, FTRO-DEF-043, FTRO-DEF-044, FTRO-DEF-045, FTRO-DEF-046, FTRO-DEF-047, FTRO-DEF-048, FTRO-DEF-049, FTRO-DEF-050, FTRO-DEF-051, FTRO-DEF-052, FTRO-DEF-053, FTRO-DEF-054, FTRO-DEF-055, FTRO-DEF-056, FTRO-DEF-057)
 
 | ID | Class | Sev. | Domain | Party | Title |
 | --- | --- | --- | --- | --- | --- |
@@ -47,6 +47,9 @@
 | [`FTRO-DEF-048`](#ftro-def-048) | execution | high | optical | **self** | SELF-DIRECTED: the segmentation oracle validated topology, not extent |
 | [`FTRO-DEF-049`](#ftro-def-049) | execution | high | cross-domain | **self** | SELF-DIRECTED: generated-file version enforcement did not exist |
 | [`FTRO-DEF-050`](#ftro-def-050) | execution | high | cross-domain | **self** | SELF-DIRECTED: the consumer permitted absent per-pin state and incoherent counters |
+| [`FTRO-DEF-053`](#ftro-def-053) | execution | high | optical | **self** | SELF-DIRECTED: the oracle fixture contained no gap at a scientifically active tolerance boundary |
+| [`FTRO-DEF-054`](#ftro-def-054) | execution | high | gnss | **self** | SELF-DIRECTED: the runtime consumer verified a report's self-description, not its completeness |
+| [`FTRO-DEF-055`](#ftro-def-055) | execution | high | cross-domain | **self** | SELF-DIRECTED: generated-version enforcement had two laundering paths |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | optical | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | optical | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | optical | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -68,6 +71,8 @@
 | [`FTRO-DEF-047`](#ftro-def-047) | execution | medium | cross-domain | **self** | SELF-DIRECTED: a mutation test asserted only a non-zero exit, which the unmutated run also produces |
 | [`FTRO-DEF-051`](#ftro-def-051) | execution | medium | cross-domain | **self** | SELF-DIRECTED: an explicit digest bypassed preflight, and a trailing newline validated |
 | [`FTRO-DEF-052`](#ftro-def-052) | execution | medium | cross-domain | **self** | SELF-DIRECTED: the discovery suffix list advertised formats the pattern could not parse |
+| [`FTRO-DEF-056`](#ftro-def-056) | execution | medium | cross-domain | **self** | SELF-DIRECTED: container-shape checks ran only when the container was already the right type |
+| [`FTRO-DEF-057`](#ftro-def-057) | execution | medium | cross-domain | **self** | SELF-DIRECTED: the 'nothing was fetched' test measured 'nothing was cached' |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | optical | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | optical | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | gnss | provider | High-rate 30 s clock products are absent from the mirror used |
@@ -1778,5 +1783,168 @@
 **Workaround.** None.
 
 **Proposed response.** Corrected 2026-08-26. Rule adopted (D-070): a capability list is a claim; it needs a test per entry.
+
+---
+
+### FTRO-DEF-053
+
+**SELF-DIRECTED: the oracle fixture contained no gap at a scientifically active tolerance boundary**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | optical |
+| Dataset | `FTRO test suite` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Constraining the segmentation threshold against off-by-one error.
+
+**Known fact or required evidence.** 5.0 s floors to 57 ticks and rounds to 58, and the real archive contains 3,143 gaps of exactly 58 ticks.
+
+**Observed.** The mini-archive had no 58-tick gap, so replacing int() with round() in contiguous_runs() left all 94 tests green while changing the published 5 s sensitivity row: runs 4,826 -> 2,943, optical 133.567344 -> 134.533680 h, optical-VLBI 82.232760 -> 82.536504 h. The regenerated report passed the tests, the version gate and the crate gate.
+
+**Evidence.**
+
+- `tests/fixtures/mini-archive/EEE_b-FFF_b/`
+- `tests/test_retrieval_validation.py`
+
+**Impact.** An oracle can only constrain behaviour its fixture exercises. The fixture now embeds gaps at each tolerance's floored threshold T and at T+1 (12/13, 17/18, 23/24, 57/58), with tests asserting that a T gap merges and a T+1 gap splits at every tolerance. Verified: int->round now fails 6 tests, and a > to >= flip fails 12.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-071): a fixture must exercise every threshold the production code branches on, at the boundary and one beyond it.
+
+---
+
+### FTRO-DEF-054
+
+**SELF-DIRECTED: the runtime consumer verified a report's self-description, not its completeness**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | gnss |
+| Dataset | `FTRO consumer gate` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Refusing an incomplete or fabricated report before deriving science from it.
+
+**Known fact or required evidence.** A report can be internally consistent and still be neither complete nor truthful.
+
+**Observed.** assert_report_usable() consulted nothing external. Truncating the IGS report from 57 pins to one and setting n_pinned: 1 was accepted; so was rewriting a pin's actual AND expected digest to the same fabricated value. four_domain_intersection.py then consumed those pins directly. The stored-report test did check registry equality, but the documented workflow runs the tests BEFORE retrieval, so it does not protect a run.
+
+**Evidence.**
+
+- `src/ftro/pinning.py`
+- `src/ftro/four_domain_intersection.py`
+
+**Impact.** The gate is now bound to the expected-digest registry: it rejects pins missing from the registry, pins unknown to it, duplicate pins, and any pin whose digest disagrees with the registry value. Both accepted mutations now exit 1.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-072): a runtime gate must compare against an external expectation, not the artifact's own account of itself.
+
+---
+
+### FTRO-DEF-055
+
+**SELF-DIRECTED: generated-version enforcement had two laundering paths**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO version gate` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Requiring a version advance for changed generated content.
+
+**Known fact or required evidence.** D-067: a compensating control must measure the property the original gate measured.
+
+**Observed.** The generated check rejected changed content only when the declared version EQUALLED the recorded version, and --register disabled the refusal outright. Verified: same version gave check 1 -> register 0 -> check 0 with all 94 tests passing; a v0.2.0 to v0.1.0 downgrade passed check, update and every test; and removing the version entirely let --update record version: null.
+
+**Evidence.**
+
+- `src/ftro/check_versions.py`
+
+**Impact.** Generated entries now run the same state machine as tracked ones: a version is required and must be valid, the registry must agree exactly during --check, updates are permitted only on a strict forward change, and --register may only ADD a missing entry. All three laundering paths now end in exit 1.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-073): a special-cased class of artifact must obey the general state machine, not a weakened copy of it.
+
+---
+
+### FTRO-DEF-056
+
+**SELF-DIRECTED: container-shape checks ran only when the container was already the right type**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO consumer gate` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Validating the structure of a pin report.
+
+**Known fact or required evidence.** A coherence check guarded by isinstance() is skipped, not failed, when the type is wrong.
+
+**Observed.** The failure/uncovered coherence check ran only when each field was ALREADY a list, so failures: {} and uncovered_by_registry: "ghost" both passed, and adding pins: {} to a valid single-pin report was ignored. The tests exercised non-empty valid lists only.
+
+**Evidence.**
+
+- `src/ftro/pinning.py`
+- `tests/test_retrieval_validation.py`
+
+**Impact.** Shape is now required explicitly: pins must be a list when present, every entry must be an object, and each count-associated field must be present and a list of the correct type. Six container-shape mutations are tested.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-074): validate the type before the invariant; a guard that skips on the wrong type is a fail-open branch.
+
+---
+
+### FTRO-DEF-057
+
+**SELF-DIRECTED: the 'nothing was fetched' test measured 'nothing was cached'**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO test suite` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Proving that a preflight failure issues no request.
+
+**Known fact or required evidence.** Bytes are not cached until verification, so an empty cache does not imply no retrieval.
+
+**Observed.** The test observed the diagnostic and the cache directory. Moving retrieval ABOVE the preflight error, while keeping the same message and leaving the cache empty, passed all 94 tests. Production ordering was correct, but nothing enforced it.
+
+**Evidence.**
+
+- `tests/test_retrieval_validation.py`
+
+**Impact.** The test now spies on urllib.request.urlopen and asserts zero calls, so the ordering itself is enforced. Verified: injecting a fetch before the preflight now fails. The production-consumer mutation test was also still writing into the tracked checkout, contrary to D-067; it now runs in a copied tree and asserts the tracked report is untouched.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-075): assert the action you mean to forbid, not a side effect that usually accompanies it.
 
 ---

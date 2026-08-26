@@ -119,7 +119,23 @@ REQUIRED_REPORT_STATE = {
 }
 
 
-def assert_report_usable(path, what="report"):
+def _registry_digests(registry_path, section):
+    try:
+        with open(registry_path, encoding="utf-8") as fh:
+            sect = json.load(fh).get(section) or {}
+    except (OSError, json.JSONDecodeError):
+        return None
+    return {k: (v["sha256"] if isinstance(v, dict) else v) for k, v in sect.items()}
+
+
+def assert_report_usable(path, what="report", registry=None, section=None, key=None):
+    """Consumer gate. With `registry`/`section` it also checks COMPLETENESS.
+
+    Without them the gate verifies only a report's self-description: truncating the IGS
+    report to one pin and setting n_pinned: 1 was accepted, as was rewriting a pin's
+    actual AND expected digest to the same fabricated value, because nothing external was
+    consulted (FTRO-DEF-054). `key` maps a pin to its registry name.
+    """
     """Consumer-side gate: refuse to build science on a report that is not a clean success.
 
     Every required field must be PRESENT, of the right type, and hold a permitted value.
@@ -149,11 +165,28 @@ def assert_report_usable(path, what="report"):
         if value not in allowed:
             problems.append(f"{field}={value!r}, expected one of {allowed}")
 
-    if "pins" not in doc and "sha256" not in doc:
+    # Container shape, explicitly. The coherence checks below previously ran only when a
+    # field was ALREADY a list, so failures: {} and uncovered_by_registry: "ghost" both
+    # passed, and adding pins: {} to a single-pin report was ignored (FTRO-DEF-056).
+    if "pins" in doc:
+        if not isinstance(doc["pins"], list):
+            problems.append(f"pins is {type(doc['pins']).__name__}, expected list")
+            pins = []
+        else:
+            pins = doc["pins"]
+            for i, p in enumerate(pins):
+                if not isinstance(p, dict):
+                    problems.append(f"pins[{i}] is {type(p).__name__}, expected object")
+            pins = [p for p in pins if isinstance(p, dict)]
+    elif "sha256" in doc:
+        pins = [doc]
+    else:
         problems.append("report declares neither a pins list nor a single pin")
-    pins = doc.get("pins") if isinstance(doc.get("pins"), list) else [doc]
-    if not pins:
-        problems.append("report contains no pins")
+        pins = []
+    if not pins and "pins" not in doc and "sha256" not in doc:
+        pass
+    elif not pins:
+        problems.append("report contains no usable pins")
     # A declared count that disagrees with the pins is a report describing something
     # other than itself.
     # n_pinned must be PRESENT and a true int. Absence passed; 57.0 == 57 and True == 1
@@ -169,7 +202,11 @@ def assert_report_usable(path, what="report"):
     # A zero counter beside a non-empty list is a report contradicting itself.
     for lst, counter in (("failures", "n_failed"),
                          ("uncovered_by_registry", "n_without_expected_digest")):
-        if isinstance(doc.get(lst), list) and len(doc[lst]) != doc.get(counter, 0):
+        if lst not in doc:
+            problems.append(f"{lst} absent (its counter {counter} is required, so the list is too)")
+        elif not isinstance(doc[lst], list):
+            problems.append(f"{lst} is {type(doc[lst]).__name__}, expected list")
+        elif len(doc[lst]) != doc.get(counter, 0):
             problems.append(f"{lst} has {len(doc[lst])} entries but {counter}="
                             f"{doc.get(counter)!r}")
 
@@ -193,6 +230,31 @@ def assert_report_usable(path, what="report"):
             problems.append(f"pin {label}: retrieval_validation absent")
         elif p["retrieval_validation"] != "content_validated":
             problems.append(f"pin {label}: retrieval_validation={p['retrieval_validation']!r}")
+
+    # Completeness against the expected registry: which artifacts must be present, and
+    # what their digests must be. A self-consistent report is not necessarily a complete
+    # or truthful one.
+    if registry and section:
+        expected = _registry_digests(registry, section)
+        if expected is None:
+            problems.append(f"expected-digest registry {registry} is unreadable")
+        else:
+            keyfn = key or (lambda p: p.get("name"))
+            got = [keyfn(p) for p in pins]
+            dupes = sorted({n for n in got if got.count(n) > 1})
+            missing = sorted(set(expected) - set(got))
+            unknown = sorted(set(got) - set(expected))
+            if dupes:
+                problems.append(f"duplicate pins: {dupes[:5]}")
+            if missing:
+                problems.append(f"{len(missing)} artifact(s) in the registry are absent "
+                                f"from the report: {missing[:5]}")
+            if unknown:
+                problems.append(f"{len(unknown)} pin(s) are not in the registry: {unknown[:5]}")
+            for p in pins:
+                n = keyfn(p)
+                if n in expected and p.get("sha256") != expected[n]:
+                    problems.append(f"pin {n}: sha256 does not match the registry digest")
 
     if problems:
         raise SystemExit(f"{what} at {path} is not a clean success: {'; '.join(problems[:6])}"
