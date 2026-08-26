@@ -2,20 +2,20 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.7.0  
+**Version:** 0.8.0  
 **Opened:** 2026-08-25  
 **Phase:** Phase 0  
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (10), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (17), low (3), medium (14)  
-**By domain:** cross-domain (7), gnss (2), optical (15), pulsar (8), vlbi (4)  
-**By disposition:** open (24), resolved (12)  
-**By responsible party:** ftro (12), provider (24)  
+**By class:** execution (15), policy (1), rights (2), schema (4), source_evidence (19)  
+**By severity:** critical (2), high (19), low (3), medium (17)  
+**By domain:** cross-domain (10), gnss (2), optical (16), pulsar (8), vlbi (5)  
+**By disposition:** open (24), resolved (17)  
+**By responsible party:** ftro (17), provider (24)  
 
-**Total entries:** 36 · **self-directed:** 12 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035, FTRO-DEF-036)
+**Total entries:** 41 · **self-directed:** 17 (FTRO-DEF-018, FTRO-DEF-024, FTRO-DEF-025, FTRO-DEF-027, FTRO-DEF-029, FTRO-DEF-030, FTRO-DEF-031, FTRO-DEF-032, FTRO-DEF-033, FTRO-DEF-034, FTRO-DEF-035, FTRO-DEF-036, FTRO-DEF-037, FTRO-DEF-038, FTRO-DEF-039, FTRO-DEF-040, FTRO-DEF-041)
 
 | ID | Class | Sev. | Domain | Party | Title |
 | --- | --- | --- | --- | --- | --- |
@@ -38,6 +38,8 @@
 | [`FTRO-DEF-032`](#ftro-def-032) | execution | high | pulsar | **self** | SELF-DIRECTED: four artifacts asserted evidence_state=resolvable under validation the profile forbids |
 | [`FTRO-DEF-034`](#ftro-def-034) | execution | high | cross-domain | **self** | SELF-DIRECTED: the §9.2 conformance test exempted every record that omitted the field |
 | [`FTRO-DEF-035`](#ftro-def-035) | execution | high | cross-domain | **self** | SELF-DIRECTED: projection-only verification -- tests checked a hand-corrected manifest while its generators drifted |
+| [`FTRO-DEF-037`](#ftro-def-037) | execution | high | optical | **self** | SELF-DIRECTED: a contract change updated one caller of two, and the report published a wrong number |
+| [`FTRO-DEF-038`](#ftro-def-038) | execution | high | cross-domain | **self** | SELF-DIRECTED: the consumer gate and its tests both equated an absent field with success |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | optical | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | optical | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | optical | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -52,6 +54,9 @@
 | [`FTRO-DEF-028`](#ftro-def-028) | source_evidence | medium | vlbi | provider | The published vgosDB was silently reprocessed in 2025 with no version signal outside its wrappers |
 | [`FTRO-DEF-033`](#ftro-def-033) | schema | medium | cross-domain | **self** | SELF-DIRECTED: version labels stopped identifying a constraint state |
 | [`FTRO-DEF-036`](#ftro-def-036) | execution | medium | optical | **self** | SELF-DIRECTED: the spacing analysis differenced binary floats and invented a distinct spacing |
+| [`FTRO-DEF-039`](#ftro-def-039) | execution | medium | cross-domain | **self** | SELF-DIRECTED: --update could legalise an unbumped content change |
+| [`FTRO-DEF-040`](#ftro-def-040) | execution | medium | cross-domain | **self** | SELF-DIRECTED: 'every versioned artifact' was a manual list with no completeness check |
+| [`FTRO-DEF-041`](#ftro-def-041) | execution | medium | vlbi | **self** | SELF-DIRECTED: a transport failure produced a traceback instead of a rejected report |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | optical | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | optical | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | gnss | provider | High-rate 30 s clock products are absent from the mirror used |
@@ -1235,5 +1240,171 @@
 **Workaround.** None.
 
 **Proposed response.** Corrected round 2 (2026-08-26): contiguous_runs() operates on integer microday ticks with the tolerance converted once by flooring, so segmentation is exact integer arithmetic. The obsolete note is replaced by the empty-band statement. The four-domain result is unchanged at 82.0134 h optical-VLBI and no_common_support.
+
+---
+
+### FTRO-DEF-037
+
+**SELF-DIRECTED: a contract change updated one caller of two, and the report published a wrong number**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | optical |
+| Dataset | `FTRO Phase-0 tooling` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Keeping the sensitivity scan consistent with the segmentation it probes.
+
+**Known fact or required evidence.** analyse_optical.contiguous_runs() was changed to take integer microday ticks rather than float MJDs (FTRO-DEF-036 v2.0.0).
+
+**Observed.** Only one of its two callers was updated. optical_sensitivity.Resegmenter continued to pass float MJDs and to convert the returned values as MJDs. With MJD-scale differences compared against a tick-scale tolerance, no gap test could ever be true: every tolerance collapsed to 34 runs -- one per file -- and the committed report published 171.442704 h optical and 117.995208 h optical-VLBI, against the 133.111920 h and 82.013424 h its own main computation produced from the same convention. The report therefore contradicted the selection note, and all 57 committed tests passed.
+
+**Evidence.**
+
+- `src/ftro/optical_sensitivity.py`
+- `phase0/reports/four-domain-intersection.json#optical_support_sensitivity`
+- `tests/test_retrieval_validation.py#TestSensitivityAgreesWithMainComputation`
+
+**Impact.** A wrong number in a published report, reachable by any reader, surviving every gate. The four-domain null was unaffected -- no_common_support holds under both the broken and the corrected scan -- but the sensitivity table, whose entire purpose is to show the null is convention-independent, was itself wrong. The missing invariant is obvious in hindsight: the scan's shipped-tolerance row and the main computation share a convention, so they must agree, and nothing compared them.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26: the adapter passes ticks. Corrected values reproduce 7,398/7,398/7,139/4,826 runs at 1.1/1.5/2.0/5.0 s. Three tests added: the shipped-tolerance row must equal the main computation, run counts must not be degenerate across tolerances, and the invariance flag must be computed. Rule adopted (D-054): changing a function's contract requires enumerating its callers, and any two computations sharing a convention must be asserted equal.
+
+---
+
+### FTRO-DEF-038
+
+**SELF-DIRECTED: the consumer gate and its tests both equated an absent field with success**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO consumer gate and test suite` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Refusing to derive science from a report that is not a clean success.
+
+**Known fact or required evidence.** Absence is not evidence of success -- the principle already recorded in FTRO-DEF-034 for retrieval_validation.
+
+**Observed.** pinning.assert_report_usable() tested `doc.get(field)` for truthiness, so a report OMITTING retrieval_validation, n_failed or n_without_expected_digest was accepted. Each was removed independently and all three passed. The committed tests carried the same defect via assertFalse(doc.get(...)), so removing both counters from the IGS report left all 57 tests green. The same fail-open pattern, in the gate written to fix the previous one.
+
+**Evidence.**
+
+- `src/ftro/pinning.py#REQUIRED_REPORT_STATE`
+- `tests/test_retrieval_validation.py#TestConsumerGate`
+
+**Impact.** A report could reach the scientific path by declaring less rather than more. Fixed by requiring each field to be PRESENT, of the correct type, and to hold a permitted value, and by mutation-testing the production consumer itself rather than only the helper. Single-pin reports now declare the same state as list reports, so no consumer needs a per-shape special case and absence is never ambiguous.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-055): a conformance predicate names its required fields explicitly with types and permitted values; `.get()` truthiness is never a conformance test.
+
+---
+
+### FTRO-DEF-039
+
+**SELF-DIRECTED: --update could legalise an unbumped content change**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO version gate` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Preventing content drift from passing the version gate.
+
+**Known fact or required evidence.** D-051: the version gate compares content digests so unbumped drift is detectable.
+
+**Observed.** check_versions.py --update replaced both the recorded version and the recorded digest unconditionally, including for artifacts the audit had just flagged as same-version drift. In a clean export: --check exited 1, --update exited 0, and --check then passed with the version unchanged. The gate could be silenced by the command documented for maintaining it.
+
+**Evidence.**
+
+- `src/ftro/check_versions.py`
+- `tests/test_retrieval_validation.py#test_update_refuses_to_launder_an_unbumped_change`
+
+**Impact.** Any drift could be made invisible in one command. --update now REFUSES when content changed under an unchanged version, and initial registration is a separate explicit --register path rather than a side effect.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-056): the command that maintains a gate must not be able to satisfy it.
+
+---
+
+### FTRO-DEF-040
+
+**SELF-DIRECTED: 'every versioned artifact' was a manual list with no completeness check**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO versioned-artifact registry` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Applying D-039a, which binds every versioned artifact.
+
+**Known fact or required evidence.** A rule quantified over 'every X' needs a way to enumerate X.
+
+**Observed.** The registry was a hand-written twelve-file list. All three ApplicabilityAssessments declare version 1.0.0 and none was registered, so changing one without a bump returned success. Nothing detected the omission because nothing enumerated the population the rule quantifies over.
+
+**Evidence.**
+
+- `src/ftro/check_versions.py#discover_versioned`
+- `phase0/evidence/versioned-artifacts.json`
+
+**Impact.** The version rule silently applied to a subset. check_versions.py now DISCOVERS every document under phase0/, ledgers/, profile/ and charter/ that declares a version, and fails if one is neither registered nor listed in an explicit EXCLUSIONS map with a stated reason. Fourteen artifacts are tracked; four generated or externally-versioned documents are excluded on the record. A test asserts a newly added versioned document is detected.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-057): a rule quantified over 'every X' requires an executable enumeration of X and an explicit, stated exclusion policy.
+
+---
+
+### FTRO-DEF-041
+
+**SELF-DIRECTED: a transport failure produced a traceback instead of a rejected report**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | vlbi |
+| Dataset | `FTRO retrieval tooling` |
+| Disposition | `resolved` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Applying the shared retrieval contract to a failed retrieval.
+
+**Known fact or required evidence.** D-049: a report reaches its official path only on complete success, and a failure is preserved as .rejected.
+
+**Observed.** pin_vgosdb.py's urlopen() sat outside any failure-handling path. A preflight-covered but nonexistent file:// URL exited 1 with an unhandled traceback and produced NEITHER the official report NOR a .rejected one -- so a transport failure left no evidence at all, contrary to the contract every other failure mode obeyed. The subprocess suite exercised only content and digest outcomes, never transport.
+
+**Evidence.**
+
+- `src/ftro/pin_vgosdb.py`
+- `tests/test_retrieval_validation.py#test_transport_failure_is_preserved_as_rejected`
+
+**Impact.** The one failure mode most likely in practice -- the network -- was the one that left no record. Now caught and promoted as a rejected report with retrieval_validation = content_rejected and a stated reason, with a test asserting no traceback reaches the operator.
+
+**Workaround.** None.
+
+**Proposed response.** Corrected 2026-08-26. Rule adopted (D-058): every failure mode a contract names must have a test, transport included.
 
 ---

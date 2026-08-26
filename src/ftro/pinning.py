@@ -81,28 +81,56 @@ def promote(report, out_path, ok):
     return True
 
 
+# Fields a report MUST declare for a consumer to trust it, with their required values.
+# Absence is a failure, not a zero: the first version used `.get()` truthiness, so a
+# report that simply omitted n_failed or retrieval_validation was accepted (FTRO-DEF-038).
+REQUIRED_REPORT_STATE = {
+    "retrieval_validation": ("content_validated",),
+    "n_failed": (0,),
+    "n_without_expected_digest": (0,),
+}
+
+
 def assert_report_usable(path, what="report"):
     """Consumer-side gate: refuse to build science on a report that is not a clean success.
 
-    four_domain_intersection.py consumed the IGS report without checking any of this, so a
-    failed run produced normal GNSS support.
+    Every required field must be PRESENT, of the right type, and hold a permitted value.
+    four_domain_intersection.py originally consumed the IGS report without checking any of
+    this, so a failed run produced normal GNSS support; the first gate then accepted a
+    report that omitted the state entirely.
     """
     with open(path, encoding="utf-8") as fh:
         doc = json.load(fh)
     problems = []
-    if doc.get("n_failed"):
-        problems.append(f"n_failed={doc['n_failed']}")
-    if doc.get("n_without_expected_digest"):
-        problems.append(f"n_without_expected_digest={doc['n_without_expected_digest']}")
-    rv = doc.get("retrieval_validation")
-    if rv is not None and rv != "content_validated":
-        problems.append(f"retrieval_validation={rv!r}")
+
+    for field, allowed in REQUIRED_REPORT_STATE.items():
+        if field not in doc:
+            problems.append(f"{field} absent (absence is not evidence of success)")
+            continue
+        value = doc[field]
+        exemplar = allowed[0]
+        if isinstance(exemplar, int) and not isinstance(value, int):
+            problems.append(f"{field}={value!r} is {type(value).__name__}, expected int")
+        elif isinstance(exemplar, str) and not isinstance(value, str):
+            problems.append(f"{field}={value!r} is {type(value).__name__}, expected str")
+        elif value not in allowed:
+            problems.append(f"{field}={value!r}, expected one of {allowed}")
+
+    if "pins" not in doc and "sha256" not in doc:
+        problems.append("report declares neither a pins list nor a single pin")
     pins = doc.get("pins") if isinstance(doc.get("pins"), list) else [doc]
-    bad = [p.get("name") or p.get("key") or p.get("session")
-           for p in pins if p.get("checksum_match") is not True]
-    if bad:
-        problems.append(f"{len(bad)} pins without checksum_match=True: {bad[:5]}")
+    if not pins:
+        problems.append("report contains no pins")
+    for p in pins:
+        label = p.get("name") or p.get("key") or p.get("session") or "<unnamed>"
+        if p.get("checksum_match") is not True:
+            problems.append(f"pin {label}: checksum_match={p.get('checksum_match')!r}, "
+                            f"expected True")
+        if not p.get("expected_sha256"):
+            problems.append(f"pin {label}: no expected_sha256 recorded")
+
     if problems:
-        raise SystemExit(f"{what} at {path} is not a clean success: {'; '.join(problems)}. "
+        raise SystemExit(f"{what} at {path} is not a clean success: {'; '.join(problems[:6])}"
+                         f"{' ...' if len(problems) > 6 else ''}. "
                          f"Regenerate it before deriving results from it.")
     return doc

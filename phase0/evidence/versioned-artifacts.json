@@ -1,22 +1,22 @@
 {
   "document": "FTRO versioned-artifact registry",
-  "note": "Content digest recorded when each version was set. check_versions.py fails if a file changed without a version bump -- the check the first gate could not perform.",
+  "note": "Content digest recorded when each version was set. check_versions.py fails if a file changed without a version bump -- the check the first gate could not perform. Completeness is enforced by discovery: any document under phase0/, ledgers/, profile/ or charter/ that declares a version must be registered or explicitly excluded.",
   "artifacts": {
     "profile/ftro-graph-profile-v0.0.3.md": {
       "version": "0.0.3",
       "sha256": "c33cfc61fd99ee0b28dcd843a9a10ce0ade08f68759d24de4d6f895273ba2cd5"
     },
     "phase0/evidence/identities.json": {
-      "version": "0.2.0",
-      "sha256": "51504f2caf4415cfb2c432a3b66d7be7888c149b42640205431f8712de5467d2"
+      "version": "0.3.0",
+      "sha256": "531962537358fae0fff488512857888d9fffaad0f7d65a252309e9e6a6f9eecd"
     },
     "ledgers/deficiency-log.json": {
-      "version": "0.7.0",
-      "sha256": "a488bd6409d1a6d5f1477aab8260de4efac20e3eba439fec06094fd496894135"
+      "version": "0.8.0",
+      "sha256": "a9d7e28f9ef2ee7f90f3e2982f1561ac0f2e537a1750d008aa5e5b0071b95b6e"
     },
     "ledgers/decision-ledger.md": {
-      "version": "0.4.0",
-      "sha256": "cdd8842708d926a24b334d3b805ea786bb04187a9e1cf6cbfb11bc7cf143f813"
+      "version": "0.5.0",
+      "sha256": "9ff634cb493d277b50bf7243cf685b8fbbf484762d1c3bcec237bdfce5fe5cb2"
     },
     "ledgers/source-ledger.md": {
       "version": "0.4.0",
@@ -34,10 +34,6 @@
       "version": "0.2.0",
       "sha256": "2f20be85d1e5286e3896266e6053f98b7b652575a374d90b181e1b6e670f4e79"
     },
-    "phase0/optical-validity-intervals.md": {
-      "version": "0.2.0",
-      "sha256": "bf45394d173767f43f17d1a58f36b9f8161b9ddea4107212ecf02ca389029029"
-    },
     "phase0/optical-timetag-ancestry-note.md": {
       "version": "0.3.0",
       "sha256": "8bbb3ae587eab3b7f3cd54f8e6b0adda17ba73e1d11b5b17f7d0e91ed63225fd"
@@ -49,6 +45,18 @@
     "charter/access-charter-v0.1.md": {
       "version": "0.1.0",
       "sha256": "9cbbadd7c715ed48ea65e4b0c0289ade819716732942b818884cbe16ed157f0c"
+    },
+    "phase0/applicability/AA-PARKES-C0C0PRIME-001.md": {
+      "version": "1.0.0",
+      "sha256": "a1a5587131dc35fff8993ac32cca0ef74c3a2df3d4967c3c5145f88a27a19315"
+    },
+    "phase0/applicability/AA-PPTA-CLKREALISATION-001.md": {
+      "version": "1.0.0",
+      "sha256": "fa2d2046d24adf65202ad6b7e0bfa4af6dc47ca394ddc3fcad52469a85b83759"
+    },
+    "phase0/applicability/AA-PPTA-TIMINGMODEL-001.md": {
+      "version": "1.0.0",
+      "sha256": "6015691f62b33fff3684af2ef2db4223580342a522c6886f3c2af10292fa0068"
     }
   }
 }

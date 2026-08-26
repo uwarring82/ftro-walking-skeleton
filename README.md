@@ -75,7 +75,7 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 36 classified deficiencies** across all five classes, 12 resolved. **Twelve are
+**4. 41 classified deficiencies** across all five classes, 17 resolved. **Seventeen are
 self-directed** — against FTRO's own tooling, evidence discipline, test suite and profile
 conformance. Every entry carries a machine-readable `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as successive
 fixes proved partial.
@@ -222,7 +222,8 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | `1b77a72` | Third external review — see [session 04](labnotes/2026-08-25-session-04-review-corrections-3.md). The sensitivity scan could not perform the reanalysis it reported (`FTRO-DEF-030`) and is reimplemented by re-segmentation; the test suite skipped its own fail-closed coverage on a clean clone (`FTRO-DEF-031`); the §9.2 conformance contradiction is resolved by validating rather than downgrading (`FTRO-DEF-032`); profile bumped because a drifting version label identifies no constraint state (`FTRO-DEF-033`). |
 | `11ea11c` | Fourth external review — see [session 05](labnotes/2026-08-25-session-05-review-corrections-4.md). **Projection-only verification** named and fixed: the §9.2 check exempted every record that omitted the field (`FTRO-DEF-034`), and `pin_ppta.py` emitted four identities that differed from the manifest it was built to support (`FTRO-DEF-035`). Generators now declare canonical identities and are reconciled by test; the suite runs with zero skips on a clean export; expected digests are committed. |
 | `99fe720` | Fifth external review — see [session 06](labnotes/2026-08-26-session-06-review-corrections-5.md). The digest registry was committed but **not connected** (57/57 IGS pins had `expected_sha256: null`), and the reconciliation test could not detect drift. Now **39 tests**, all 65 digests enforced, and the reconciliation verified by injected mutation. Spacing analysis moved to exact integer ticks: `1.987199 s` was a float artefact (`FTRO-DEF-036`). |
-| this | Sixth external review — see [session 07](labnotes/2026-08-26-session-07-review-corrections-6.md). Retrieval now **preflights** the digest registry before fetching and **promotes reports only on complete success**; consumers refuse a non-clean report; the version gate checks content digests rather than a hard-coded mirror of the version string; segmentation moved to integer ticks. The manual mutation table is now **12 committed tests**. **57 tests**, zero skips. |
+| `615afe2` | Sixth external review — see [session 07](labnotes/2026-08-26-session-07-review-corrections-6.md). Retrieval now **preflights** the digest registry before fetching and **promotes reports only on complete success**; consumers refuse a non-clean report; the version gate checks content digests rather than a hard-coded mirror of the version string; segmentation moved to integer ticks. The manual mutation table is now **12 committed tests**. |
+| this | Seventh external review — see [session 08](labnotes/2026-08-26-session-08-review-corrections-7.md). A contract change updated one caller of two, and the sensitivity scan **published a wrong number past every gate** (`FTRO-DEF-037`); the consumer gate and its tests both accepted an absent field as success (`FTRO-DEF-038`); `--update` could silence the version gate (`FTRO-DEF-039`). **70 tests**, zero skips. |
 
 ## Next — Phase 1
 

@@ -46,6 +46,7 @@ US_PER_DAY = 86_400_000_000
 US_PER_S = 1_000_000
 W0_MJD, W1_MJD = 59630.0, 59640.0
 W0, W1 = int(W0_MJD) * US_PER_DAY, int(W1_MJD) * US_PER_DAY
+W0_TICK, W1_TICK = int(W0_MJD * 1_000_000), int(W1_MJD * 1_000_000)
 WINDOW = [(W0, W1)]
 
 GAP_TOLERANCES_S = (1.1, 1.5, 2.0, 5.0)
@@ -127,7 +128,14 @@ class Resegmenter:
         self._cache = None
 
     def _window_samples(self):
-        """[(comparison, file, [mjd...], [flag...])] for files touching the window."""
+        """[(comparison, file, [tick...], [flag...])] for files touching the window.
+
+        Ticks, not MJDs: analyse_optical.contiguous_runs() takes integer microday ticks.
+        This adapter previously passed floats and converted the results back as MJDs,
+        which silently made every gap test false -- all four tolerances collapsed to 34
+        runs (one per file) and the report published 171.442704 h optical against the
+        133.111920 h its own main computation produced (FTRO-DEF-037).
+        """
         if self._cache is not None:
             return self._cache
         cache = []
@@ -141,22 +149,23 @@ class Resegmenter:
                 _hdr, rows, _bad = self.ao.parse_dat(os.path.join(cdir, fn))
                 if not rows:
                     continue
-                mjds = [r[0] for r in rows]
-                if not (max(mjds) >= W0_MJD and min(mjds) <= W1_MJD):
+                ticks = [r[6] for r in rows]
+                if not (max(ticks) >= W0_TICK and min(ticks) <= W1_TICK):
                     continue
-                w = [(m, r[2]) for m, r in zip(mjds, rows) if W0_MJD <= m <= W1_MJD]
+                w = [(t, r[2]) for t, r in zip(ticks, rows)
+                     if W0_TICK <= t <= W1_TICK]
                 if w:
-                    cache.append((name, fn, [m for m, _ in w], [f for _, f in w]))
+                    cache.append((name, fn, [t for t, _ in w], [f for _, f in w]))
         self._cache = cache
         return cache
 
     def runs(self, gap_tol_s):
         """[(start_us, end_us, n_samples, comparison, file)] segmented at gap_tol_s."""
         out = []
-        for comp, fn, mjds, flags in self._window_samples():
-            for s, e, n in self.ao.contiguous_runs(mjds, flags, keep={1, 2},
+        for comp, fn, ticks, flags in self._window_samples():
+            for s, e, n in self.ao.contiguous_runs(ticks, flags, keep={1, 2},
                                                    gap_tol_s=gap_tol_s):
-                out.append((to_us(s), to_us(e), n, comp, fn))
+                out.append((s * 86400, e * 86400, n, comp, fn))   # ticks -> us
         return out
 
     def subprocess_runs(self, gap_tol_s, out_json):
@@ -172,8 +181,8 @@ class Resegmenter:
     def window_stamps_us(self):
         """Every valid in-window tag, as exact us. Segmentation-independent."""
         out = []
-        for _c, _f, mjds, flags in self._window_samples():
-            out.extend(to_us(m) for m, fl in zip(mjds, flags) if fl in {1, 2})
+        for _c, _f, ticks, flags in self._window_samples():
+            out.extend(t * 86400 for t, fl in zip(ticks, flags) if fl in {1, 2})
         out.sort()
         return out
 

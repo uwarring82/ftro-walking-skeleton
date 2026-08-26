@@ -54,8 +54,22 @@ def main():
     retrieved = datetime.datetime.now(datetime.timezone.utc).isoformat()
 
     req = urllib.request.Request(args.url, headers={"User-Agent": "FTRO-walking-skeleton/0.1"})
-    with urllib.request.urlopen(req, timeout=300) as resp:
-        headers, body, status = dict(resp.headers), resp.read(), resp.status
+    try:
+        with urllib.request.urlopen(req, timeout=300) as resp:
+            headers, body, status = dict(resp.headers), resp.read(), resp.status
+    except Exception as exc:                                     # noqa: BLE001
+        # A transport failure is a failed retrieval, and the shared contract says a failed
+        # retrieval is preserved as .rejected rather than vanishing in a traceback
+        # (FTRO-DEF-041).
+        pinning.promote({
+            "generator": "src/ftro/pin_vgosdb.py", "session": args.session, "url": args.url,
+            "retrieved_utc": retrieved, "retrieval_validation": "content_rejected",
+            "content_valid": False, "checksum_match": None,
+            "rejected_reason": f"transport failure: {type(exc).__name__}: {exc}",
+            "bytes_written_to_cache": False,
+        }, args.out, False)
+        print(f"REJECTED {args.url}: transport failure: {exc}", file=sys.stderr)
+        return 1
 
     sha256 = hashlib.sha256(body).hexdigest()
     md5 = hashlib.md5(body).hexdigest()
@@ -138,6 +152,11 @@ def main():
         "expected_sha256": args.expect_sha256,
         "checksum_match": checksum_match,
         "retrieval_validation": "content_validated" if verified else "content_rejected",
+        # Single-pin reports declare the same state as list reports, so a consumer needs
+        # no per-shape special case and absence is never ambiguous.
+        "n_pinned": 1 if verified else 0,
+        "n_failed": 0 if verified else 1,
+        "n_without_expected_digest": 0 if args.expect_sha256 else 1,
         "content_checks": checks,
         "content_valid": ok,
         "n_members": len(members),

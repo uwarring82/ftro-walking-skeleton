@@ -1,6 +1,6 @@
 {
   "document": "FTRO Phase-0 concept and snapshot identities",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "date": "2026-08-25",
   "card": "FTRO-WS-001 v0.3",
   "note": "Task card section 11.3: living series carry a concept identity naming the continuing product line and a snapshot identity naming the immutable state actually consumed. Where the provider supplies no immutable snapshot PID, section 10 requires an FTRO identity composed from the concept identifier, retrieval time, byte checksum and recorded retrieval procedure.",
@@ -399,7 +399,7 @@
       "sha256": "0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
       "md5": "f577564a3166a31f4db273ec66a7850e",
       "size_bytes": 19610760,
-      "retrieved_utc": "2026-08-25T23:24:11.136602+00:00",
+      "retrieved_utc": "2026-08-26T07:04:04.650728+00:00",
       "last_modified": "Mon, 15 Dec 2025 16:46:58 GMT",
       "etag": "\"12b3c88-646005c046480\"",
       "retrieval_validation": "content_validated",
@@ -652,6 +652,11 @@
       "version": "0.2.0",
       "commit": "this",
       "note": "Every record declares retrieval_validation; the three git-hosted evidence artifacts are retrieved and content-validated rather than asserted resolvable on commit metadata; concept-level records carry not_applicable."
+    },
+    {
+      "version": "0.3.0",
+      "commit": "this",
+      "note": "vgosDB retrieval time and procedure re-synced after a re-pin. A re-pin changes the recorded provenance of a snapshot identity, so it is a deliberate version change, not incidental churn -- which is why the content gate flags it."
     }
   ]
 }

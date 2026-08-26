@@ -273,6 +273,27 @@ class TestPinnerEndToEnd(unittest.TestCase):
                 break
         return r, rec
 
+    def test_transport_failure_is_preserved_as_rejected(self):
+        """A failed retrieval must leave evidence, not a traceback (FTRO-DEF-041)."""
+        out = os.path.join(self.tmp, "ghost.json")
+        reg = os.path.join(self.tmp, "ghost-registry.json")
+        with open(reg, "w", encoding="utf-8") as fh:
+            json.dump({"vgosdb": {"ghost.tgz": "0" * 64}}, fh)
+        r = subprocess.run(
+            [sys.executable, "src/ftro/pin_vgosdb.py",
+             "--url", "file:///nonexistent/path/ghost.tgz", "--session", "R11040",
+             "--cache", os.path.join(self.tmp, "cache"), "--out", out, "--expect", reg],
+            cwd=REPO, capture_output=True, text=True, timeout=120)
+        self.assertEqual(r.returncode, 1)
+        self.assertNotIn("Traceback", r.stderr, "a transport failure surfaced as a traceback")
+        self.assertFalse(os.path.exists(out), "a failed retrieval must not be promoted")
+        self.assertTrue(os.path.exists(out + ".rejected"),
+                        "a failed retrieval must be preserved as .rejected")
+        with open(out + ".rejected", encoding="utf-8") as fh:
+            rec = json.load(fh)
+        self.assertIn("transport failure", rec["rejected_reason"])
+        self.assertEqual(rec["retrieval_validation"], "content_rejected")
+
     def test_preflight_refuses_an_uncovered_target_and_fetches_nothing(self):
         """Registry coverage is checked BEFORE retrieval, not after caching."""
         r, rec = self._pin_vgosdb("vgosdb_min.tgz", registry=None)
@@ -287,11 +308,13 @@ class TestPinnerEndToEnd(unittest.TestCase):
         ok, _ = self._pin_vgosdb("vgosdb_min.tgz", out_name="official.json")
         self.assertEqual(ok.returncode, 0, ok.stderr)
         official = os.path.join(self.tmp, "official.json")
-        before = hashlib.sha256(open(official, "rb").read()).hexdigest()
+        with open(official, "rb") as fh:
+            before = hashlib.sha256(fh.read()).hexdigest()
         bad, _ = self._pin_vgosdb("not_vgosdb.tgz", out_name="official.json", registry=None,
                                   allow_unpinned=True)
         self.assertEqual(bad.returncode, 1)
-        after = hashlib.sha256(open(official, "rb").read()).hexdigest()
+        with open(official, "rb") as fh:
+            after = hashlib.sha256(fh.read()).hexdigest()
         self.assertEqual(before, after, "a failed run overwrote the official report")
         self.assertTrue(os.path.exists(official + ".rejected"),
                         "the rejected report should be preserved beside it")
@@ -601,11 +624,15 @@ class TestDigestRegistryChain(unittest.TestCase):
             with self.subTest(section=section):
                 # None was previously permitted, so a report that simply omitted the field
                 # passed. Every committed report must declare content_validated.
-                self.assertEqual(doc.get("retrieval_validation"), "content_validated",
+                # Presence, type and value -- assertFalse(doc.get(...)) equated absence
+                # with zero, the same fail-open the production gate had (FTRO-DEF-038).
+                self.assertIn("retrieval_validation", doc)
+                self.assertEqual(doc["retrieval_validation"], "content_validated",
                                  "a committed report must declare content_validated")
-                self.assertFalse(doc.get("n_failed"), "a failed report must not be committed")
-                self.assertFalse(doc.get("n_without_expected_digest"),
-                                 "a report with uncovered expectations must not be committed")
+                for counter in ("n_failed", "n_without_expected_digest"):
+                    self.assertIn(counter, doc, f"{counter} absent from a committed report")
+                    self.assertIsInstance(doc[counter], int)
+                    self.assertEqual(doc[counter], 0)
 
 
 class TestMutationsAreDetected(unittest.TestCase):
@@ -657,8 +684,10 @@ class TestMutationsAreDetected(unittest.TestCase):
         return r
 
     def test_unmutated_baseline_passes(self):
-        self.assertEqual(self._run_suite().returncode, 0,
-                         "the copied tree must pass before any mutation is meaningful")
+        r = self._run_suite()
+        self.assertEqual(r.returncode, 0,
+                         "the copied tree must pass before any mutation is meaningful\n"
+                         + r.stderr[-2000:])
 
     def _assert_detected(self, key, fn, label):
         self._mutate(key, fn)
@@ -732,6 +761,122 @@ class TestMutationsAreDetected(unittest.TestCase):
                               "omitted the top-level retrieval_validation")
 
 
+class TestConsumerGate(unittest.TestCase):
+    """pinning.assert_report_usable must fail closed on ABSENT state, not only on bad state."""
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="ftro-gate-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+        sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
+        with open(os.path.join(REPO, "phase0", "reports", "igs-artifact-pins.json"),
+                  encoding="utf-8") as fh:
+            self.good = json.load(fh)
+
+    def _check(self, doc):
+        import pinning
+        path = os.path.join(self.tmp, "r.json")
+        with open(path, "w", encoding="utf-8") as fh:
+            json.dump(doc, fh)
+        return pinning.assert_report_usable(path)
+
+    def test_clean_report_is_accepted(self):
+        self._check(self.good)
+
+    def test_absent_fields_are_rejected(self):
+        for field in ("retrieval_validation", "n_failed", "n_without_expected_digest"):
+            with self.subTest(removed=field):
+                doc = json.loads(json.dumps(self.good))
+                doc.pop(field)
+                with self.assertRaises(SystemExit):
+                    self._check(doc)
+
+    def test_wrong_typed_counter_is_rejected(self):
+        doc = json.loads(json.dumps(self.good))
+        doc["n_failed"] = "0"
+        with self.assertRaises(SystemExit):
+            self._check(doc)
+
+    def test_nonzero_counters_are_rejected(self):
+        for field in ("n_failed", "n_without_expected_digest"):
+            with self.subTest(field=field):
+                doc = json.loads(json.dumps(self.good))
+                doc[field] = 1
+                with self.assertRaises(SystemExit):
+                    self._check(doc)
+
+    def test_pin_without_expectation_is_rejected(self):
+        doc = json.loads(json.dumps(self.good))
+        doc["pins"][0]["expected_sha256"] = None
+        with self.assertRaises(SystemExit):
+            self._check(doc)
+
+    def test_empty_pins_is_rejected(self):
+        doc = json.loads(json.dumps(self.good))
+        doc["pins"] = []
+        with self.assertRaises(SystemExit):
+            self._check(doc)
+
+    def test_production_consumer_rejects_a_stripped_report(self):
+        """Mutation-test the real consumer, not only the helper."""
+        target = os.path.join(REPO, "phase0", "reports", "igs-artifact-pins.json")
+        backup = os.path.join(self.tmp, "igs.bak")
+        shutil.copy(target, backup)
+        try:
+            doc = json.loads(json.dumps(self.good))
+            doc.pop("n_failed")
+            with open(target, "w", encoding="utf-8") as fh:
+                json.dump(doc, fh, indent=2)
+            r = subprocess.run([sys.executable, "src/ftro/four_domain_intersection.py"],
+                               cwd=REPO, capture_output=True, text=True, timeout=600)
+            self.assertNotEqual(r.returncode, 0,
+                                "the production consumer accepted a report missing n_failed")
+        finally:
+            shutil.copy(backup, target)
+
+
+class TestSensitivityAgreesWithMainComputation(unittest.TestCase):
+    """The scan's shipped-tolerance row must equal the main computation.
+
+    They share a convention, so disagreement means one of them is wrong. Nothing compared
+    them, and an adapter passing MJDs to a tick-based function published 171.442704 h
+    against the main computation's 133.111920 h (FTRO-DEF-037).
+    """
+
+    def setUp(self):
+        with open(os.path.join(REPO, "phase0", "reports",
+                               "four-domain-intersection.json"), encoding="utf-8") as fh:
+            self.report = json.load(fh)
+
+    def test_shipped_tolerance_row_matches_the_main_figures(self):
+        conv = self.report["optical_support_convention"]["gap_tolerance_s"]
+        scan = self.report["optical_support_sensitivity"]["gap_tolerance_scan"]
+        row = scan.get(str(conv)) or scan.get(f"{conv:.1f}")
+        self.assertIsNotNone(row, f"no scan row for the shipped tolerance {conv}")
+        for label, main, scanned in (
+                ("optical", self.report["domain_support"]["optical"]["total_hours"],
+                 row["domain_h"]["optical"]),
+                ("optical|vlbi", self.report["pairwise"]["optical|vlbi"]["total_hours"],
+                 row["pairwise_h"]["optical|vlbi"])):
+            with self.subTest(quantity=label):
+                self.assertAlmostEqual(main, scanned, places=3,
+                                       msg="scan and main computation disagree")
+
+    def test_scan_run_counts_are_not_degenerate(self):
+        """All tolerances collapsing to one value is the signature of the adapter bug."""
+        scan = self.report["optical_support_sensitivity"]["gap_tolerance_scan"]
+        counts = {k: v["n_runs"] for k, v in scan.items()}
+        self.assertGreater(len(set(counts.values())), 1,
+                           f"every tolerance produced the same run count: {counts}")
+        self.assertGreater(min(counts.values()), 1000,
+                           f"run counts implausibly low, suggesting no splitting: {counts}")
+
+    def test_four_domain_status_is_invariant_and_computed(self):
+        sens = self.report["optical_support_sensitivity"]
+        self.assertTrue(sens["four_domain_status_invariant"])
+        self.assertEqual(set(sens["four_domain_status_over_all_variants"]),
+                         {"no_common_support"})
+
+
 class TestVersionGate(unittest.TestCase):
     """check_versions.py must detect content drift, and must itself be tested."""
 
@@ -756,6 +901,33 @@ class TestVersionGate(unittest.TestCase):
         r = self._run(work)
         self.assertEqual(r.returncode, 1, "the version gate did not detect content drift")
         self.assertIn("content changed but version is still", r.stderr)
+
+    def test_update_refuses_to_launder_an_unbumped_change(self):
+        """--update must not be a way to make unbumped drift pass."""
+        work = os.path.join(self.tmp, "repo3")
+        shutil.copytree(REPO, work, symlinks=True,
+                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
+        with open(os.path.join(work, "ledgers", "source-ledger.md"), "a",
+                  encoding="utf-8") as fh:
+            fh.write("\n<!-- unbumped -->\n")
+        self.assertEqual(self._run(work).returncode, 1)
+        upd = subprocess.run([sys.executable, "src/ftro/check_versions.py", "--update"],
+                             cwd=work, capture_output=True, text=True, timeout=120)
+        self.assertEqual(upd.returncode, 1, "--update laundered an unbumped change")
+        self.assertIn("REFUSED", upd.stderr)
+        self.assertEqual(self._run(work).returncode, 1, "drift became invisible after --update")
+
+    def test_an_unregistered_versioned_document_is_detected(self):
+        """Completeness: declaring a version without being tracked must fail."""
+        work = os.path.join(self.tmp, "repo4")
+        shutil.copytree(REPO, work, symlinks=True,
+                        ignore=shutil.ignore_patterns("data", ".git", "__pycache__"))
+        with open(os.path.join(work, "phase0", "a-new-versioned-note.md"), "w",
+                  encoding="utf-8") as fh:
+            fh.write("# New note\n\n**Version:** 1.0.0\n")
+        r = self._run(work)
+        self.assertEqual(r.returncode, 1, "an unregistered versioned document was not detected")
+        self.assertIn("not in the registry", r.stderr)
 
     def test_version_bump_without_re_recording_is_detected(self):
         work = os.path.join(self.tmp, "repo2")

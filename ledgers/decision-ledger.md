@@ -1,6 +1,6 @@
 # FTRO Decision Ledger
 
-**Version:** 0.4.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+**Version:** 0.5.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
 
 > **Version history.** 0.1.0 (`fdbf2b9`) · 0.2.0 (D-021…D-028, `2c31279`–`0b41929`, unversioned at the time) · **0.3.0** (D-029…D-047). D-039a required every versioned artifact to be bumped when it changes; this ledger and the source ledger were then changed twice without a bump ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v3.0.0). `src/ftro/check_versions.py` now enforces it.
 
@@ -44,6 +44,11 @@ task card §23; this ledger records choices made *while executing* it.
 | D-051 | A version gate compares **content digests**, not a hard-coded copy of the version string | The first gate agreed with itself by construction and never detected drift ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v4.0.0) | 07 |
 | D-052 | A mutation table demonstrated by hand becomes **committed tests** | Session 06's table proved things no committed test asserted ([`FTRO-DEF-035`](deficiency-log.md#ftro-def-035) v3.0.0) | 07 |
 | D-053 | Where a serialised quantity is exactly representable in integers, **every** comparison uses integers — not only the census | `contiguous_runs()` still compared binary floats after the census was made exact | 07 |
+| D-054 | Changing a function's contract requires enumerating its callers; any two computations sharing a convention are asserted equal | One of two callers was updated, and the report published 171.442704 h against its own 133.111920 h ([`FTRO-DEF-037`](deficiency-log.md#ftro-def-037)) | 08 |
+| D-055 | A conformance predicate names its required fields explicitly, with types and permitted values; `.get()` truthiness is never a conformance test | The consumer gate and its tests both accepted an absent field as success ([`FTRO-DEF-038`](deficiency-log.md#ftro-def-038)) | 08 |
+| D-056 | The command that maintains a gate must not be able to satisfy it | `--update` recorded flagged drift as the new truth ([`FTRO-DEF-039`](deficiency-log.md#ftro-def-039)) | 08 |
+| D-057 | A rule quantified over "every X" requires an executable enumeration of X and a stated exclusion policy | "Every versioned artifact" meant twelve files I had listed ([`FTRO-DEF-040`](deficiency-log.md#ftro-def-040)) | 08 |
+| D-058 | Every failure mode a contract names must have a test, transport included | A transport failure produced a traceback and no record at all ([`FTRO-DEF-041`](deficiency-log.md#ftro-def-041)) | 08 |
 | D-039a | **Extended 05:** the version-bump rule binds every versioned artifact, not only the profile | `identities.json` had four byte-distinct states under one label ([`FTRO-DEF-033`](deficiency-log.md#ftro-def-033) v2.0.0) | 05 |
 | D-034 | Wrapper states keyed by member digest, never filename | 7 filenames collapse to 5 distinct byte sequences; filename keying invents two states and attributes bytes to a centre that produced none | 03 |
 | D-035 | Route enumeration gates the dataset-level negative, not `access_class` | `access_class` is a property of a retrieval path, so one content-validated anonymous retrieval settles it for that path. Enumeration is required before asserting `unresolved` | 03 |
