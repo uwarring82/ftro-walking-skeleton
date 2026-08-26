@@ -48,3 +48,5 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-26 | 11 | [Tenth external review — a fixture that could not see the boundary](2026-08-26-session-11-review-corrections-10.md) |
 | 2026-08-26 | 12 | [Consolidation — bounding Phase 0 so it can be finished](2026-08-26-session-12-consolidation.md) |
 | 2026-08-26 | 13 | [Phase 1 — four hand-authored manifests](2026-08-26-session-13-phase1-manifests.md) *(branch `phase1`)* |
+| 2026-08-26 | 14 | [Boundaries executed — C9 fails, Gate 1 source location passes](2026-08-26-session-14-boundaries-executed.md) *(branch `phase1`)* |
+| 2026-08-26 | 15 | [Independent verification corrections — audit reset and durable Gate-1 witnesses](2026-08-26-session-15-independent-verification-corrections.md) *(branch `phase1`)* |

@@ -9,18 +9,13 @@
     {
       "@id": "ro-crate-metadata.json",
       "@type": "CreativeWork",
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      },
       "about": {
         "@id": "./"
       },
-      "description": "Hand-authored FTRO manifest for the vlbi leg. Conformance ASSERTED AND UNVERIFIED."
+      "description": "Hand-authored FTRO manifest for the VLBI leg. Normative RO-Crate 1.3 validation has not run; see ftro:conformance_report."
     },
     {
       "@id": "./",
@@ -31,14 +26,9 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+      },
       "ftro:domain": "vlbi",
       "ftro:conformance_report": {
         "@id": "#conformance"
@@ -46,15 +36,36 @@
       "ftro:data_role": "core measurement",
       "hasPart": [
         {
+          "@id": "ftro:concept:ivs/session/R11040"
+        },
+        {
           "@id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54"
+        },
+        {
+          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json"
         }
       ],
+      "ftro:source_catalog": {
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json"
+      },
       "mentions": [
         {
           "@id": "#assertion-downstream-eop"
         },
         {
           "@id": "#wrapper-selection"
+        },
+        {
+          "@id": "#re-release"
+        },
+        {
+          "@id": "#route-cddis"
+        },
+        {
+          "@id": "#route-bkg"
+        },
+        {
+          "@id": "#route-opar"
         }
       ]
     },
@@ -63,10 +74,13 @@
       "@type": "ftro:ConformanceReport",
       "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
       "ftro:profile": "FTRO v0.0.3",
-      "ftro:validator": null,
-      "ftro:validator_version": null,
-      "ftro:validation_result": "not_run",
-      "ftro:note": "No RO-Crate validator obtainable in this environment. FTRO-P1-DEF-001."
+      "ftro:normative_validation_result": "not_run",
+      "ftro:normative_validation_reason": "The obtainable roc-validator 0.11.3 implements RO-Crate 1.1 and 1.2, not the pinned RO-Crate 1.3 base.",
+      "ftro:compatibility_validator": "roc-validator",
+      "ftro:compatibility_validator_version": "0.11.3",
+      "ftro:compatibility_profile": "ro-crate-1.2",
+      "ftro:compatibility_validation_result": "failed",
+      "ftro:note": "A temporary, explicitly non-normative 1.2 export fails; exact scope and issue counts are in phase1/reports/ro-crate-validation-v1.0.json. This is not a 1.3 verdict. FTRO-P1-DEF-001."
     },
     {
       "@id": "ftro:concept:ivs/session/R11040",
@@ -98,28 +112,13 @@
       "ftro:access_class": "public (OPAR path); CDDIS path is registered; BKG path not established",
       "ftro:routes_tried": [
         {
-          "channel": "CDDIS",
-          "url": "https://cddis.nasa.gov/archive/vlbi/ivsdata/vgosdb/",
-          "protocol": "https",
-          "attempted_utc": "2026-08-25",
-          "outcome": "auth_required",
-          "detail": "Earthdata login returned with HTTP 200 as an HTML interstitial (FTRO-DEF-018)."
+          "@id": "#route-cddis"
         },
         {
-          "channel": "BKG",
-          "url": "https://ivs.bkg.bund.de/",
-          "protocol": "https",
-          "attempted_utc": "2026-08-25",
-          "outcome": "unreachable",
-          "detail": "No TCP connection on 443 from two independent networks; access class not established."
+          "@id": "#route-bkg"
         },
         {
-          "channel": "OPAR",
-          "url": "https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz",
-          "protocol": "https",
-          "attempted_utc": "2026-08-25",
-          "outcome": "retrieved",
-          "detail": "Anonymous, content-validated. access_class = public for THIS path."
+          "@id": "#route-opar"
         }
       ],
       "ftro:routes_source": "https://ivscc.gsfc.nasa.gov/products-data/data.html",
@@ -132,6 +131,45 @@
       "ftro:valid_to": "2022-03-01",
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "#route-cddis",
+      "@type": [
+        "Action",
+        "ftro:RetrievalAttempt"
+      ],
+      "ftro:channel": "CDDIS",
+      "url": "https://cddis.nasa.gov/archive/vlbi/ivsdata/vgosdb/",
+      "ftro:protocol": "https",
+      "ftro:attempted_utc": "2026-08-25",
+      "ftro:outcome": "auth_required",
+      "ftro:detail": "Earthdata login returned with HTTP 200 as an HTML interstitial (FTRO-DEF-018)."
+    },
+    {
+      "@id": "#route-bkg",
+      "@type": [
+        "Action",
+        "ftro:RetrievalAttempt"
+      ],
+      "ftro:channel": "BKG",
+      "url": "https://ivs.bkg.bund.de/",
+      "ftro:protocol": "https",
+      "ftro:attempted_utc": "2026-08-25",
+      "ftro:outcome": "unreachable",
+      "ftro:detail": "No TCP connection on 443 from two independent networks; access class not established."
+    },
+    {
+      "@id": "#route-opar",
+      "@type": [
+        "Action",
+        "ftro:RetrievalAttempt"
+      ],
+      "ftro:channel": "OPAR",
+      "url": "https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz",
+      "ftro:protocol": "https",
+      "ftro:attempted_utc": "2026-08-25",
+      "ftro:outcome": "retrieved",
+      "ftro:detail": "Anonymous, content-validated. access_class = public for this path."
     },
     {
       "@id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54",
@@ -147,14 +185,12 @@
       "ftro:retrieval_procedure": "GET https://ivsopar.obspm.fr/vlbi/ivsdata/vgosdb/2022/20220228-r11040.tgz",
       "ftro:retrieval_validation": "content_validated",
       "ftro:content_checks": {
-        "gzip_magic": true,
-        "not_html": true,
-        "tar_readable": true,
-        "has_wrappers": true,
-        "has_versioned_wrappers": true,
-        "session_in_paths": true
+        "@id": "#vgosdb-content-checks"
       },
       "ftro:snapshot_kind": "ftro_composed",
+      "ftro:snapshot_of": {
+        "@id": "ftro:concept:ivs/session/R11040"
+      },
       "ftro:evidence_state": "resolvable",
       "ftro:first_availability_time": "Mon, 15 Dec 2025 16:46:58 GMT",
       "ftro:availability_time_source": "mirror_derived",
@@ -173,13 +209,26 @@
           "@id": "#wrapper-3c52b94f"
         },
         {
-          "@id": "#wrapper-3c52b94f"
+          "@id": "#wrapper-310c5815"
         }
       ],
       "ftro:valid_from": "2022-02-28",
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "#vgosdb-content-checks",
+      "@type": [
+        "Action",
+        "ftro:ContentValidation"
+      ],
+      "ftro:gzip_magic": true,
+      "ftro:not_html": true,
+      "ftro:tar_readable": true,
+      "ftro:has_wrappers": true,
+      "ftro:has_versioned_wrappers": true,
+      "ftro:session_in_paths": true
     },
     {
       "@id": "#wrapper-32c3ef8e",
@@ -190,6 +239,9 @@
       "name": "20220228-r11040_V001_iMPI_kall.wrp",
       "ftro:filenames": [
         "20220228-r11040_V001_iMPI_kall.wrp"
+      ],
+      "ftro:member_paths": [
+        "20220228-r11040/20220228-r11040_V001_iMPI_kall.wrp"
       ],
       "ftro:sha256": "32c3ef8e53ca994d02cb9431d4ab95dd0fa80207092acdb176f5d4cae335872a",
       "contentSize": "2322",
@@ -215,6 +267,9 @@
       "ftro:filenames": [
         "20220228-r11040_V002_iGSFC_kall.wrp"
       ],
+      "ftro:member_paths": [
+        "20220228-r11040/20220228-r11040_V002_iGSFC_kall.wrp"
+      ],
       "ftro:sha256": "c9616dd160c1393f5068346a559c78892c795ac2938d29ac1c967883885e29eb",
       "contentSize": "6015",
       "ftro:run_time_tags": [
@@ -222,9 +277,9 @@
         "2022/03/10 19:50:56 UTC",
         "2022/03/10 19:59:10 UTC"
       ],
-      "ftro:input_wrappers": [
-        "20220228-r11040_V001_iMPI_kall.wrp"
-      ],
+      "ftro:input_wrappers": {
+        "@id": "#wrapper-32c3ef8e"
+      },
       "ftro:evidence_state": "resolvable",
       "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
       "ftro:valid_from": null,
@@ -242,6 +297,9 @@
       "ftro:filenames": [
         "20220228-r11040_V003_iGSFC_kall.wrp"
       ],
+      "ftro:member_paths": [
+        "20220228-r11040/20220228-r11040_V003_iGSFC_kall.wrp"
+      ],
       "ftro:sha256": "25a19892113aea2e724ceb17f48c693f6ba2fbb3673b2ca638abfa663d2e7ae8",
       "contentSize": "6455",
       "ftro:run_time_tags": [
@@ -251,8 +309,12 @@
         "2022/03/10 19:59:22 UTC"
       ],
       "ftro:input_wrappers": [
-        "20220228-r11040_V001_iMPI_kall.wrp",
-        "20220228-r11040_V002_iGSFC_kall.wrp"
+        {
+          "@id": "#wrapper-32c3ef8e"
+        },
+        {
+          "@id": "#wrapper-c9616dd1"
+        }
       ],
       "ftro:evidence_state": "resolvable",
       "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
@@ -272,6 +334,10 @@
         "20220228-r11040_V004_iGSFC_kall.wrp",
         "20220228-r11040_V004_iIVS_kall.wrp"
       ],
+      "ftro:member_paths": [
+        "20220228-r11040/20220228-r11040_V004_iGSFC_kall.wrp",
+        "20220228-r11040/20220228-r11040_V004_iIVS_kall.wrp"
+      ],
       "ftro:sha256": "3c52b94fd87fc394535fe8a489b9fcd5017dba1063b3290d90e79fc6e191c16a",
       "contentSize": "7246",
       "ftro:run_time_tags": [
@@ -282,9 +348,15 @@
         "2022/03/10 22:28:49 UTC"
       ],
       "ftro:input_wrappers": [
-        "20220228-r11040_V001_iMPI_kall.wrp",
-        "20220228-r11040_V002_iGSFC_kall.wrp",
-        "20220228-r11040_V003_iGSFC_kall.wrp"
+        {
+          "@id": "#wrapper-32c3ef8e"
+        },
+        {
+          "@id": "#wrapper-c9616dd1"
+        },
+        {
+          "@id": "#wrapper-25a19892"
+        }
       ],
       "ftro:evidence_state": "resolvable",
       "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
@@ -304,6 +376,10 @@
         "20220228-r11040_V005_iGSFC_kall.wrp",
         "20220228-r11040_V005_iIVS_kall.wrp"
       ],
+      "ftro:member_paths": [
+        "20220228-r11040/20220228-r11040_V005_iGSFC_kall.wrp",
+        "20220228-r11040/20220228-r11040_V005_iIVS_kall.wrp"
+      ],
       "ftro:sha256": "310c5815f9bc46f1802e1a27f7addc88f8b7358feb00ac5506dd34c67f18b67d",
       "contentSize": "7645",
       "ftro:run_time_tags": [
@@ -315,10 +391,18 @@
         "2025/12/12 21:18:49 UTC"
       ],
       "ftro:input_wrappers": [
-        "20220228-r11040_V001_iMPI_kall.wrp",
-        "20220228-r11040_V002_iGSFC_kall.wrp",
-        "20220228-r11040_V003_iGSFC_kall.wrp",
-        "20220228-r11040_V004_iGSFC_kall.wrp"
+        {
+          "@id": "#wrapper-32c3ef8e"
+        },
+        {
+          "@id": "#wrapper-c9616dd1"
+        },
+        {
+          "@id": "#wrapper-25a19892"
+        },
+        {
+          "@id": "#wrapper-3c52b94f"
+        }
       ],
       "ftro:evidence_state": "resolvable",
       "ftro:note": "Keyed by member digest, not filename: 7 filenames collapse to 5 states (FTRO-DEF-026).",
@@ -331,12 +415,37 @@
       "@id": "#wrapper-selection",
       "@type": "ftro:Assertion",
       "name": "Which wrapper member did a downstream analysis consume?",
+      "ftro:subject": {
+        "@id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54"
+      },
+      "ftro:declared_relation": "downstream analysis analysed_with wrapper member",
+      "ftro:object": null,
       "ftro:evidence_state": "unresolved",
       "ftro:note": "The archive digest pins the container, not the member. Seven filenames, five distinct byte sequences, produced by MPI and GSFC only -- 'iIVS' is a redesignation. Any chain consuming this session must name the member by path AND digest.",
       "ftro:valid_from": null,
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "VLBI Phase-0 vgosDB pin report",
+      "ftro:local_path": "phase0/reports/vlbi-vgosdb-pin.json",
+      "ftro:sha256": "ac808bd43c2da96bcac2065107cbe0b9d16cbdff0ec3ad015313887157cede1a",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:expected_entry_count": 1
+    },
+    {
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@type": "Profile",
+      "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
+      "version": "0.0.3"
     },
     {
       "@id": "#assertion-downstream-eop",

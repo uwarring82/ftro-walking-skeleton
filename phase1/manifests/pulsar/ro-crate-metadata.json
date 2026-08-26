@@ -9,18 +9,13 @@
     {
       "@id": "ro-crate-metadata.json",
       "@type": "CreativeWork",
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      },
       "about": {
         "@id": "./"
       },
-      "description": "Hand-authored FTRO manifest for the pulsar-timing leg. Conformance ASSERTED AND UNVERIFIED; see ftro:conformance_report."
+      "description": "Hand-authored FTRO manifest for the pulsar-timing leg. Normative RO-Crate 1.3 validation has not run; see ftro:conformance_report."
     },
     {
       "@id": "./",
@@ -31,27 +26,61 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+      },
       "ftro:domain": "pulsar",
       "ftro:data_role": "core measurement",
       "hasPart": [
         {
           "@id": "ftro:concept:ppta/dr3"
+        },
+        {
+          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json"
         }
       ],
+      "ftro:source_catalog": {
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json"
+      },
       "mentions": [
+        {
+          "@id": "#toa"
+        },
         {
           "@id": "#assertion-eop"
         },
         {
           "@id": "#contestation-tt"
+        },
+        {
+          "@id": "#assertion-pks2gps-upstream"
+        },
+        {
+          "@id": "#declared-DE436"
+        },
+        {
+          "@id": "#declared-IF99"
+        },
+        {
+          "@id": "#declared-IAU2000B"
+        },
+        {
+          "@id": "#applicability-timingmodel"
+        },
+        {
+          "@id": "#applicability-c0"
+        },
+        {
+          "@id": "#edge-pks2gps"
+        },
+        {
+          "@id": "#edge-gps2utc"
+        },
+        {
+          "@id": "#verification-gps2utc"
+        },
+        {
+          "@id": "git:ipta/pulsar-clock-corrections@36dc139a150efde056aa32fa13deac856a7a679d"
         }
       ],
       "ftro:conformance_report": {
@@ -63,10 +92,13 @@
       "@type": "ftro:ConformanceReport",
       "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
       "ftro:profile": "FTRO v0.0.3",
-      "ftro:validator": null,
-      "ftro:validator_version": null,
-      "ftro:validation_result": "not_run",
-      "ftro:note": "No RO-Crate validator obtainable in this environment. FTRO-P1-DEF-001."
+      "ftro:normative_validation_result": "not_run",
+      "ftro:normative_validation_reason": "The obtainable roc-validator 0.11.3 implements RO-Crate 1.1 and 1.2, not the pinned RO-Crate 1.3 base.",
+      "ftro:compatibility_validator": "roc-validator",
+      "ftro:compatibility_validator_version": "0.11.3",
+      "ftro:compatibility_profile": "ro-crate-1.2",
+      "ftro:compatibility_validation_result": "failed",
+      "ftro:note": "A temporary, explicitly non-normative 1.2 export fails; exact scope and issue counts are in phase1/reports/ro-crate-validation-v1.0.json. This is not a 1.3 verdict. FTRO-P1-DEF-001."
     },
     {
       "@id": "ftro:concept:ppta/dr3",
@@ -87,9 +119,7 @@
         "https://doi.org/10.25919/axvw-qa43"
       ],
       "ftro:part_overlap": {
-        "shared_paths": 90884,
-        "part1_only": 18414,
-        "part2_only": 15509
+        "@id": "#ppta-part-overlap"
       },
       "ftro:data_rights": "CC-BY-SA-4.0",
       "ftro:metadata_rights": "CC-BY-SA-4.0",
@@ -100,13 +130,61 @@
       "ftro:note": "No single provider PID exists: two separately-DOI'd collections share 90,884 file paths. The concept identity is composed over the pair (FTRO-DEF-015).",
       "hasPart": [
         {
-          "@id": "#toa"
+          "@id": "ftro:snapshot:ppta/dr3/all/J0437-4715.par@sha256:cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75"
+        },
+        {
+          "@id": "ftro:snapshot:ppta/dr3/all/J0437-4715.tim@sha256:ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564"
+        },
+        {
+          "@id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa"
+        },
+        {
+          "@id": "ftro:snapshot:ppta/dr3/clock/tai2tt_bipm2021.clk@sha256:047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386"
         }
       ],
       "ftro:valid_from": "2004-02-05",
       "ftro:valid_to": "2022-03-07",
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "#ppta-part-overlap",
+      "@type": [
+        "Thing",
+        "ftro:OverlapSummary"
+      ],
+      "ftro:shared_paths": 90884,
+      "ftro:part1_only": 18414,
+      "ftro:part2_only": 15509
+    },
+    {
+      "@id": "ftro:snapshot:ppta/dr3/all/J0437-4715.par@sha256:cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "J0437-4715.par",
+      "contentSize": "4402",
+      "ftro:sha256": "cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75",
+      "ftro:retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419506",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:redistribution_mode": "link_only"
+    },
+    {
+      "@id": "ftro:snapshot:ppta/dr3/all/J0437-4715.tim@sha256:ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564",
+      "@type": [
+        "File",
+        "ftro:ImmutableSnapshot"
+      ],
+      "name": "J0437-4715.tim",
+      "contentSize": "4464619",
+      "ftro:sha256": "ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564",
+      "ftro:retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419499",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:redistribution_mode": "link_only"
     },
     {
       "@id": "#toa",
@@ -142,6 +220,12 @@
       "ftro:uncertainty_representation": "per-TOA 1-sigma, provider supplied",
       "ftro:evidence_state": "resolvable",
       "ftro:data_role": "core measurement",
+      "ftro:derived_from": {
+        "@id": "ftro:snapshot:ppta/dr3/all/J0437-4715.tim@sha256:ee6a2dec40b4dc6fe73fc06c8ddc43052d2f0c24edc703bec8963b58c2541564"
+      },
+      "ftro:parameter_file": {
+        "@id": "ftro:snapshot:ppta/dr3/all/J0437-4715.par@sha256:cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75"
+      },
       "ftro:valid_from": "2022-02-20",
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
@@ -150,11 +234,14 @@
     {
       "@id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
       "@type": [
+        "File",
         "ftro:CorrectionArtifact",
         "ftro:EvidenceArtifact"
       ],
       "name": "pks2gps.clk (Parkes -> GPS)",
+      "contentSize": "1742710",
       "ftro:sha256": "c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa",
+      "ftro:retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419593",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:note": "Interpolates to -90.444 ns at the TOA epoch between samples at MJD 59630.37155 and 59631.37502. Its own upstream is a narratively described merge of three eras: evidence_state opaque.",
@@ -162,6 +249,19 @@
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "#assertion-pks2gps-upstream",
+      "@type": "ftro:Assertion",
+      "name": "Which three source series were merged into pks2gps.clk?",
+      "ftro:subject": {
+        "@id": "ftro:snapshot:ppta/dr3/clock/pks2gps.clk@sha256:c8131f51e17eef409450459d7097f9eceec2efd3dccd1394cc7214460ef342fa"
+      },
+      "ftro:edge_class": "derived_from",
+      "ftro:object": null,
+      "ftro:evidence_state": "unresolved",
+      "ftro:terminates_at": "opaque",
+      "ftro:note": "The file describes a merge of three eras narratively but does not identify immutable upstream artifacts. Traversal must not treat this correction file as a complete terminal."
     },
     {
       "@id": "#edge-pks2gps",
@@ -187,6 +287,7 @@
       ],
       "name": "gps2utc.clk (GPS -> UTC)",
       "ftro:sha256": "7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/ipta/pulsar-clock-corrections/36dc139a150efde056aa32fa13deac856a7a679d/T2runtime/clock/gps2utc.clk",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:note": "C0-prime regime throughout the window, VERIFIED by VP-GPS2UTC-001. +2.800 ns at MJD 59630.",
@@ -232,11 +333,15 @@
     {
       "@id": "ftro:snapshot:ppta/dr3/clock/tai2tt_bipm2021.clk@sha256:047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
       "@type": [
+        "File",
         "ftro:CorrectionArtifact",
         "ftro:TimeScaleRealisation"
       ],
       "name": "tai2tt_bipm2021.clk (TAI -> TT(BIPM2021))",
+      "contentSize": "48871",
       "ftro:sha256": "047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386",
+      "ftro:retrieval_procedure": "GET https://data.csiro.au/dap/ws/v2/collections/59423/data/65419592",
+      "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:value_is_extrapolated": true,
       "ftro:extrapolation_formula": "32.184 + 27667.5ns - 0.01(MJD - 59579.0)ns",
@@ -254,12 +359,10 @@
       "name": "The timing model requests TT(BIPM2020); the release ships TT(BIPM2021)",
       "ftro:competing_assertions": [
         {
-          "ftro:source": "toas_and_parameters/all/J0437-4715.par",
-          "ftro:claim": "CLK TT(BIPM2020)"
+          "@id": "#tt-claim-par"
         },
         {
-          "ftro:source": "toas_and_parameters/clock/tai2tt_bipm2021.clk",
-          "ftro:claim": "TAI TT(BIPM2021)"
+          "@id": "#tt-claim-clock-file"
         }
       ],
       "ftro:resolution": null,
@@ -268,6 +371,28 @@
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "#tt-claim-par",
+      "@type": [
+        "CreativeWork",
+        "ftro:Claim"
+      ],
+      "ftro:source": {
+        "@id": "ftro:snapshot:ppta/dr3/all/J0437-4715.par@sha256:cfbd0db49a66d8a100e3d8dd5695f139136eef21ca01f65cafb586f0918aca75"
+      },
+      "ftro:claim": "CLK TT(BIPM2020)"
+    },
+    {
+      "@id": "#tt-claim-clock-file",
+      "@type": [
+        "CreativeWork",
+        "ftro:Claim"
+      ],
+      "ftro:source": {
+        "@id": "ftro:snapshot:ppta/dr3/clock/tai2tt_bipm2021.clk@sha256:047c2a19b13f69231d9d3c5602a016f01af7a286133de318a2da9c1ef3a23386"
+      },
+      "ftro:claim": "TAI TT(BIPM2021)"
     },
     {
       "@id": "#assertion-eop",
@@ -288,6 +413,26 @@
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "PPTA Phase-0 pin report",
+      "ftro:local_path": "phase0/reports/ppta-artifact-pins.json",
+      "ftro:sha256": "f758c7cee9a66a1d07e5bd6d2763734a57be5ef9a79f92e98a2aaebba08a9d62",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:expected_entry_count": 4
+    },
+    {
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@type": "Profile",
+      "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
+      "version": "0.0.3"
     },
     {
       "@id": "#declared-DE436",

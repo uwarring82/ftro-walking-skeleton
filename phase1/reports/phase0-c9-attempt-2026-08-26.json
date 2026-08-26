@@ -1,0 +1,128 @@
+{
+  "document": "Phase-0 C9 live-provider execution attempt",
+  "version": "1.1.0",
+  "contract": "phase0/acceptance-contract-v1.0.md#C9",
+  "phase0_baseline": "a806bbaa573d28f1460d18110f7974189ca19213",
+  "execution_started_utc": "2026-08-26T13:26:55Z",
+  "execution_finished_utc": "2026-08-26T13:31:02Z",
+  "environment": {
+    "platform": "Darwin arm64",
+    "python": "3.13.7",
+    "locale": "C.UTF-8",
+    "execution_kind": "isolated local clone retaining Git metadata",
+    "shared_main_modified": false,
+    "shared_phase1_modified_by_run": false
+  },
+  "c9_status": "failed",
+  "reason": "The exact README step-3 unzip command exited 2 in a clean checkout because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed the diagnostic continuation, but cannot convert the documented sequence into a pass.",
+  "documented_steps": [
+    {
+      "step": 0,
+      "outcome": "passed",
+      "detail": "97 tests, OK, zero skips"
+    },
+    {
+      "step": 1,
+      "outcome": "passed",
+      "detail": "3 evidence-repository artifacts pinned; 0 failed; 0 uncovered"
+    },
+    {
+      "step": 2,
+      "outcome": "passed",
+      "detail": "VP-GPS2UTC-001 exited 0 and reproduced phase0/evidence/VA-GPS2UTC-001.json byte-for-byte"
+    },
+    {
+      "step": "3a",
+      "outcome": "passed",
+      "detail": "Zenodo archive retrieved; MD5 4ae290f559c90b462991286c933a1147; SHA-256 6168e24a0c29ce0929e9651460f11ea77f151176e1ba3d0fe3428e1e08bd56bd"
+    },
+    {
+      "step": "3b",
+      "outcome": "failed",
+      "command": "unzip -d data/raw/zenodo-17107693/extracted \"ROCIT campaign results.zip\"",
+      "exit_status": 2,
+      "stderr": "checkdir: cannot create extraction directory: data/raw/zenodo-17107693/extracted; No such file or directory"
+    },
+    {
+      "step": "3c",
+      "outcome": "passed_after_manual_intervention",
+      "manual_intervention": "mkdir -p data/raw/zenodo-17107693",
+      "detail": "The same unzip command, analyse_optical.py and summarise_optical.py then exited 0"
+    },
+    {
+      "step": 4,
+      "outcome": "passed",
+      "detail": "IGS 57/0/0; vgosDB 1/0/0; PPTA 4/0/0; every checksum_match exactly true"
+    },
+    {
+      "step": 5,
+      "outcome": "passed",
+      "detail": "four_domain.status=no_common_support; four_domain.n_intervals=0; pulsar_optical_gap.gap_hours=31.174"
+    },
+    {
+      "step": 6,
+      "outcome": "passed",
+      "detail": "Both Markdown renderers exited 0"
+    },
+    {
+      "step": 7,
+      "outcome": "passed",
+      "detail": "check_versions.py: 0 stale; refresh_crate.py: 0 stale, 0 missing"
+    }
+  ],
+  "post_failure_diagnostic_evidence": {
+    "fresh_reports_equal_to_baseline_except_retrieved_utc": true,
+    "fresh_report_counts": {
+      "evidence_repo": 3,
+      "igs": 57,
+      "vgosdb": 1,
+      "ppta": 4
+    },
+    "deterministic_outputs": [
+      {
+        "path": "phase0/evidence/VA-GPS2UTC-001.json",
+        "sha256": "151de33f2b395b9739ef78a1a34e92250cb59417758ed31989a336790e9b899d",
+        "byte_identical_to_baseline": true
+      },
+      {
+        "path": "phase0/reports/four-domain-intersection.json",
+        "sha256": "f5b6ab85e8be01a7b26d50f18ebaa8aff9c9256c0359ded4996aa8797a40d2de",
+        "byte_identical_to_baseline": true
+      },
+      {
+        "path": "ledgers/deficiency-log.md",
+        "sha256": "ff043710e63e4f4e4c13cdb3b6e07a1bb8c91109b6ea73ca0eb12cac6168ab56",
+        "byte_identical_to_baseline": true
+      },
+      {
+        "path": "phase0/optical-validity-intervals.md",
+        "sha256": "bf45394d173767f43f17d1a58f36b9f8161b9ddea4107212ecf02ca389029029",
+        "byte_identical_to_baseline": true
+      }
+    ]
+  },
+  "failure_reproduced": {
+    "utc_date": "2026-08-26",
+    "environment": "second data-free clone of main at a806bba, using the already verified archive bytes",
+    "exact_command_exit_status": 2,
+    "note": "An initial reproduction attempt accidentally ran unzip from the source checkout rather than the new clone and exited 9 because the archive was not in that working directory. The corrected reproduction above exited 2 with the original failure. Both attempts are retained in session 14."
+  },
+  "second_bounded_audit": {
+    "status": "not_run",
+    "reason": "The same missing concrete recipes invalidate the historical run previously counted as the first clean audit: run 2 added M1b/M1c and selected an explicit M11 route after those gaps were observed. Neither historical run qualifies as pre-registered.",
+    "required_next_artifact": "A finite audit-run execution manifest frozen before execution, followed by two clean runs of that unchanged manifest"
+  },
+  "bounded_audit_count": {
+    "qualifying_completed": 0,
+    "required": 2,
+    "run_1": "failed retrospective diagnostic; model and result were introduced together",
+    "run_2": "retrospective diagnostic; corrected scope and concrete recipes were not frozen before execution",
+    "exit_condition_4": "not demonstrated",
+    "exit_condition_5": "0 of 2"
+  },
+  "phase0_exit_status": "open",
+  "phase0_blockers": [
+    "C9 exact documented sequence",
+    "two qualifying bounded audits against one frozen executable manifest"
+  ]
+}

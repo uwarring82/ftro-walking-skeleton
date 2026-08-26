@@ -1,0 +1,81 @@
+{
+  "document": "Phase-1 RO-Crate validation status",
+  "version": "1.0.0",
+  "date": "2026-08-26",
+  "normative_target": "https://w3id.org/ro/crate/1.3",
+  "normative_validation": {
+    "status": "not_run",
+    "validator": null,
+    "reason": "The obtainable roc-validator 0.11.3 supplies RO-Crate 1.1 and 1.2 profiles, not RO-Crate 1.3. A 1.2 result cannot demonstrate conformance to the pinned 1.3 base."
+  },
+  "validator_discovery": {
+    "package": "roc-validator",
+    "package_version": "0.11.3",
+    "installation": "temporary virtual environment; not a repository dependency",
+    "available_ro_crate_base_profiles": [
+      "1.1",
+      "1.2"
+    ],
+    "correction": "The session-13 claim that no validator was obtainable was false. Installation succeeds; support for the normative version is what is unavailable."
+  },
+  "json_ld_parse": {
+    "tool": "RDFLib",
+    "version": "7.6.0",
+    "status": "passed",
+    "scope": "JSON-LD parsing only; not RO-Crate conformance",
+    "triple_counts": {
+      "optical": 198,
+      "pulsar": 256,
+      "vlbi": 240,
+      "gnss": 257
+    }
+  },
+  "non_normative_1_2_export": {
+    "status": "failed",
+    "method": "Temporary export changed only the context URI and metadata-descriptor conformsTo value from 1.3 to 1.2; provider bytes were neither required nor retained; validator ran with --metadata-only and --skip-availability-check.",
+    "warning": "This compatibility result is not a validation of the normative 1.3 manifests.",
+    "results": {
+      "optical": {
+        "passed": false,
+        "n_required_issues": 76,
+        "checks": {
+          "ro-crate-1.2_2.1": 70,
+          "ro-crate-1.2_32.2": 2,
+          "ro-crate-1.2_32.3": 2,
+          "ro-crate-1.2_38.1": 2
+        }
+      },
+      "pulsar": {
+        "passed": false,
+        "n_required_issues": 81,
+        "checks": {
+          "ro-crate-1.2_2.1": 81
+        }
+      },
+      "vlbi": {
+        "passed": false,
+        "n_required_issues": 73,
+        "checks": {
+          "ro-crate-1.2_2.1": 73
+        }
+      },
+      "gnss": {
+        "passed": false,
+        "n_required_issues": 64,
+        "checks": {
+          "ro-crate-1.2_2.1": 63,
+          "ro-crate-1.2_2.3": 1
+        }
+      }
+    },
+    "interpretation": "The dominant 1.2 failure is the validator's compact-context check over provisional ftro:* keys. Optical also triggers base rules for its two unresolved software entities; GNSS triggers one URI-string/reference rule. These are amendment inputs, not a substitute 1.3 verdict."
+  },
+  "bounded_gate1_check": {
+    "tool": "phase1/check_gate1.py",
+    "status": "passed",
+    "tests": 44,
+    "scope": "Exact frozen source identity, captured-input integrity, selected report-to-manifest projections, flattened named entities, fixed JSON-LD context, root/profile/conformance-report structure, local references and minimum unresolved-assertion structure. It is explicitly not a general RO-Crate or FTRO-profile validator.",
+    "retrieval_report": "phase1/reports/gate1-clean-retrieval-v1.0.json"
+  },
+  "conclusion": "Gate 1 source location is demonstrated. RO-Crate 1.3 conformance is still not demonstrated and remains an open Phase-1 assurance gap."
+}

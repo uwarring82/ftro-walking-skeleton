@@ -9,18 +9,13 @@
     {
       "@id": "ro-crate-metadata.json",
       "@type": "CreativeWork",
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      },
       "about": {
         "@id": "./"
       },
-      "description": "Hand-authored FTRO manifest for the gnss leg. Conformance ASSERTED AND UNVERIFIED."
+      "description": "Hand-authored FTRO manifest for the GNSS leg. Normative RO-Crate 1.3 validation has not run; see ftro:conformance_report."
     },
     {
       "@id": "./",
@@ -31,14 +26,9 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+      },
       "ftro:domain": "gnss",
       "ftro:conformance_report": {
         "@id": "#conformance"
@@ -46,9 +36,15 @@
       "ftro:data_role": "ancestry or correction artifact",
       "hasPart": [
         {
-          "@id": "ftro:concept:igs/igs/orbit"
+          "@id": "#igs-source-collection"
+        },
+        {
+          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json"
         }
       ],
+      "ftro:source_catalog": {
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json"
+      },
       "mentions": [
         {
           "@id": "#policy-operational"
@@ -63,19 +59,22 @@
       "@type": "ftro:ConformanceReport",
       "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
       "ftro:profile": "FTRO v0.0.3",
-      "ftro:validator": null,
-      "ftro:validator_version": null,
-      "ftro:validation_result": "not_run",
-      "ftro:note": "No RO-Crate validator obtainable in this environment. FTRO-P1-DEF-001."
+      "ftro:normative_validation_result": "not_run",
+      "ftro:normative_validation_reason": "The obtainable roc-validator 0.11.3 implements RO-Crate 1.1 and 1.2, not the pinned RO-Crate 1.3 base.",
+      "ftro:compatibility_validator": "roc-validator",
+      "ftro:compatibility_validator_version": "0.11.3",
+      "ftro:compatibility_profile": "ro-crate-1.2",
+      "ftro:compatibility_validation_result": "failed",
+      "ftro:note": "A temporary, explicitly non-normative 1.2 export fails; exact scope and issue counts are in phase1/reports/ro-crate-validation-v1.0.json. This is not a 1.3 verdict. FTRO-P1-DEF-001."
     },
     {
-      "@id": "ftro:concept:igs/igs/orbit",
+      "@id": "#igs-source-collection",
       "@type": [
         "Dataset",
-        "ftro:SeriesConcept"
+        "Collection"
       ],
       "name": "IGS operational product lines (Final, Rapid), GPS weeks 2198–2199",
-      "ftro:concept_kind": "ftro_composed",
+      "ftro:concept_kind": "collection_of_six_product_lines",
       "ftro:composition_precondition_checked": [
         "BKG mirror directory listing (filenames only; no PID, no sidecar metadata)",
         "IGS product documentation (product line named, but no per-file persistent identifier scheme)",
@@ -86,8 +85,7 @@
       "ftro:reference_frame_note": "IGS20 becomes operational at GPS week 2238 (2022-11-27), after this window",
       "ftro:n_artifacts_pinned": 57,
       "ftro:series_counts": {
-        "igs": 24,
-        "igr": 33
+        "@id": "#series-counts-igs-igr"
       },
       "ftro:data_centre": "BKG (Bundesamt für Kartographie und Geodäsie) IGS mirror, anonymous HTTP",
       "ftro:retrieval_validation": "content_validated",
@@ -100,10 +98,22 @@
       "ftro:evidence_state": "resolvable",
       "hasPart": [
         {
-          "@id": "#pin-igs21980.sp3.Z"
+          "@id": "ftro:concept:igs/igs/orbit"
         },
         {
-          "@id": "#pin-igs21980.clk.Z"
+          "@id": "ftro:concept:igs/igs/clock"
+        },
+        {
+          "@id": "ftro:concept:igs/igs/erp"
+        },
+        {
+          "@id": "ftro:concept:igs/igr/orbit"
+        },
+        {
+          "@id": "ftro:concept:igs/igr/clock"
+        },
+        {
+          "@id": "ftro:concept:igs/igr/erp"
         }
       ],
       "ftro:valid_from": "2022-02-20",
@@ -112,7 +122,88 @@
       "ftro:known_to": null
     },
     {
-      "@id": "#pin-igs21980.sp3.Z",
+      "@id": "#series-counts-igs-igr",
+      "@type": [
+        "Thing",
+        "ftro:SeriesCountSummary"
+      ],
+      "ftro:igs": 24,
+      "ftro:igr": 33
+    },
+    {
+      "@id": "ftro:concept:igs/igs/orbit",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IGS Final orbit products",
+      "ftro:catalog_entry_count": 11,
+      "hasPart": {
+        "@id": "ftro:snapshot:igs/igs21980.sp3.Z@sha256:4e9a0038bce4c07f50956838b24ab1de121b6f2fbe2a9def678b80e3550b62e7"
+      }
+    },
+    {
+      "@id": "ftro:concept:igs/igs/clock",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IGS Final clock products",
+      "ftro:catalog_entry_count": 11,
+      "hasPart": {
+        "@id": "ftro:snapshot:igs/igs21980.clk.Z@sha256:11edebb56d87356fb4c0efe5d592aa8f4b178ace90efcd740c49dd6d091799f9"
+      }
+    },
+    {
+      "@id": "ftro:concept:igs/igs/erp",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IGS Final Earth-rotation products",
+      "ftro:catalog_entry_count": 2,
+      "ftro:source_catalog": {
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json"
+      }
+    },
+    {
+      "@id": "ftro:concept:igs/igr/orbit",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IGS Rapid orbit products",
+      "ftro:catalog_entry_count": 11,
+      "hasPart": {
+        "@id": "ftro:snapshot:igs/igr21980.sp3.Z@sha256:634b4c2e4517754c4b588a31176432e9514c4aaa8d1d1cfca22c23d6b08fd1b3"
+      }
+    },
+    {
+      "@id": "ftro:concept:igs/igr/clock",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IGS Rapid clock products",
+      "ftro:catalog_entry_count": 11,
+      "hasPart": {
+        "@id": "ftro:snapshot:igs/igr21980.clk.Z@sha256:05c6bfbc2dcb68e3227d9f2ce78e8260fb74c03a2f70e3abc2aa242ee1fb23d3"
+      }
+    },
+    {
+      "@id": "ftro:concept:igs/igr/erp",
+      "@type": [
+        "Dataset",
+        "ftro:SeriesConcept"
+      ],
+      "name": "IGS Rapid Earth-rotation products",
+      "ftro:catalog_entry_count": 11,
+      "hasPart": {
+        "@id": "ftro:snapshot:igs/igr21980.erp.Z@sha256:d26e4bcc27e763daba4fda77e6a01d3f17c39659b6b4729aa2e731945b11bb5b"
+      }
+    },
+    {
+      "@id": "ftro:snapshot:igs/igs21980.sp3.Z@sha256:4e9a0038bce4c07f50956838b24ab1de121b6f2fbe2a9def678b80e3550b62e7",
       "@type": [
         "File",
         "ftro:ImmutableSnapshot"
@@ -123,6 +214,9 @@
       "ftro:expected_sha256": "4e9a0038bce4c07f50956838b24ab1de121b6f2fbe2a9def678b80e3550b62e7",
       "ftro:checksum_match": true,
       "ftro:snapshot_id": "ftro:snapshot:igs/igs21980.sp3.Z@sha256:4e9a0038bce4c07f50956838b24ab1de121b6f2fbe2a9def678b80e3550b62e7",
+      "ftro:snapshot_of": {
+        "@id": "ftro:concept:igs/igs/orbit"
+      },
       "ftro:series": "igs",
       "ftro:validity_interval_mjd": [
         59630,
@@ -141,7 +235,7 @@
       "ftro:known_to": null
     },
     {
-      "@id": "#pin-igs21980.clk.Z",
+      "@id": "ftro:snapshot:igs/igs21980.clk.Z@sha256:11edebb56d87356fb4c0efe5d592aa8f4b178ace90efcd740c49dd6d091799f9",
       "@type": [
         "File",
         "ftro:ImmutableSnapshot"
@@ -152,6 +246,9 @@
       "ftro:expected_sha256": "11edebb56d87356fb4c0efe5d592aa8f4b178ace90efcd740c49dd6d091799f9",
       "ftro:checksum_match": true,
       "ftro:snapshot_id": "ftro:snapshot:igs/igs21980.clk.Z@sha256:11edebb56d87356fb4c0efe5d592aa8f4b178ace90efcd740c49dd6d091799f9",
+      "ftro:snapshot_of": {
+        "@id": "ftro:concept:igs/igs/clock"
+      },
       "ftro:series": "igs",
       "ftro:validity_interval_mjd": [
         59630,
@@ -170,7 +267,7 @@
       "ftro:known_to": null
     },
     {
-      "@id": "#pin-igr21980.sp3.Z",
+      "@id": "ftro:snapshot:igs/igr21980.sp3.Z@sha256:634b4c2e4517754c4b588a31176432e9514c4aaa8d1d1cfca22c23d6b08fd1b3",
       "@type": [
         "File",
         "ftro:ImmutableSnapshot"
@@ -181,6 +278,9 @@
       "ftro:expected_sha256": "634b4c2e4517754c4b588a31176432e9514c4aaa8d1d1cfca22c23d6b08fd1b3",
       "ftro:checksum_match": true,
       "ftro:snapshot_id": "ftro:snapshot:igs/igr21980.sp3.Z@sha256:634b4c2e4517754c4b588a31176432e9514c4aaa8d1d1cfca22c23d6b08fd1b3",
+      "ftro:snapshot_of": {
+        "@id": "ftro:concept:igs/igr/orbit"
+      },
       "ftro:series": "igr",
       "ftro:validity_interval_mjd": [
         59630,
@@ -199,7 +299,7 @@
       "ftro:known_to": null
     },
     {
-      "@id": "#pin-igr21980.clk.Z",
+      "@id": "ftro:snapshot:igs/igr21980.clk.Z@sha256:05c6bfbc2dcb68e3227d9f2ce78e8260fb74c03a2f70e3abc2aa242ee1fb23d3",
       "@type": [
         "File",
         "ftro:ImmutableSnapshot"
@@ -210,6 +310,9 @@
       "ftro:expected_sha256": "05c6bfbc2dcb68e3227d9f2ce78e8260fb74c03a2f70e3abc2aa242ee1fb23d3",
       "ftro:checksum_match": true,
       "ftro:snapshot_id": "ftro:snapshot:igs/igr21980.clk.Z@sha256:05c6bfbc2dcb68e3227d9f2ce78e8260fb74c03a2f70e3abc2aa242ee1fb23d3",
+      "ftro:snapshot_of": {
+        "@id": "ftro:concept:igs/igr/clock"
+      },
       "ftro:series": "igr",
       "ftro:validity_interval_mjd": [
         59630,
@@ -228,7 +331,7 @@
       "ftro:known_to": null
     },
     {
-      "@id": "#pin-igr21980.erp.Z",
+      "@id": "ftro:snapshot:igs/igr21980.erp.Z@sha256:d26e4bcc27e763daba4fda77e6a01d3f17c39659b6b4729aa2e731945b11bb5b",
       "@type": [
         "File",
         "ftro:ImmutableSnapshot"
@@ -239,6 +342,9 @@
       "ftro:expected_sha256": "d26e4bcc27e763daba4fda77e6a01d3f17c39659b6b4729aa2e731945b11bb5b",
       "ftro:checksum_match": true,
       "ftro:snapshot_id": "ftro:snapshot:igs/igr21980.erp.Z@sha256:d26e4bcc27e763daba4fda77e6a01d3f17c39659b6b4729aa2e731945b11bb5b",
+      "ftro:snapshot_of": {
+        "@id": "ftro:concept:igs/igr/erp"
+      },
       "ftro:series": "igr",
       "ftro:validity_interval_mjd": [
         59630,
@@ -271,16 +377,10 @@
       "ftro:tie_breaking": "Final over Rapid at equal availability",
       "ftro:fixtures": [
         {
-          "ftro:epoch_mjd": 59630,
-          "ftro:as_of": "2022-02-25",
-          "ftro:selected": "igr21980.sp3.Z",
-          "ftro:reason_code": "final_not_yet_available"
+          "@id": "#fixture-operational-before-final"
         },
         {
-          "ftro:epoch_mjd": 59630,
-          "ftro:as_of": "2022-03-20",
-          "ftro:selected": "igs21980.sp3.Z",
-          "ftro:reason_code": "final_available"
+          "@id": "#fixture-operational-after-final"
         }
       ],
       "ftro:note": "Real bitemporal fixture: Rapid available 2022-02-21T17:30Z, Final 2022-03-13T11:46Z. Same epoch, same policy, different knowledge date; the historical answer is never overwritten.",
@@ -290,6 +390,28 @@
       "ftro:known_to": null
     },
     {
+      "@id": "#fixture-operational-before-final",
+      "@type": [
+        "Thing",
+        "ftro:ResolverFixture"
+      ],
+      "ftro:epoch_mjd": 59630,
+      "ftro:as_of": "2022-02-25",
+      "ftro:selected": "igr21980.sp3.Z",
+      "ftro:reason_code": "final_not_yet_available"
+    },
+    {
+      "@id": "#fixture-operational-after-final",
+      "@type": [
+        "Thing",
+        "ftro:ResolverFixture"
+      ],
+      "ftro:epoch_mjd": 59630,
+      "ftro:as_of": "2022-03-20",
+      "ftro:selected": "igs21980.sp3.Z",
+      "ftro:reason_code": "final_available"
+    },
+    {
       "@id": "#policy-reprocessing",
       "@type": "ftro:Policy",
       "name": "Latest homogeneous reprocessing covering interval I as known on date d",
@@ -297,23 +419,49 @@
       "ftro:issuer": "FTRO",
       "ftro:publication_date": "2026-08-26",
       "ftro:human_rule": "Select the most recent IGS reprocessing campaign whose coverage contains I.",
-      "ftro:fixtures": [
-        {
-          "ftro:interval_mjd": [
-            59630,
-            59640
-          ],
-          "ftro:as_of": "2026-08-26",
-          "ftro:selected": null,
-          "ftro:reason_code": "no_campaign_covers_interval",
-          "ftro:explanation": "repro3 covers 1994–2020; the candidate window is 2022."
-        }
-      ],
+      "ftro:fixtures": {
+        "@id": "#fixture-reprocessing-none"
+      },
       "ftro:note": "An explained null, not an undifferentiated one (card §10 'nulls require reasons').",
       "ftro:valid_from": null,
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "#fixture-reprocessing-none",
+      "@type": [
+        "Thing",
+        "ftro:ResolverFixture"
+      ],
+      "ftro:interval_mjd": [
+        59630,
+        59640
+      ],
+      "ftro:as_of": "2026-08-26",
+      "ftro:selection_status": "null",
+      "ftro:reason_code": "no_campaign_covers_interval",
+      "ftro:explanation": "repro3 covers 1994–2020; the candidate window is 2022."
+    },
+    {
+      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json",
+      "@type": [
+        "File",
+        "ftro:EvidenceArtifact"
+      ],
+      "name": "IGS Phase-0 pin report",
+      "ftro:local_path": "phase0/reports/igs-artifact-pins.json",
+      "ftro:sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json",
+      "ftro:retrieval_validation": "content_validated",
+      "ftro:evidence_state": "resolvable",
+      "ftro:expected_entry_count": 57
+    },
+    {
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@type": "Profile",
+      "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
+      "version": "0.0.3"
     },
     {
       "@id": "https://creativecommons.org/licenses/by/4.0/",

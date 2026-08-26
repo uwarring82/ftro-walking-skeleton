@@ -9,18 +9,13 @@
     {
       "@id": "ro-crate-metadata.json",
       "@type": "CreativeWork",
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://w3id.org/ro/crate/1.3"
+      },
       "about": {
         "@id": "./"
       },
-      "description": "Hand-authored FTRO manifest for the optical-clock leg. Declares conformance to RO-Crate 1.3 and FTRO profile v0.0.3. NOTE: no RO-Crate validator was available in this environment, so the 1.3 conformance claim is UNVERIFIED -- see ftro:conformance_report."
+      "description": "Hand-authored FTRO manifest for the optical-clock leg. Normative RO-Crate 1.3 validation has not run; a non-normative RO-Crate 1.2 compatibility run failed. See ftro:conformance_report."
     },
     {
       "@id": "./",
@@ -31,14 +26,9 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "conformsTo": [
-        {
-          "@id": "https://w3id.org/ro/crate/1.3"
-        },
-        {
-          "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/main/profile/ftro-graph-profile-v0.0.3.md"
-        }
-      ],
+      "conformsTo": {
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+      },
       "ftro:domain": "optical",
       "ftro:data_role": "core measurement",
       "ftro:candidate_window_mjd": [
@@ -47,7 +37,16 @@
       ],
       "hasPart": [
         {
+          "@id": "https://doi.org/10.5281/zenodo.17107692"
+        },
+        {
           "@id": "https://doi.org/10.5281/zenodo.17107693"
+        },
+        {
+          "@id": "git:INRIM/optical-link-data-format@689bda77000fec52c401bc0c9c3664d1dd534ecb"
+        },
+        {
+          "@id": "git:INRIM/tintervals@2064db12777df78bc87f68f7710a47176192c2e1"
         }
       ],
       "mentions": [
@@ -56,6 +55,18 @@
         },
         {
           "@id": "#assertion-comparator-interpretation"
+        },
+        {
+          "@id": "#edge-conforms-to"
+        },
+        {
+          "@id": "#edge-generated-a"
+        },
+        {
+          "@id": "#edge-generated-b"
+        },
+        {
+          "@id": "#edge-context-tintervals"
         }
       ],
       "ftro:conformance_report": {
@@ -68,10 +79,13 @@
       "name": "RO-Crate 1.3 + FTRO v0.0.3 conformance report",
       "ftro:base_specification": "https://w3id.org/ro/crate/1.3",
       "ftro:profile": "FTRO Reference-Ancestry Graph Profile v0.0.3",
-      "ftro:validator": null,
-      "ftro:validator_version": null,
-      "ftro:validation_result": "not_run",
-      "ftro:note": "Card §9.1 requires the exact validator and version to be recorded in every conformance report. No RO-Crate validator could be obtained in this environment (`rocrate-validator` is not installable here, and the repository takes no third-party dependencies). The conformance claim is therefore ASSERTED AND UNVERIFIED. Recorded as FTRO-P1-DEF-001 rather than presented as conformance."
+      "ftro:normative_validation_result": "not_run",
+      "ftro:normative_validation_reason": "The obtainable roc-validator 0.11.3 implements RO-Crate 1.1 and 1.2, not the pinned RO-Crate 1.3 base.",
+      "ftro:compatibility_validator": "roc-validator",
+      "ftro:compatibility_validator_version": "0.11.3",
+      "ftro:compatibility_profile": "ro-crate-1.2",
+      "ftro:compatibility_validation_result": "failed",
+      "ftro:note": "The earlier claim that no validator was obtainable was false: `pip install roc-validator` succeeds. Version 0.11.3 cannot validate 1.3. A temporary, explicitly non-normative 1.2 export fails; exact scope and issue counts are in phase1/reports/ro-crate-validation-v1.0.json. FTRO-P1-DEF-001."
     },
     {
       "@id": "https://doi.org/10.5281/zenodo.17107692",
@@ -169,6 +183,7 @@
       "ftro:snapshot_kind": "provider_immutable",
       "ftro:pinned_file": "README.md",
       "ftro:sha256": "cf93ae7a8f934944230e8555941d9d1e1afac9fa59d3a6d15bacd7befbfcee98",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/INRIM/optical-link-data-format/689bda77000fec52c401bc0c9c3664d1dd534ecb/README.md",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:commit_date": "2025-01-20T15:39:52Z",
@@ -269,6 +284,7 @@
       "ftro:concept_id": "https://github.com/INRIM/tintervals",
       "ftro:pinned_file": "pyproject.toml",
       "ftro:sha256": "c1054d63703d42cded863d536202be014d3ce5166d1f70bee6f69d89dc81c180",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/INRIM/tintervals/2064db12777df78bc87f68f7710a47176192c2e1/pyproject.toml",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:commit_date": "2026-08-16T16:00:18Z",
@@ -322,16 +338,15 @@
       "ftro:subject": {
         "@id": "https://doi.org/10.5281/zenodo.17107693"
       },
+      "ftro:declared_relation": "comparator_output_interpreted_as",
       "ftro:evidence_state": "unresolved",
       "ftro:contestation_state": "none",
       "ftro:competing_readings": [
         {
-          "ftro:reading": "Ref = A: Delta = rho-tilde(B,A), frequency of B referenced to A",
-          "ftro:reference_oscillator": "oscillator A"
+          "@id": "#reading-a"
         },
         {
-          "ftro:reading": "Ref = local RF: Delta = rho-tilde(B,x) - rho-tilde(A,x)",
-          "ftro:reference_oscillator": "an unnamed local RF reference x"
+          "@id": "#reading-local-rf"
         }
       ],
       "ftro:note": "All 12 comparisons use rho0 = nu0B/nu0A and sB = nu0B, which matches TWO rows of the pinned format's examples table differing only by ref_osc. The two have different reference oscillators and therefore different time-tag ancestry. Both readings are retained; neither is selected. FTRO-DEF-004.",
@@ -339,6 +354,24 @@
       "ftro:valid_to": null,
       "ftro:known_from": "2026-08-25",
       "ftro:known_to": null
+    },
+    {
+      "@id": "#reading-a",
+      "@type": "ftro:Assertion",
+      "ftro:reading": "Ref = A: Delta = rho-tilde(B,A), frequency of B referenced to A",
+      "ftro:reference_oscillator": "oscillator A"
+    },
+    {
+      "@id": "#reading-local-rf",
+      "@type": "ftro:Assertion",
+      "ftro:reading": "Ref = local RF: Delta = rho-tilde(B,x) - rho-tilde(A,x)",
+      "ftro:reference_oscillator": "an unnamed local RF reference x"
+    },
+    {
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@type": "Profile",
+      "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
+      "version": "0.0.3"
     },
     {
       "@id": "https://creativecommons.org/licenses/by/4.0/",
