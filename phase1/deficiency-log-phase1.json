@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
@@ -173,7 +173,7 @@
     },
     {
       "id": "FTRO-P1-DEF-007",
-      "version": "3.0.0",
+      "version": "3.1.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "phase1/check_gate1.py",
@@ -188,12 +188,13 @@
       "evidence": [
         "phase1/check_gate1.py",
         "phase1/tests/test_gate1.py",
-        "phase1/reports/gate1-clean-retrieval-v1.0.json"
+        "phase1/reports/gate1-clean-retrieval-v1.0.json",
+        "phase1/reports/gate1-clean-retrieval-committed-d31a70c.json"
       ],
       "severity": "high",
       "impact": "Gate 1 could have been declared on the wrong artifact population, against bytes not represented by the validated snapshot, or with false headline counts; the published repository could not rerun the supposedly clean procedure.",
       "workaround": "The stable candidate identity is the Phase-1 parent plus a fingerprint of ten captured inputs. Execution may be witnessed either by the exact six-file overlay on that parent or by a clean descendant commit containing those six paths plus only allowlisted non-executable publication outputs under phase1/reports, labnotes, the Phase-1 README and the Phase-1 ledger. Every result-derived counter and status is recomputed, and a newly generated PASS must satisfy the same verifier before publication.",
-      "proposed_response": "Closed with 44 Phase-1 tests, including a clean committed-carrier run, permitted non-input publication outputs, rejection of executable extra paths and a clean non-descendant, every aggregate field, duplicate rows and coherent failure rows. The current live report remains a historical parent-overlay witness and can be verified after publication; a third party can then rerun from the published committed form and record its exact HEAD.",
+      "proposed_response": "Closed with 44 Phase-1 tests, including a clean committed-carrier run, permitted non-input publication outputs, rejection of executable extra paths and a clean non-descendant, every aggregate field, duplicate rows and coherent failure rows. The parent-overlay and committed-checkout executions are retained as separate reports; the latter ran at d31a70c and records its full HEAD.",
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.3"

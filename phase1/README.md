@@ -46,20 +46,21 @@ additional `phase1/` code are rejected.
 python3 -m unittest discover -s phase1/tests -v
 python3 phase1/check_gate1.py
 python3 phase1/check_gate1.py \
-  --check-report phase1/reports/gate1-clean-retrieval-v1.0.json
+  --check-report phase1/reports/gate1-clean-retrieval-committed-d31a70c.json
 # After publication, from a clean checkout; write outside the tree to preserve cleanliness:
 python3 phase1/check_gate1.py --retrieve --source-state committed_checkout \
   --out /tmp/gate1-clean-retrieval.json
 ```
 
-From the parent-overlay witness with no `data/` directory, the retrieval run matched **69/69**
-targets: 66 provider artifacts and three FTRO pin reports fetched at the frozen baseline commit.
-Those three demonstrate that the catalogs are published and immutable; they are not third-party
-provider artifacts. Fifty-seven provider sources are catalog-backed GNSS entries, of which five are
-represented as graph entities. No provider bytes were retained. The report binds the six Gate-1
-candidate paths plus four frozen Phase-0 evidence inputs, not unrelated modified documentation in
-the authoring worktree. See
-[`gate1-clean-retrieval-v1.0.json`](reports/gate1-clean-retrieval-v1.0.json).
+The initial parent-overlay run and a second live run from clean committed checkout `d31a70c` both
+matched **69/69** targets: 66 provider artifacts and three FTRO pin reports fetched at the frozen
+baseline commit. Those three demonstrate that the catalogs are published and immutable; they are
+not third-party provider artifacts. Fifty-seven provider sources are catalog-backed GNSS entries,
+of which five are represented as graph entities. No provider bytes were retained. The current
+committed report records the full execution HEAD and binds the six Gate-1 candidate paths plus four
+frozen Phase-0 evidence inputs. See the
+[`committed-checkout report`](reports/gate1-clean-retrieval-committed-d31a70c.json); the
+[`parent-overlay report`](reports/gate1-clean-retrieval-v1.0.json) is retained separately.
 
 This is deliberately not a general RO-Crate or FTRO-profile validator. `roc-validator` 0.11.3 is
 obtainable but supports bases 1.1 and 1.2, not the normative 1.3 target. The exact validation status

@@ -50,3 +50,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-26 | 13 | [Phase 1 — four hand-authored manifests](2026-08-26-session-13-phase1-manifests.md) *(branch `phase1`)* |
 | 2026-08-26 | 14 | [Boundaries executed — C9 fails, Gate 1 source location passes](2026-08-26-session-14-boundaries-executed.md) *(branch `phase1`)* |
 | 2026-08-26 | 15 | [Independent verification corrections — audit reset and durable Gate-1 witnesses](2026-08-26-session-15-independent-verification-corrections.md) *(branch `phase1`)* |
+| 2026-08-26 | 16 | [Published-carrier hardening and committed Gate-1 witness](2026-08-26-session-16-committed-gate1-witness.md) *(branch `phase1`)* |
