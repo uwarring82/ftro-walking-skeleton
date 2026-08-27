@@ -746,6 +746,31 @@ def optical_attempt(optical, completed_steps):
     }
 
 
+def first_failed_attempt(attempts):
+    """Return the earliest failed provider attempt in pipeline/time order.
+
+    Provider evidence is assembled by report family and the optical row is appended after
+    the pin reports, so list order is not necessarily execution order. A previous version
+    selected the last failed row and consequently labelled the last IGS rejection as
+    ``first_failure`` in the first live C9 report. Step is authoritative; retrieval time
+    orders failures within a step; original order is the deterministic tie-breaker.
+    """
+    failed = [(index, row) for index, row in enumerate(attempts)
+              if row.get("failure_class") != "success"]
+    if not failed:
+        return None
+
+    def order(item):
+        index, row = item
+        step = row.get("step")
+        step_key = step if type(step) is int else sys.maxsize
+        retrieved = row.get("retrieved_utc")
+        time_key = retrieved if isinstance(retrieved, str) else "\uffff"
+        return step_key, time_key, index
+
+    return min(failed, key=order)[1]
+
+
 def optical_http_evidence(record):
     matches = re.findall(
         r"(?m)^FTRO_CURL_HTTP (\d{3}) (\S+) (\S*) ([0-9]+(?:\.[0-9]+)?)$",
@@ -1060,9 +1085,8 @@ def main(argv=None):
 
         # Prefer the structured rejected-report reason over a whole numbered step's mixed
         # stdout/stderr when one is available.
-        failed_attempts = [row for row in attempts if row["failure_class"] != "success"]
-        if failure is not None and failed_attempts:
-            candidate = failed_attempts[-1]
+        candidate = first_failed_attempt(attempts)
+        if failure is not None and candidate is not None:
             for key in (
                 "failure_class", "reachability_stage", "access_class_conclusion",
                 "http_status", "bytes_received", "expected_sha256", "observed_sha256",
@@ -1077,7 +1101,7 @@ def main(argv=None):
         ]
         report = {
             "document": "FTRO Phase-0 C9 live-pipeline report",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "run_id": args.run_id,
             "started_utc": started,
             "ended_utc": utc_now(),
@@ -1085,7 +1109,7 @@ def main(argv=None):
             "qualifying": failure is None,
             "subject": state,
             "contract": {
-                "id": "FTRO-ACC-001", "version": "1.2.0", "clause": "C9",
+                "id": "FTRO-ACC-001", "version": "1.3.0", "clause": "C9",
                 "path": "phase0/acceptance-contract-v1.0.md",
                 "sha256": digest_file(ROOT / "phase0/acceptance-contract-v1.0.md"),
             },
@@ -1171,7 +1195,7 @@ def main(argv=None):
                 "tree": state["tree"],
                 "required_ancestor": REQUIRED_ANCESTOR,
                 "contract_id": "FTRO-ACC-001",
-                "contract_version": "1.2.0",
+                "contract_version": "1.3.0",
                 "output_view": "producer",
                 "report_path": str(output),
                 "verify_runtime_tools": True,

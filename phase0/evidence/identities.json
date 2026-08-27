@@ -1,6 +1,6 @@
 {
   "document": "FTRO Phase-0 concept and snapshot identities",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "date": "2026-08-25",
   "card": "FTRO-WS-001 v0.3",
   "note": "Task card section 11.3: living series carry a concept identity naming the continuing product line and a snapshot identity naming the immutable state actually consumed. Where the provider supplies no immutable snapshot PID, section 10 requires an FTRO identity composed from the concept identifier, retrieval time, byte checksum and recorded retrieval procedure.",
@@ -606,7 +606,7 @@
           "utc_date": "2022-02-20",
           "sha256_prefix": "4e9a0038bce4c07f",
           "size_bytes": 97301,
-          "mirror_last_modified": "Sun, 13 Mar 2022 11:46:51 GMT"
+          "mirror_last_modified": "Sun, 13 Mar 2022 01:55:31 GMT"
         },
         {
           "name": "igs21991.sp3.Z",
@@ -618,25 +618,28 @@
       ],
       "reference_frame": "IGb14 (operational for GPS weeks 2106-2237; IGS20 begins week 2238, 2022-11-27)",
       "n_artifacts_pinned": 57,
-      "data_centre": "BKG IGS mirror, anonymous HTTP",
-      "data_rights": "IGS data and products are provided free of charge; no explicit machine-readable licence was located for these artifacts",
+      "data_centre": "SIO/SOPAC GARNER IGS global data centre, anonymous HTTPS",
+      "data_rights": "Not established; no explicit machine-readable licence was located for these artifacts",
       "redistribution_mode": "link_only",
       "evidence_state": "resolvable",
       "deficiencies": [
         "FTRO-DEF-019",
-        "FTRO-DEF-020"
+        "FTRO-DEF-020",
+        "FTRO-DEF-075"
       ],
       "composition_precondition_checked": [
-        "BKG mirror directory listing (filenames only; no PID, no sidecar metadata)",
+        "SIO/SOPAC GARNER directory listing (filenames only; no per-file PID or sidecar identity metadata)",
         "IGS product documentation (product line named, but no per-file persistent identifier scheme)",
         "HTTP ETag / Last-Modified (mirror-local and mutable, not a PID)"
       ],
       "composition_justification": "IGS supplies no per-file immutable persistent identifier for operational products, so both concept and snapshot identities are composed per task card §10.",
+      "pinned_population_note": "The retrieval-route transition does not widen the selected population: the same 57 product names remain pinned. SIO/GARNER also carries .clk_30s and .sum products for these weeks, but they remain outside the pre-registered selection.",
+      "container_equivalence_note": "SIO/GARNER serves different Unix-compress containers for igs21982.clk.Z, igs21983.clk.Z and igr21991.clk.Z. Their FTRO snapshot identities therefore change, while each decoded byte stream is identical to the earlier BKG retrieval. Old and new container SHA-256 values and the common decoded-content SHA-256 are recorded in phase0/evidence/expected-digests.json (FTRO-DEF-075).",
       "retrieval_validation": "not_applicable",
       "retrieval_validation_note": "Concept-level product-line record; it is not itself a retrieval. Its evidence_state derives from the 57 pinned snapshots, all content_validated with digests enforced (phase0/reports/igs-artifact-pins.json)."
     }
   ],
-  "revised": "2026-08-25",
+  "revised": "2026-08-27",
   "version_history": [
     {
       "version": "0.1.0",
@@ -657,6 +660,11 @@
       "version": "0.3.0",
       "commit": "this",
       "note": "vgosDB retrieval time and procedure re-synced after a re-pin. A re-pin changes the recorded provenance of a snapshot identity, so it is a deliberate version change, not incidental churn -- which is why the content gate flags it."
+    },
+    {
+      "version": "0.4.0",
+      "commit": "this",
+      "note": "GNSS retrieval provenance moved from BKG to SIO/SOPAC GARNER without widening the frozen 57-name selection. Three compression-container identities changed while their decoded content remained byte-identical; both identity levels are retained explicitly."
     }
   ]
 }

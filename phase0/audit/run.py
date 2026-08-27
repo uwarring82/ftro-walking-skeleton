@@ -51,7 +51,7 @@ EXPECTED_OPERATORS = set(EXPECTED_OPERATOR_ORDER)
 
 # This is the executable scope, not merely the semantic operator headings.  A manifest
 # that silently drops one alternative, or changes a rejection into an accepted mutation,
-# is a different audit and must not validate under v1.0.1.
+# is a different audit and must not validate under v1.0.2.
 EXPECTED_CASES = {
     "M1.missing-generator": ("M1", "detected", "rejected"),
     "M1.missing-pin-retrieved-utc": ("M1", "detected", "rejected"),
@@ -427,8 +427,8 @@ def validate_manifest(manifest):
     )
     if manifest["document"] != "FTRO Phase-0 executable audit manifest":
         raise RecipeError("unexpected manifest document type")
-    if manifest["version"] != "1.0.1":
-        raise RecipeError("runner supports manifest version 1.0.1 only")
+    if manifest["version"] != "1.0.2":
+        raise RecipeError("runner supports manifest version 1.0.2 only")
     require_string(manifest["manifest_id"], "manifest.manifest_id")
     validate_binding(manifest["semantic_model"], "semantic_model")
     validate_binding(manifest["acceptance_contract"], "acceptance_contract")

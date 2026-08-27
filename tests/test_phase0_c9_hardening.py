@@ -185,6 +185,37 @@ class TestC9FreshEvidence(unittest.TestCase):
         self.assertEqual(attempt["reachability_stage"], "bytes_received")
         self.assertEqual(attempt["expected_sha256"], digest)
 
+    def test_rejected_http_error_propagates_status_to_c9(self):
+        path = self.root / C9.PIN_REPORTS["igs"]["path"]
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path = Path(str(path) + ".rejected")
+        digest = self.population()["igs"]["igs.dat"]
+        path.write_text(json.dumps({
+            "pins": [],
+            "failures": [{
+                "name": "igs.dat",
+                "url": "https://example.invalid/igs.dat",
+                "http_status": 404,
+                "size_bytes": 19,
+                "sha256": "f" * 64,
+                "expected_sha256": digest,
+                "retrieved_utc": "2026-08-27T10:00:01+00:00",
+                "retrieval_validation": "content_rejected",
+                "error": "HTTPError: HTTP Error 404: Not Found",
+            }],
+            "n_failed": 1,
+            "retrieval_validation": "content_validation_incomplete",
+        }), encoding="utf-8")
+        with mock.patch.object(C9, "ROOT", self.root):
+            attempts, _, _ = C9.provider_report_evidence(
+                "2026-08-27T10:00:00+00:00", self.population(),
+            )
+        attempt = next(row for row in attempts if row.get("source_group") == "igs")
+        self.assertEqual(attempt["failure_class"], "http_failure")
+        self.assertEqual(attempt["reachability_stage"], "bytes_received")
+        self.assertEqual(attempt["http_status"], 404)
+        self.assertEqual(attempt["bytes_received"], 19)
+
     def test_rejected_single_report_uses_top_reason_without_duplicate_attempt(self):
         path = self.root / C9.PIN_REPORTS["vgosdb"]["path"]
         path.parent.mkdir(parents=True, exist_ok=True)
@@ -288,6 +319,30 @@ class TestC9ProductionProof(unittest.TestCase):
         self.assertEqual(attempt["access_class_conclusion"], "not_established")
         self.assertEqual(attempt["access_evidence"], "anonymous_request_succeeded")
         self.assertEqual(attempt["source_group"], "optical")
+
+    def test_first_failure_is_earliest_by_step_then_retrieval_time(self):
+        attempts = [
+            {"artifact": "late-listed-optical", "step": 3,
+             "retrieved_utc": "2026-08-27T10:00:03+00:00",
+             "failure_class": "digest_mismatch"},
+            {"artifact": "second-in-step", "step": 4,
+             "retrieved_utc": "2026-08-27T10:00:05+00:00",
+             "failure_class": "transport_failure"},
+            {"artifact": "first-in-step", "step": 4,
+             "retrieved_utc": "2026-08-27T10:00:04+00:00",
+             "failure_class": "transport_failure"},
+            {"artifact": "success", "step": 1,
+             "retrieved_utc": "2026-08-27T10:00:01+00:00",
+             "failure_class": "success"},
+        ]
+        self.assertEqual(C9.first_failed_attempt(attempts)["artifact"],
+                         "late-listed-optical")
+        attempts[0]["failure_class"] = "success"
+        self.assertEqual(C9.first_failed_attempt(attempts)["artifact"],
+                         "first-in-step")
+        self.assertIsNone(C9.first_failed_attempt([
+            {"artifact": "success", "step": 1, "failure_class": "success"},
+        ]))
 
     def test_transport_has_priority_over_prior_checksum_text(self):
         failure, reachability = C9.classify_failure(

@@ -25,9 +25,11 @@ The observatory should let a user answer:
 
 ## Status — Gate 0 passed; Phase 0 closure pending
 
-Gate 0's scientific selection result stands. Phase 0 is not yet procedurally closed: C9 needs one
-clean live-provider run, and the two historical mutation exercises were retrospective rather than
-pre-registered. The qualifying audit count is therefore **0/2**; see the
+Gate 0's scientific selection result stands. Phase 0 is not yet procedurally closed: the first
+live C9 attempt reached step 4 and failed when the BKG IGS route refused all 57 connections. A
+reachable official SIO/GARNER route is now pinned for the replacement carrier. The two historical
+mutation exercises were retrospective rather than pre-registered, so the qualifying audit count
+is still **0/2**; see the
 [acceptance contract](phase0/acceptance-contract-v1.0.md).
 
 Four pilot domains over the candidate window **MJD 59630–59640** (2022-02-20 → 2022-03-02):
@@ -80,12 +82,13 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 82 classified deficiencies**, 51 resolved, 58 self-directed after reconciling the nine-entry
-Phase-1 source ledger and rejecting the first closure carrier at its clean-archive gate.
+**4. 85 classified deficiencies**, 56 resolved, 60 self-directed after reconciling the nine-entry
+Phase-1 source ledger and rejecting two closure carriers: one at its clean-archive gate and one
+after its first live-provider failure report proved to misname the last rejection as the first.
 Each carries a `finding_type`
 and an `affects` axis, because an append-only count cannot show convergence. The exact measure is:
 **entries simultaneously open, `affects == changes_result` and
-`finding_type == current_defect` — zero after the merge.** **Fifty-eight are self-directed** —
+`finding_type == current_defect` — zero after the merge.** **Sixty are self-directed** —
 against FTRO's own tooling,
 evidence discipline, test suite and profile conformance. Every entry carries a machine-readable
 `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as
@@ -203,6 +206,12 @@ Unix-compress decoder verified byte-identical to system `gzip` on a real 253 KB 
 checking the inner format. All three tools fail closed on a digest mismatch: non-zero exit, no
 identity minted, no bytes cached. Logged against our own tooling as
 [`FTRO-DEF-018`](ledgers/deficiency-log.md#ftro-def-018).
+
+The default IGS route is the official SIO/SOPAC GARNER mirror over anonymous HTTPS. It reproduces
+54 of the earlier BKG retrieval containers exactly; three `.Z` containers differ while all 57
+decoded products are byte-identical. Those three are explicit new retrieval snapshots, with the
+earlier outer digest and common decoded digest retained in the registry
+([`FTRO-DEF-075`](ledgers/deficiency-log.md#ftro-def-075)).
 
 The regression tests use committed deterministic fixtures and perform **no network call**; an
 earlier README described a live-CDDIS test that did not exist as committed code

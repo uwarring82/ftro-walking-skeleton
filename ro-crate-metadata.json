@@ -287,7 +287,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "18178",
+      "contentSize": "19272",
       "name": "selection-note-v0.1.md"
     },
     {
@@ -327,7 +327,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "34202",
+      "contentSize": "35260",
       "name": "identities.json"
     },
     {
@@ -416,7 +416,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "168816",
+      "contentSize": "179456",
       "name": "deficiency-log.json"
     },
     {
@@ -426,7 +426,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "167447",
+      "contentSize": "177290",
       "name": "deficiency-log.md"
     },
     {
@@ -436,7 +436,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4995",
+      "contentSize": "5258",
       "name": "rights-ledger.md"
     },
     {
@@ -446,7 +446,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "6366",
+      "contentSize": "7265",
       "name": "source-ledger.md"
     },
     {
@@ -574,7 +574,7 @@
       "name": "pin_igs.py",
       "description": "Retrieves and pins IGS products with full digests and content-shape validation.",
       "encodingFormat": "text/x-python",
-      "contentSize": "12145",
+      "contentSize": "18207",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -714,7 +714,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3579",
+      "contentSize": "3727",
       "name": "README.md"
     },
     {
@@ -802,7 +802,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "78918"
+      "contentSize": "89838"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -991,7 +991,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "6285"
+      "contentSize": "7566"
     },
     {
       "@id": "src/ftro/pin_evidence_repos.py",
@@ -1059,7 +1059,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "9026"
+      "contentSize": "9439"
     },
     {
       "@id": "labnotes/2026-08-26-session-08-review-corrections-7.md",
@@ -1172,7 +1172,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "9068"
+      "contentSize": "9496"
     },
     {
       "@id": "phase0/audit-fault-model-v1.0.md",
@@ -1260,7 +1260,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4682"
+      "contentSize": "5039"
     },
     {
       "@id": "phase0/audit/c9_contract.py",
@@ -1334,7 +1334,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "51245"
+      "contentSize": "52227"
     },
     {
       "@id": "phase0/audit/check_qualification.py",
@@ -1430,7 +1430,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "20368"
+      "contentSize": "23002"
     },
     {
       "@id": "tests/test_phase0_c9_contract.py",

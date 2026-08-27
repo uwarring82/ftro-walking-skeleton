@@ -855,7 +855,7 @@ def validate_success_report(report, root, context):
         if not isinstance(report, dict):
             return errors
     if report.get("document") != "FTRO Phase-0 C9 live-pipeline report" \
-            or report.get("version") != "1.1.0":
+            or report.get("version") != "1.2.0":
         errors.append("C9 report document/version differs")
     if not isinstance(report.get("run_id"), str) or not report["run_id"].strip():
         errors.append("C9 run_id must be non-empty")
@@ -912,7 +912,7 @@ def validate_success_report(report, root, context):
     if _exact_keys(contract, CONTRACT_KEYS, "contract", errors):
         expected_contract = {
             "id": context.get("contract_id", "FTRO-ACC-001"),
-            "version": context.get("contract_version", "1.2.0"),
+            "version": context.get("contract_version", "1.3.0"),
             "clause": "C9", "path": EXPECTED_CONTRACT_PATH,
             "sha256": _sha256(contract_body),
         }

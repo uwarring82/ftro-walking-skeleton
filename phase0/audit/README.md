@@ -1,11 +1,16 @@
 # Phase-0 closure execution
 
-**Document ID:** FTRO-AUD-EXEC-README-001 · **Version:** 1.0.0 · **Date:** 2026-08-27  
-**Status:** Preparation candidate; C9 not rerun, calibration not run, qualifying audits 0/2.
+**Document ID:** FTRO-AUD-EXEC-README-001 · **Version:** 1.1.0 · **Date:** 2026-08-27
+**Status:** Replacement carrier in preparation; prior C9 failed, calibration not run, qualifying audits 0/2.
 
 The semantic fault model is historical. The executable pre-registration is
 [`execution-manifest-v1.0.json`](execution-manifest-v1.0.json); its controller is
 [`run.py`](run.py). The live C9 recorder is [`run_c9.py`](run_c9.py).
+
+Carrier `354868a` passed its literal clean-archive suite, then its first live C9 attempt stopped at
+step 4 when BKG refused all 57 IGS connections. The same report exposed `FTRO-DEF-074`: its
+`first_failure` projection selected the last rejection. The carrier is rejected; no calibration
+or qualifying evidence transfers to this replacement.
 
 ## Outcome model
 

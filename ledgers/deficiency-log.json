@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.19.0",
+  "version": "0.20.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -481,7 +481,7 @@
     },
     {
       "id": "FTRO-DEF-018",
-      "version": "1.2.0",
+      "version": "1.3.0",
       "class": "rights",
       "domain": "vlbi",
       "dataset": "CDDIS IVS archive",
@@ -495,7 +495,7 @@
       "severity": "high",
       "impact": "A federation retrieval procedure that validates only status code and checksum will silently pin a login page as if it were data, then propagate that checksum as evidence. This affects FTRO's own tooling: src/ftro/pin_igs.py has the same weakness and is recorded here as a known limitation.",
       "workaround": "IVS session metadata was obtained from https://ivscc.gsfc.nasa.gov/sessions/2022/ instead, and the vgosDB itself from OPAR (see FTRO-DEF-025).",
-      "proposed_response": "RESOLVED for FTRO tooling 2026-08-25. All four pinners (pin_igs, pin_vgosdb, pin_ppta, pin_evidence_repos) perform content-shape validation: HTML/auth-marker detection, magic-byte checks, actual decompression via src/ftro/unixz.py for .Z products, inner-format checks, and archive-structure checks for vgosDB. All fail closed on a digest mismatch. Profile §9.2 requires content_validated before evidence_state = resolvable, and 34 committed tests enforce it. CORRECTION (v1.2.0): earlier versions of this entry claimed 'a regression test against the live CDDIS URL'. No such committed test ever existed -- the live check was run interactively once and never committed. The committed suite uses deterministic fixtures and makes NO network call (FTRO-DEF-031 v2.0.0). The CDDIS behaviour itself is unchanged and remains reportable upstream.",
+      "proposed_response": "RESOLVED for FTRO tooling 2026-08-25. All four pinners (pin_igs, pin_vgosdb, pin_ppta, pin_evidence_repos) perform content-shape validation: HTML/auth-marker detection, magic-byte checks, actual decompression via src/ftro/unixz.py for .Z products, inner-format checks, and archive-structure checks for vgosDB. All fail closed on a digest mismatch. Profile §9.2 requires content_validated before evidence_state = resolvable, with direct deterministic tests over the relevant failure paths. CORRECTION (v1.2.0): earlier versions of this entry claimed 'a regression test against the live CDDIS URL'. No such committed test ever existed -- the live check was run interactively once and never committed. The committed suite uses deterministic fixtures and makes NO network call (FTRO-DEF-031 v2.0.0). CORRECTION (v1.3.0): removed the stale '34 tests' count, which was a historical whole-suite total rather than a stable description of content-validation coverage. The CDDIS behaviour itself is unchanged and remains reportable upstream.",
       "disposition": "resolved",
       "links": {
         "profile": "v0.0.1",
@@ -508,16 +508,17 @@
     },
     {
       "id": "FTRO-DEF-019",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "source_evidence",
       "domain": "gnss",
       "dataset": "IGS operational products",
       "title": "Product availability time is mirror-derived, not provider-declared",
       "failed_step": "Recording a provider-authoritative first-availability time for the bitemporal resolver.",
       "known_fact": "Task card section 10 requires release time and first availability time as distinct primitives; section 13.3 requires resolver fixtures keyed on knowledge date.",
-      "observed": "The pinned artifacts carry only the BKG mirror's HTTP Last-Modified header, e.g. igr21980 at 2022-02-21T17:30:12Z and igs21980 at 2022-03-13T11:46:51Z. These are mirror file times, which approximate but are not identical to IGS release times. No IGS-declared release timestamp was located for these artifacts.",
+      "observed": "CORRECTION v2.0.0: the original examples came from the historical BKG route. The current SIO/GARNER pins likewise carry mirror-local HTTP Last-Modified values, for example igr21980.sp3.Z at 2022-02-21T17:03:41Z and igs21980.sp3.Z at 2022-03-13T01:55:31Z. Neither route's file times are provider-declared IGS release timestamps. No IGS-authoritative release timestamp was located for these artifacts.",
       "evidence": [
-        "phase0/reports/igs-artifact-pins.json"
+        "phase0/reports/igs-artifact-pins.json",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
       ],
       "severity": "medium",
       "impact": "The bitemporal resolver fixtures are keyed on an approximation. The Rapid-to-Final ordering (about 1 day against about 21 days) is robust, but a knowledge date within hours of a boundary is not decidable from this evidence.",
@@ -535,24 +536,26 @@
     },
     {
       "id": "FTRO-DEF-020",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "source_evidence",
       "domain": "gnss",
       "dataset": "IGS operational products",
-      "title": "High-rate 30 s clock products are absent from the mirror used",
+      "title": "CORRECTED: high-rate clock and summary products were absent only from the original BKG route",
       "failed_step": "Pinning the clock artifact at the cadence a sub-daily alignment would require.",
       "known_fact": "IGS Final clock products are published at 5-minute cadence (.clk) and, for many weeks, 30-second cadence (.clk_30s).",
-      "observed": "The BKG mirror listing for GPS weeks 2198 and 2199 contains .sp3, .clk and .erp only. No .clk_30s and no .sum summary files are present.",
+      "observed": "The historical BKG mirror listing used in session 01 contained .sp3, .clk and .erp only. That route-specific observation was incorrectly carried as if it described the IGS holdings. The SIO/GARNER listings checked on 2026-08-27 contain seven igs*.clk_30s.Z files in each of weeks 2198 and 2199 (14 total) and 96 *.sum.Z files in each week. The frozen Phase-0 target population remains the pre-registered 57 .sp3/.clk/.erp artifacts; these newly located files are not silently added.",
       "evidence": [
-        "phase0/reports/igs-artifact-pins.json"
+        "phase0/reports/igs-artifact-pins.json",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
       ],
       "severity": "low",
-      "impact": "Sub-5-minute GNSS clock interpolation cannot be evidenced from this data centre. Given that the optical leg's own time tags are quantised at 86.4 ms (FTRO-DEF-002), this is not currently the binding constraint.",
-      "workaround": "Use the 5-minute Final clocks; record the cadence limit in the alignment certificate.",
-      "proposed_response": "Locate a mirror carrying .clk_30s for these weeks if sub-5-minute alignment is later required.",
-      "disposition": "open",
+      "impact": "The earlier dataset-level absence claim was false. It had no present scientific effect because 30-second clocks and summary files were outside the pre-registered target population and the optical timestamp evidence remains the binding alignment constraint.",
+      "workaround": "Use the frozen 5-minute Final-clock selection for Phase 0; treat SIO's higher-rate and summary products as discoverable but out of scope.",
+      "proposed_response": "Resolved 2026-08-27 by locating the files at SIO/GARNER and narrowing the historical absence statement to BKG. Any future use requires an explicit new selection rather than target drift.",
+      "disposition": "resolved",
       "links": {
-        "profile": "v0.0.1"
+        "profile": "v0.0.1",
+        "evidence": "phase0/selection-note-v0.1.md#24-gnss--selected"
       },
       "responsible_party": "provider",
       "self_directed": false,
@@ -890,7 +893,7 @@
     },
     {
       "id": "FTRO-DEF-033",
-      "version": "4.0.0",
+      "version": "5.0.0",
       "class": "schema",
       "domain": "cross-domain",
       "dataset": "FTRO profile and ledger version labels",
@@ -902,15 +905,18 @@
       "observed": "profile/ftro-graph-profile-v0.0.3.md is byte-distinct at fdbf2b9, 2c31279 and 0b41929 while remaining labelled v0.0.1, and gained normative clauses (§5.0, §5.1, §5.2, the §9.2 routes_tried requirement) between them. phase0/evidence/identities.json likewise stayed v0.1.0 across substantive changes. 'Conforms to v0.0.1' therefore names no particular set of constraints. CORRECTION (v2.0.0): the first fix bumped the profile only. phase0/evidence/identities.json -- named in this entry's own scope -- had four byte-distinct states at fdbf2b9, 2c31279, 0b41929 and 1b77a72 while remaining version 0.1.0 throughout, so the entry was marked resolved while half its own scope was untouched. CORRECTION (v3.0.0): D-039a extended the rule to every versioned artifact and the same commit then changed both ledgers without bumping decision-ledger v0.1.0 or source-ledger v0.2.0. The entry also still described the current profile as v0.0.2 after it had become v0.0.3. CORRECTION (v4.0.0): the gate built in round 3 could not perform the check it existed for. It stored set_at: 'HEAD' and never used it, comparing each document's declared version against a hard-coded copy of the same string -- so the two agreed by construction and a content change without a version bump passed. Working-tree changes produced only a non-failing note, and no test invoked the checker. The same commit demonstrated the miss: identities.json changed its vgosDB retrieval time and optical-validity-intervals.md changed its spacing evidence, both without a bump, and the latter was not even registered.",
       "evidence": [
         "profile/ftro-graph-profile-v0.0.3.md",
-        "phase0/evidence/identities.json"
+        "phase0/evidence/identities.json",
+        "src/ftro/check_versions.py",
+        "tests/test_retrieval_validation.py#TestVersionGate",
+        "labnotes/2026-08-26-session-12-consolidation.md"
       ],
       "severity": "medium",
-      "impact": "Any conformance assertion made against a drifting label is unfalsifiable, which defeats the purpose of §9.1. Corrected: the profile is at v0.0.3 with a version-history table, every versioned artifact carries a version, and src/ftro/check_versions.py enforces the rule.",
+      "impact": "Any conformance assertion against a drifting label is unfalsifiable. Corrected: the profile is v0.0.3 with version history; the current Git-based gate rejects a changed document whose declared version is removed, unchanged or moves backwards, and fails closed when Git is unavailable.",
       "workaround": "Cite the commit hash alongside the version label until the profile freezes.",
-      "proposed_response": "Corrected round 4 (2026-08-26): check_versions.py records a CONTENT DIGEST per artifact in phase0/evidence/versioned-artifacts.json, taken when the version was set, so any change without a bump is detectable. Twelve artifacts registered, --update re-records after a deliberate bump, and TestVersionGate asserts both failure modes -- content drift and an unrecorded bump -- against a copied tree.",
+      "proposed_response": "CORRECTION v5.0.0 (2026-08-27): the round-4 registry repair was retired in session 12. check_versions.py is now read-only and compares candidate content/version with a named Git base; there is no registry, --update or --register path to drift or bless a change. TestVersionGate covers unchanged content, same-version drift, downgrade, removal and first introduction of a version.",
       "disposition": "resolved",
       "links": {
-        "profile": "v0.0.2"
+        "profile": "v0.0.3"
       },
       "finding_type": "assurance_gap",
       "affects": "maintenance_only"
@@ -1053,7 +1059,7 @@
     },
     {
       "id": "FTRO-DEF-039",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "FTRO version gate",
@@ -1061,16 +1067,17 @@
       "self_directed": true,
       "title": "SELF-DIRECTED: --update could legalise an unbumped content change",
       "failed_step": "Preventing content drift from passing the version gate.",
-      "known_fact": "D-051: the version gate compares content digests so unbumped drift is detectable.",
+      "known_fact": "D-051: the version gate compares a candidate against a fixed baseline so unbumped drift is detectable.",
       "observed": "check_versions.py --update replaced both the recorded version and the recorded digest unconditionally, including for artifacts the audit had just flagged as same-version drift. In a clean export: --check exited 1, --update exited 0, and --check then passed with the version unchanged. The gate could be silenced by the command documented for maintaining it.",
       "evidence": [
         "src/ftro/check_versions.py",
-        "tests/test_retrieval_validation.py#test_update_refuses_to_launder_an_unbumped_change"
+        "tests/test_retrieval_validation.py#TestVersionGate",
+        "labnotes/2026-08-26-session-12-consolidation.md"
       ],
       "severity": "medium",
-      "impact": "Any drift could be made invisible in one command. --update now REFUSES when content changed under an unchanged version, and initial registration is a separate explicit --register path rather than a side effect.",
+      "impact": "Any drift could be made invisible in one command. CORRECTION v2.0.0: that laundering path is absent by construction: the current gate is read-only and has no maintenance flag or mutable registry.",
       "workaround": "None.",
-      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-056): the command that maintains a gate must not be able to satisfy it.",
+      "proposed_response": "Superseded in session 12 by deleting --update, --register and the registry; Git is the sole baseline, and tests assert same-version drift is rejected.",
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
@@ -1080,7 +1087,7 @@
     },
     {
       "id": "FTRO-DEF-040",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "FTRO versioned-artifact registry",
@@ -1091,13 +1098,15 @@
       "known_fact": "A rule quantified over 'every X' needs a way to enumerate X.",
       "observed": "The registry was a hand-written twelve-file list. All three ApplicabilityAssessments declare version 1.0.0 and none was registered, so changing one without a bump returned success. Nothing detected the omission because nothing enumerated the population the rule quantifies over.",
       "evidence": [
-        "src/ftro/check_versions.py#discover_versioned",
-        "phase0/evidence/versioned-artifacts.json"
+        "git:615afe2cfdadaea46ee7551f8f0ded05c392ed7f:phase0/evidence/versioned-artifacts.json",
+        "src/ftro/check_versions.py",
+        "tests/test_retrieval_validation.py#TestVersionGate",
+        "labnotes/2026-08-26-session-12-consolidation.md"
       ],
       "severity": "medium",
-      "impact": "The version rule silently applied to a subset. check_versions.py now DISCOVERS every document under phase0/, ledgers/, profile/ and charter/ that declares a version, and fails if one is neither registered nor listed in an explicit EXCLUSIONS map with a stated reason. Fourteen artifacts are tracked; four generated or externally-versioned documents are excluded on the record. A test asserts a newly added versioned document is detected.",
+      "impact": "The manual registry silently applied to a subset. CORRECTION v2.0.0: there is no opt-in population. The gate enumerates changed documentation from git diff, applies the rule whenever current or base content declares a version, and names exactly two file exclusions (the externally versioned task card and CITATION.cff), plus explicit non-document path-prefix skips.",
       "workaround": "None.",
-      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-057): a rule quantified over 'every X' requires an executable enumeration of X and an explicit, stated exclusion policy.",
+      "proposed_response": "The registry was deleted in session 12; executable Git enumeration and explicit exclusions now implement D-057.",
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
@@ -1188,7 +1197,7 @@
     },
     {
       "id": "FTRO-DEF-044",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "FTRO version gate",
@@ -1200,12 +1209,13 @@
       "observed": "--register only disabled the same-version laundering refusal, so check 1 -> update --register 0 -> check 0 made drift invisible. And because the update loop iterated only EXISTING registry entries, --register could not add a newly discovered document: it exited 0 while the next check still failed. Ordinary --update also accepted a version downgrade.",
       "evidence": [
         "src/ftro/check_versions.py",
-        "tests/test_retrieval_validation.py#TestRegisterSemantics"
+        "tests/test_retrieval_validation.py#TestVersionGate",
+        "labnotes/2026-08-26-session-12-consolidation.md"
       ],
       "severity": "high",
-      "impact": "The maintenance command both weakened the gate and failed at its stated purpose. --register now adds only newly discovered artifacts, neither flag can bypass the same-version refusal, and a version that moves backwards is refused.",
+      "impact": "The maintenance command both weakened the gate and failed at registration. CORRECTION v2.0.0: both flags and registration itself were deleted. A document gaining its first version is handled by the same read-only comparison, and a backward version is rejected.",
       "workaround": "None.",
-      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-061): a maintenance flag adds capability, never removes a check.",
+      "proposed_response": "Resolved by removal in session 12; no command can add capability by disabling a check.",
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
@@ -1322,7 +1332,7 @@
     },
     {
       "id": "FTRO-DEF-049",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "FTRO version gate",
@@ -1334,12 +1344,13 @@
       "observed": "The compensating control added last round was a FRESHNESS check: it proves output matches current input, not that changed output was re-versioned. Editing the optical summary and regenerating produced different content still declaring v0.2.0, and the version check, crate check and all tests passed -- exactly the scenario FTRO-DEF-045 claimed to have fixed. The test also rendered into the tracked checkout, so a stale file was overwritten by the first failing run and the second run passed.",
       "evidence": [
         "src/ftro/check_versions.py",
-        "tests/test_retrieval_validation.py"
+        "tests/test_retrieval_validation.py#TestVersionGate",
+        "labnotes/2026-08-26-session-12-consolidation.md"
       ],
       "severity": "high",
-      "impact": "A control that measured the wrong property, and a test that repaired the condition it was meant to detect. Generated documents now have their CONTENT registered under __generated__ with their declared version; a content change under an unchanged version fails --check and is refused by --update. The freshness test renders into a copied tree.",
+      "impact": "The compensating control measured the wrong property and its test repaired the inspected tree. CORRECTION v2.0.0: there is no __generated__ registry class; changed generated and hand-authored versioned documents enter the same Git comparison, while freshness tests render into copied trees.",
       "workaround": "None.",
-      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-067): a compensating control must measure the property the original gate measured, and a test must never repair the state it inspects.",
+      "proposed_response": "Session 12 deleted the generated-file special case and mutable registry; D-067 remains enforced by the common gate and non-mutating freshness tests.",
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
@@ -1483,7 +1494,7 @@
     },
     {
       "id": "FTRO-DEF-055",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "FTRO version gate",
@@ -1494,12 +1505,14 @@
       "known_fact": "D-067: a compensating control must measure the property the original gate measured.",
       "observed": "The generated check rejected changed content only when the declared version EQUALLED the recorded version, and --register disabled the refusal outright. Verified: same version gave check 1 -> register 0 -> check 0 with all 94 tests passing; a v0.2.0 to v0.1.0 downgrade passed check, update and every test; and removing the version entirely let --update record version: null.",
       "evidence": [
-        "src/ftro/check_versions.py"
+        "src/ftro/check_versions.py",
+        "tests/test_retrieval_validation.py#TestVersionGate",
+        "labnotes/2026-08-26-session-12-consolidation.md"
       ],
       "severity": "high",
-      "impact": "Generated entries now run the same state machine as tracked ones: a version is required and must be valid, the registry must agree exactly during --check, updates are permitted only on a strict forward change, and --register may only ADD a missing entry. All three laundering paths now end in exit 1.",
+      "impact": "CORRECTION v2.0.0: the weakened generated-entry state machine no longer exists. Generated and hand-authored versioned documents share one Git-diff loop; the three laundering paths disappeared with the registry and maintenance flags.",
       "workaround": "None.",
-      "proposed_response": "Corrected 2026-08-26. Rule adopted (D-073): a special-cased class of artifact must obey the general state machine, not a weakened copy of it.",
+      "proposed_response": "Resolved by construction in session 12: delete the special case, --update, --register and registry; test the one common state-transition logic.",
       "disposition": "resolved",
       "links": {
         "software": "src/ftro/check_versions.py"
@@ -2118,7 +2131,7 @@
     },
     {
       "id": "FTRO-P1-DEF-008",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "README Phase-0 pipeline",
@@ -2129,15 +2142,17 @@
       "title": "Phase-0 C9 fails at the documented unzip command in a clean checkout",
       "failed_step": "C9: every documented README command runs to completion from a clean export.",
       "known_fact": "The README downloads the optical archive at repository root, then unzips into data/raw/zenodo-17107693/extracted without creating its parent.",
-      "observed": "The exact live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but cannot make the documented sequence a C9 pass. The failure reproduced in a second data-free clone.",
+      "observed": "The exact Phase-1 live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. CORRECTION v2.0.0: README now creates the parent with mkdir -p before unzip. The first actual closure C9 run against carrier 354868a completed README step 3 without intervention; it later stopped at the BKG route in step 4. That independently demonstrates that the documented extraction defect is closed.",
       "evidence": [
-        "phase1/reports/phase0-c9-attempt-2026-08-26.json"
+        "phase1/reports/phase0-c9-attempt-2026-08-26.json",
+        "README.md",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
       ],
       "severity": "high",
-      "impact": "Phase-0 exit condition 2 remains open; the advertised cold path is not executable as written.",
-      "workaround": "Manual `mkdir -p data/raw/zenodo-17107693` before unzip; recorded as intervention, not a pass.",
-      "proposed_response": "After the isolation boundary permits, add the directory-creation command to README and rerun C9 once from a fresh checkout.",
-      "disposition": "open",
+      "impact": "The original workflow defect blocked C9. It is now resolved; Phase-0 exit condition 2 remains open for the replacement carrier for independent reasons recorded in FTRO-DEF-074 and FTRO-DEF-075.",
+      "workaround": "None required after the README repair.",
+      "proposed_response": "Resolved: the documented pipeline creates data/raw/zenodo-17107693 before unzip, and a later clean live execution completed the extraction and both optical analysis commands without intervention.",
+      "disposition": "resolved",
       "links": {
         "contract": "C9"
       },
@@ -2250,7 +2265,7 @@
     },
     {
       "id": "FTRO-DEF-072",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "Phase-0 live C9 runner",
@@ -2261,18 +2276,20 @@
       "title": "SELF-DIRECTED: the first live runner degraded failure evidence and omitted runtime bindings",
       "failed_step": "Recording a live-provider failure or success without losing the distinction between transport, content and local workflow evidence.",
       "known_fact": "A live run must preserve the producer's rejection reason, bind every attempted source and executable, terminate timed-out subprocesses, and prove that deterministic outputs were freshly reproduced.",
-      "observed": "Rejected pinner reports lost their structured reason; vgosDB could be attempted twice; the optical summary was checked for existence rather than byte reproduction; child process groups could survive timeout; the shell and Git execution context were not bound; and volatile pin-report sizes made the final root-crate refresh disagree with the freshly retrieved reports. A subprocess review then showed that importing the adjacent contract could create an ignored __pycache__ before source_state(), causing a fresh checkout to reject itself before the first provider request.",
+      "observed": "Rejected pinner reports lost their structured reason; vgosDB could be attempted twice; the optical summary was checked for existence rather than byte reproduction; child process groups could survive timeout; the shell and Git execution context were not bound; and volatile pin-report sizes made the final root-crate refresh disagree with the freshly retrieved reports. A subprocess review then showed that importing the adjacent contract could create an ignored __pycache__ before source_state(), causing a fresh checkout to reject itself before the first provider request. CORRECTION v2.0.0: the IGS pinner's broad exception branch also treated urllib HTTPError as transport failure, discarding an actual HTTP status, headers and response-body evidence before C9 could classify it.",
       "evidence": [
         "phase0/audit/run_c9.py",
         "phase0/audit/c9_contract.py",
+        "src/ftro/pin_igs.py",
         "src/ftro/refresh_crate.py",
         "tests/test_phase0_c9_hardening.py",
-        "tests/test_phase0_c9_contract.py"
+        "tests/test_phase0_c9_contract.py",
+        "tests/test_retrieval_validation.py"
       ],
       "severity": "high",
       "impact": "The report could misclassify the likeliest live failure, leave unobserved processes running, or claim a deterministic comparison over stale output.",
       "workaround": "None; the live closure run had not begun.",
-      "proposed_response": "Resolved before freeze by preserving structured rejection and reachability evidence, binding source groups and tool digests, process-group timeout handling, five fresh deterministic comparisons, omission of volatile pin-report content sizes, and disabling local bytecode writes before controller-module imports.",
+      "proposed_response": "Resolved before the replacement-carrier freeze by preserving structured rejection and reachability evidence, binding source groups and tool digests, process-group timeout handling, five fresh deterministic comparisons, omission of volatile pin-report content sizes, and disabling local bytecode writes before controller-module imports. The v2.0.0 repair catches HTTPError separately, retains its numeric status, effective URL, selected headers and response-body size/digest in the rejected report, never caches those bytes, and tests propagation into C9's http_failure classification.",
       "disposition": "resolved",
       "links": {
         "contract": "C9",
@@ -2306,10 +2323,98 @@
         "contract": "exit-condition-1",
         "software": "tests/test_phase0_c9_contract.py"
       }
+    },
+    {
+      "id": "FTRO-DEF-074",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "Phase-0 C9 live-pipeline report",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "SELF-DIRECTED: first_failure selected the last rejected provider artifact",
+      "failed_step": "Recording the first causal failure of the first live C9 execution.",
+      "known_fact": "The C9 report names a singular first_failure so readers can distinguish the causal pipeline stop from later or collateral provider evidence.",
+      "observed": "The run against carrier 354868a recorded 57 ordered IGS transport failures beginning with igs21980.sp3.Z at 2026-08-27T07:41:27.482440Z, but first_failure named the final rejection, igs21997.erp.Z at 07:42:17.736870Z. The recorder explicitly selected failed_attempts[-1]. The outcome (C9 FAIL) and classification (TCP failure; access class not established) were unchanged, but the named first artifact was false.",
+      "evidence": [
+        "phase0/audit/run_c9.py",
+        "tests/test_phase0_c9_hardening.py",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
+      ],
+      "severity": "high",
+      "impact": "Carrier 354868a cannot be the closure carrier because its recorder emitted materially mislabeled failure evidence. Calibration and qualifying audits were correctly not started.",
+      "workaround": "The immutable failed report retains every timestamped attempt, so the true first rejection remains recoverable from provider_attempts.",
+      "proposed_response": "Resolved in the next carrier: choose the earliest failed attempt by pipeline step, then retrieval timestamp, with original list position only as a deterministic tie-breaker; a regression test covers non-chronological assembly and same-step ordering.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "C9",
+        "software": "phase0/audit/run_c9.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-075",
+      "version": "1.0.0",
+      "class": "source_evidence",
+      "domain": "gnss",
+      "dataset": "IGS operational products, GPS weeks 2198-2199",
+      "responsible_party": "provider",
+      "self_directed": false,
+      "finding_type": "external_evidence_gap",
+      "affects": "blocks_workflow",
+      "title": "The pinned BKG route refused every live C9 connection and three mirror containers are byte-distinct",
+      "failed_step": "C9 step 4: retrieve and validate all 57 IGS artifacts from the documented live route.",
+      "known_fact": "A mirror change is not an identity-preserving URL substitution when raw container bytes differ, even if the decoded product is identical.",
+      "observed": "Carrier 354868a made 57 requests to the BKG HTTPS route; every connection was refused before HTTP or bytes. SIO/GARNER then retrieved and content-validated all 57 artifacts. Fifty-four raw SHA-256 values match the earlier BKG retrieval. Three clock .Z containers differ, while all 57 decoded payloads match byte-for-byte; IGN and WHU independently serve the same three alternate containers as SIO. No reachable official mirror reproducing the three BKG-specific containers was established.",
+      "evidence": [
+        "phase0/evidence/expected-digests.json",
+        "phase0/reports/igs-artifact-pins.json",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
+      ],
+      "severity": "high",
+      "impact": "The BKG-bound carrier cannot satisfy C9 from the present environment. Adopting SIO requires three explicit new retrieval snapshot identities; silently retaining the old hashes or calling the change URL-only would be false provenance. The decoded GNSS evidence and scientific support are unchanged.",
+      "workaround": "Use the reachable official SIO/GARNER HTTPS route with the three new outer-container pins and retain the prior BKG digests plus decoded-content equality evidence.",
+      "proposed_response": "The next carrier adopts SIO/GARNER, advances the expected-digest registry, and records previous retrieval and decoded-content SHA-256 values for the three representation variants. BKG reachability and access class remain not established by this run.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "C9",
+        "software": "src/ftro/pin_igs.py"
+      }
+    },
+    {
+      "id": "FTRO-DEF-076",
+      "version": "3.0.0",
+      "class": "execution",
+      "domain": "gnss",
+      "dataset": "IGS pinner route provenance",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "SELF-DIRECTED: alternate-route provenance was asserted or stored without enforcement",
+      "failed_step": "Testing and pinning an alternate official IGS route without emitting unenforced provenance claims.",
+      "known_fact": "Retrieval-route provenance must describe the route actually used, and a recorded decoded-content expectation is evidence only if the retrieval path can reject disagreement.",
+      "observed": "Running pin_igs.py with --base https://garner.ucsd.edu/pub/products produced correct SIO URLs and 57 validated pins, but the report still said data_centre was BKG and described Last-Modified as a BKG file time. The URL was configurable while its provenance projection was not. CORRECTION v2.0.0: the first registry repair then stored decoded_sha256 and previous_retrieval_sha256 for the three changed containers, but the pinner projected each structured record to its outer sha256 and never executed the decoded expectation. Wrong decoded bytes would have passed while the registry appeared to constrain them. CORRECTION v3.0.0: successful urllib retrievals discarded resp.geturl(), so a redirect could still be labelled as the requested SIO route; decoded-digest rejection was also falsely described as content-shape rejection.",
+      "evidence": [
+        "src/ftro/pin_igs.py",
+        "phase0/reports/igs-artifact-pins.json",
+        "tests/test_retrieval_validation.py",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
+      ],
+      "severity": "high",
+      "impact": "The first successful alternate-route trial could not be promoted as truthful evidence. Had its report been accepted at face value, it would have assigned one data centre's identity to another centre's bytes. The first repair would then have published decoded-equivalence metadata that no retrieval path enforced.",
+      "workaround": "None; route metadata and representation-level expectations must be coupled to the selected route and executed retrieval.",
+      "proposed_response": "Resolved in the next carrier: SIO/GARNER is the named default route, and any operator-supplied override is labelled as not established rather than inheriting SIO metadata. Structured representation-variant records are validated before retrieval; the pinner decompresses and hashes their payloads, rejects a decoded mismatch, and emits expected/observed decoded evidence plus the earlier outer digest. The v3.0.0 repair records the effective URL and refuses any unexpected redirect before cache or promotion; rejection notes distinguish route, shape, outer-checksum and decoded-checksum causes. Direct tests cover both route branches, malformed preflight with zero requests, redirect and mismatch rejection, and report-to-registry reconciliation.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "C1",
+        "software": "src/ftro/pin_igs.py"
+      }
     }
   ],
   "revised": "2026-08-27",
-  "revision_note": "Merged all nine Phase-1 entries from the frozen 1c9bc56 source ledger, recorded three pre-freeze instrument defects, and rejected the first committed carrier when five tests failed in its required clean-archive environment. The merged convergence predicate remains exact: open + changes_result + current_defect. Qualification status remains pending.",
+  "revision_note": "Rejected carrier 354868a after its first live C9 run exposed one recorder defect and an unavailable BKG route; adopted the reachable official SIO/GARNER route as three explicit new container snapshots after proving all 57 decoded payloads byte-identical. Removed hard-coded BKG metadata, made decoded-content and effective-route expectations executable rather than inert, and preserved HTTPError response evidence for C9 classification. Corrected DEF-019 and DEF-020 to distinguish historical BKG observations from current SIO evidence, and resolved imported FTRO-P1-DEF-008 after the live run completed the repaired extraction step. Corrected six historical version-gate entries whose resolution text still described the deleted registry/update/register machinery instead of the current read-only Git gate. The frozen 57-target selection is unchanged. The merged convergence predicate remains exact: open + changes_result + current_defect. Qualification status remains pending.",
   "triage_axes": {
     "finding_type": {
       "current_defect": "today's committed behaviour is wrong or a documented workflow fails",

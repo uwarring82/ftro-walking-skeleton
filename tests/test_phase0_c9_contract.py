@@ -88,7 +88,7 @@ def carrier_repository():
             [*prefix, "rev-parse", "HEAD^{tree}"], cwd=root, env=environment,
             capture_output=True, text=True, check=True,
         ).stdout.strip()
-        yield root, {"commit": commit, "tree": tree, "contract_version": "1.2.0",
+        yield root, {"commit": commit, "tree": tree, "contract_version": "1.3.0",
                      "git_command": git}
 
 
@@ -141,7 +141,7 @@ class TestStrictC9Contract(unittest.TestCase):
         # but none of the complete evidence populations is present.
         fabricated = {
             "document": "FTRO Phase-0 C9 live-pipeline report",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "run_id": "fabricated-one-row",
             "started_utc": "2026-08-27T10:00:00+00:00",
             "ended_utc": "2026-08-27T10:01:00+00:00",
@@ -164,7 +164,7 @@ class TestStrictC9Contract(unittest.TestCase):
     def test_audit_consumer_uses_the_same_strict_contract(self):
         fabricated = {
             "document": "FTRO Phase-0 C9 live-pipeline report",
-            "version": "1.1.0",
+            "version": "1.2.0",
             "run_id": "fabricated-one-row",
             "started_utc": "2026-08-27T10:00:00+00:00",
             "ended_utc": "2026-08-27T10:01:00+00:00",
@@ -200,7 +200,7 @@ class TestStrictC9Contract(unittest.TestCase):
         }
         bound = {"acceptance_contract": {
             "path": "phase0/acceptance-contract-v1.0.md",
-            "version": "1.2.0", "sha256": "0" * 64,
+            "version": "1.3.0", "sha256": "0" * 64,
         }}
         with tempfile.TemporaryDirectory(prefix="ftro-c9-portable-consumer-") as tmp:
             copied = Path(tmp, "copied-report.json")

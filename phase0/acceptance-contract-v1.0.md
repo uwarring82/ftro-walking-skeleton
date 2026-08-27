@@ -1,6 +1,6 @@
 # Phase-0 Acceptance Contract v1.0
 
-**Document ID:** FTRO-ACC-001 · **Version:** 1.2.0 · **Date:** 2026-08-27 · **Licence:** CC BY 4.0
+**Document ID:** FTRO-ACC-001 · **Version:** 1.3.0 · **Date:** 2026-08-27 · **Licence:** CC BY 4.0
 **Status:** Frozen functional scope; execution qualification pending. Anything not listed here is
 Phase 1 or robustness work.
 
@@ -87,7 +87,7 @@ Phase 0 is complete when all of the following hold, and not before:
 5. **Two bounded audits against this frozen scope produce no new high-severity current defect.**
    A latent-regression finding does not reopen Phase 0; it is filed and deferred.
 
-**Status at v1.2** (qualification correction, 2026-08-27):
+**Status at v1.3** (first live execution, 2026-08-27):
 
 The first retrospective exercise found failures on C3, C8, C10 and M11 and produced two scope
 corrections (C1, C6). Those failures were fixed before v1.2, but neither historical exercise
@@ -98,13 +98,18 @@ pre-registered audit: the first fault model and its result were committed togeth
 selected cases after observing run 1. The historical claim that condition 4 held and that one of
 two audits qualified was therefore false.
 
-**Condition 1 is not yet re-demonstrated for the closure candidate.** The network-free suite
-passes in the preparation worktree, but condition 1 still requires a committed clean-archive run.
+Carrier `354868a` demonstrated condition 1 with 175 tests and zero skips from a literal clean
+archive. Its live C9 report then exposed a recorder defect (`FTRO-DEF-074`), so it was rejected.
+**Condition 1 must be demonstrated again for the replacement carrier**; evidence does not transfer
+between carrier trees.
 **Condition 3 holds after reconciling all nine entries from the Phase-1 source ledger:** the exact
 merged-ledger convergence predicate returns zero.
 
-**2 (C9) is outstanding** — the documented pipeline has never been run end to end against live
-providers in one pass.
+**2 (C9) is outstanding.** The first actual live attempt completed steps 0–3, then the BKG IGS
+route refused all 57 TCP connections in step 4. The report classified reachability without
+inferring an access class, and calibration did not start. The replacement carrier adopts the
+reachable official SIO/GARNER route as explicit new retrieval snapshots for three byte-distinct,
+decoded-identical `.Z` containers (`FTRO-DEF-075`).
 
 **4 is not yet demonstrated.** An executable manifest is prepared but has not yet been calibrated
 or executed from its committed carrier.

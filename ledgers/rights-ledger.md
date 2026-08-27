@@ -1,6 +1,6 @@
 # FTRO Rights Ledger
 
-**Version:** 0.1.0 · **Opened:** 2026-08-25 · **Licence of this document:** CC BY 4.0
+**Version:** 0.2.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-27 · **Licence of this document:** CC BY 4.0
 
 Task card §11.6 requires `data_rights`, `metadata_rights`, `evidence_retention_rights`
 and `redistribution_mode` to be tracked **separately**. Unknown or conflicting rights
@@ -66,7 +66,7 @@ Note also the tension between an open CC BY-SA grant and a blanket "All Rights
 | `metadata_rights` | Not established |
 | `evidence_retention_rights` | Assumed permitted for verification; not evidenced |
 | `redistribution_mode` | **`link_only`** (default for unknown rights, per card §11.6) |
-| Evidence | Absence of any licence file in the BKG mirror listing for GPS weeks 2198–2199 |
+| Evidence | No licence file or machine-readable licence is exposed with the pinned products in the SIO/SOPAC GARNER listings for GPS weeks 2198–2199 |
 
 IGS products are conventionally understood to be freely available, but *convention is
 not evidence*. Recorded as `unknown` pending a provider-specific statement.
@@ -76,13 +76,15 @@ not evidence*. Recorded as `unknown` pending a provider-specific statement.
 | Field | Value |
 | --- | --- |
 | `data_rights` | **Not established** |
-| `metadata_rights` | Session listing is publicly readable at <https://ivscc.gsfc.nasa.gov/sessions/2022/> |
+| `metadata_rights` | **Not established** |
+| Metadata access | Session listing is publicly readable at <https://ivscc.gsfc.nasa.gov/sessions/2022/>; readability is not a reuse grant |
 | `evidence_retention_rights` | Not established |
 | `redistribution_mode` | **`link_only`** |
-| Access class | **`registered`** — CDDIS requires an Earthdata login |
+| Access class | Route-specific: **`public`** at OPAR; **`registered`** at CDDIS; BKG not established |
 
-See [`FTRO-DEF-018`](deficiency-log.md#ftro-def-018): CDDIS returns the login page with
-HTTP 200 rather than 401/403, so an automated agent cannot detect the wall from the
+OPAR serves the pinned vgosDB anonymously. See
+[`FTRO-DEF-018`](deficiency-log.md#ftro-def-018): the separate CDDIS route returns the login page
+with HTTP 200 rather than 401/403, so an automated agent cannot detect that route's wall from the
 status code alone.
 
 ### Evidence artifacts

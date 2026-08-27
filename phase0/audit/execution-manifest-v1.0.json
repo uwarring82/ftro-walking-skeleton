@@ -1,6 +1,6 @@
 {
   "document": "FTRO Phase-0 executable audit manifest",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "manifest_id": "FTRO-AUD-EXEC-001",
   "semantic_model": {
     "path": "phase0/audit-fault-model-v1.0.md",
@@ -9,8 +9,8 @@
   },
   "acceptance_contract": {
     "path": "phase0/acceptance-contract-v1.0.md",
-    "version": "1.2.0",
-    "sha256": "fdee9b6ab4b23cf9d98eb270c9e878f83386d645206b470c80d4995e526c32c5"
+    "version": "1.3.0",
+    "sha256": "23d7ee6544a03d95344768308c93be3e7fd60af37e990c0511b7e9e13720e3c4"
   },
   "subject_binding": {
     "kind": "manifest_carrier_commit",
@@ -69,7 +69,7 @@
         {
           "id": "M1.missing-generator",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_remove",
             "pointer": [
@@ -122,7 +122,7 @@
         {
           "id": "M1.missing-pin-retrieved-utc",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_remove",
             "pointer": [
@@ -177,7 +177,7 @@
         {
           "id": "M1.missing-pin-retrieval-procedure",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_remove",
             "pointer": [
@@ -238,7 +238,7 @@
         {
           "id": "M2.counter-false",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_set",
             "pointer": [
@@ -293,7 +293,7 @@
         {
           "id": "M2.counter-float",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_set",
             "pointer": [
@@ -348,7 +348,7 @@
         {
           "id": "M2.counter-string",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_set",
             "pointer": [
@@ -409,7 +409,7 @@
         {
           "id": "M3.list-object",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_set",
             "pointer": [
@@ -464,7 +464,7 @@
         {
           "id": "M3.list-string",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_set",
             "pointer": [
@@ -525,7 +525,7 @@
         {
           "id": "M4.truncate",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_array_remove",
             "pointer": [
@@ -582,7 +582,7 @@
         {
           "id": "M4.duplicate",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_array_duplicate",
             "pointer": [
@@ -640,7 +640,7 @@
         {
           "id": "M4.add-rogue",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_array_duplicate",
             "pointer": [
@@ -706,7 +706,7 @@
         {
           "id": "M5.fabricated-digests",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "composite",
             "operations": [
@@ -782,7 +782,7 @@
         {
           "id": "M6.relabel-series-and-mjd",
           "target": "phase0/reports/igs-artifact-pins.json",
-          "target_before_sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
           "mutation": {
             "kind": "json_bulk_set",
             "pointer": [
@@ -1218,7 +1218,7 @@
         {
           "id": "M12.content-without-bump",
           "target": "ledgers/source-ledger.md",
-          "target_before_sha256": "a075a726b875fb7dd4bee745ded4c2cd0d2b85e441dc05161ae3cfbc65cd60ea",
+          "target_before_sha256": "13e47da0575f1b662dfdae477094041227bd9d438f9c0132cd62274b7497a927",
           "mutation": {
             "kind": "text_append",
             "text": "\n<!-- FTRO audit mutation M12: content changed -->\n"
@@ -1253,7 +1253,7 @@
             ],
             "reject_output": [
               "STALE",
-              "content changed but version is still 0.4.0"
+              "content changed but version is still 0.5.0"
             ]
           },
           "expected_observation": "detected",
@@ -1268,11 +1268,11 @@
         {
           "id": "M12a.version-downgrade",
           "target": "ledgers/source-ledger.md",
-          "target_before_sha256": "a075a726b875fb7dd4bee745ded4c2cd0d2b85e441dc05161ae3cfbc65cd60ea",
+          "target_before_sha256": "13e47da0575f1b662dfdae477094041227bd9d438f9c0132cd62274b7497a927",
           "mutation": {
             "kind": "text_replace_exact",
-            "old": "**Version:** 0.4.0",
-            "new": "**Version:** 0.3.0",
+            "old": "**Version:** 0.5.0",
+            "new": "**Version:** 0.4.0",
             "count": 1
           },
           "detector": {
@@ -1319,10 +1319,10 @@
         {
           "id": "M12b.version-removed",
           "target": "ledgers/source-ledger.md",
-          "target_before_sha256": "a075a726b875fb7dd4bee745ded4c2cd0d2b85e441dc05161ae3cfbc65cd60ea",
+          "target_before_sha256": "13e47da0575f1b662dfdae477094041227bd9d438f9c0132cd62274b7497a927",
           "mutation": {
             "kind": "text_replace_exact",
-            "old": "**Version:** 0.4.0 \u00b7 ",
+            "old": "**Version:** 0.5.0 \u00b7 ",
             "new": "",
             "count": 1
           },
@@ -1355,7 +1355,7 @@
             ],
             "reject_output": [
               "STALE",
-              "declared version 0.4.0 was removed"
+              "declared version 0.5.0 was removed"
             ]
           },
           "expected_observation": "detected",
@@ -1370,7 +1370,7 @@
         {
           "id": "M12c.version-gained",
           "target": "README.md",
-          "target_before_sha256": "3c516a2554bea27e92c482fad15e3b965bdcdb13c92e8c0450fe5e5415c70245",
+          "target_before_sha256": "4091450f6b1be69db40718f24463b5ca881ec1f12bfc084980cba4752e6ac614",
           "mutation": {
             "kind": "text_replace_exact",
             "old": "# Federated Time-Reference Observatory \u2014 Walking Skeleton\n",
@@ -1420,7 +1420,7 @@
         {
           "id": "M13.consume-before-produce",
           "target": "README.md",
-          "target_before_sha256": "3c516a2554bea27e92c482fad15e3b965bdcdb13c92e8c0450fe5e5415c70245",
+          "target_before_sha256": "4091450f6b1be69db40718f24463b5ca881ec1f12bfc084980cba4752e6ac614",
           "mutation": {
             "kind": "swap_exact_blocks",
             "first": "# 1. Pin the git-hosted evidence artifacts (writes data/raw/evidence/)\npython3 src/ftro/pin_evidence_repos.py\n\n",
