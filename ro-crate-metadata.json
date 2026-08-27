@@ -10,14 +10,14 @@
       "about": {
         "@id": "./"
       },
-      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the repository as a research object for FAIR discoverability. Four hand-authored per-domain candidate manifests exist on the isolated Phase-1 branch; they have not been merged into this Phase-0 closure branch. This crate does not claim conformance to the FTRO profile. contentSize is deliberately omitted for this entity: it describes the file it is written into, so any value is stale the moment it is serialised.",
+      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the repository as a research object for FAIR discoverability. Four hand-authored per-domain candidate manifests are integrated on Phase 1 and rebaselined to the qualified Phase-0 carrier. This crate does not claim conformance to the FTRO profile. contentSize is deliberately omitted for this entity: it describes the file it is written into, so any value is stale the moment it is serialised.",
       "name": "RO-Crate Metadata Descriptor"
     },
     {
       "@id": "./",
       "@type": "Dataset",
       "name": "Federated Time-Reference Observatory — Walking Skeleton",
-      "description": "Qualified Phase-0 evidence lock, classified deficiency ledger, bounded closure evidence and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Carrier 8ddcbfa passed live C9 and two qualifying bounded audits; the append-only labnotes record the review and correction history.",
+      "description": "Qualified Phase-0 evidence lock and Phase-1 reality-first manifests for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Carrier 8ddcbfa passed live C9 and two qualifying bounded audits; Gate-1 candidate d0f9e37 located and digest-matched the current SIO-backed source population. Normative RO-Crate 1.3 and FTRO-profile conformance remain unclaimed.",
       "datePublished": "2026-08-25",
       "dateModified": "2026-08-27",
       "license": {
@@ -203,6 +203,39 @@
         },
         {
           "@id": "phase0/audit/evidence/qualification-8ddcbfa.json"
+        },
+        {
+          "@id": "labnotes/2026-08-27-session-21-phase1-sio-rebaseline.md"
+        },
+        {
+          "@id": "phase1/README.md"
+        },
+        {
+          "@id": "phase1/deficiency-log-phase1.json"
+        },
+        {
+          "@id": "phase1/check_gate1.py"
+        },
+        {
+          "@id": "phase1/tests/test_gate1.py"
+        },
+        {
+          "@id": "phase1/manifests/optical/ro-crate-metadata.json"
+        },
+        {
+          "@id": "phase1/manifests/pulsar/ro-crate-metadata.json"
+        },
+        {
+          "@id": "phase1/manifests/vlbi/ro-crate-metadata.json"
+        },
+        {
+          "@id": "phase1/manifests/gnss/ro-crate-metadata.json"
+        },
+        {
+          "@id": "phase1/reports/vocabulary-pressure-v1.2.md"
+        },
+        {
+          "@id": "phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json"
         }
       ],
       "isBasedOn": [
@@ -739,7 +772,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3823",
+      "contentSize": "4562",
       "name": "README.md"
     },
     {
@@ -1582,6 +1615,128 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "2762"
+    },
+    {
+      "@id": "labnotes/2026-08-27-session-21-phase1-sio-rebaseline.md",
+      "@type": "File",
+      "name": "2026-08-27-session-21-phase1-sio-rebaseline.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5305"
+    },
+    {
+      "@id": "phase1/README.md",
+      "@type": "File",
+      "name": "README.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "6582"
+    },
+    {
+      "@id": "phase1/deficiency-log-phase1.json",
+      "@type": "File",
+      "name": "deficiency-log-phase1.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "21348"
+    },
+    {
+      "@id": "phase1/check_gate1.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "check_gate1.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "58349"
+    },
+    {
+      "@id": "phase1/tests/test_gate1.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_gate1.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "32046"
+    },
+    {
+      "@id": "phase1/manifests/optical/ro-crate-metadata.json",
+      "@type": "File",
+      "name": "Optical Gate-1 RO-Crate manifest",
+      "encodingFormat": "application/ld+json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "15517"
+    },
+    {
+      "@id": "phase1/manifests/pulsar/ro-crate-metadata.json",
+      "@type": "File",
+      "name": "Pulsar Gate-1 RO-Crate manifest",
+      "encodingFormat": "application/ld+json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "21012"
+    },
+    {
+      "@id": "phase1/manifests/vlbi/ro-crate-metadata.json",
+      "@type": "File",
+      "name": "VLBI Gate-1 RO-Crate manifest",
+      "encodingFormat": "application/ld+json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "17523"
+    },
+    {
+      "@id": "phase1/manifests/gnss/ro-crate-metadata.json",
+      "@type": "File",
+      "name": "GNSS Gate-1 RO-Crate manifest",
+      "encodingFormat": "application/ld+json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "24926"
+    },
+    {
+      "@id": "phase1/reports/vocabulary-pressure-v1.2.md",
+      "@type": "File",
+      "name": "Vocabulary pressure report v1.2",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5667"
+    },
+    {
+      "@id": "phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json",
+      "@type": "File",
+      "name": "Gate-1 SIO clean retrieval report",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "51057"
     }
   ]
 }

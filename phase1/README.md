@@ -1,25 +1,29 @@
 # Phase 1 — Reality-first manifests
 
-**Branch:** `phase1` · **Baseline:** `main` frozen at [`a806bba`](https://github.com/uwarring82/ftro-walking-skeleton/commit/a806bbaa573d28f1460d18110f7974189ca19213)
+**Branch:** `phase1` · **Qualified Phase-0 evidence carrier:** [`8ddcbfa`](https://github.com/uwarring82/ftro-walking-skeleton/commit/8ddcbfacef2468b8988c331c30100d72f0912eb8)
 
-## Isolation rule
+## Integration boundary
 
-Phase 1 **must not modify** any Phase-0 candidate output before C9 and two qualifying bounded audits
-have run. That includes `src/`, `tests/`, `phase0/`, `ledgers/` and `profile/` — the ledger
-because its contents feed C11 and C12, and the profile because Gate 1 forbids freezing terms
-before the manifests exist.
+Phase 0 is closed for immutable carrier `8ddcbfa`; its qualification evidence is published by
+`264cf1a`. The historical Phase-1 work was merged with that baseline at `12b119a`, then Gate 1 was
+rebaselined in a separate six-file candidate `d0f9e37`. Neither merge nor rebaseline rewrites the
+qualified Phase-0 subject or the two historical Gate-1 witnesses.
 
-Everything Phase 1 produces lives under `phase1/`, including its own deficiency ledger, except the
-append-only chronological notes under `labnotes/`. When Phase 0 closes, the two ledgers merge.
+The current Gate-1 source witness is defined by the integration parent, the exact six candidate
+files and a fingerprint of four carrier evidence inputs. Publication-only changes may follow under
+`phase1/reports/`, `labnotes/`, the Phase-1 README and ledger, and the root RO-Crate metadata. The
+checker still rejects executable or scientific-input drift outside that bounded set.
 
-That exception deliberately leaves the root crate's recorded `labnotes/README.md` size stale on
-this branch. Do not refresh the root crate while the isolation rule holds; `main` at `a806bba`
-remains internally current, and the Phase-1 metadata is checked by `phase1/check_gate1.py` instead.
+The unified carrier ledger retains the immutable nine-entry Phase-1 snapshot merged before
+qualification. `phase1/deficiency-log-phase1.json` v0.5.0 is the post-closure working supplement:
+it records the completed closure responses and new `FTRO-P1-DEF-010` without silently rewriting
+the qualified carrier. A later integration must reconcile that supplement into the unified ledger
+as an explicit operation.
 
 | Track | Runs on | Status |
 | --- | --- | --- |
-| Phase 0 closure | isolated clone of `main` @ `a806bba` | **C9 failed as written**; qualifying audits **0/2**; executable recipes not frozen |
-| Phase 1 manifests | `phase1` branch | **Gate 1 source-location clause passed**; normative RO-Crate 1.3 conformance remains `not_run` |
+| Phase 0 closure | carrier `8ddcbfa` | **complete**: C9 pass, calibration pass, qualifying audits **2/2** |
+| Phase 1 manifests | candidate `d0f9e37` | **Gate 1 source-location clause passed against SIO**; normative RO-Crate 1.3 conformance remains `not_run` |
 
 ## What Phase 1 is
 
@@ -37,55 +41,64 @@ evidence. It compares the **exact** source identity set, not only counts; reconc
 PPTA, GNSS and VLBI projections; and fingerprints every input used by retrieval. A clean run also
 proves its source state before making a request. Two witnesses are accepted for the same candidate
 identity `(Phase-1 parent, ten-input fingerprint)`: the exact six input files overlaid on the parent,
-or a clean descendant commit containing those six paths plus only non-executable publication
-outputs under `phase1/reports/`, `labnotes/`, the Phase-1 README and the Phase-1 ledger. Both require
-no `data/` directory; changes under `src/`, `tests/`, `phase0/`, `profile/`, `ledgers/` or arbitrary
-additional `phase1/` code are rejected.
+or a clean descendant commit containing those six paths plus only the explicit non-executable
+publication outputs named above. Both require no `data/` directory; changes under `src/`, `tests/`,
+`phase0/`, `profile/`, `ledgers/` or arbitrary additional `phase1/` code are rejected.
 
 ```bash
 python3 -m unittest discover -s phase1/tests -v
 python3 phase1/check_gate1.py
 python3 phase1/check_gate1.py \
-  --check-report phase1/reports/gate1-clean-retrieval-committed-d31a70c.json
+  --check-report phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json
 # After publication, from a clean checkout; write outside the tree to preserve cleanliness:
 python3 phase1/check_gate1.py --retrieve --source-state committed_checkout \
   --out /tmp/gate1-clean-retrieval.json
 ```
 
-The initial parent-overlay run and a second live run from clean committed checkout `d31a70c` both
-matched **69/69** targets: 66 provider artifacts and three FTRO pin reports fetched at the frozen
-baseline commit. Those three demonstrate that the catalogs are published and immutable; they are
-not third-party provider artifacts. Fifty-seven provider sources are catalog-backed GNSS entries,
-of which five are represented as graph entities. No provider bytes were retained. The current
-committed report records the full execution HEAD and binds the six Gate-1 candidate paths plus four
-frozen Phase-0 evidence inputs. See the
-[`committed-checkout report`](reports/gate1-clean-retrieval-committed-d31a70c.json); the
-[`parent-overlay report`](reports/gate1-clean-retrieval-v1.0.json) is retained separately.
+The current clean committed-checkout run matched **69/69** targets: 66 provider artifacts and three
+FTRO pin reports fetched at qualified carrier `8ddcbfa`. Those catalogs are FTRO publication
+evidence, not third-party provider artifacts. Fifty-seven provider sources are catalog-backed GNSS
+entries at SIO/GARNER, of which five are graph exemplars. The report records candidate `d0f9e37`,
+the exact six changed paths and four frozen carrier inputs; no provider bytes were retained. See the
+[`SIO rebaseline report`](reports/gate1-clean-retrieval-sio-d0f9e37.json).
+
+The two earlier 69/69 reports remain truthful historical witnesses for the BKG-bound `a806bba`
+fingerprint: [`committed checkout`](reports/gate1-clean-retrieval-committed-d31a70c.json) and
+[`parent overlay`](reports/gate1-clean-retrieval-v1.0.json). They do not transfer to the SIO
+population: three GNSS `.Z` containers have new outer digests and snapshot identifiers even though
+their decoded payloads are equal. Equal counts and filenames do not establish population identity.
+
+Do not confuse Gate 1's 66 provider sources with C9's equal headline count. Gate 1 uses 3 optical,
+5 pulsar, 1 VLBI and 57 GNSS provider sources. C9 uses 1 optical archive, 4 PPTA artifacts, 1
+vgosDB, 3 evidence-repository files and 57 GNSS artifacts. The totals coincide; the populations do
+not.
 
 This is deliberately not a general RO-Crate or FTRO-profile validator. `roc-validator` 0.11.3 is
 obtainable but supports bases 1.1 and 1.2, not the normative 1.3 target. The exact validation status
 and non-normative 1.2 result are in
 [`ro-crate-validation-v1.0.json`](reports/ro-crate-validation-v1.0.json).
 
-## Phase-0 boundary discovered by the live run
+## Phase-0 boundary discovered and closed
 
-The isolated live-provider run demonstrated that the rest of the pipeline works after one manual
-intervention, but C9 itself failed: README step 3 unzips into a parent directory no earlier command
-creates. Neither historical audit qualifies as pre-registered: the model and first result landed
-together, while run 2 added choices after observing run-1 failures. The qualifying count is 0/2;
-one executable manifest must be frozen and then run twice. See
-[`phase0-c9-attempt-2026-08-26.json`](reports/phase0-c9-attempt-2026-08-26.json).
+The first Phase-1 boundary run correctly remains a failure: README step 3 lacked its parent
+directory, and neither historical audit was pre-registered. Carrier `8ddcbfa` later executed the
+repaired eight-step pipeline against live providers, then one calibration and two qualifying runs
+of the frozen manifest passed. The historical failure is retained in
+[`phase0-c9-attempt-2026-08-26.json`](reports/phase0-c9-attempt-2026-08-26.json); the closure verdict
+is [`phase0/phase0-qualification-v1.0.md`](../phase0/phase0-qualification-v1.0.md).
 
-The profile amendment is therefore deferred. The corrected vocabulary assessment is
-[`vocabulary-pressure-v1.1.md`](reports/vocabulary-pressure-v1.1.md); v1.0 remains as the historical
-first assessment.
+The profile amendment remains deferred for a different reason: the representation-level identity
+fork and the RDF assertion model must be exercised before §5 is changed, and normative RO-Crate
+1.3 validation remains unavailable. Current guidance is
+[`vocabulary-pressure-v1.2.md`](reports/vocabulary-pressure-v1.2.md); v1.0 and v1.1 remain historical.
 
 ## Deliberate non-goals for this phase
 
 - **No generation machinery.** The manifests are hand-authored. Building a generator before four
   real manifests exist would encode a vocabulary nobody has tested against real products — the
   mistake the profile's own §5.0 warns about.
-- **No profile amendment until all four are written and compared.** Vocabulary pressure is
-  discovered by writing the manifests, not predicted.
+- **No profile amendment from one representation fork.** The four manifests and SIO rebaseline
+  expose the pressure; at least one alternative mapping and another packaged product must test it
+  before §5 is frozen.
 - **No resolution of Phase-0 evidence gaps.** `ref_osc`, the PPTA EOP artifact and the VLBI
   downstream products stay unresolved and are represented as typed incompleteness.
