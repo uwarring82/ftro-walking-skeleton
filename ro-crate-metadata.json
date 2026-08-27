@@ -17,8 +17,9 @@
       "@id": "./",
       "@type": "Dataset",
       "name": "Federated Time-Reference Observatory — Walking Skeleton",
-      "description": "Phase-0 evidence lock, classified deficiency ledger, bounded closure machinery and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. The append-only labnotes record the review and correction history.",
+      "description": "Qualified Phase-0 evidence lock, classified deficiency ledger, bounded closure evidence and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Carrier 8ddcbfa passed live C9 and two qualifying bounded audits; the append-only labnotes record the review and correction history.",
       "datePublished": "2026-08-25",
+      "dateModified": "2026-08-27",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
@@ -178,6 +179,30 @@
         },
         {
           "@id": "labnotes/2026-08-27-session-18-first-carrier-rejected.md"
+        },
+        {
+          "@id": "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
+        },
+        {
+          "@id": "labnotes/2026-08-27-session-20-phase0-qualified.md"
+        },
+        {
+          "@id": "phase0/phase0-qualification-v1.0.md"
+        },
+        {
+          "@id": "phase0/audit/evidence/c9-8ddcbfa-1.json"
+        },
+        {
+          "@id": "phase0/audit/evidence/calibration-8ddcbfa-1.json"
+        },
+        {
+          "@id": "phase0/audit/evidence/qualifying-8ddcbfa-1.json"
+        },
+        {
+          "@id": "phase0/audit/evidence/qualifying-8ddcbfa-2.json"
+        },
+        {
+          "@id": "phase0/audit/evidence/qualification-8ddcbfa.json"
         }
       ],
       "isBasedOn": [
@@ -714,7 +739,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3727",
+      "contentSize": "3823",
       "name": "README.md"
     },
     {
@@ -1260,7 +1285,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5039"
+      "contentSize": "5270"
     },
     {
       "@id": "phase0/audit/c9_contract.py",
@@ -1477,6 +1502,86 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "3120"
+    },
+    {
+      "@id": "labnotes/2026-08-27-session-19-first-live-c9-rejected.md",
+      "@type": "File",
+      "name": "2026-08-27-session-19-first-live-c9-rejected.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "9032"
+    },
+    {
+      "@id": "labnotes/2026-08-27-session-20-phase0-qualified.md",
+      "@type": "File",
+      "name": "2026-08-27-session-20-phase0-qualified.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "4498"
+    },
+    {
+      "@id": "phase0/phase0-qualification-v1.0.md",
+      "@type": "File",
+      "name": "phase0-qualification-v1.0.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2890"
+    },
+    {
+      "@id": "phase0/audit/evidence/c9-8ddcbfa-1.json",
+      "@type": "File",
+      "name": "c9-8ddcbfa-1.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "217392"
+    },
+    {
+      "@id": "phase0/audit/evidence/calibration-8ddcbfa-1.json",
+      "@type": "File",
+      "name": "calibration-8ddcbfa-1.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "340780"
+    },
+    {
+      "@id": "phase0/audit/evidence/qualifying-8ddcbfa-1.json",
+      "@type": "File",
+      "name": "qualifying-8ddcbfa-1.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "341097"
+    },
+    {
+      "@id": "phase0/audit/evidence/qualifying-8ddcbfa-2.json",
+      "@type": "File",
+      "name": "qualifying-8ddcbfa-2.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "341095"
+    },
+    {
+      "@id": "phase0/audit/evidence/qualification-8ddcbfa.json",
+      "@type": "File",
+      "name": "qualification-8ddcbfa.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2762"
     }
   ]
 }

@@ -1,0 +1,64 @@
+{
+  "document": "FTRO Phase-0 qualification evidence check",
+  "version": "1.0.0",
+  "checked_utc": "2026-08-27T14:56:55.854310+00:00",
+  "status": "pass",
+  "subject": {
+    "commit": "8ddcbfacef2468b8988c331c30100d72f0912eb8",
+    "tree": "c3e05bddcdb59c578cd406d28da8247d243c5c59",
+    "clean": true,
+    "detached_head": true,
+    "checkout_realpath": "/private/tmp/ftro-closure-8ddcbfa.PjM6wU/final-checkout"
+  },
+  "manifest": {
+    "path": "phase0/audit/execution-manifest-v1.0.json",
+    "sha256": "08f5db204eeafc7e9a641167314968b707705491dbd034278083ec34d1647204"
+  },
+  "runner": {
+    "path": "phase0/audit/run.py",
+    "sha256": "9a5dfec1f9c240c842da6181a7fddc05da1e9ce11a6186667eeac4e698d30431"
+  },
+  "checker": {
+    "path": "phase0/audit/check_qualification.py",
+    "sha256": "3ed0f5b23d8a51b34ee153245870adfde5563cb8cdefa59d8e8ba686c1f5735b"
+  },
+  "c9_evidence": {
+    "run_id": "c9-8ddcbfa-1",
+    "ended_utc": "2026-08-27T14:53:09.388161+00:00",
+    "subject_commit": "8ddcbfacef2468b8988c331c30100d72f0912eb8",
+    "subject_tree": "c3e05bddcdb59c578cd406d28da8247d243c5c59",
+    "bound_input_fingerprint_sha256": "e12f166028ca7d2581e16f26dedab5204796389ccd7e312a0f54ac6190529919",
+    "command_block_sha256": "c88377ffa5555d56ef065c01be2c1da0cf13cc6469d779440fb9e20ab3a7dccd",
+    "report_content_sha256": "937cc64ea54fbbce4e4be96e6ce82a9f762690777ec0bd2469bd2676aadbbdf5",
+    "sha256": "8d018fa9dfcaadfef0e08451632cda3860aaacca2986f1d9206e640af83d1452"
+  },
+  "calibration_evidence": {
+    "sha256": "e909238182963024a3a33db1bd527261d249531474abe472c6424524839884dc",
+    "run_id": "calibration-8ddcbfa-1",
+    "started_utc": "2026-08-27T14:54:24.267803+00:00",
+    "ended_utc": "2026-08-27T14:54:41.245855+00:00",
+    "checkout_realpath": "/private/tmp/ftro-closure-8ddcbfa.PjM6wU/calibration-checkout"
+  },
+  "qualifying_evidence": [
+    {
+      "sha256": "acc0ef4d18da8e76cdf540aa6baae3771ccba0166f7e0e397e5af3be2afe719c",
+      "run_id": "qualifying-8ddcbfa-1",
+      "started_utc": "2026-08-27T14:55:17.924294+00:00",
+      "ended_utc": "2026-08-27T14:55:33.466510+00:00",
+      "checkout_realpath": "/private/tmp/ftro-closure-8ddcbfa.PjM6wU/qualifying-1-checkout"
+    },
+    {
+      "sha256": "43c61b44eb054b6f585cd7290bf0b740b5b5455f5d400d53b44e99fcca484a96",
+      "run_id": "qualifying-8ddcbfa-2",
+      "started_utc": "2026-08-27T14:56:12.735420+00:00",
+      "ended_utc": "2026-08-27T14:56:28.696565+00:00",
+      "checkout_realpath": "/private/tmp/ftro-closure-8ddcbfa.PjM6wU/qualifying-2-checkout"
+    }
+  ],
+  "n_qualifying_reports": 2,
+  "distinct_report_digests": true,
+  "distinct_run_ids": true,
+  "distinct_checkout_identities": true,
+  "distinct_checker_checkout": true,
+  "calibration_preceded_qualification": true
+}

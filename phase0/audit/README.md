@@ -1,7 +1,11 @@
 # Phase-0 closure execution
 
-**Document ID:** FTRO-AUD-EXEC-README-001 · **Version:** 1.1.0 · **Date:** 2026-08-27
-**Status:** Replacement carrier in preparation; prior C9 failed, calibration not run, qualifying audits 0/2.
+**Document ID:** FTRO-AUD-EXEC-README-001 · **Version:** 1.2.0 · **Date:** 2026-08-27
+**Status:** Carrier `8ddcbfa` qualified; C9 passed; calibration passed; qualifying audits 2/2.
+
+The immutable evidence and exit evaluation are published in
+[`phase0/phase0-qualification-v1.0.md`](../phase0-qualification-v1.0.md). This README update is a
+descendant publication about the named carrier, not a rebinding of the audit subject.
 
 The semantic fault model is historical. The executable pre-registration is
 [`execution-manifest-v1.0.json`](execution-manifest-v1.0.json); its controller is
