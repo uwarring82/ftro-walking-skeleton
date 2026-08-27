@@ -225,7 +225,7 @@ def main():
     else:
         pin["bytes_written_to_cache"] = True
 
-    pinning.promote(pin, args.out, verified)
+    promoted = pinning.promote(pin, args.out, verified)
     print(json.dumps({k: pin[k] for k in
                       ("size_bytes", "sha256", "checksum_match", "content_valid",
                        "last_modified", "n_members", "n_wrapper_filenames",
@@ -234,7 +234,7 @@ def main():
     print(f"wrote {args.out}")
     if not verified:
         print(f"REJECTED: {pin['rejected_reason']}", file=sys.stderr)
-    return 0 if verified else 1
+    return 0 if promoted else 1
 
 
 if __name__ == "__main__":

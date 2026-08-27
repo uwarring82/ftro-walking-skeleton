@@ -240,11 +240,11 @@ def main():
         "failures": failures,
     }
     ok = bool(pins) and not failures and not unexpected
-    pinning.promote(report, args.out, ok)
+    promoted = pinning.promote(report, args.out, ok)
     print(f"pinned {len(pins)}, failed {len(failures)}, uncovered {len(unexpected)} -> {args.out}")
     for f in failures:
         print(f"REJECTED {f['name']}: {f['error']}", file=sys.stderr)
-    return 0 if ok else 1
+    return 0 if promoted else 1
 
 
 if __name__ == "__main__":

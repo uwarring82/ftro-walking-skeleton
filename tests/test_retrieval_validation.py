@@ -11,6 +11,8 @@
 #     python3 -m unittest discover -s tests -v
 
 import io
+import contextlib
+import importlib
 import json
 import os
 import re
@@ -22,6 +24,7 @@ import sys
 import tarfile
 import tempfile
 import unittest
+from unittest import mock
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIXTURES = os.path.join(REPO, "tests", "fixtures")
@@ -1465,6 +1468,109 @@ class TestSchemaContract(unittest.TestCase):
                          "a non-conforming report was promoted")
         self.assertFalse(os.path.exists(out))
         self.assertTrue(os.path.exists(out + ".rejected"))
+
+
+class TestPinnerPromotionVerdict(unittest.TestCase):
+    """A producer success is the promotion verdict, not its pre-schema local state."""
+
+    class Response:
+        status = 200
+        headers = {}
+
+        def __init__(self, body):
+            self.body = body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return None
+
+        def read(self):
+            return self.body
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="ftro-promotion-verdict-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+
+    def _assert_schema_rejection_fails(self, module, argv, patches=()):
+        out = argv[argv.index("--out") + 1]
+        with contextlib.ExitStack() as stack:
+            stack.enter_context(mock.patch.object(sys, "argv", argv))
+            stack.enter_context(mock.patch.object(
+                module.pinning.schema, "validate", return_value=["injected schema rejection"]))
+            for target, attribute, value in patches:
+                stack.enter_context(mock.patch.object(target, attribute, value))
+            result = module.main()
+
+        self.assertEqual(result, 1, "schema rejection was reported as producer success")
+        self.assertFalse(os.path.exists(out), "schema-rejected report reached the official path")
+        self.assertTrue(os.path.exists(out + ".rejected"),
+                        "schema-rejected report was not preserved")
+        with open(out + ".rejected", encoding="utf-8") as fh:
+            rejected = json.load(fh)
+        self.assertIn("injected schema rejection", rejected["schema_problems"])
+
+    def test_evidence_repo_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_evidence_repos")
+        body = b"valid evidence bytes\n"
+        digest = hashlib.sha256(body).hexdigest()
+        target = {"key": "x", "repo": "example/repo", "commit": "abc",
+                  "path": "evidence.txt", "kind": "test-kind"}
+        out = os.path.join(self.tmp, "evidence.json")
+        argv = ["pin_evidence_repos.py", "--cache", os.path.join(self.tmp, "evidence"),
+                "--out", out, "--expect", os.path.join(self.tmp, "unused.json")]
+        self._assert_schema_rejection_fails(module, argv, (
+            (module, "TARGETS", [target]),
+            (module.pinning, "load_section", lambda *args, **kwargs: {"x": digest}),
+            (module.urllib.request, "urlopen", lambda *args, **kwargs: self.Response(body)),
+        ))
+
+    def test_igs_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_igs")
+        body = b"valid IGS bytes\n"
+        digest = hashlib.sha256(body).hexdigest()
+        week, dow = module.mjd_to_gps(59630)
+        expected = {
+            f"igs{week}{dow}.sp3.Z": digest,
+            f"igs{week}{dow}.clk.Z": digest,
+            f"igs{week}7.erp.Z": digest,
+        }
+        out = os.path.join(self.tmp, "igs.json")
+        argv = ["pin_igs.py", "--mjd-start", "59630", "--mjd-end", "59630",
+                "--series", "igs", "--cache", os.path.join(self.tmp, "igs"),
+                "--out", out, "--expect-sha256-manifest", "unused.json"]
+        self._assert_schema_rejection_fails(module, argv, (
+            (module.pinning, "load_section", lambda *args, **kwargs: expected),
+            (module, "fetch", lambda *args, **kwargs: (200, {}, body)),
+            (module, "validate_content",
+             lambda *args, **kwargs: (True, "content_validated", "ok")),
+        ))
+
+    def test_vgosdb_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_vgosdb")
+        archive = os.path.join(FIXTURES, "vgosdb_min.tgz")
+        digest = hashlib.sha256(fixture("vgosdb_min.tgz")).hexdigest()
+        out = os.path.join(self.tmp, "vgosdb.json")
+        argv = ["pin_vgosdb.py", "--url", "file://" + archive, "--session", "R11040",
+                "--cache", os.path.join(self.tmp, "vgosdb"), "--out", out,
+                "--expect-sha256", digest]
+        self._assert_schema_rejection_fails(module, argv)
+
+    def test_ppta_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_ppta")
+        body = b"valid PPTA bytes\n"
+        digest = hashlib.sha256(body).hexdigest()
+        target = {"name": "x.dat", "file_id": "1", "kind": "test-kind",
+                  "concept_id": "ftro:concept:test", "snapshot_stem": "test/x"}
+        out = os.path.join(self.tmp, "ppta.json")
+        argv = ["pin_ppta.py", "--cache", os.path.join(self.tmp, "ppta"),
+                "--out", out, "--expect", os.path.join(self.tmp, "unused.json")]
+        self._assert_schema_rejection_fails(module, argv, (
+            (module, "TARGETS", [target]),
+            (module.pinning, "load_section", lambda *args, **kwargs: {"x.dat": digest}),
+            (module.urllib.request, "urlopen", lambda *args, **kwargs: self.Response(body)),
+        ))
 
 
 class TestDerivedSemantics(unittest.TestCase):

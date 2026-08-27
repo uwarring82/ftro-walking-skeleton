@@ -10,14 +10,14 @@
       "about": {
         "@id": "./"
       },
-      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the REPOSITORY as a research object for FAIR discoverability. The four per-domain manifests required by task card section 8 are a Phase-1 deliverable and do not exist yet; this crate does not claim conformance to the FTRO profile. contentSize is deliberately omitted for this entity: it describes the file it is written into, so any value is stale the moment it is serialised.",
+      "description": "Root RO-Crate descriptor for the FTRO walking skeleton repository. NOTE: this describes the repository as a research object for FAIR discoverability. Four hand-authored per-domain candidate manifests exist on the isolated Phase-1 branch; they have not been merged into this Phase-0 closure branch. This crate does not claim conformance to the FTRO profile. contentSize is deliberately omitted for this entity: it describes the file it is written into, so any value is stale the moment it is serialised.",
       "name": "RO-Crate Metadata Descriptor"
     },
     {
       "@id": "./",
       "@type": "Dataset",
       "name": "Federated Time-Reference Observatory — Walking Skeleton",
-      "description": "Phase-0 evidence lock, classified deficiency ledger and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Revised twice after external review: see labnotes sessions 02 and 03.",
+      "description": "Phase-0 evidence lock, classified deficiency ledger, bounded closure machinery and product selection for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. The append-only labnotes record the review and correction history.",
       "datePublished": "2026-08-25",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
@@ -166,6 +166,15 @@
         },
         {
           "@id": "labnotes/2026-08-26-session-12-consolidation.md"
+        },
+        {
+          "@id": "phase0/audit/"
+        },
+        {
+          "@id": "ledgers/phase1-deficiency-log-at-1c9bc56.json"
+        },
+        {
+          "@id": "labnotes/2026-08-27-session-17-phase0-closure-preparation.md"
         }
       ],
       "isBasedOn": [
@@ -355,7 +364,6 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "68574",
       "name": "igs-artifact-pins.json"
     },
     {
@@ -405,7 +413,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "139070",
+      "contentSize": "166816",
       "name": "deficiency-log.json"
     },
     {
@@ -415,7 +423,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "140429",
+      "contentSize": "165480",
       "name": "deficiency-log.md"
     },
     {
@@ -514,6 +522,9 @@
         },
         {
           "@id": "src/ftro/verify_gps2utc.py"
+        },
+        {
+          "@id": "src/ftro/deficiency.py"
         }
       ]
     },
@@ -543,7 +554,7 @@
       "name": "four_domain_intersection.py",
       "description": "Computes per-domain support envelopes and the pairwise, three- and four-domain intersections.",
       "encodingFormat": "text/x-python",
-      "contentSize": "14527",
+      "contentSize": "18736",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -560,7 +571,7 @@
       "name": "pin_igs.py",
       "description": "Retrieves and pins IGS products with full digests and content-shape validation.",
       "encodingFormat": "text/x-python",
-      "contentSize": "12128",
+      "contentSize": "12145",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -577,7 +588,7 @@
       "name": "pin_vgosdb.py",
       "description": "Retrieves and pins an IVS vgosDB from OPAR with content-shape validation and wrapper-version inventory.",
       "encodingFormat": "text/x-python",
-      "contentSize": "12789",
+      "contentSize": "12800",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -594,7 +605,7 @@
       "name": "render_deficiencies.py",
       "description": "Renders ledgers/deficiency-log.json to Markdown.",
       "encodingFormat": "text/x-python",
-      "contentSize": "3668",
+      "contentSize": "3663",
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
@@ -664,7 +675,6 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "8134",
       "name": "vlbi-vgosdb-pin.json"
     },
     {
@@ -701,7 +711,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3333",
+      "contentSize": "3449",
       "name": "README.md"
     },
     {
@@ -715,6 +725,21 @@
       "hasPart": [
         {
           "@id": "tests/test_retrieval_validation.py"
+        },
+        {
+          "@id": "tests/test_phase0_audit.py"
+        },
+        {
+          "@id": "tests/test_phase0_audit_runner_hardening.py"
+        },
+        {
+          "@id": "tests/test_phase0_audit_probes_hardening.py"
+        },
+        {
+          "@id": "tests/test_phase0_c9_hardening.py"
+        },
+        {
+          "@id": "tests/test_phase0_c9_contract.py"
         },
         {
           "@id": "tests/fixtures/bad_lzw.sp3.Z"
@@ -774,7 +799,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "73920"
+      "contentSize": "78918"
     },
     {
       "@id": "tests/fixtures/login_page.html",
@@ -843,8 +868,7 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      },
-      "contentSize": "6721"
+      }
     },
     {
       "@id": "src/ftro/optical_sensitivity.py",
@@ -860,7 +884,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "15794"
+      "contentSize": "15725"
     },
     {
       "@id": "src/ftro/pin_ppta.py",
@@ -876,7 +900,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "7841"
+      "contentSize": "7858"
     },
     {
       "@id": "src/ftro/refresh_crate.py",
@@ -892,7 +916,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "1833"
+      "contentSize": "2573"
     },
     {
       "@id": "src/ftro/unixz.py",
@@ -954,8 +978,7 @@
       "encodingFormat": "application/json",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
-      },
-      "contentSize": "4151"
+      }
     },
     {
       "@id": "phase0/evidence/expected-digests.json",
@@ -981,7 +1004,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "6905"
+      "contentSize": "6922"
     },
     {
       "@id": "labnotes/2026-08-26-session-06-review-corrections-5.md",
@@ -1146,7 +1169,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7241"
+      "contentSize": "9068"
     },
     {
       "@id": "phase0/audit-fault-model-v1.0.md",
@@ -1156,7 +1179,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4156"
+      "contentSize": "5262"
     },
     {
       "@id": "phase0/reports/audit-2026-08-26.md",
@@ -1166,7 +1189,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4953"
+      "contentSize": "5920"
     },
     {
       "@id": "labnotes/2026-08-26-session-12-consolidation.md",
@@ -1193,6 +1216,254 @@
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
       "contentSize": "4555"
+    },
+    {
+      "@id": "phase0/audit/",
+      "@type": "Dataset",
+      "name": "Phase-0 closure audit instrument",
+      "description": "Frozen mutation recipes, tri-state runner, live C9 recorder and qualification-pair checker.",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "hasPart": [
+        {
+          "@id": "phase0/audit/README.md"
+        },
+        {
+          "@id": "phase0/audit/c9_contract.py"
+        },
+        {
+          "@id": "phase0/audit/execution-manifest-v1.0.json"
+        },
+        {
+          "@id": "phase0/audit/probes.py"
+        },
+        {
+          "@id": "phase0/audit/run.py"
+        },
+        {
+          "@id": "phase0/audit/run_c9.py"
+        },
+        {
+          "@id": "phase0/audit/check_qualification.py"
+        }
+      ]
+    },
+    {
+      "@id": "phase0/audit/README.md",
+      "@type": "File",
+      "name": "README.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "4682"
+    },
+    {
+      "@id": "phase0/audit/c9_contract.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "c9_contract.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "47804"
+    },
+    {
+      "@id": "phase0/audit/execution-manifest-v1.0.json",
+      "@type": "File",
+      "name": "execution-manifest-v1.0.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "45799"
+    },
+    {
+      "@id": "phase0/audit/probes.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "probes.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "9042"
+    },
+    {
+      "@id": "phase0/audit/run.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "run.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "76595"
+    },
+    {
+      "@id": "phase0/audit/run_c9.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "run_c9.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "51245"
+    },
+    {
+      "@id": "phase0/audit/check_qualification.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "check_qualification.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "6692"
+    },
+    {
+      "@id": "src/ftro/deficiency.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "deficiency.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "646"
+    },
+    {
+      "@id": "tests/test_phase0_audit.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_phase0_audit.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "13381"
+    },
+    {
+      "@id": "tests/test_phase0_audit_runner_hardening.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_phase0_audit_runner_hardening.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "25451"
+    },
+    {
+      "@id": "tests/test_phase0_audit_probes_hardening.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_phase0_audit_probes_hardening.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "8490"
+    },
+    {
+      "@id": "tests/test_phase0_c9_hardening.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_phase0_c9_hardening.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "20368"
+    },
+    {
+      "@id": "tests/test_phase0_c9_contract.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_phase0_c9_contract.py",
+      "encodingFormat": "text/x-python",
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "contentSize": "10384"
+    },
+    {
+      "@id": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
+      "@type": "File",
+      "name": "phase1-deficiency-log-at-1c9bc56.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "17798"
+    },
+    {
+      "@id": "labnotes/2026-08-27-session-17-phase0-closure-preparation.md",
+      "@type": "File",
+      "name": "2026-08-27-session-17-phase0-closure-preparation.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "13809"
     }
   ]
 }

@@ -1,7 +1,8 @@
 # Phase-0 Acceptance Contract v1.0
 
-**Document ID:** FTRO-ACC-001 · **Version:** 1.1.0 · **Date:** 2026-08-26 · **Licence:** CC BY 4.0
-**Status:** Frozen scope for Phase 0. Anything not listed here is Phase 1 or robustness work.
+**Document ID:** FTRO-ACC-001 · **Version:** 1.2.0 · **Date:** 2026-08-27 · **Licence:** CC BY 4.0
+**Status:** Frozen functional scope; execution qualification pending. Anything not listed here is
+Phase 1 or robustness work.
 
 ---
 
@@ -24,9 +25,12 @@ Three structural causes, recorded so they are not repeated:
 
 ## Trusted computing base
 
-Assumed correct and **not** verified by this repository: the Python standard library, `git`,
-the operating system, and the providers' own published bytes. Everything else in `src/` is in
-scope for the contracts below.
+Assumed correct and **not** verified by this repository: the Python standard library, `git`, the
+operating system, the shell plus `curl`/`md5`/`unzip` used by the documented live pipeline, and the
+providers' own published bytes. C9 and the bounded audit record resolved executable bytes and tool
+probes; controller Git is selected from fixed system paths and run with replacement refs disabled.
+That is provenance and isolation, not independent verification of the tools. Everything else in
+`src/` is in scope for the contracts below.
 
 The version state machine was deleted in favour of `git` for exactly this reason: 275 lines of
 bespoke state produced four defects of its own, none of which existed in the thing it replaced.
@@ -35,8 +39,10 @@ bespoke state produced four defects of its own, none of which existed in the thi
 
 ## The contracts
 
-A contract is *satisfied* when the stated command produces the stated outcome from a clean
-export. Each is executable.
+A contract is *satisfied* when the stated command produces the stated outcome from its declared
+clean environment. C1–C8 and C10–C12 are exercised by the network-free suite from a clean
+`git archive`; C9 uses a clean detached Git checkout because its documented version gate
+deliberately fails closed without Git metadata.
 
 | # | Contract | Verified by |
 | --- | --- | --- |
@@ -47,11 +53,11 @@ export. Each is executable.
 | C5 | Scientific meaning is derived from authenticated names, never read from unbound report fields | `igs_day_from_name`; relabel mutation has no effect |
 | C6 | The **non-optical** domain supports (pulsar, VLBI, GNSS) have one construction, passed from the main computation into the sensitivity scan, which raises if they are omitted. Optical support is constructed per variant by design — varying it *is* the scan. Main and sensitivity are reconciled two-sidedly at the shipped convention for every domain, pair, triple, four-way result and gap | `main_vs_sensitivity_reconciliation`; run fails on disagreement |
 | C7 | Optical segmentation agrees with an implementation that shares no code with it, tuple for tuple, at every tolerance and at each threshold T and T+1 | `independent_runs`; `TestSegmentationOracle` |
-| C8 | Steps 2, 5 and 6 reproduce their committed outputs byte-for-byte from the same pinned inputs. Retrieval steps (1, 3, 4) are **not** byte-deterministic — they stamp `retrieved_utc` — and are covered by C1 and C2 instead | README steps 2, 5–6; determinism check |
-| C9 | Every documented command in the README runs to completion from a clean export | manual, per release |
+| C8 | Step 2, the tracked optical summary produced within step 3, and steps 5–6 reproduce their committed outputs byte-for-byte from the same pinned inputs. The pin reports produced by retrieval steps 1 and 4 are **not** byte-deterministic — they stamp `retrieved_utc` — and are covered by C1 and C2 instead | README steps 2, 3, 5–6; determinism check |
+| C9 | Every documented command in the README runs to completion, in order and without intervention, from a clean detached Git checkout against live providers | recorded live run, per release |
 | C10 | A changed versioned artifact declares a new, forward version, and the gate **fails closed** when no git context is available rather than reporting success | `check_versions.py --check`; `TestVersionGate` |
 | C11 | Every deficiency carries a machine-readable finding type and impact axis | `deficiency-log.json`; renderer |
-| C12 | No open entry that could change the Phase-0 scientific conclusion is a software defect | the convergence measure in the rendered ledger |
+| C12 | No entry is simultaneously open, `affects == changes_result` and `finding_type == current_defect` | the convergence measure derived from the merged machine ledger |
 
 **Explicitly out of scope for Phase 0:** proof that every normative profile clause has an
 executable check; exhaustive mutation coverage of maintenance commands; independent oracles for
@@ -73,26 +79,39 @@ Phase 0 is complete when all of the following hold, and not before:
 3. **The convergence measure reads zero**: no open ledger entry both bears on the scientific
    conclusion and is a software defect rather than an external evidence gap or the recorded
    outcome itself.
-4. **The declared mutation suite detects its pre-registered fault model** (see
-   [`phase0/audit-fault-model-v1.0.md`](audit-fault-model-v1.0.md)).
+4. **The frozen executable mutation manifest behaves as registered:** rejected mutations are
+   detected; registered no-effect/coherent/accepted mutations are observed without conflating
+   them with a recipe that did not execute. See the semantic model in
+   [`phase0/audit-fault-model-v1.0.md`](audit-fault-model-v1.0.md) and the frozen recipes in
+   [`phase0/audit/execution-manifest-v1.0.json`](audit/execution-manifest-v1.0.json).
 5. **Two bounded audits against this frozen scope produce no new high-severity current defect.**
    A latent-regression finding does not reopen Phase 0; it is filed and deferred.
 
-**Status at v1.1** (after the first bounded audit, 2026-08-26):
+**Status at v1.2** (qualification correction, 2026-08-27):
 
-The first audit **failed** on C3, C8, C10 and M11, and produced two scope corrections (C1, C6).
-That is the protocol working: it returned a finite result and stopped rather than searching on.
-Those failures are fixed in this revision and the checklist must be rerun; the failed audit does
-**not** count toward exit condition 5.
+The first retrospective exercise found failures on C3, C8, C10 and M11 and produced two scope
+corrections (C1, C6). Those failures were fixed before v1.2, but neither historical exercise
+counts toward exit condition 5.
 
-After the rerun: **1, 3 and 4 hold.** C1–C8 and C10–C12 pass from a clean export; the convergence
-measure is zero; the declared mutation suite detects its fault model.
+The two 2026-08-26 exercises are retained as retrospective diagnostics. Neither qualifies as a
+pre-registered audit: the first fault model and its result were committed together, and run 2
+selected cases after observing run 1. The historical claim that condition 4 held and that one of
+two audits qualified was therefore false.
+
+**Condition 1 is not yet re-demonstrated for the closure candidate.** The network-free suite
+passes in the preparation worktree, but condition 1 still requires a committed clean-archive run.
+**Condition 3 holds after reconciling all nine entries from the Phase-1 source ledger:** the exact
+merged-ledger convergence predicate returns zero.
 
 **2 (C9) is outstanding** — the documented pipeline has never been run end to end against live
 providers in one pass.
 
-**5 requires two clean audits. One has now been achieved** (run 2, 2026-08-26). Run 1 failed and
-does not count.
+**4 is not yet demonstrated.** An executable manifest is prepared but has not yet been calibrated
+or executed from its committed carrier.
+
+**5 stands at 0/2.** One non-qualifying calibration run must establish that every frozen recipe
+applies, executes and resets; the unchanged manifest must then pass twice in separate clean
+checkouts. Calibration never counts.
 
 ---
 
@@ -101,7 +120,8 @@ does not count.
 | Finding type | Effect on Phase 0 |
 | --- | --- |
 | `current_defect` bearing on the result | **Blocks.** Fix before exit. |
-| `current_defect` blocking a documented workflow | **Blocks.** Fix before exit. |
+| `current_defect` that makes one of C1–C12 fail | **Blocks.** Fix before exit. |
+| `current_defect` blocking a provider-controlled or later-phase workflow outside C1–C12 | Filed; it does not block this bounded Phase-0 exit. |
 | `current_defect`, maintenance only | Filed; fix if cheap, otherwise defer. |
 | `latent_regression` | **Does not block.** Filed against the fault model for Phase 1. |
 | `assurance_gap` | **Does not block.** Listed as out of scope above. |

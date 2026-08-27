@@ -52,9 +52,6 @@ WINDOW = [(W0, W1)]
 GAP_TOLERANCES_S = (1.1, 1.5, 2.0, 5.0)
 TAG_SHIFTS_S = (-1.0, 0.0, 1.0)
 
-PULSAR_OBS_START_UTC = "2022-02-20T10:40:59"
-PULSAR_TOBS_S = 3843.1
-
 
 # --------------------------------------------------------------------------- exact interval algebra
 def to_us(mjd: float) -> int:

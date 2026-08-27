@@ -2,24 +2,24 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.15.0  
-**Opened:** 2026-08-25  
-**Phase:** Phase 0  
+**Version:** 0.18.0
+**Opened:** 2026-08-25
+**Phase:** Phase 0
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (43), policy (1), rights (2), schema (4), source_evidence (19)  
-**By severity:** critical (2), high (38), low (3), medium (26)  
-**By domain:** cross-domain (30), gnss (5), optical (20), pulsar (8), vlbi (6)  
-**By disposition:** open (24), resolved (45)  
-**By responsible party:** ftro (45), provider (24)  
-**By finding type:** assurance_gap (8), current_defect (20), external_evidence_gap (17), latent_regression (23), recorded_outcome (1)  
-**By affects:** blocks_workflow (11), changes_result (12), maintenance_only (11), no_present_effect (35)  
+**By class:** execution (51), policy (1), rights (2), schema (8), source_evidence (19)
+**By severity:** critical (4), high (45), low (4), medium (28)
+**By domain:** cross-domain (41), gnss (6), optical (20), pulsar (8), vlbi (6)
+**By disposition:** open (31), resolved (50)
+**By responsible party:** ftro (57), provider (24)
+**By finding type:** assurance_gap (11), current_defect (29), external_evidence_gap (17), latent_regression (23), recorded_outcome (1)
+**By affects:** blocks_workflow (19), changes_result (12), maintenance_only (12), no_present_effect (38)
 
-**Total entries:** 69 · **self-directed:** 45
+**Total entries:** 81 · **self-directed:** 57
 
-> **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries that could change the Phase-0 result and are not external evidence gaps.**
+> **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries with `affects == changes_result` and `finding_type == current_defect`.**
 >
 > Currently: **0** — the remaining result-bearing entries are provider evidence gaps and the recorded null itself, which are the deliverable rather than software failures.
 
@@ -27,6 +27,8 @@
 | --- | --- | --- | --- | --- | --- | --- |
 | [`FTRO-DEF-003`](#ftro-def-003) | source_evidence | critical | external_evidence_gap | changes_result | provider | ref_osc, interval, lag and weighting are absent from every comparison, leaving the time-tag realisation unresolved |
 | [`FTRO-DEF-004`](#ftro-def-004) | source_evidence | critical | external_evidence_gap | changes_result | provider | Comparator output is formally ambiguous between two documented physical interpretations |
+| [`FTRO-DEF-070`](#ftro-def-070) | execution | critical | current_defect | blocks_workflow | **self** | SELF-DIRECTED: the first C9 verifier could certify a projection instead of the documented live pipeline |
+| [`FTRO-DEF-071`](#ftro-def-071) | execution | critical | current_defect | blocks_workflow | **self** | SELF-DIRECTED: the first executable audit recipe did not bind its baseline, tools or chronology strongly enough |
 | [`FTRO-DEF-001`](#ftro-def-001) | source_evidence | high | external_evidence_gap | changes_result | provider | Validity-flag vocabulary is documented but degenerate: every sample carries flag=1 |
 | [`FTRO-DEF-002`](#ftro-def-002) | source_evidence | high | external_evidence_gap | changes_result | provider | Published MJD time tags are quantised to 86.4 ms, coarser than the sampling interval they represent |
 | [`FTRO-DEF-007`](#ftro-def-007) | execution | high | current_defect | blocks_workflow | provider | Named generating scripts are not present in the archive and no environment specification is supplied |
@@ -65,6 +67,13 @@
 | [`FTRO-DEF-065`](#ftro-def-065) | execution | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: C3 claimed one declaration while the consumer kept a parallel hand-written validator |
 | [`FTRO-DEF-066`](#ftro-def-066) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: M11's coverage was narrower than its registered scope, so the audit result was wrong |
 | [`FTRO-DEF-067`](#ftro-def-067) | execution | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: the version gate failed OPEN in the environment its contract requires |
+| [`FTRO-DEF-072`](#ftro-def-072) | execution | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: the first live runner degraded failure evidence and omitted runtime bindings |
+| [`FTRO-P1-DEF-001`](#ftro-p1-def-001) | execution | high | assurance_gap | no_present_effect | **self** | RO-Crate 1.3 conformance remains unverified; the obtainable validator stops at 1.2 |
+| [`FTRO-P1-DEF-002`](#ftro-p1-def-002) | schema | high | current_defect | blocks_workflow | **self** | Profile §4 under-specifies how bitemporal relation assertions are serialised |
+| [`FTRO-P1-DEF-006`](#ftro-p1-def-006) | execution | high | current_defect | blocks_workflow | **self** | The first four manifests violated base structural requirements before any validator ran |
+| [`FTRO-P1-DEF-007`](#ftro-p1-def-007) | execution | high | current_defect | blocks_workflow | **self** | The Gate-1 checker repeatedly substituted narrower evidence for the claim |
+| [`FTRO-P1-DEF-008`](#ftro-p1-def-008) | execution | high | current_defect | blocks_workflow | **self** | Phase-0 C9 fails at the documented unzip command in a clean checkout |
+| [`FTRO-P1-DEF-009`](#ftro-p1-def-009) | execution | high | current_defect | blocks_workflow | **self** | Neither historical bounded audit qualifies as pre-registered |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -91,9 +100,12 @@
 | [`FTRO-DEF-064`](#ftro-def-064) | execution | medium | current_defect | maintenance_only | **self** | SELF-DIRECTED: the git-based version gate crashed on a document that gains a version |
 | [`FTRO-DEF-068`](#ftro-def-068) | execution | medium | current_defect | no_present_effect | **self** | SELF-DIRECTED: the README claimed byte-determinism for a step that stamps a timestamp |
 | [`FTRO-DEF-069`](#ftro-def-069) | execution | medium | assurance_gap | no_present_effect | **self** | SELF-DIRECTED: two contracts were worded more broadly than the code they describe |
+| [`FTRO-P1-DEF-003`](#ftro-p1-def-003) | schema | medium | current_defect | maintenance_only | **self** | Conformance-report and TIMEEPH representations are provisional, not both logically forced |
+| [`FTRO-P1-DEF-004`](#ftro-p1-def-004) | schema | medium | assurance_gap | no_present_effect | **self** | Whole-document term frequency was presented as semantic vocabulary coverage |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | external_evidence_gap | changes_result | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | current_defect | no_present_effect | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | external_evidence_gap | no_present_effect | provider | High-rate 30 s clock products are absent from the mirror used |
+| [`FTRO-P1-DEF-005`](#ftro-p1-def-005) | schema | low | assurance_gap | no_present_effect | **self** | The profile assumes every domain is a chain; the GNSS leg is only ever consumed |
 
 ## Entries
 
@@ -2268,7 +2280,7 @@
 | Finding type | `assurance_gap` |
 | Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.1.0 |
 
 **Failed step.** Determining when Phase 0 is complete.
 
@@ -2281,11 +2293,11 @@
 - `phase0/acceptance-contract-v1.0.md`
 - `phase0/audit-fault-model-v1.0.md`
 
-**Impact.** Phase 0 now has a frozen 12-contract scope, a stated trusted computing base, a finite exit condition, a pre-registered fault model executed once, and a convergence measure that can reach zero: open entries bearing on the result that are software defects rather than external evidence gaps. That measure now reads ZERO. The trusted base was shrunk by deleting the 275-line version state machine in favour of git, and the eight-entry absent-field family was retired by one declarative schema.
+**Impact.** CORRECTION v2.1.0: Phase 0 has a frozen 12-contract scope, a stated trusted computing base and a finite exit condition, but the two 2026-08-26 mutation exercises were retrospective rather than pre-registered. A separate executable manifest, one non-qualifying calibration and two qualifying runs are still required. The nine-entry Phase-1 ledger has now been merged and the exact convergence predicate was recomputed at zero.
 
 **Workaround.** None.
 
-**Proposed response.** Adopted 2026-08-26. Rule (D-080): freeze the acceptance scope and pre-register the audit before the next fix round.
+**Proposed response.** Partly adopted 2026-08-26; corrected 2026-08-27. Rule (D-080): freeze the acceptance scope and the exact executable audit recipes before qualification, calibrate the instrument separately, then run the unchanged manifest twice.
 
 ---
 
@@ -2303,7 +2315,7 @@
 | Finding type | `current_defect` |
 | Affects | `maintenance_only` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 **Failed step.** Running check_versions.py --check --base HEAD~1 after the consolidation commit.
 
@@ -2316,7 +2328,7 @@
 - `src/ftro/check_versions.py`
 - `phase0/audit-fault-model-v1.0.md`
 
-**Impact.** A maintenance command crashed rather than reporting. No committed artifact was affected. Notable as the first finding located by our own pre-registered process rather than by review, and as the first exercise of the amend-then-rerun rule: the fault model is now v1.1.0 with M12a-M12c enumerated.
+**Impact.** CORRECTION v2.0.0: a maintenance command crashed rather than reporting, and no committed artifact was affected. The finding was located while exercising the newly written process, but that process was not pre-registered: model and result first landed together. It remains evidence that enumerating state transitions is useful, not evidence of a qualifying audit.
 
 **Workaround.** None.
 
@@ -2373,13 +2385,13 @@
 | Finding type | `latent_regression` |
 | Affects | `no_present_effect` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 **Failed step.** Detecting a precondition moved behind the action it guards.
 
 **Known fact or required evidence.** A pre-registered operator must be exercised over the scope it claims.
 
-**Observed.** The urlopen spy covered only the null-registry route. Moving explicit --expect-sha256 validation behind urlopen() left all 96 tests green, so the audit report's M11 'detected' was incorrect -- a false PASS in a pre-registered checklist, which is worse than a missing check because it is believed.
+**Observed.** The urlopen spy covered only the null-registry route. Moving explicit --expect-sha256 validation behind urlopen() left all 96 tests green, so the audit report's M11 'detected' was incorrect. CORRECTION v2.0.0: calling the checklist pre-registered was also false; its recipes had not been frozen before execution. The false PASS remains worse than a declared gap because it was believed.
 
 **Evidence.**
 
@@ -2495,5 +2507,436 @@
 **Workaround.** None.
 
 **Proposed response.** Corrected 2026-08-26 in contract v1.1.
+
+---
+
+### FTRO-P1-DEF-001
+
+**RO-Crate 1.3 conformance remains unverified; the obtainable validator stops at 1.2**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `all four manifests` |
+| Disposition | `open` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 2.0.0 |
+
+**Failed step.** Card §9.1: record the exact validator and its version in every conformance report.
+
+**Known fact or required evidence.** §9.1 requires conformance to the pinned base to be validated, and the validator and version recorded.
+
+**Observed.** CORRECTION v2.0.0: the claim that no validator was obtainable was false. `pip install roc-validator` succeeds in a temporary environment. Version 0.11.3 supplies RO-Crate 1.1 and 1.2 profiles, not the pinned 1.3 base. All four manifests therefore retain an explicit normative result of `not_run`. RDFLib parses the JSON-LD; a temporary, non-normative 1.2 export fails. Neither is a 1.3 verdict.
+
+**Evidence.**
+
+- `phase1/reports/ro-crate-validation-v1.0.json`
+- `phase1/manifests/optical/ro-crate-metadata.json#conformance`
+
+**Impact.** The manifests declare the 1.3 base and the provisional FTRO profile, but are not demonstrated conforming on the profile's own definition. Gate 1 source location can pass independently; normative conformance cannot.
+
+**Workaround.** Every conformance report says `not_run` and why. The bounded Gate-1 checker and RDF parse are labelled as weaker, scoped evidence rather than a validator substitute.
+
+**Proposed response.** Obtain a validator implementing RO-Crate 1.3, or pre-register and review an explicit substitute conformance method without calling it validator evidence.
+
+---
+
+### FTRO-P1-DEF-002
+
+**Profile §4 under-specifies how bitemporal relation assertions are serialised**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO profile v0.0.3` |
+| Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 2.0.0 |
+
+**Failed step.** Attaching the bitemporal quartet to every edge, as §4 requires.
+
+**Known fact or required evidence.** §4 says every mutable node assertion and every edge carries valid_from, valid_to, known_from and known_to. §9.1 pins RO-Crate 1.3 JSON-LD.
+
+**Observed.** CORRECTION v2.0.0: JSON-LD can satisfy the information requirement by reifying a relation as a node, so 'unsatisfiable' was too strong. The defect is that the profile declares neither that assertion class nor predicate/cardinality/direct-triple/null semantics. The manifests use provisional `ftro:Edge` and `ftro:Assertion` nodes, proving a possible encoding rather than a conforming one.
+
+**Evidence.**
+
+- `phase1/reports/vocabulary-pressure-v1.1.md`
+- `phase1/manifests/optical/ro-crate-metadata.json`
+
+**Impact.** Two implementations can preserve the quartet while producing incompatible graphs, and JSON null cannot preserve open or absent state at RDF level.
+
+**Workaround.** Provisional named assertion nodes with explicit subject, relation, evidence state and reason; no claim that the representation is frozen.
+
+**Proposed response.** Define a relation-assertion model, direct-triple policy and RDF-level unresolved/temporal state in a later profile amendment. Do not amend while Phase-0 closure preconditions are open.
+
+---
+
+### FTRO-P1-DEF-003
+
+**Conformance-report and TIMEEPH representations are provisional, not both logically forced**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO profile v0.0.3` |
+| Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 2.0.0 |
+
+**Failed step.** Recording the validator and version in a typed conformance report.
+
+**Known fact or required evidence.** §1 requires validator identity and version in every conformance report; §2 enumerates node classes. PPTA's .par declares TIMEEPH IF99.
+
+**Observed.** CORRECTION v2.0.0: §1 constrains a report if present but does not unambiguously require one, although all four manifests need a report to record `not_run`. `ConformanceReport` is therefore a strong candidate, not a logically forced class. TIMEEPH is a declared timing-model parameter; one file does not establish that it belongs as an ancestry edge.
+
+**Evidence.**
+
+- `phase1/reports/vocabulary-pressure-v1.1.md`
+
+**Impact.** Prematurely freezing either representation would turn an authoring convenience into an unsupported normative model.
+
+**Workaround.** Use provisional `ftro:ConformanceReport`; retain TIMEEPH as a declared parameter assertion and record the vocabulary pressure.
+
+**Proposed response.** Consider ConformanceReport in the amendment; defer a TIMEEPH-specific edge until more timing products establish its provenance semantics.
+
+---
+
+### FTRO-P1-DEF-004
+
+**Whole-document term frequency was presented as semantic vocabulary coverage**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `FTRO profile v0.0.3` |
+| Disposition | `open` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 2.0.0 |
+
+**Failed step.** Establishing which profile terms are validated by use.
+
+**Known fact or required evidence.** Card §8.1: manifests must be based on real source products, not an abstract ontology exercise.
+
+**Observed.** CORRECTION v2.0.0: the 13/21 and 28/41 figures are whole-document key/name counts. They do not establish that a term was semantically exercised, why another is absent, which entity kind owns a common field, or that four occurrences justify a universal MUST. The counts are a historical inventory, not a coverage oracle.
+
+**Evidence.**
+
+- `phase1/reports/vocabulary-usage.json`
+- `phase1/reports/vocabulary-pressure-v1.1.md`
+
+**Impact.** The proposed `exercised` flags and promotion of 21 common fields would have frozen conclusions the comparison did not support.
+
+**Workaround.** The v1.1 report explicitly treats the counts as descriptive and freezes no field or term.
+
+**Proposed response.** Build a separate coverage report classifying each term as instantiated, unresolved-but-required, inapplicable or untested; do not encode four-manifest frequency as a normative profile marker.
+
+---
+
+### FTRO-P1-DEF-005
+
+**The profile assumes every domain is a chain; the GNSS leg is only ever consumed**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | low |
+| Domain | gnss |
+| Dataset | `FTRO profile v0.0.3` |
+| Disposition | `open` |
+| Finding type | `assurance_gap` |
+| Affects | `no_present_effect` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 2.0.0 |
+
+**Failed step.** Applying one minimum record to a leg that has no ancestry of its own here.
+
+**Known fact or required evidence.** §10 states one minimum record set for every dataset, product or evidence manifest.
+
+**Observed.** The GNSS manifest uses zero ancestry edges. Its current role is a six-line product collection plus resolver policies consumed by other legs. CORRECTION v2.0.0: the earlier field totals were descriptive counts from a superseded manifest revision and are not evidence for role-conditioned cardinalities.
+
+**Evidence.**
+
+- `phase1/reports/vocabulary-pressure-v1.1.md`
+- `phase1/manifests/gnss/ro-crate-metadata.json`
+
+**Impact.** Not an error -- the GNSS manifest is complete for its role. But a leg whose role is to BE consumed plausibly needs a different minimum record from one that consumes, and the profile does not distinguish them.
+
+**Workaround.** None; recorded for the Phase-6 freeze review.
+
+**Proposed response.** Consider a role-conditioned minimum record only after more legs exercise distinct roles; do not add it in the first amendment.
+
+---
+
+### FTRO-P1-DEF-006
+
+**The first four manifests violated base structural requirements before any validator ran**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `initial Phase-1 manifests` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Hand-author one RO-Crate 1.3 manifest per domain.
+
+**Known fact or required evidence.** RO-Crate requires flattened JSON-LD entities and a typed contextual Profile entity for a declared profile.
+
+**Observed.** The first manifests embedded 13 structured records as anonymous nested objects, omitted the Profile contextual entity in all four, mixed base/profile declarations on the descriptor, and linked only four of five VLBI wrapper states because one hasPart target was duplicated. The original self-check did not test these properties.
+
+**Evidence.**
+
+- `phase1/manifests/optical/ro-crate-metadata.json`
+- `phase1/manifests/pulsar/ro-crate-metadata.json`
+- `phase1/manifests/vlbi/ro-crate-metadata.json`
+- `phase1/manifests/gnss/ro-crate-metadata.json`
+- `phase1/tests/test_gate1.py`
+
+**Impact.** The session-13 structural PASS was false and the VLBI graph represented the wrong wrapper population.
+
+**Workaround.** All anonymous records were promoted to named graph entities; each crate now describes the commit-pinned Profile; descriptor/root conformance roles and VLBI links were repaired.
+
+**Proposed response.** Closed by the bounded structural/source checker and committed mutation tests; normative 1.3 validation remains separately open in FTRO-P1-DEF-001.
+
+---
+
+### FTRO-P1-DEF-007
+
+**The Gate-1 checker repeatedly substituted narrower evidence for the claim**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `phase1/check_gate1.py` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 3.1.0 |
+
+**Failed step.** Test retrieval in a clean environment and demonstrate the exact Gate-1 source population.
+
+**Known fact or required evidence.** A source-location gate must constrain identity, not just count, and retrieval must consume the inputs that were validated.
+
+**Observed.** A digest-correct README could replace gps2utc while preserving the 3/6/2/58 domain counts; corrupt VLBI wrapper digest/path/size passed; JSON false passed as integer zero; and reports were reopened between validation and retrieval. CORRECTION v2.0.0: the first repair still trusted the caller's `isolated_export` label and did not apply the report verifier before publishing a newly generated PASS. CORRECTION v3.0.0: the next repair accepted only an uncommitted six-file overlay, rejecting a clean commit carrying the same candidate, and did not reconcile the three quoted aggregate counters to `results[]`.
+
+**Evidence.**
+
+- `phase1/check_gate1.py`
+- `phase1/tests/test_gate1.py`
+- `phase1/reports/gate1-clean-retrieval-v1.0.json`
+- `phase1/reports/gate1-clean-retrieval-committed-d31a70c.json`
+
+**Impact.** Gate 1 could have been declared on the wrong artifact population, against bytes not represented by the validated snapshot, or with false headline counts; the published repository could not rerun the supposedly clean procedure.
+
+**Workaround.** The stable candidate identity is the Phase-1 parent plus a fingerprint of ten captured inputs. Execution may be witnessed either by the exact six-file overlay on that parent or by a clean descendant commit containing those six paths plus only allowlisted non-executable publication outputs under phase1/reports, labnotes, the Phase-1 README and the Phase-1 ledger. Every result-derived counter and status is recomputed, and a newly generated PASS must satisfy the same verifier before publication.
+
+**Proposed response.** Closed with 44 Phase-1 tests, including a clean committed-carrier run, permitted non-input publication outputs, rejection of executable extra paths and a clean non-descendant, every aggregate field, duplicate rows and coherent failure rows. The parent-overlay and committed-checkout executions are retained as separate reports; the latter ran at d31a70c and records its full HEAD.
+
+---
+
+### FTRO-P1-DEF-008
+
+**Phase-0 C9 fails at the documented unzip command in a clean checkout**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `README Phase-0 pipeline` |
+| Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** C9: every documented README command runs to completion from a clean export.
+
+**Known fact or required evidence.** The README downloads the optical archive at repository root, then unzips into data/raw/zenodo-17107693/extracted without creating its parent.
+
+**Observed.** The exact live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but cannot make the documented sequence a C9 pass. The failure reproduced in a second data-free clone.
+
+**Evidence.**
+
+- `phase1/reports/phase0-c9-attempt-2026-08-26.json`
+
+**Impact.** Phase-0 exit condition 2 remains open; the advertised cold path is not executable as written.
+
+**Workaround.** Manual `mkdir -p data/raw/zenodo-17107693` before unzip; recorded as intervention, not a pass.
+
+**Proposed response.** After the isolation boundary permits, add the directory-creation command to README and rerun C9 once from a fresh checkout.
+
+---
+
+### FTRO-P1-DEF-009
+
+**Neither historical bounded audit qualifies as pre-registered**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `phase0/audit-fault-model-v1.0.md` |
+| Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 2.0.0 |
+
+**Failed step.** Phase-0 exit conditions 4 and 5: demonstrate the pre-registered fault model and obtain two clean bounded audits against frozen scope.
+
+**Known fact or required evidence.** A pre-registered fault injection needs a concrete target, mutation, expected detecting command, isolation/reset rule and result destination selected before execution.
+
+**Observed.** CORRECTION v2.0.0: qualifying count is 0/2, not 1/2. Commit f767457 introduced the fault model and completed run-1 report together; 97553a2 amended both; a806bba introduced the corrected acceptance scope, fixes, run-2 result and its 'first clean audit' claim together. Run 2 added M1b/M1c, absent from every fault-model version, and selected the explicit-digest M11 route after run 1 exposed it. No version freezes exact targets, mutations, detecting commands, reset boundaries or destination. Both runs are useful retrospective diagnostics, not pre-registered audits.
+
+**Evidence.**
+
+- `phase0/audit-fault-model-v1.0.md`
+- `phase0/reports/audit-2026-08-26.md`
+- `phase0/acceptance-contract-v1.0.md`
+- `phase1/reports/phase0-c9-attempt-2026-08-26.json`
+
+**Impact.** The qualifying audit count is 0/2. Exit condition 4 is not yet demonstrated, and exit condition 5 needs two clean qualifying runs rather than one.
+
+**Workaround.** None; stopping before choosing concrete mutations is the fail-closed action. The historical runs remain diagnostic evidence but do not count.
+
+**Proposed response.** Freeze one finite execution recipe per operator in a new audit-run manifest, then execute that unchanged manifest twice in separately isolated copies, report every result and stop after each run.
+
+---
+
+### FTRO-DEF-070
+
+**SELF-DIRECTED: the first C9 verifier could certify a projection instead of the documented live pipeline**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | critical |
+| Domain | cross-domain |
+| Dataset | `Phase-0 C9 evidence contract` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Demonstrating C9 with one durable report whose producer and consumer enforce the same complete claim.
+
+**Known fact or required evidence.** C9 is a population-and-procedure claim: the report must bind the carrier, all eight README commands, all 65 registered pins plus the optical archive, generated outputs and deterministic comparisons.
+
+**Observed.** The first closure verifier accepted a synthetic one-row PASS because it checked selected counters and status fields rather than an exact report schema and source population. Its rebinding prose also allowed later candidate changes to inherit an earlier live run, contradicting the stated carrier binding. A second pass found the opposite boundary error in the replacement: the consumer re-read the producer's historical absolute provisional path and executable bytes, so copying a valid report or validating it on another host could fail. The C9 and calibration evidence dictionaries also embedded their current absolute locator, making byte-identical moved reports compare unequal in the next stage.
+
+**Evidence.**
+
+- `phase0/audit/c9_contract.py`
+- `phase0/audit/run_c9.py`
+- `phase0/audit/run.py`
+- `tests/test_phase0_c9_contract.py`
+
+**Impact.** A fabricated or incomplete report could have satisfied the calibration prerequisite, and a changed candidate could have been qualified against provider evidence from different code.
+
+**Workaround.** None; no closure run was permitted before the contract was replaced.
+
+**Proposed response.** Resolved before freeze by one strict shared validator used by both producer and consumer, exact population reconciliation, a no-rebinding carrier rule, and an explicit producer/carrier view split: fresh paths and runtime binaries are checked at production, while later consumers validate recorded provenance and compare stable report digests rather than locator paths.
+
+---
+
+### FTRO-DEF-071
+
+**SELF-DIRECTED: the first executable audit recipe did not bind its baseline, tools or chronology strongly enough**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | critical |
+| Domain | cross-domain |
+| Dataset | `Phase-0 bounded-audit runner` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Executing each pre-registered mutation against an isolated, immutable candidate and proving apply, detector execution and reset.
+
+**Known fact or required evidence.** A qualifying fault-injection run must distinguish detected, not detected and not executed, and must prove that its subject and executable tools remain the registered ones throughout the run.
+
+**Observed.** The initial runner recorded reset as a boolean without a complete pre/post export fingerprint, inherited user Git configuration and hooks, accepted relative PATH entries and a Python shim, and did not require C9, calibration, two qualification runs and the final checker to occur in five distinct checkouts in chronological order. The next pass found that controller-level Git still came from ambient PATH and honoured replacement refs, so an absolute shim or local replace ref could forge carrier reads while the reported commit ID stayed unchanged.
+
+**Evidence.**
+
+- `phase0/audit/run.py`
+- `phase0/audit/check_qualification.py`
+- `tests/test_phase0_audit_runner_hardening.py`
+
+**Impact.** A mutation could have been applied to or detected by the wrong execution environment, reset evidence could have agreed with itself, and reports could have been replayed out of order while still appearing qualifying.
+
+**Workaround.** None; the runner had not yet been frozen or used for a qualifying run.
+
+**Proposed response.** Resolved before freeze with isolated HOME/Git state, a fixed-path recorded controller Git running with replacement refs disabled, absolute detector executable digests, complete tree fingerprints, deep PASS self-validation, timestamp ordering and five distinct checkout identities.
+
+---
+
+### FTRO-DEF-072
+
+**SELF-DIRECTED: the first live runner degraded failure evidence and omitted runtime bindings**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `Phase-0 live C9 runner` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Recording a live-provider failure or success without losing the distinction between transport, content and local workflow evidence.
+
+**Known fact or required evidence.** A live run must preserve the producer's rejection reason, bind every attempted source and executable, terminate timed-out subprocesses, and prove that deterministic outputs were freshly reproduced.
+
+**Observed.** Rejected pinner reports lost their structured reason; vgosDB could be attempted twice; the optical summary was checked for existence rather than byte reproduction; child process groups could survive timeout; the shell and Git execution context were not bound; and volatile pin-report sizes made the final root-crate refresh disagree with the freshly retrieved reports. A subprocess review then showed that importing the adjacent contract could create an ignored __pycache__ before source_state(), causing a fresh checkout to reject itself before the first provider request.
+
+**Evidence.**
+
+- `phase0/audit/run_c9.py`
+- `phase0/audit/c9_contract.py`
+- `src/ftro/refresh_crate.py`
+- `tests/test_phase0_c9_hardening.py`
+- `tests/test_phase0_c9_contract.py`
+
+**Impact.** The report could misclassify the likeliest live failure, leave unobserved processes running, or claim a deterministic comparison over stale output.
+
+**Workaround.** None; the live closure run had not begun.
+
+**Proposed response.** Resolved before freeze by preserving structured rejection and reachability evidence, binding source groups and tool digests, process-group timeout handling, five fresh deterministic comparisons, omission of volatile pin-report content sizes, and disabling local bytecode writes before controller-module imports.
 
 ---

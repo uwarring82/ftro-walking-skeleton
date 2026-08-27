@@ -6,6 +6,11 @@
 
 import collections
 import json
+import os
+import sys
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+from deficiency import result_bearing_current_defects  # noqa: E402
 
 d = json.load(open("ledgers/deficiency-log.json", encoding="utf-8"))
 e = d["entries"]
@@ -16,9 +21,9 @@ w(f"# {d['ledger']}\n")
 w("> **Generated file — do not edit.** Source of truth is "
   "[`deficiency-log.json`](deficiency-log.json); regenerate with "
   "`python3 src/ftro/render_deficiencies.py`.\n")
-w(f"**Version:** {d['version']}  ")
-w(f"**Opened:** {d['opened']}  ")
-w(f"**Phase:** {d['phase']}  ")
+w(f"**Version:** {d['version']}")
+w(f"**Opened:** {d['opened']}")
+w(f"**Phase:** {d['phase']}")
 w(f"**Task card:** {d['card']}\n")
 
 w("## Summary\n")
@@ -26,14 +31,13 @@ for label, key in (("Class", "class"), ("Severity", "severity"), ("Domain", "dom
                    ("Disposition", "disposition"), ("Responsible party", "responsible_party"),
                    ("Finding type", "finding_type"), ("Affects", "affects")):
     c = collections.Counter(x[key] for x in e)
-    w(f"**By {label.lower()}:** " + ", ".join(f"{k} ({v})" for k, v in sorted(c.items())) + "  ")
+    w(f"**By {label.lower()}:** " + ", ".join(f"{k} ({v})" for k, v in sorted(c.items())))
 sd = [x["id"] for x in e if x.get("self_directed")]
 w(f"\n**Total entries:** {len(e)} · **self-directed:** {len(sd)}\n")
-blocking = [x for x in e if x["disposition"] == "open" and x.get("affects") == "changes_result"
-            and x.get("finding_type") not in ("external_evidence_gap", "recorded_outcome")]
+blocking = result_bearing_current_defects(e)
 w("> **Convergence measure.** An append-only count can only rise, so totals cannot show "
-  "progress. The measure is: **open entries that could change the Phase-0 result and are "
-  "not external evidence gaps.**\n>\n"
+  "progress. The measure is: **open entries with `affects == changes_result` and "
+  "`finding_type == current_defect`.**\n>\n"
   f"> Currently: **{len(blocking)}**"
   + (" — " + ", ".join(f"`{x['id']}`" for x in blocking) if blocking else
      " — the remaining result-bearing entries are provider evidence gaps and the "
