@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -2278,10 +2278,38 @@
         "contract": "C9",
         "software": "phase0/audit/run_c9.py"
       }
+    },
+    {
+      "id": "FTRO-DEF-073",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "Phase-0 clean-archive test suite",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "SELF-DIRECTED: five strict-contract tests borrowed Git metadata absent from the required clean archive",
+      "failed_step": "Phase-0 exit condition 1: run C1–C8 and C10–C12 from a clean git archive export.",
+      "known_fact": "The acceptance contract deliberately distinguishes the network-free archive environment from C9's detached Git checkout; tests executed in the former cannot assume a repository database.",
+      "observed": "The first committed closure carrier fdd2f6a passed 175 tests in its source checkout, then failed five strict C9-contract tests in a literal git archive. Their carrier_context() helper called git rev-parse against the exported directory. The tests therefore exercised the source checkout's .git metadata rather than constructing the immutable carrier fixture their subject required.",
+      "evidence": [
+        "tests/test_phase0_c9_contract.py",
+        "labnotes/2026-08-27-session-18-first-carrier-rejected.md"
+      ],
+      "severity": "high",
+      "impact": "Carrier fdd2f6a does not satisfy exit condition 1 and cannot be used for C9, calibration or qualification. No live or audit evidence was taken against it.",
+      "workaround": "None; the carrier was rejected before provider execution.",
+      "proposed_response": "Resolved in the next carrier by building a minimal temporary Git repository from exported files inside the tests; all commit-scoped assertions now use that fixture without writing into the source tree.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "exit-condition-1",
+        "software": "tests/test_phase0_c9_contract.py"
+      }
     }
   ],
   "revised": "2026-08-27",
-  "revision_note": "Merged all nine Phase-1 entries from the frozen 1c9bc56 source ledger before Phase-0 closure qualification, then recorded and resolved three pre-freeze defects in the C9 and audit instruments. The merged convergence predicate remains exact: open + changes_result + current_defect. Qualification status remains pending.",
+  "revision_note": "Merged all nine Phase-1 entries from the frozen 1c9bc56 source ledger, recorded three pre-freeze instrument defects, and rejected the first committed carrier when five tests failed in its required clean-archive environment. The merged convergence predicate remains exact: open + changes_result + current_defect. Qualification status remains pending.",
   "triage_axes": {
     "finding_type": {
       "current_defect": "today's committed behaviour is wrong or a documented workflow fails",

@@ -48,3 +48,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-26 | 11 | [Tenth external review — a fixture that could not see the boundary](2026-08-26-session-11-review-corrections-10.md) |
 | 2026-08-26 | 12 | [Consolidation — bounding Phase 0 so it can be finished](2026-08-26-session-12-consolidation.md) |
 | 2026-08-27 | 17 | [Phase-0 closure instrument preparation](2026-08-27-session-17-phase0-closure-preparation.md) |
+| 2026-08-27 | 18 | [First closure carrier rejected by its clean-archive gate](2026-08-27-session-18-first-carrier-rejected.md) |

@@ -80,12 +80,12 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 81 classified deficiencies**, 50 resolved, 57 self-directed after reconciling the nine-entry
-Phase-1 source ledger and recording three pre-freeze closure-instrument defects in the canonical ledger.
+**4. 82 classified deficiencies**, 51 resolved, 58 self-directed after reconciling the nine-entry
+Phase-1 source ledger and rejecting the first closure carrier at its clean-archive gate.
 Each carries a `finding_type`
 and an `affects` axis, because an append-only count cannot show convergence. The exact measure is:
 **entries simultaneously open, `affects == changes_result` and
-`finding_type == current_defect` — zero after the merge.** **Fifty-seven are self-directed** —
+`finding_type == current_defect` — zero after the merge.** **Fifty-eight are self-directed** —
 against FTRO's own tooling,
 evidence discipline, test suite and profile conformance. Every entry carries a machine-readable
 `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as

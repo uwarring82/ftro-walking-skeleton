@@ -175,6 +175,9 @@
         },
         {
           "@id": "labnotes/2026-08-27-session-17-phase0-closure-preparation.md"
+        },
+        {
+          "@id": "labnotes/2026-08-27-session-18-first-carrier-rejected.md"
         }
       ],
       "isBasedOn": [
@@ -413,7 +416,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "166816",
+      "contentSize": "168816",
       "name": "deficiency-log.json"
     },
     {
@@ -423,7 +426,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "165480",
+      "contentSize": "167447",
       "name": "deficiency-log.md"
     },
     {
@@ -711,7 +714,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3449",
+      "contentSize": "3579",
       "name": "README.md"
     },
     {
@@ -1443,7 +1446,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "10384"
+      "contentSize": "12846"
     },
     {
       "@id": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
@@ -1464,6 +1467,16 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "13809"
+    },
+    {
+      "@id": "labnotes/2026-08-27-session-18-first-carrier-rejected.md",
+      "@type": "File",
+      "name": "2026-08-27-session-18-first-carrier-rejected.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3120"
     }
   ]
 }

@@ -2,9 +2,13 @@
 # SPDX-License-Identifier: Apache-2.0
 """Focused regressions for the shared strict C9 success-report contract."""
 
+import contextlib
 import importlib.util
 import json
+import os
 from pathlib import Path
+import shutil
+import subprocess
 import tempfile
 import unittest
 from unittest import mock
@@ -35,16 +39,57 @@ def load_audit_runner():
 AUDIT = load_audit_runner()
 
 
-def carrier_context():
-    import subprocess
-    commit = subprocess.run(
-        ["git", "rev-parse", "HEAD"], cwd=REPO, capture_output=True, text=True, check=True,
-    ).stdout.strip()
-    tree = subprocess.run(
-        ["git", "rev-parse", "HEAD^{tree}"], cwd=REPO, capture_output=True, text=True,
-        check=True,
-    ).stdout.strip()
-    return {"commit": commit, "tree": tree, "contract_version": "1.1.0"}
+@contextlib.contextmanager
+def carrier_repository():
+    """Build the immutable Git fixture the contract needs without writing into REPO.
+
+    The network-free suite must run from ``git archive``, so a test may not borrow the
+    source checkout's .git directory.  This fixture contains exactly the carrier files
+    exercised by the strict validator and creates its own temporary commit.
+    """
+    paths = (
+        "README.md",
+        "phase0/acceptance-contract-v1.0.md",
+        "phase0/audit/run_c9.py",
+        "phase0/evidence/expected-digests.json",
+        "phase0/reports/evidence-repo-pins.json",
+        "phase0/reports/igs-artifact-pins.json",
+        "phase0/reports/ppta-artifact-pins.json",
+        "phase0/reports/vlbi-vgosdb-pin.json",
+    )
+    with tempfile.TemporaryDirectory(prefix="ftro-c9-carrier-fixture-") as temporary:
+        root = Path(temporary)
+        for relative in paths:
+            destination = root / relative
+            destination.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(REPO / relative, destination)
+        git = C9._trusted_git()
+        environment = {
+            "PATH": os.defpath,
+            "LC_ALL": "C",
+            "GIT_CONFIG_GLOBAL": "/dev/null",
+            "GIT_CONFIG_NOSYSTEM": "1",
+            "GIT_NO_REPLACE_OBJECTS": "1",
+            "GIT_AUTHOR_NAME": "FTRO test",
+            "GIT_AUTHOR_EMAIL": "test@invalid",
+            "GIT_COMMITTER_NAME": "FTRO test",
+            "GIT_COMMITTER_EMAIL": "test@invalid",
+        }
+        prefix = [git, "--no-replace-objects", "-c", "core.hooksPath=/dev/null"]
+        for suffix in (("init", "--quiet", "-b", "fixture"), ("add", "-A"),
+                       ("commit", "--quiet", "-m", "immutable carrier fixture")):
+            subprocess.run([*prefix, *suffix], cwd=root, env=environment, check=True,
+                           stdin=subprocess.DEVNULL, capture_output=True)
+        commit = subprocess.run(
+            [*prefix, "rev-parse", "HEAD"], cwd=root, env=environment,
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        tree = subprocess.run(
+            [*prefix, "rev-parse", "HEAD^{tree}"], cwd=root, env=environment,
+            capture_output=True, text=True, check=True,
+        ).stdout.strip()
+        yield root, {"commit": commit, "tree": tree, "contract_version": "1.2.0",
+                     "git_command": git}
 
 
 class TestStrictC9Contract(unittest.TestCase):
@@ -109,11 +154,12 @@ class TestStrictC9Contract(unittest.TestCase):
             "provider_population_verified": True,
             "provider_attempts": [{"artifact": "one", "failure_class": "success"}],
         }
-        errors = C9.validate_success_report(fabricated, REPO, carrier_context())
-        self.assertTrue(errors)
-        self.assertTrue(any("keys differ" in error for error in errors))
-        with self.assertRaises(C9.C9ContractError):
-            C9.assert_success_report(fabricated, REPO, carrier_context())
+        with carrier_repository() as (root, context):
+            errors = C9.validate_success_report(fabricated, root, context)
+            self.assertTrue(errors)
+            self.assertTrue(any("keys differ" in error for error in errors))
+            with self.assertRaises(C9.C9ContractError):
+                C9.assert_success_report(fabricated, root, context)
 
     def test_audit_consumer_uses_the_same_strict_contract(self):
         fabricated = {
@@ -131,21 +177,21 @@ class TestStrictC9Contract(unittest.TestCase):
             "provider_population_verified": True,
             "provider_attempts": [{"artifact": "one", "failure_class": "success"}],
         }
-        context = carrier_context()
-        source = {
-            "commit": context["commit"], "tree": context["tree"], "clean": True,
-            "detached_head": True, "checkout_realpath": str(REPO),
-        }
-        bound = {"acceptance_contract": {
-            "path": "phase0/acceptance-contract-v1.0.md",
-            "version": context["contract_version"],
-            "sha256": "0" * 64,
-        }}
-        with tempfile.TemporaryDirectory(prefix="ftro-c9-contract-consumer-") as tmp:
-            path = Path(tmp, "fabricated.json")
-            path.write_text(json.dumps(fabricated), encoding="utf-8")
-            with self.assertRaises(AUDIT.RecipeError):
-                AUDIT.validate_c9_report(path, source, bound, REPO)
+        with carrier_repository() as (root, context):
+            source = {
+                "commit": context["commit"], "tree": context["tree"], "clean": True,
+                "detached_head": True, "checkout_realpath": str(root),
+            }
+            bound = {"acceptance_contract": {
+                "path": "phase0/acceptance-contract-v1.0.md",
+                "version": context["contract_version"],
+                "sha256": "0" * 64,
+            }}
+            with tempfile.TemporaryDirectory(prefix="ftro-c9-contract-consumer-") as tmp:
+                path = Path(tmp, "fabricated.json")
+                path.write_text(json.dumps(fabricated), encoding="utf-8")
+                with self.assertRaises(AUDIT.RecipeError):
+                    AUDIT.validate_c9_report(path, source, bound, root)
 
     def test_audit_consumer_does_not_rebind_historical_paths_or_tools(self):
         source = {
@@ -210,34 +256,37 @@ class TestStrictC9Contract(unittest.TestCase):
     def test_exact_top_level_schema_rejects_an_extra_projection(self):
         fabricated = {key: None for key in C9.REPORT_KEYS}
         fabricated["unexpected_green_tick"] = True
-        errors = C9.validate_success_report(fabricated, REPO, carrier_context())
-        self.assertTrue(any("unknown=['unexpected_green_tick']" in error for error in errors))
+        with carrier_repository() as (root, context):
+            errors = C9.validate_success_report(fabricated, root, context)
+            self.assertTrue(any("unknown=['unexpected_green_tick']" in error for error in errors))
 
     def test_expected_population_is_65_registry_pins(self):
-        errors = []
-        expected, urls = C9._carrier_expectations(
-            REPO, carrier_context()["commit"], errors,
-        )
-        self.assertEqual(errors, [])
-        self.assertEqual({key: len(value) for key, value in expected.items()}, {
-            "evidence_repos": 3, "igs": 57, "ppta": 4, "vgosdb": 1,
-        })
-        self.assertEqual(sum(map(len, expected.values())), 65)
-        self.assertEqual(set(urls), set(expected))
+        with carrier_repository() as (root, context):
+            errors = []
+            expected, urls = C9._carrier_expectations(
+                root, context["commit"], errors, context["git_command"],
+            )
+            self.assertEqual(errors, [])
+            self.assertEqual({key: len(value) for key, value in expected.items()}, {
+                "evidence_repos": 3, "igs": 57, "ppta": 4, "vgosdb": 1,
+            })
+            self.assertEqual(sum(map(len, expected.values())), 65)
+            self.assertEqual(set(urls), set(expected))
 
     def test_committed_tree_population_is_not_the_dirty_worktree_projection(self):
-        context = carrier_context()
-        rows = C9._carrier_rows(REPO, context["commit"])
-        names = {row["path"] for row in rows}
-        # The independent enumeration is commit-scoped even while this checkout has
-        # generated-output changes or unrelated uncommitted preparation files.
-        expected = {
-            row.strip() for row in __import__("subprocess").run(
-                ["git", "ls-tree", "-r", "--name-only", context["commit"]], cwd=REPO,
-                capture_output=True, text=True, check=True,
-            ).stdout.splitlines()
-        }
-        self.assertEqual(names, expected)
+        with carrier_repository() as (root, context):
+            (root / "dirty-untracked.txt").write_text("not in carrier\n", encoding="utf-8")
+            rows = C9._carrier_rows(root, context["commit"], context["git_command"])
+            names = {row["path"] for row in rows}
+            expected = {
+                row.strip() for row in subprocess.run(
+                    [context["git_command"], "--no-replace-objects", "ls-tree", "-r",
+                     "--name-only", context["commit"]], cwd=root,
+                    capture_output=True, text=True, check=True,
+                ).stdout.splitlines()
+            }
+            self.assertEqual(names, expected)
+            self.assertNotIn("dirty-untracked.txt", names)
 
 
 if __name__ == "__main__":

@@ -1,6 +1,6 @@
 {
   "document": "FTRO Phase-0 executable audit manifest",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "manifest_id": "FTRO-AUD-EXEC-001",
   "semantic_model": {
     "path": "phase0/audit-fault-model-v1.0.md",
@@ -1370,7 +1370,7 @@
         {
           "id": "M12c.version-gained",
           "target": "README.md",
-          "target_before_sha256": "156fbb4b5b17f175d244cfd3fdb0fc6fdc652c01c727d4489865a98d1f7cbb57",
+          "target_before_sha256": "3c516a2554bea27e92c482fad15e3b965bdcdb13c92e8c0450fe5e5415c70245",
           "mutation": {
             "kind": "text_replace_exact",
             "old": "# Federated Time-Reference Observatory \u2014 Walking Skeleton\n",
@@ -1420,7 +1420,7 @@
         {
           "id": "M13.consume-before-produce",
           "target": "README.md",
-          "target_before_sha256": "156fbb4b5b17f175d244cfd3fdb0fc6fdc652c01c727d4489865a98d1f7cbb57",
+          "target_before_sha256": "3c516a2554bea27e92c482fad15e3b965bdcdb13c92e8c0450fe5e5415c70245",
           "mutation": {
             "kind": "swap_exact_blocks",
             "first": "# 1. Pin the git-hosted evidence artifacts (writes data/raw/evidence/)\npython3 src/ftro/pin_evidence_repos.py\n\n",

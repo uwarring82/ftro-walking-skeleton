@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.18.0
+**Version:** 0.19.0
 **Opened:** 2026-08-25
 **Phase:** Phase 0
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (51), policy (1), rights (2), schema (8), source_evidence (19)
-**By severity:** critical (4), high (45), low (4), medium (28)
-**By domain:** cross-domain (41), gnss (6), optical (20), pulsar (8), vlbi (6)
-**By disposition:** open (31), resolved (50)
-**By responsible party:** ftro (57), provider (24)
-**By finding type:** assurance_gap (11), current_defect (29), external_evidence_gap (17), latent_regression (23), recorded_outcome (1)
-**By affects:** blocks_workflow (19), changes_result (12), maintenance_only (12), no_present_effect (38)
+**By class:** execution (52), policy (1), rights (2), schema (8), source_evidence (19)
+**By severity:** critical (4), high (46), low (4), medium (28)
+**By domain:** cross-domain (42), gnss (6), optical (20), pulsar (8), vlbi (6)
+**By disposition:** open (31), resolved (51)
+**By responsible party:** ftro (58), provider (24)
+**By finding type:** assurance_gap (11), current_defect (30), external_evidence_gap (17), latent_regression (23), recorded_outcome (1)
+**By affects:** blocks_workflow (20), changes_result (12), maintenance_only (12), no_present_effect (38)
 
-**Total entries:** 81 · **self-directed:** 57
+**Total entries:** 82 · **self-directed:** 58
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries with `affects == changes_result` and `finding_type == current_defect`.**
 >
@@ -68,6 +68,7 @@
 | [`FTRO-DEF-066`](#ftro-def-066) | execution | high | latent_regression | no_present_effect | **self** | SELF-DIRECTED: M11's coverage was narrower than its registered scope, so the audit result was wrong |
 | [`FTRO-DEF-067`](#ftro-def-067) | execution | high | current_defect | maintenance_only | **self** | SELF-DIRECTED: the version gate failed OPEN in the environment its contract requires |
 | [`FTRO-DEF-072`](#ftro-def-072) | execution | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: the first live runner degraded failure evidence and omitted runtime bindings |
+| [`FTRO-DEF-073`](#ftro-def-073) | execution | high | current_defect | blocks_workflow | **self** | SELF-DIRECTED: five strict-contract tests borrowed Git metadata absent from the required clean archive |
 | [`FTRO-P1-DEF-001`](#ftro-p1-def-001) | execution | high | assurance_gap | no_present_effect | **self** | RO-Crate 1.3 conformance remains unverified; the obtainable validator stops at 1.2 |
 | [`FTRO-P1-DEF-002`](#ftro-p1-def-002) | schema | high | current_defect | blocks_workflow | **self** | Profile §4 under-specifies how bitemporal relation assertions are serialised |
 | [`FTRO-P1-DEF-006`](#ftro-p1-def-006) | execution | high | current_defect | blocks_workflow | **self** | The first four manifests violated base structural requirements before any validator ran |
@@ -2938,5 +2939,40 @@
 **Workaround.** None; the live closure run had not begun.
 
 **Proposed response.** Resolved before freeze by preserving structured rejection and reachability evidence, binding source groups and tool digests, process-group timeout handling, five fresh deterministic comparisons, omission of volatile pin-report content sizes, and disabling local bytecode writes before controller-module imports.
+
+---
+
+### FTRO-DEF-073
+
+**SELF-DIRECTED: five strict-contract tests borrowed Git metadata absent from the required clean archive**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `Phase-0 clean-archive test suite` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Phase-0 exit condition 1: run C1–C8 and C10–C12 from a clean git archive export.
+
+**Known fact or required evidence.** The acceptance contract deliberately distinguishes the network-free archive environment from C9's detached Git checkout; tests executed in the former cannot assume a repository database.
+
+**Observed.** The first committed closure carrier fdd2f6a passed 175 tests in its source checkout, then failed five strict C9-contract tests in a literal git archive. Their carrier_context() helper called git rev-parse against the exported directory. The tests therefore exercised the source checkout's .git metadata rather than constructing the immutable carrier fixture their subject required.
+
+**Evidence.**
+
+- `tests/test_phase0_c9_contract.py`
+- `labnotes/2026-08-27-session-18-first-carrier-rejected.md`
+
+**Impact.** Carrier fdd2f6a does not satisfy exit condition 1 and cannot be used for C9, calibration or qualification. No live or audit evidence was taken against it.
+
+**Workaround.** None; the carrier was rejected before provider execution.
+
+**Proposed response.** Resolved in the next carrier by building a minimal temporary Git repository from exported files inside the tests; all commit-scoped assertions now use that fixture without writing into the source tree.
 
 ---
