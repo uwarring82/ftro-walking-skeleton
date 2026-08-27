@@ -27,7 +27,7 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "conformsTo": {
-        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md"
       },
       "ftro:domain": "gnss",
       "ftro:conformance_report": {
@@ -39,11 +39,11 @@
           "@id": "#igs-source-collection"
         },
         {
-          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json"
+          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json"
         }
       ],
       "ftro:source_catalog": {
-        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json"
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json"
       },
       "mentions": [
         {
@@ -51,6 +51,15 @@
         },
         {
           "@id": "#policy-reprocessing"
+        },
+        {
+          "@id": "#representation-variant-igs21982-clk-z"
+        },
+        {
+          "@id": "#representation-variant-igs21983-clk-z"
+        },
+        {
+          "@id": "#representation-variant-igr21991-clk-z"
         }
       ]
     },
@@ -76,7 +85,7 @@
       "name": "IGS operational product lines (Final, Rapid), GPS weeks 2198–2199",
       "ftro:concept_kind": "collection_of_six_product_lines",
       "ftro:composition_precondition_checked": [
-        "BKG mirror directory listing (filenames only; no PID, no sidecar metadata)",
+        "Historical BKG and current SIO/GARNER mirror listings (filenames only; no PID, no sidecar metadata)",
         "IGS product documentation (product line named, but no per-file persistent identifier scheme)",
         "HTTP ETag / Last-Modified (mirror-local and mutable, not a PID)"
       ],
@@ -87,10 +96,21 @@
       "ftro:series_counts": {
         "@id": "#series-counts-igs-igr"
       },
-      "ftro:data_centre": "BKG (Bundesamt für Kartographie und Geodäsie) IGS mirror, anonymous HTTP",
+      "ftro:representation_variant_assertions": [
+        {
+          "@id": "#representation-variant-igs21982-clk-z"
+        },
+        {
+          "@id": "#representation-variant-igs21983-clk-z"
+        },
+        {
+          "@id": "#representation-variant-igr21991-clk-z"
+        }
+      ],
+      "ftro:data_centre": "SIO/SOPAC GARNER IGS global data centre, anonymous HTTPS",
       "ftro:retrieval_validation": "content_validated",
       "ftro:availability_time_source": "mirror_derived",
-      "ftro:availability_time_note": "last_modified is the BKG mirror's file time, which approximates but is not identical to the IGS release time (FTRO-DEF-019).",
+      "ftro:availability_time_note": "last_modified is the SIO/GARNER mirror's file time, which approximates but is not identical to the IGS release time (FTRO-DEF-019).",
       "ftro:data_rights": null,
       "ftro:redistribution_mode": "link_only",
       "ftro:licence_compatibility": "undetermined",
@@ -163,7 +183,7 @@
       "name": "IGS Final Earth-rotation products",
       "ftro:catalog_entry_count": 2,
       "ftro:source_catalog": {
-        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json"
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json"
       }
     },
     {
@@ -222,10 +242,10 @@
         59630,
         59631
       ],
-      "ftro:first_availability_time": "Sun, 13 Mar 2022 11:46:51 GMT",
+      "ftro:first_availability_time": "Sun, 13 Mar 2022 01:55:31 GMT",
       "ftro:availability_time_source": "mirror_derived",
-      "ftro:retrieved_utc": "2026-08-26T11:16:46.637431+00:00",
-      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21980.sp3.Z",
+      "ftro:retrieved_utc": "2026-08-27T14:44:05.493648+00:00",
+      "ftro:retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21980.sp3.Z",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
@@ -254,10 +274,10 @@
         59630,
         59631
       ],
-      "ftro:first_availability_time": "Sun, 13 Mar 2022 11:46:51 GMT",
+      "ftro:first_availability_time": "Sun, 13 Mar 2022 01:55:33 GMT",
       "ftro:availability_time_source": "mirror_derived",
-      "ftro:retrieved_utc": "2026-08-26T11:16:47.037826+00:00",
-      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21980.clk.Z",
+      "ftro:retrieved_utc": "2026-08-27T14:44:06.762936+00:00",
+      "ftro:retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21980.clk.Z",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
@@ -286,10 +306,10 @@
         59630,
         59631
       ],
-      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:30:12 GMT",
+      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:03:41 GMT",
       "ftro:availability_time_source": "mirror_derived",
-      "ftro:retrieved_utc": "2026-08-26T11:16:48.163048+00:00",
-      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igr21980.sp3.Z",
+      "ftro:retrieved_utc": "2026-08-27T14:44:09.139419+00:00",
+      "ftro:retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igr21980.sp3.Z",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
@@ -318,10 +338,10 @@
         59630,
         59631
       ],
-      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:30:12 GMT",
+      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:03:40 GMT",
       "ftro:availability_time_source": "mirror_derived",
-      "ftro:retrieved_utc": "2026-08-26T11:16:48.404288+00:00",
-      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igr21980.clk.Z",
+      "ftro:retrieved_utc": "2026-08-27T14:44:10.185055+00:00",
+      "ftro:retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igr21980.clk.Z",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
@@ -350,16 +370,115 @@
         59630,
         59631
       ],
-      "ftro:first_availability_time": "Mon, 21 Feb 2022 17:30:12 GMT",
+      "ftro:first_availability_time": "Thu, 03 Mar 2022 00:18:52 GMT",
       "ftro:availability_time_source": "mirror_derived",
-      "ftro:retrieved_utc": "2026-08-26T11:16:49.260919+00:00",
-      "ftro:retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igr21980.erp.Z",
+      "ftro:retrieved_utc": "2026-08-27T14:44:12.121770+00:00",
+      "ftro:retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igr21980.erp.Z",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:derived_semantics_note": "series and validity are DERIVED from the filename, which the registry binds by digest; the stored series field is descriptive only (FTRO-DEF-060).",
       "ftro:valid_from": "59630",
       "ftro:valid_to": "59631",
       "ftro:known_from": "2026-08-25",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#representation-variant-igs21982-clk-z",
+      "@type": [
+        "Thing",
+        "ftro:Assertion",
+        "ftro:RepresentationEquivalenceAssertion"
+      ],
+      "name": "Decoded-equivalence evidence for igs21982.clk.Z",
+      "ftro:subject": {
+        "@id": "ftro:snapshot:igs/igs21982.clk.Z@sha256:7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5"
+      },
+      "ftro:declared_relation": "decodes_to_equal_payload_under_recorded_procedure",
+      "ftro:object": {
+        "@id": "ftro:snapshot:igs/igs21982.clk.Z@sha256:da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1"
+      },
+      "ftro:filename": "igs21982.clk.Z",
+      "ftro:current_container_sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+      "ftro:previous_container_sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+      "ftro:decoded_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+      "ftro:hash_algorithm": "sha256",
+      "ftro:decoding_implementation": "src/ftro/unixz.py",
+      "ftro:equivalence_scope": "decoded_payload_only",
+      "ftro:not_equivalent_scope": "retrieval_container_bytes",
+      "ftro:evidence_artifact": {
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json"
+      },
+      "ftro:evidence_state": "recorded",
+      "ftro:note": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval. The two container snapshots remain distinct and this assertion is not owl:sameAs.",
+      "ftro:valid_from": "59632",
+      "ftro:valid_to": "59633",
+      "ftro:known_from": "2026-08-27",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#representation-variant-igs21983-clk-z",
+      "@type": [
+        "Thing",
+        "ftro:Assertion",
+        "ftro:RepresentationEquivalenceAssertion"
+      ],
+      "name": "Decoded-equivalence evidence for igs21983.clk.Z",
+      "ftro:subject": {
+        "@id": "ftro:snapshot:igs/igs21983.clk.Z@sha256:9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6"
+      },
+      "ftro:declared_relation": "decodes_to_equal_payload_under_recorded_procedure",
+      "ftro:object": {
+        "@id": "ftro:snapshot:igs/igs21983.clk.Z@sha256:898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40"
+      },
+      "ftro:filename": "igs21983.clk.Z",
+      "ftro:current_container_sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+      "ftro:previous_container_sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+      "ftro:decoded_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+      "ftro:hash_algorithm": "sha256",
+      "ftro:decoding_implementation": "src/ftro/unixz.py",
+      "ftro:equivalence_scope": "decoded_payload_only",
+      "ftro:not_equivalent_scope": "retrieval_container_bytes",
+      "ftro:evidence_artifact": {
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json"
+      },
+      "ftro:evidence_state": "recorded",
+      "ftro:note": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval. The two container snapshots remain distinct and this assertion is not owl:sameAs.",
+      "ftro:valid_from": "59633",
+      "ftro:valid_to": "59634",
+      "ftro:known_from": "2026-08-27",
+      "ftro:known_to": null
+    },
+    {
+      "@id": "#representation-variant-igr21991-clk-z",
+      "@type": [
+        "Thing",
+        "ftro:Assertion",
+        "ftro:RepresentationEquivalenceAssertion"
+      ],
+      "name": "Decoded-equivalence evidence for igr21991.clk.Z",
+      "ftro:subject": {
+        "@id": "ftro:snapshot:igs/igr21991.clk.Z@sha256:2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34"
+      },
+      "ftro:declared_relation": "decodes_to_equal_payload_under_recorded_procedure",
+      "ftro:object": {
+        "@id": "ftro:snapshot:igs/igr21991.clk.Z@sha256:fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c"
+      },
+      "ftro:filename": "igr21991.clk.Z",
+      "ftro:current_container_sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+      "ftro:previous_container_sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+      "ftro:decoded_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+      "ftro:hash_algorithm": "sha256",
+      "ftro:decoding_implementation": "src/ftro/unixz.py",
+      "ftro:equivalence_scope": "decoded_payload_only",
+      "ftro:not_equivalent_scope": "retrieval_container_bytes",
+      "ftro:evidence_artifact": {
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json"
+      },
+      "ftro:evidence_state": "recorded",
+      "ftro:note": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval. The two container snapshots remain distinct and this assertion is not owl:sameAs.",
+      "ftro:valid_from": "59638",
+      "ftro:valid_to": "59639",
+      "ftro:known_from": "2026-08-27",
       "ftro:known_to": null
     },
     {
@@ -444,21 +563,21 @@
       "ftro:explanation": "repro3 covers 1994–2020; the candidate window is 2022."
     },
     {
-      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json",
+      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json",
       "@type": [
         "File",
         "ftro:EvidenceArtifact"
       ],
       "name": "IGS Phase-0 pin report",
       "ftro:local_path": "phase0/reports/igs-artifact-pins.json",
-      "ftro:sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
-      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/igs-artifact-pins.json",
+      "ftro:sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/igs-artifact-pins.json",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:expected_entry_count": 57
     },
     {
-      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md",
       "@type": "Profile",
       "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
       "version": "0.0.3"

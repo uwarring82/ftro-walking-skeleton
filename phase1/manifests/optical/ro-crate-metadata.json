@@ -27,7 +27,7 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "conformsTo": {
-        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md"
       },
       "ftro:domain": "optical",
       "ftro:data_role": "core measurement",
@@ -368,7 +368,7 @@
       "ftro:reference_oscillator": "an unnamed local RF reference x"
     },
     {
-      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md",
       "@type": "Profile",
       "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
       "version": "0.0.3"

@@ -27,7 +27,7 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "conformsTo": {
-        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md"
       },
       "ftro:domain": "vlbi",
       "ftro:conformance_report": {
@@ -42,11 +42,11 @@
           "@id": "ftro:snapshot:ivs/vgosdb/20220228-r11040.tgz@sha256:0211948678aebfbcfdcf0f8d1ab8777bfd940605668073b8deb99aba1ff2ba54"
         },
         {
-          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json"
+          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/vlbi-vgosdb-pin.json"
         }
       ],
       "ftro:source_catalog": {
-        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json"
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/vlbi-vgosdb-pin.json"
       },
       "mentions": [
         {
@@ -428,7 +428,7 @@
       "ftro:known_to": null
     },
     {
-      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json",
+      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/vlbi-vgosdb-pin.json",
       "@type": [
         "File",
         "ftro:EvidenceArtifact"
@@ -436,13 +436,13 @@
       "name": "VLBI Phase-0 vgosDB pin report",
       "ftro:local_path": "phase0/reports/vlbi-vgosdb-pin.json",
       "ftro:sha256": "ac808bd43c2da96bcac2065107cbe0b9d16cbdff0ec3ad015313887157cede1a",
-      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/vlbi-vgosdb-pin.json",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/vlbi-vgosdb-pin.json",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:expected_entry_count": 1
     },
     {
-      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md",
       "@type": "Profile",
       "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
       "version": "0.0.3"

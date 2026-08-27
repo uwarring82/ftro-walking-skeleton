@@ -29,8 +29,8 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DOMAINS = ("optical", "pulsar", "vlbi", "gnss")
-BASELINE_COMMIT = "a806bbaa573d28f1460d18110f7974189ca19213"
-PHASE1_PARENT_COMMIT = "028c317ff1db27577617b8c3d2ff105da77b6739"
+BASELINE_COMMIT = "8ddcbfacef2468b8988c331c30100d72f0912eb8"
+PHASE1_PARENT_COMMIT = "12b119ae5b03cad707a968ed3fdf3e6424966853"
 BASE_SPEC = "https://w3id.org/ro/crate/1.3"
 PROFILE_PATH = "profile/ftro-graph-profile-v0.0.3.md"
 PROFILE_ID = (
@@ -55,10 +55,10 @@ EXPECTED_CATALOGS = {
     "gnss": {
         "path": "phase0/reports/igs-artifact-pins.json",
         "count": 57,
-        "sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201",
+        "sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
     },
 }
-EXPECTED_IDENTITIES_SHA256 = "531962537358fae0fff488512857888d9fffaad0f7d65a252309e9e6a6f9eecd"
+EXPECTED_IDENTITIES_SHA256 = "a4a27e7e6dd0fd3ae75fd36acd9cfb9dfde51576724b8fecd21cae66cae3ac45"
 EXPECTED_RETRIEVAL_COUNTS = {"optical": 3, "pulsar": 6, "vlbi": 2, "gnss": 58}
 CAPTURED_INPUT_PATHS = (
     "phase1/check_gate1.py",
@@ -89,6 +89,7 @@ CANDIDATE_OVERLAY_PATHS = {
 COMMITTED_CARRIER_ALLOWED_EXTRA_PATHS = {
     "phase1/README.md",
     "phase1/deficiency-log-phase1.json",
+    "ro-crate-metadata.json",
 }
 COMMITTED_CARRIER_ALLOWED_EXTRA_PREFIXES = (
     "phase1/reports/",
@@ -510,6 +511,68 @@ def validate_gnss_projection(
                 )
         if direct_refs(node, "ftro:snapshot_of") != [entry["concept_id"]]:
             errors.append(f"gnss: exemplar {identifier} is assigned to the wrong product line")
+
+    variants = [
+        entry for entry in entries
+        if entry.get("previous_retrieval_sha256") is not None
+    ]
+    expected_variant_ids = [
+        "#representation-variant-" + entry["name"].replace(".", "-").lower()
+        for entry in variants
+    ]
+    if len(variants) != 3:
+        errors.append("gnss: source report does not contain exactly three representation variants")
+    if direct_refs(collection, "ftro:representation_variant_assertions") != expected_variant_ids:
+        errors.append("gnss: source collection does not link the exact representation-variant assertions")
+    root_mentions = direct_refs(index["./"], "mentions")
+    catalog_id = (
+        "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/"
+        f"{BASELINE_COMMIT}/{EXPECTED_CATALOGS['gnss']['path']}"
+    )
+    for entry, assertion_id in zip(variants, expected_variant_ids):
+        assertion = index.get(assertion_id)
+        if not assertion:
+            errors.append(f"gnss: representation assertion {assertion_id} is absent")
+            continue
+        previous_id = (
+            f"ftro:snapshot:igs/{entry['name']}@sha256:"
+            f"{entry['previous_retrieval_sha256']}"
+        )
+        comparisons = {
+            "ftro:filename": entry["name"],
+            "ftro:current_container_sha256": entry["sha256"],
+            "ftro:previous_container_sha256": entry["previous_retrieval_sha256"],
+            "ftro:decoded_sha256": entry["decoded_sha256"],
+            "ftro:hash_algorithm": "sha256",
+            "ftro:decoding_implementation": "src/ftro/unixz.py",
+            "ftro:equivalence_scope": "decoded_payload_only",
+            "ftro:not_equivalent_scope": "retrieval_container_bytes",
+            "ftro:evidence_state": "recorded",
+            "ftro:valid_from": str(entry["mjd"]),
+            "ftro:valid_to": str(entry["mjd"] + 1),
+            "ftro:known_from": "2026-08-27",
+            "ftro:known_to": None,
+        }
+        for field, expected in comparisons.items():
+            if field not in assertion or assertion.get(field) != expected:
+                errors.append(
+                    f"gnss: representation assertion {assertion_id} field {field} "
+                    "disagrees with the pin report"
+                )
+        if not {
+            "ftro:Assertion", "ftro:RepresentationEquivalenceAssertion"
+        }.issubset(type_set(assertion)):
+            errors.append(f"gnss: representation assertion {assertion_id} has the wrong type")
+        if direct_refs(assertion, "ftro:subject") != [entry["ftro_snapshot_id"]]:
+            errors.append(f"gnss: representation assertion {assertion_id} has the wrong current snapshot")
+        if direct_refs(assertion, "ftro:object") != [previous_id]:
+            errors.append(f"gnss: representation assertion {assertion_id} has the wrong historical snapshot")
+        if direct_refs(assertion, "ftro:evidence_artifact") != [catalog_id]:
+            errors.append(f"gnss: representation assertion {assertion_id} has the wrong evidence artifact")
+        if assertion_id not in root_mentions:
+            errors.append(f"gnss: representation assertion {assertion_id} is not mentioned by the root")
+        if "owl:sameAs" in assertion:
+            errors.append(f"gnss: representation assertion {assertion_id} falsely uses owl:sameAs")
     return errors
 
 

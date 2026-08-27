@@ -27,7 +27,7 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "conformsTo": {
-        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md"
+        "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md"
       },
       "ftro:domain": "pulsar",
       "ftro:data_role": "core measurement",
@@ -36,11 +36,11 @@
           "@id": "ftro:concept:ppta/dr3"
         },
         {
-          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json"
+          "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/ppta-artifact-pins.json"
         }
       ],
       "ftro:source_catalog": {
-        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json"
+        "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/ppta-artifact-pins.json"
       },
       "mentions": [
         {
@@ -415,7 +415,7 @@
       "ftro:known_to": null
     },
     {
-      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json",
+      "@id": "https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/ppta-artifact-pins.json",
       "@type": [
         "File",
         "ftro:EvidenceArtifact"
@@ -423,13 +423,13 @@
       "name": "PPTA Phase-0 pin report",
       "ftro:local_path": "phase0/reports/ppta-artifact-pins.json",
       "ftro:sha256": "f758c7cee9a66a1d07e5bd6d2763734a57be5ef9a79f92e98a2aaebba08a9d62",
-      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/a806bbaa573d28f1460d18110f7974189ca19213/phase0/reports/ppta-artifact-pins.json",
+      "ftro:retrieval_procedure": "GET https://raw.githubusercontent.com/uwarring82/ftro-walking-skeleton/8ddcbfacef2468b8988c331c30100d72f0912eb8/phase0/reports/ppta-artifact-pins.json",
       "ftro:retrieval_validation": "content_validated",
       "ftro:evidence_state": "resolvable",
       "ftro:expected_entry_count": 4
     },
     {
-      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/a806bbaa573d28f1460d18110f7974189ca19213/profile/ftro-graph-profile-v0.0.3.md",
+      "@id": "https://github.com/uwarring82/ftro-walking-skeleton/blob/8ddcbfacef2468b8988c331c30100d72f0912eb8/profile/ftro-graph-profile-v0.0.3.md",
       "@type": "Profile",
       "name": "FTRO Reference-Ancestry Graph Profile v0.0.3",
       "version": "0.0.3"

@@ -138,6 +138,73 @@ class TestCommittedGate1State(unittest.TestCase):
         self.assertEqual(66, sum(item["role"] == "provider_source" for item in sources))
         self.assertEqual(3, sum(item["role"] == "source_catalog" for item in sources))
 
+    def test_rebaseline_binds_the_qualified_carrier_and_sio_population(self):
+        self.assertEqual(
+            "8ddcbfacef2468b8988c331c30100d72f0912eb8", gate1.BASELINE_COMMIT
+        )
+        self.assertEqual(
+            "12b119ae5b03cad707a968ed3fdf3e6424966853",
+            gate1.PHASE1_PARENT_COMMIT,
+        )
+        self.assertEqual(
+            "a4a27e7e6dd0fd3ae75fd36acd9cfb9dfde51576724b8fecd21cae66cae3ac45",
+            gate1.EXPECTED_IDENTITIES_SHA256,
+        )
+        self.assertEqual(
+            "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+            gate1.EXPECTED_CATALOGS["gnss"]["sha256"],
+        )
+        sources = gate1.expected_retrieval_sources(REPO_ROOT)
+        catalogs = [item for item in sources if item["role"] == "source_catalog"]
+        self.assertEqual(3, len(catalogs))
+        self.assertTrue(all(f"/{gate1.BASELINE_COMMIT}/" in item["url"] for item in catalogs))
+        gnss = [
+            item for item in sources
+            if item["domain"] == "gnss" and item["role"] == "provider_source"
+        ]
+        self.assertEqual(57, len(gnss))
+        self.assertTrue(
+            all(item["url"].startswith("https://garner.ucsd.edu/") for item in gnss)
+        )
+        self.assertFalse(any("bkg.bund.de" in item["url"] for item in gnss))
+
+    def test_three_changed_containers_are_explicit_decoded_equivalence_assertions(self):
+        document = manifest("gnss")
+        expected = {
+            "igs21982.clk.Z": (
+                "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+                "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+                "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+            ),
+            "igs21983.clk.Z": (
+                "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+                "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+                "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+            ),
+            "igr21991.clk.Z": (
+                "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+                "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+                "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+            ),
+        }
+        assertions = {
+            item["ftro:filename"]: item
+            for item in document["@graph"]
+            if "ftro:RepresentationEquivalenceAssertion"
+            in set(gate1.as_list(item.get("@type")))
+        }
+        self.assertEqual(set(expected), set(assertions))
+        for name, digests in expected.items():
+            node = assertions[name]
+            self.assertEqual(digests, (
+                node["ftro:current_container_sha256"],
+                node["ftro:previous_container_sha256"],
+                node["ftro:decoded_sha256"],
+            ))
+            self.assertEqual("decoded_payload_only", node["ftro:equivalence_scope"])
+            self.assertEqual("retrieval_container_bytes", node["ftro:not_equivalent_scope"])
+            self.assertNotIn("owl:sameAs", node)
+
     def test_snapshot_survives_a_later_catalog_replacement(self):
         with tempfile.TemporaryDirectory() as temporary:
             root = Path(temporary)
@@ -362,22 +429,23 @@ class TestSourceStatePreflight(unittest.TestCase):
             self.assertFalse(evidence["verified"])
 
     def test_committed_candidate_may_carry_non_input_outputs(self):
-        with tempfile.TemporaryDirectory() as temporary:
-            root = make_isolated_candidate(Path(temporary))
-            readme = root / "phase1/README.md"
-            readme.write_text(
-                readme.read_text(encoding="utf-8") + "\npublication output\n",
-                encoding="utf-8",
-            )
-            subprocess.run(
-                ["git", "-C", str(root), "add", "--", "phase1/README.md"],
-                check=True,
-            )
-            commit_candidate(root)
-            errors, evidence = gate1.source_state_evidence(root, "committed_checkout")
-            self.assertEqual([], errors)
-            self.assertIn("phase1/README.md", evidence["paths_changed_since_parent"])
-            self.assertTrue(evidence["verified"])
+        for relative in ("phase1/README.md", "ro-crate-metadata.json"):
+            with self.subTest(relative=relative), tempfile.TemporaryDirectory() as temporary:
+                root = make_isolated_candidate(Path(temporary))
+                output = root / relative
+                output.write_text(
+                    output.read_text(encoding="utf-8") + "\npublication output\n",
+                    encoding="utf-8",
+                )
+                subprocess.run(
+                    ["git", "-C", str(root), "add", "--", relative],
+                    check=True,
+                )
+                commit_candidate(root)
+                errors, evidence = gate1.source_state_evidence(root, "committed_checkout")
+                self.assertEqual([], errors)
+                self.assertIn(relative, evidence["paths_changed_since_parent"])
+                self.assertTrue(evidence["verified"])
 
     def test_committed_candidate_rejects_executable_extra_paths(self):
         for relative in ("src/ftro/schema.py", "phase1/helper.py"):
@@ -426,6 +494,21 @@ class TestSourceStatePreflight(unittest.TestCase):
 
 
 class TestGate1MutationsAreDetected(unittest.TestCase):
+    def test_representation_variant_assertion_removal_is_rejected(self):
+        document = manifest("gnss")
+        missing = "#representation-variant-igs21982-clk-z"
+        document["@graph"] = [item for item in document["@graph"] if item["@id"] != missing]
+        result = messages("gnss", document)
+        self.assertIn("dangling local reference", result)
+        self.assertIn("representation assertion", result)
+
+    def test_representation_variant_digest_drift_is_rejected(self):
+        document = manifest("gnss")
+        entity(document, "#representation-variant-igr21991-clk-z")[
+            "ftro:decoded_sha256"
+        ] = "0" * 64
+        self.assertIn("disagrees with the pin report", messages("gnss", document))
+
     def test_duplicate_haspart_is_rejected(self):
         document = manifest("vlbi")
         root = entity(document, "./")
