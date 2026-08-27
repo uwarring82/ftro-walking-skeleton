@@ -1,0 +1,262 @@
+{
+  "ledger": "FTRO Phase-1 Deficiency Log",
+  "version": "0.4.0",
+  "opened": "2026-08-26",
+  "phase": "Phase 1",
+  "card": "FTRO-WS-001 v0.3",
+  "note": "Separate from the Phase-0 ledger by the isolation rule: Phase-0 ledger contents feed contracts C11 and C12, and two qualifying bounded audits remain to run against `main` @ a806bba after an executable manifest is frozen. The two ledgers merge when Phase 0 closes.",
+  "triage_axes_note": "Same axes as the Phase-0 ledger.",
+  "entries": [
+    {
+      "id": "FTRO-P1-DEF-001",
+      "version": "2.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "all four manifests",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "RO-Crate 1.3 conformance remains unverified; the obtainable validator stops at 1.2",
+      "failed_step": "Card §9.1: record the exact validator and its version in every conformance report.",
+      "known_fact": "§9.1 requires conformance to the pinned base to be validated, and the validator and version recorded.",
+      "observed": "CORRECTION v2.0.0: the claim that no validator was obtainable was false. `pip install roc-validator` succeeds in a temporary environment. Version 0.11.3 supplies RO-Crate 1.1 and 1.2 profiles, not the pinned 1.3 base. All four manifests therefore retain an explicit normative result of `not_run`. RDFLib parses the JSON-LD; a temporary, non-normative 1.2 export fails. Neither is a 1.3 verdict.",
+      "evidence": [
+        "phase1/reports/ro-crate-validation-v1.0.json",
+        "phase1/manifests/optical/ro-crate-metadata.json#conformance"
+      ],
+      "severity": "high",
+      "impact": "The manifests declare the 1.3 base and the provisional FTRO profile, but are not demonstrated conforming on the profile's own definition. Gate 1 source location can pass independently; normative conformance cannot.",
+      "workaround": "Every conformance report says `not_run` and why. The bounded Gate-1 checker and RDF parse are labelled as weaker, scoped evidence rather than a validator substitute.",
+      "proposed_response": "Obtain a validator implementing RO-Crate 1.3, or pre-register and review an explicit substitute conformance method without calling it validator evidence.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-002",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Profile §4 under-specifies how bitemporal relation assertions are serialised",
+      "failed_step": "Attaching the bitemporal quartet to every edge, as §4 requires.",
+      "known_fact": "§4 says every mutable node assertion and every edge carries valid_from, valid_to, known_from and known_to. §9.1 pins RO-Crate 1.3 JSON-LD.",
+      "observed": "CORRECTION v2.0.0: JSON-LD can satisfy the information requirement by reifying a relation as a node, so 'unsatisfiable' was too strong. The defect is that the profile declares neither that assertion class nor predicate/cardinality/direct-triple/null semantics. The manifests use provisional `ftro:Edge` and `ftro:Assertion` nodes, proving a possible encoding rather than a conforming one.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.1.md",
+        "phase1/manifests/optical/ro-crate-metadata.json"
+      ],
+      "severity": "high",
+      "impact": "Two implementations can preserve the quartet while producing incompatible graphs, and JSON null cannot preserve open or absent state at RDF level.",
+      "workaround": "Provisional named assertion nodes with explicit subject, relation, evidence state and reason; no claim that the representation is frozen.",
+      "proposed_response": "Define a relation-assertion model, direct-triple policy and RDF-level unresolved/temporal state in a later profile amendment. Do not amend while Phase-0 closure preconditions are open.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-003",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "Conformance-report and TIMEEPH representations are provisional, not both logically forced",
+      "failed_step": "Recording the validator and version in a typed conformance report.",
+      "known_fact": "§1 requires validator identity and version in every conformance report; §2 enumerates node classes. PPTA's .par declares TIMEEPH IF99.",
+      "observed": "CORRECTION v2.0.0: §1 constrains a report if present but does not unambiguously require one, although all four manifests need a report to record `not_run`. `ConformanceReport` is therefore a strong candidate, not a logically forced class. TIMEEPH is a declared timing-model parameter; one file does not establish that it belongs as an ancestry edge.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.1.md"
+      ],
+      "severity": "medium",
+      "impact": "Prematurely freezing either representation would turn an authoring convenience into an unsupported normative model.",
+      "workaround": "Use provisional `ftro:ConformanceReport`; retain TIMEEPH as a declared parameter assertion and record the vocabulary pressure.",
+      "proposed_response": "Consider ConformanceReport in the amendment; defer a TIMEEPH-specific edge until more timing products establish its provenance semantics.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-004",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "Whole-document term frequency was presented as semantic vocabulary coverage",
+      "failed_step": "Establishing which profile terms are validated by use.",
+      "known_fact": "Card §8.1: manifests must be based on real source products, not an abstract ontology exercise.",
+      "observed": "CORRECTION v2.0.0: the 13/21 and 28/41 figures are whole-document key/name counts. They do not establish that a term was semantically exercised, why another is absent, which entity kind owns a common field, or that four occurrences justify a universal MUST. The counts are a historical inventory, not a coverage oracle.",
+      "evidence": [
+        "phase1/reports/vocabulary-usage.json",
+        "phase1/reports/vocabulary-pressure-v1.1.md"
+      ],
+      "severity": "medium",
+      "impact": "The proposed `exercised` flags and promotion of 21 common fields would have frozen conclusions the comparison did not support.",
+      "workaround": "The v1.1 report explicitly treats the counts as descriptive and freezes no field or term.",
+      "proposed_response": "Build a separate coverage report classifying each term as instantiated, unresolved-but-required, inapplicable or untested; do not encode four-manifest frequency as a normative profile marker.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-005",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "gnss",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "The profile assumes every domain is a chain; the GNSS leg is only ever consumed",
+      "failed_step": "Applying one minimum record to a leg that has no ancestry of its own here.",
+      "known_fact": "§10 states one minimum record set for every dataset, product or evidence manifest.",
+      "observed": "The GNSS manifest uses zero ancestry edges. Its current role is a six-line product collection plus resolver policies consumed by other legs. CORRECTION v2.0.0: the earlier field totals were descriptive counts from a superseded manifest revision and are not evidence for role-conditioned cardinalities.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.1.md",
+        "phase1/manifests/gnss/ro-crate-metadata.json"
+      ],
+      "severity": "low",
+      "impact": "Not an error -- the GNSS manifest is complete for its role. But a leg whose role is to BE consumed plausibly needs a different minimum record from one that consumes, and the profile does not distinguish them.",
+      "workaround": "None; recorded for the Phase-6 freeze review.",
+      "proposed_response": "Consider a role-conditioned minimum record only after more legs exercise distinct roles; do not add it in the first amendment.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-006",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "initial Phase-1 manifests",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The first four manifests violated base structural requirements before any validator ran",
+      "failed_step": "Hand-author one RO-Crate 1.3 manifest per domain.",
+      "known_fact": "RO-Crate requires flattened JSON-LD entities and a typed contextual Profile entity for a declared profile.",
+      "observed": "The first manifests embedded 13 structured records as anonymous nested objects, omitted the Profile contextual entity in all four, mixed base/profile declarations on the descriptor, and linked only four of five VLBI wrapper states because one hasPart target was duplicated. The original self-check did not test these properties.",
+      "evidence": [
+        "phase1/manifests/optical/ro-crate-metadata.json",
+        "phase1/manifests/pulsar/ro-crate-metadata.json",
+        "phase1/manifests/vlbi/ro-crate-metadata.json",
+        "phase1/manifests/gnss/ro-crate-metadata.json",
+        "phase1/tests/test_gate1.py"
+      ],
+      "severity": "high",
+      "impact": "The session-13 structural PASS was false and the VLBI graph represented the wrong wrapper population.",
+      "workaround": "All anonymous records were promoted to named graph entities; each crate now describes the commit-pinned Profile; descriptor/root conformance roles and VLBI links were repaired.",
+      "proposed_response": "Closed by the bounded structural/source checker and committed mutation tests; normative 1.3 validation remains separately open in FTRO-P1-DEF-001.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-007",
+      "version": "3.1.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "phase1/check_gate1.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The Gate-1 checker repeatedly substituted narrower evidence for the claim",
+      "failed_step": "Test retrieval in a clean environment and demonstrate the exact Gate-1 source population.",
+      "known_fact": "A source-location gate must constrain identity, not just count, and retrieval must consume the inputs that were validated.",
+      "observed": "A digest-correct README could replace gps2utc while preserving the 3/6/2/58 domain counts; corrupt VLBI wrapper digest/path/size passed; JSON false passed as integer zero; and reports were reopened between validation and retrieval. CORRECTION v2.0.0: the first repair still trusted the caller's `isolated_export` label and did not apply the report verifier before publishing a newly generated PASS. CORRECTION v3.0.0: the next repair accepted only an uncommitted six-file overlay, rejecting a clean commit carrying the same candidate, and did not reconcile the three quoted aggregate counters to `results[]`.",
+      "evidence": [
+        "phase1/check_gate1.py",
+        "phase1/tests/test_gate1.py",
+        "phase1/reports/gate1-clean-retrieval-v1.0.json",
+        "phase1/reports/gate1-clean-retrieval-committed-d31a70c.json"
+      ],
+      "severity": "high",
+      "impact": "Gate 1 could have been declared on the wrong artifact population, against bytes not represented by the validated snapshot, or with false headline counts; the published repository could not rerun the supposedly clean procedure.",
+      "workaround": "The stable candidate identity is the Phase-1 parent plus a fingerprint of ten captured inputs. Execution may be witnessed either by the exact six-file overlay on that parent or by a clean descendant commit containing those six paths plus only allowlisted non-executable publication outputs under phase1/reports, labnotes, the Phase-1 README and the Phase-1 ledger. Every result-derived counter and status is recomputed, and a newly generated PASS must satisfy the same verifier before publication.",
+      "proposed_response": "Closed with 44 Phase-1 tests, including a clean committed-carrier run, permitted non-input publication outputs, rejection of executable extra paths and a clean non-descendant, every aggregate field, duplicate rows and coherent failure rows. The parent-overlay and committed-checkout executions are retained as separate reports; the latter ran at d31a70c and records its full HEAD.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-008",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "README Phase-0 pipeline",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Phase-0 C9 fails at the documented unzip command in a clean checkout",
+      "failed_step": "C9: every documented README command runs to completion from a clean export.",
+      "known_fact": "The README downloads the optical archive at repository root, then unzips into data/raw/zenodo-17107693/extracted without creating its parent.",
+      "observed": "The exact live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but cannot make the documented sequence a C9 pass. The failure reproduced in a second data-free clone.",
+      "evidence": [
+        "phase1/reports/phase0-c9-attempt-2026-08-26.json"
+      ],
+      "severity": "high",
+      "impact": "Phase-0 exit condition 2 remains open; the advertised cold path is not executable as written.",
+      "workaround": "Manual `mkdir -p data/raw/zenodo-17107693` before unzip; recorded as intervention, not a pass.",
+      "proposed_response": "After the isolation boundary permits, add the directory-creation command to README and rerun C9 once from a fresh checkout.",
+      "disposition": "open",
+      "links": {
+        "contract": "C9"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-009",
+      "version": "2.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "phase0/audit-fault-model-v1.0.md",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Neither historical bounded audit qualifies as pre-registered",
+      "failed_step": "Phase-0 exit conditions 4 and 5: demonstrate the pre-registered fault model and obtain two clean bounded audits against frozen scope.",
+      "known_fact": "A pre-registered fault injection needs a concrete target, mutation, expected detecting command, isolation/reset rule and result destination selected before execution.",
+      "observed": "CORRECTION v2.0.0: qualifying count is 0/2, not 1/2. Commit f767457 introduced the fault model and completed run-1 report together; 97553a2 amended both; a806bba introduced the corrected acceptance scope, fixes, run-2 result and its 'first clean audit' claim together. Run 2 added M1b/M1c, absent from every fault-model version, and selected the explicit-digest M11 route after run 1 exposed it. No version freezes exact targets, mutations, detecting commands, reset boundaries or destination. Both runs are useful retrospective diagnostics, not pre-registered audits.",
+      "evidence": [
+        "phase0/audit-fault-model-v1.0.md",
+        "phase0/reports/audit-2026-08-26.md",
+        "phase0/acceptance-contract-v1.0.md",
+        "phase1/reports/phase0-c9-attempt-2026-08-26.json"
+      ],
+      "severity": "high",
+      "impact": "The qualifying audit count is 0/2. Exit condition 4 is not yet demonstrated, and exit condition 5 needs two clean qualifying runs rather than one.",
+      "workaround": "None; stopping before choosing concrete mutations is the fail-closed action. The historical runs remain diagnostic evidence but do not count.",
+      "proposed_response": "Freeze one finite execution recipe per operator in a new audit-run manifest, then execute that unchanged manifest twice in separately isolated copies, report every result and stop after each run.",
+      "disposition": "open",
+      "links": {
+        "contract": [
+          "exit-condition-4",
+          "exit-condition-5"
+        ]
+      }
+    }
+  ]
+}

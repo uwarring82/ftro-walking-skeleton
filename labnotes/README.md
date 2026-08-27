@@ -51,3 +51,7 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-26 | 14 | [Boundaries executed — C9 fails, Gate 1 source location passes](2026-08-26-session-14-boundaries-executed.md) *(branch `phase1`)* |
 | 2026-08-26 | 15 | [Independent verification corrections — audit reset and durable Gate-1 witnesses](2026-08-26-session-15-independent-verification-corrections.md) *(branch `phase1`)* |
 | 2026-08-26 | 16 | [Published-carrier hardening and committed Gate-1 witness](2026-08-26-session-16-committed-gate1-witness.md) *(branch `phase1`)* |
+| 2026-08-27 | 17 | [Phase-0 closure instrument preparation](2026-08-27-session-17-phase0-closure-preparation.md) |
+| 2026-08-27 | 18 | [First closure carrier rejected by its clean-archive gate](2026-08-27-session-18-first-carrier-rejected.md) |
+| 2026-08-27 | 19 | [First live C9 rejected; provider containers separated from decoded content](2026-08-27-session-19-first-live-c9-rejected.md) |
+| 2026-08-27 | 20 | [Phase 0 qualified and closed](2026-08-27-session-20-phase0-qualified.md) |

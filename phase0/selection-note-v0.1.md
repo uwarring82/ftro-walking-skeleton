@@ -1,8 +1,9 @@
 # Phase-0 Selection Note v0.1
 
 **Document ID:** FTRO-SEL-001
-**Version:** 0.4.0
+**Version:** 0.5.0
 **Date:** 2026-08-25
+**Revised:** 2026-08-27
 **Task card:** FTRO-WS-001 v0.3, §21 Phase 0 and §22
 **Status:** Gate 0 passed — VLBI downstream products carried forward as an explicit open item (§6)
 **Licence:** CC BY 4.0
@@ -12,6 +13,15 @@ cold-reproduction targets and tolerances, and the computed temporal support that
 Gate 0 requires. It is a pre-registration: §16 states that a target or tolerance
 changed after the first result is inspected is labelled post hoc and cannot satisfy
 the original acceptance test.
+
+**v0.5 route amendment.** The GNSS retrieval route moved from the unavailable BKG mirror to
+SIO/SOPAC GARNER. The pre-registered population remains exactly the same 57 named IGS products;
+no product, epoch, target or tolerance was added or substituted. At the container level, 54 retain
+their prior SHA-256, while three `.Z` containers have new byte identities but decode byte-for-byte
+to the previously pinned content. The old and new container digests and their common
+decoded-content digests are recorded in
+[`expected-digests.json`](evidence/expected-digests.json). Because FTRO snapshot identities are
+byte-specific, those three snapshot identities change even though the scientific payload does not.
 
 ---
 
@@ -84,7 +94,7 @@ would need the full DR3 epoch series.
 Digests abbreviated head…tail for display; canonical 64-character values and download URLs are in
 [`phase0/evidence/identities.json`](evidence/identities.json).
 
-### 2.3 VLBI — SELECTED (session), NOT YET PINNED (products)
+### 2.3 VLBI — SESSION AND vgosDB PINNED; DOWNSTREAM PRODUCTS UNRESOLVED
 
 **Session: IVS-R1 `R11040`.**
 
@@ -144,7 +154,7 @@ V004), making this a 2025 re-release rather than a frozen 2022 artifact; the HTT
 ### 2.4 GNSS — SELECTED
 
 **57 artifacts pinned** with SHA-256, MD5, size and mirror `Last-Modified`, from the
-BKG IGS mirror over anonymous HTTP. See
+SIO/SOPAC GARNER IGS global data centre over anonymous HTTPS. See
 [`phase0/reports/igs-artifact-pins.json`](reports/igs-artifact-pins.json).
 
 | Product line | Files | Total |
@@ -157,8 +167,10 @@ BKG IGS mirror over anonymous HTTP. See
 Reference frame for the interval: **IGb14**. IGS20 became operational at GPS week 2238
 (2022-11-27), after the candidate window, consistent with card §5.3.
 
-`.clk_30s` high-rate clocks and `.sum` summaries are absent from this mirror
-([`FTRO-DEF-020`](../ledgers/deficiency-log.md#ftro-def-020)).
+SIO/GARNER does carry `.clk_30s` high-rate clocks and `.sum` summaries for weeks 2198 and 2199.
+Their absence was a property of the earlier BKG route, not of the IGS holdings
+([`FTRO-DEF-020`](../ledgers/deficiency-log.md#ftro-def-020)). They remain outside the frozen
+57-artifact selection; locating them does not silently widen the pre-registered population.
 
 ---
 
@@ -325,7 +337,7 @@ See [`ledgers/rights-ledger.md`](../ledgers/rights-ledger.md). Summary:
 | Zenodo 17107693 | CC BY 4.0 | CC BY 4.0 | `copy_permitted` |
 | PPTA DR3 | CC BY-SA 4.0 | CC BY-SA 4.0 | `link_only` |
 | IGS products | no explicit machine-readable licence located | — | `link_only` |
-| IVS / CDDIS | not established (auth wall) | — | `link_only` |
+| IVS / OPAR and CDDIS | not established; OPAR is public, CDDIS is registered | — | `link_only` |
 
 FTRO-authored outputs: **CC BY 4.0** for metadata and documents, **Apache-2.0** for
 software. No provider content is relicensed by inclusion.
@@ -336,9 +348,9 @@ software. No provider content is relicensed by inclusion.
 
 | Gate 0 requirement | Status |
 | --- | --- |
-| Four concrete product sets selected or explicitly missing | **Met** — optical, pulsar and GNSS pinned with checksums; VLBI session selected, products explicitly unresolved |
+| Four concrete product sets selected or explicitly missing | **Met** — optical, pulsar and GNSS pinned with checksums; VLBI session and vgosDB pinned, with the analysis-centre product and downstream EOP series explicitly unresolved |
 | Four reproduction targets and tolerances locked | **Met** — §4 above, pre-registered before execution |
 | Source and FTRO rights recorded | **Met** — data, metadata and evidence rights recorded separately |
 | First deficiency entries classified | **Met** — 23 entries across all five classes |
 
-**Gate 0: passed, with the VLBI product leg carried forward as an explicit open item.**
+**Gate 0: passed, with the VLBI downstream-product leg carried forward as an explicit open item.**

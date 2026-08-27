@@ -2,7 +2,7 @@
 
 [![Licence: CC BY 4.0](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey.svg)](LICENSES/CC-BY-4.0.txt)
 [![Licence: Apache 2.0](https://img.shields.io/badge/code-Apache%202.0-blue.svg)](LICENSES/Apache-2.0.txt)
-[![Phase](https://img.shields.io/badge/phase-0%20complete%20%28EOP%20open%29-green.svg)](phase0/selection-note-v0.1.md)
+[![Phase](https://img.shields.io/badge/Gate%200-passed%3B%20closure%20pending-yellow.svg)](phase0/acceptance-contract-v1.0.md)
 
 Implementation of task card **FTRO-WS-001 v0.3**.
 
@@ -23,7 +23,14 @@ The observatory should let a user answer:
 
 ---
 
-## Status — Phase 0 complete, Gate 0 passed
+## Status — Gate 0 passed; Phase 0 closure pending
+
+Gate 0's scientific selection result stands. Phase 0 is not yet procedurally closed: the first
+live C9 attempt reached step 4 and failed when the BKG IGS route refused all 57 connections. A
+reachable official SIO/GARNER route is now pinned for the replacement carrier. The two historical
+mutation exercises were retrospective rather than pre-registered, so the qualifying audit count
+is still **0/2**; see the
+[acceptance contract](phase0/acceptance-contract-v1.0.md).
 
 Four pilot domains over the candidate window **MJD 59630–59640** (2022-02-20 → 2022-03-02):
 optical clocks, pulsar timing, VLBI and GNSS.
@@ -75,14 +82,17 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 63 classified deficiencies**, 39 resolved, 39 self-directed. Each carries a `finding_type`
-and an `affects` axis, because an append-only count cannot show convergence. The measure that can:
-**open entries bearing on the result that are software defects rather than provider evidence gaps
-— currently zero.** Every remaining result-bearing entry is provider incompleteness, which is the
-deliverable. Scope and exit condition: [Phase-0 acceptance contract](phase0/acceptance-contract-v1.0.md).
-**Thirty-nine are self-directed** — against FTRO's own tooling, evidence discipline, test suite and profile
-conformance. Every entry carries a machine-readable `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as successive
-fixes proved partial.
+**4. 85 classified deficiencies**, 56 resolved, 60 self-directed after reconciling the nine-entry
+Phase-1 source ledger and rejecting two closure carriers: one at its clean-archive gate and one
+after its first live-provider failure report proved to misname the last rejection as the first.
+Each carries a `finding_type`
+and an `affects` axis, because an append-only count cannot show convergence. The exact measure is:
+**entries simultaneously open, `affects == changes_result` and
+`finding_type == current_defect` — zero after the merge.** **Sixty are self-directed** —
+against FTRO's own tooling,
+evidence discipline, test suite and profile conformance. Every entry carries a machine-readable
+`responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as
+successive fixes proved partial.
 
 **5. Platform conformance is separate from scientific demonstration.** The platform worked as far
 as it was exercised: each gap it encountered was located, typed and — where the bytes were
@@ -140,9 +150,12 @@ python3 src/ftro/verify_gps2utc.py \
   --expect-sha256 7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a
 
 # 3. Optical: retrieve, verify, analyse
-curl -L -o "ROCIT campaign results.zip" \
+curl --fail --show-error --location \
+  --output "ROCIT campaign results.zip" \
+  --write-out 'FTRO_CURL_HTTP %{http_code} %{url_effective} %{content_type} %{size_download}\n' \
   "https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content"
 md5 "ROCIT campaign results.zip"     # 4ae290f559c90b462991286c933a1147
+mkdir -p data/raw/zenodo-17107693
 unzip -d data/raw/zenodo-17107693/extracted "ROCIT campaign results.zip"
 python3 src/ftro/analyse_optical.py \
   --root data/raw/zenodo-17107693/extracted --out data/work/optical-inventory.json
@@ -168,12 +181,14 @@ python3 src/ftro/check_versions.py --check   # changed artifacts declare a new v
 python3 src/ftro/refresh_crate.py --check    # RO-Crate sizes match disk
 ```
 
-**Reproducibility scope.** Steps **2, 5 and 6** are byte-deterministic: over the same pinned
-local inputs they reproduce their committed outputs byte-for-byte.
+**Reproducibility scope.** Step **2**, the tracked optical inventory summary produced within
+step **3**, and steps **5 and 6** are byte-deterministic: over the same pinned local inputs they
+reproduce their committed outputs byte-for-byte.
 
-Every step that performs a retrieval — **1, 3 and 4** — stamps a fresh `retrieved_utc` and so
-cannot reproduce its committed report byte-for-byte, by construction. What must match is the
-*pinned digest*, asserted against
+The pin reports produced by retrieval steps **1 and 4** stamp a fresh `retrieved_utc` and so
+cannot reproduce their committed bytes by construction. The optical archive retrieved in step 3
+is digest-pinned, while its derived inventory and summary contain no retrieval timestamp and are
+deterministic. Every retrieved artifact must match the *pinned digest*, asserted against
 [`expected-digests.json`](phase0/evidence/expected-digests.json). An earlier version of this
 paragraph listed step 1 as deterministic, which was false
 ([`FTRO-DEF-068`](ledgers/deficiency-log.md#ftro-def-068)).
@@ -191,6 +206,12 @@ Unix-compress decoder verified byte-identical to system `gzip` on a real 253 KB 
 checking the inner format. All three tools fail closed on a digest mismatch: non-zero exit, no
 identity minted, no bytes cached. Logged against our own tooling as
 [`FTRO-DEF-018`](ledgers/deficiency-log.md#ftro-def-018).
+
+The default IGS route is the official SIO/SOPAC GARNER mirror over anonymous HTTPS. It reproduces
+54 of the earlier BKG retrieval containers exactly; three `.Z` containers differ while all 57
+decoded products are byte-identical. Those three are explicit new retrieval snapshots, with the
+earlier outer digest and common decoded digest retained in the registry
+([`FTRO-DEF-075`](ledgers/deficiency-log.md#ftro-def-075)).
 
 The regression tests use committed deterministic fixtures and perform **no network call**; an
 earlier README described a live-CDDIS test that did not exist as committed code
@@ -241,11 +262,12 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | `5f0244f` | Eighth external review — see [session 09](labnotes/2026-08-26-session-09-review-corrections-8.md). The tests guarding the sensitivity computation **only read its output**, so restoring the broken revision left all 70 green (`FTRO-DEF-046`). There is now an executing oracle over a synthetic fixture, with both segmentation paths asserted equal run-for-run. Preflight validated presence not shape (`FTRO-DEF-042`); `isinstance(False, int)` let JSON `false` pass as zero (`FTRO-DEF-043`). **86 tests**, zero skips. |
 | `aaeae6f` | Ninth external review — see [session 10](labnotes/2026-08-26-session-10-review-corrections-9.md). The oracle constrained **topology, not extent**: halving every run's span changed optical support by 40% and passed all 86 tests (`FTRO-DEF-048`). It now uses a segmenter written independently of `src/`, and a manifest of full run tuples. **94 tests**, zero skips. |
 | `3e6face` | Tenth external review — see [session 11](labnotes/2026-08-26-session-11-review-corrections-10.md). The oracle fixture contained **no gap at a live tolerance boundary**, so `int`→`round` passed all 94 tests while changing the 5 s row by 1,883 runs (`FTRO-DEF-053`). The runtime gate read the report's own account of itself (`FTRO-DEF-054`). **99 tests**, zero skips. |
-| this | **Consolidation.** Ten review rounds had a flat discovery rate because the acceptance scope was unbounded and every gate added unverified surface. This round *shrinks* the codebase: one declarative schema retires the 8-entry absent-field family; `series`/`mjd` are derived from authenticated names; domain supports are built once; the 275-line version state machine is replaced by git (101 lines). Phase 0 now has a [frozen contract](phase0/acceptance-contract-v1.0.md), a [pre-registered fault model](phase0/audit-fault-model-v1.0.md) executed once with 13/13 as expected, and a finite exit condition. |
+| this | **Consolidation.** Ten review rounds had a flat discovery rate because the acceptance scope was unbounded and every gate added unverified surface. This round *shrinks* the codebase: one declarative schema retires the 8-entry absent-field family; `series`/`mjd` are derived from authenticated names; domain supports are built once; the 275-line version state machine is replaced by git (101 lines). Phase 0 now has a [frozen contract](phase0/acceptance-contract-v1.0.md), a finite semantic fault model, and a finite exit condition. The two 2026-08-26 exercises were later shown to be retrospective; neither is a qualifying pre-registered audit. |
 
-## Next — Phase 1
+## Next — Phase 0 closure, then Phase 1
 
-Hand-author four RO-Crate 1.3 manifests declaring conformance to the pinned base and the
-FTRO profile. Blocking items are listed in
-[lab notes §14](labnotes/2026-08-25-session-01-phase0.md#14--carried-into-phase-1); the VLBI
-downstream analysis product and IERS EOP series remain the open leg.
+The Phase-1 deficiency entries are now merged and classified. Next execute C9 once, run the frozen
+mutation manifest once as explicitly non-qualifying calibration, and only then run it twice from
+separate clean checkouts. Phase 1 has started on an isolated branch with four hand-authored RO-Crate 1.3
+manifests; its implementation remains isolated until this closure boundary is crossed. The VLBI
+downstream analysis product and IERS EOP series remain open evidence gaps, not closure defects.

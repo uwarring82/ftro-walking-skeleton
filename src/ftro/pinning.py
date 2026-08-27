@@ -39,8 +39,8 @@ class PreflightError(SystemExit):
     """Raised before any retrieval when the digest registry cannot cover the targets."""
 
 
-def load_section(registry_path, section, required=True):
-    """Return {key: sha256} for one section of the sectioned digest registry."""
+def load_section_records(registry_path, section, required=True):
+    """Return one registry section without discarding structured evidence fields."""
     if not os.path.exists(registry_path):
         if required:
             raise PreflightError(
@@ -56,7 +56,18 @@ def load_section(registry_path, section, required=True):
                              f"sections present: {available}")
     if not sect and required:
         raise PreflightError(f"preflight: section {section!r} is empty")
-    return {k: (v["sha256"] if isinstance(v, dict) else v) for k, v in sect.items()}
+    return sect
+
+
+def section_digests(section_records):
+    """Project registry records to the outer-byte digest enforced by every pinner."""
+    return {k: (v.get("sha256") if isinstance(v, dict) else v)
+            for k, v in section_records.items()}
+
+
+def load_section(registry_path, section, required=True):
+    """Return {key: sha256} for one section of the sectioned digest registry."""
+    return section_digests(load_section_records(registry_path, section, required=required))
 
 
 def preflight(expected, names, allow_unpinned=False, what="artifact"):

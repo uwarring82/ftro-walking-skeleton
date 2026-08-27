@@ -1,10 +1,14 @@
 # FTRO Source Ledger
 
-**Version:** 0.4.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-26 · **Licence:** CC BY 4.0
+**Version:** 0.5.0 · **Opened:** 2026-08-25 · **Revised:** 2026-08-27 · **Licence:** CC BY 4.0
 
 > **v0.2.0** corrects the optical identity to the provider's own concept/version DOIs, restores
 > full 64-character digests, and pins the VLBI vgosDB. Digests below are abbreviated head…tail for
 > display; canonical values are in [`identities.json`](../phase0/evidence/identities.json).
+>
+> **v0.5.0** moves the current GNSS retrieval provenance from the unavailable BKG route to
+> SIO/SOPAC GARNER without changing the frozen 57-name population. Three Unix-compress containers
+> acquire new byte identities; each decodes byte-identically to its earlier BKG snapshot.
 
 Every artifact pinned in Phase 0, with its concept identity, snapshot identity, checksum
 and evidence state. Machine-readable companion:
@@ -70,13 +74,21 @@ re-release, not a frozen 2022 artifact.
 **57 artifacts pinned** with SHA-256, MD5, size and mirror `Last-Modified`; full detail in
 [`phase0/reports/igs-artifact-pins.json`](../phase0/reports/igs-artifact-pins.json).
 
-| Line | Files | Availability for MJD 59630 |
+| Line | Files | Mirror-time exemplar for MJD 59630 |
 | --- | --- | --- |
-| `igs` Final orbit / clock / ERP | 24 | 2022-03-13T11:46:51Z |
-| `igr` Rapid orbit / clock / ERP | 33 | 2022-02-21T17:30:12Z |
+| `igs` Final orbit / clock / ERP | 24 | `igs21980.sp3.Z`: 2022-03-13T01:55:31Z |
+| `igr` Rapid orbit / clock / ERP | 33 | `igr21980.sp3.Z`: 2022-02-21T17:03:41Z |
 
-GPS weeks 2198–2199 · frame **IGb14** · data centre BKG, anonymous HTTP ·
+GPS weeks 2198–2199 · frame **IGb14** · data centre SIO/SOPAC GARNER, anonymous HTTPS ·
 `availability_time_source = mirror_derived`
+
+The selected population remains exactly 57 artifacts. SIO/GARNER also carries `.clk_30s` and
+`.sum` products for these weeks, resolving the earlier BKG-route observation in
+[`FTRO-DEF-020`](deficiency-log.md#ftro-def-020); those additional files were not added after
+selection. For `igs21982.clk.Z`, `igs21983.clk.Z` and `igr21991.clk.Z`, the GARNER container
+digests differ from the earlier BKG snapshots while the decoded SHA-256 values match exactly.
+Canonical old, new and decoded digests are in
+[`expected-digests.json`](../phase0/evidence/expected-digests.json).
 
 ## Verification activities
 
@@ -84,7 +96,7 @@ GPS weeks 2198–2199 · frame **IGb14** · data centre BKG, anonymous HTTP ·
 | --- | --- | --- | --- |
 | `VA-GPS2UTC-001` | `VP-GPS2UTC-001` v1.0.0 | `gps2utc.clk` supplies C0′ over MJD 59630–59640 | **`supports`** |
 | — | `src/ftro/pin_vgosdb.py` content checks | R11040 vgosDB is a gzip/tar vgosDB with versioned wrappers | **`supports`** |
-| — | `src/ftro/pin_igs.py` `validate_content` | an Earthdata login interstitial is not data; a `.Z` that will not decompress is not a product | **`supports`** — 34 committed tests, deterministic fixtures, **no network call** ([`FTRO-DEF-031`](deficiency-log.md#ftro-def-031) v2.0.0) |
+| — | `src/ftro/pin_igs.py` `validate_content` | an Earthdata login interstitial is not data; a `.Z` that will not decompress is not a product | **`supports`** — committed deterministic fixtures, **no network call** ([`FTRO-DEF-031`](deficiency-log.md#ftro-def-031) v2.0.0) |
 | — | `src/ftro/unixz.py` | pure-stdlib `.Z` decoder matches system `gzip -dc` byte-for-byte on `igs21980.sp3.Z` | **`supports`** |
 
 ## Applicability assessments

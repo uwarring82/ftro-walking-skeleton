@@ -130,11 +130,11 @@ def main():
               "n_without_expected_digest": len(uncovered), "uncovered_by_registry": uncovered,
               "retrieval_validation": "content_validated" if not failures else "content_validation_incomplete",
               "n_pinned": len(pins), "n_failed": len(failures), "pins": pins, "failures": failures}
-    pinning.promote(report, args.out, ok)
+    promoted = pinning.promote(report, args.out, ok)
     print(f"pinned {len(pins)}, failed {len(failures)}, uncovered {len(uncovered)} -> {args.out}")
     for f in failures:
         print(f"REJECTED {f['key']}: {f['error']}", file=sys.stderr)
-    return 0 if ok else 1
+    return 0 if promoted else 1
 
 
 if __name__ == "__main__":

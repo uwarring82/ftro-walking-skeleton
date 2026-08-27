@@ -1,13 +1,18 @@
 # Phase-0 Audit Fault Model v1.0
 
-**Document ID:** FTRO-AUD-001 · **Version:** 1.1.0 · **Date:** 2026-08-26 · **Licence:** CC BY 4.0
-**Status:** Pre-registered. Run once, report all results including zero findings.
+**Document ID:** FTRO-AUD-001 · **Version:** 2.0.0 · **Date:** 2026-08-27 · **Licence:** CC BY 4.0
+**Status:** Retrospective semantic fault model. Not itself an executable pre-registration.
+The qualifying recipes live separately in
+[`audit/execution-manifest-v1.0.json`](audit/execution-manifest-v1.0.json).
 **v1.1.0** adds M12a–M12c after M12c was found unguarded by running the gate against `HEAD~1` —
 the amend-then-rerun path the reporting rule prescribes.
 
-Pre-registered so an audit has a defined end. The previous protocol had an implicit "find five"
+Finite so an audit can have a defined end. The previous protocol had an implicit "find five"
 stopping rule, which cannot terminate: once familiar branches are covered it moves to another
-input shape or hypothetical mutation. This enumerates the faults in scope **before** execution.
+input shape or hypothetical mutation. This enumerates the semantic operators. The 2026-08-26
+runs did not freeze concrete targets, mutations, commands, reset rules or report destinations
+before execution and therefore do not qualify. A separate executable manifest must select those
+details before calibration or audit.
 
 ## Workflows in scope
 
@@ -17,8 +22,10 @@ fixtures · W4 `four_domain_intersection.py` against committed reports · W5 `ch
 
 ## Mutation operators
 
-Applied to `src/` and to committed artifacts. Each must be **detected** (non-zero exit or a
-failing test) or recorded as an accepted gap.
+Applied to `src/` and to committed artifacts. The executable manifest must distinguish the
+observation `detected`, `not_detected` or `not_executed`. The last is always a run failure.
+For M6, M7, M8 and M12c, `not_detected` is the registered observation and passes only when the
+mutation was proved applied and the detector was proved to have run.
 
 | # | Operator | Target | Expected |
 | --- | --- | --- | --- |
@@ -32,7 +39,7 @@ failing test) or recorded as an accepted gap.
 | M8 | Remove a sort, or otherwise break an internal precondition | `optical_sensitivity` | **no effect** (function owns its precondition) |
 | M9 | `int` → `round`, or `>` → `>=`, in the segmenter | `analyse_optical` | rejected by C7 |
 | M10 | Halve every run's span, preserving topology | `analyse_optical` | rejected by C7 |
-| M11 | Move a precondition check after the action it guards | any pinner | rejected by the urlopen spy |
+| M11 | Move a precondition check after the action it guards | the registry and explicit-digest routes frozen as separate vgosDB cases | rejected by the `urlopen` spy |
 | M12 | Edit a versioned artifact without bumping its version | any | rejected by C10 |
 | M12a | Downgrade a version | any | rejected by C10 |
 | M12b | Remove a declared version | any | rejected by C10 |
@@ -60,7 +67,12 @@ byte changes (covered by digests, not by tests); and mutations to the test suite
 
 ## Reporting rule
 
-Execute the checklist once. Report every operator's result, including "detected" for all of
-them. **Do not continue searching after the list is exhausted.** A fault discovered outside this
-model is filed as `latent_regression` against Phase 1 and amends this document for the next
-audit; it does not reopen Phase 0.
+First run the frozen executable manifest once as **calibration**. Calibration is categorically
+non-qualifying and establishes only that every recipe applies, the detector executes, and the
+isolated tree resets. Freeze any correction before qualification begins. Then execute the same
+manifest twice in separate clean checkouts, report every result and stop when the fixed list is
+exhausted. Any runner, manifest, subject or bound-input change resets the qualifying count to 0/2.
+A qualifying run also requires the structured C9 PASS for that exact carrier; the final pair
+checker requires two distinct report digests, run IDs and checkout identities.
+A finding outside the frozen model is filed under the acceptance contract's finding-type rule;
+it does not authorize an unbounded search during a run.

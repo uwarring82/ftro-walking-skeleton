@@ -1,0 +1,1481 @@
+{
+  "document": "FTRO Phase-0 executable audit manifest",
+  "version": "1.0.2",
+  "manifest_id": "FTRO-AUD-EXEC-001",
+  "semantic_model": {
+    "path": "phase0/audit-fault-model-v1.0.md",
+    "version": "2.0.0",
+    "sha256": "de7dd09443be9aded33a553e9e84a5b555250eef4377603a9319d136fc65c74d"
+  },
+  "acceptance_contract": {
+    "path": "phase0/acceptance-contract-v1.0.md",
+    "version": "1.3.0",
+    "sha256": "23d7ee6544a03d95344768308c93be3e7fd60af37e990c0511b7e9e13720e3c4"
+  },
+  "subject_binding": {
+    "kind": "manifest_carrier_commit",
+    "required_ancestor": "a806bbaa573d28f1460d18110f7974189ca19213",
+    "note": "The manifest cannot contain the hash of the commit that contains itself. The runner requires a clean checkout, proves that manifest and runner bytes are the HEAD blobs, and records HEAD commit/tree plus both file digests. Two qualifying reports must bind the same tuple."
+  },
+  "environment": {
+    "network": "not_used_by_registered_detectors",
+    "isolation": "fresh full git archive and locally committed baseline per case; no source symlinks; fixed-path checksummed controller Git with replacement refs disabled",
+    "variables": {
+      "LC_ALL": "C",
+      "TZ": "UTC",
+      "PYTHONHASHSEED": "0",
+      "PYTHONNOUSERSITE": "1"
+    }
+  },
+  "c9_rebinding_policy": {
+    "version": "1.0.0",
+    "live_run_precedes_qualifying_audits": true,
+    "live_rerun_required_after_changes_to": [
+      "any tracked byte in a new candidate commit before qualification completes"
+    ],
+    "why_tests_rebind": "README step 0 executes tests; a tests-only fix changes the documented C9 pipeline.",
+    "rebind_without_provider_rerun_only_for": [
+      "none; evidence publication is a descendant record about the qualified carrier, not a rebound candidate"
+    ],
+    "default_for_unclassified_change": "live_rerun_required_for_any_new_candidate_commit",
+    "provider_failure_fields": [
+      "failure_class",
+      "reachability_stage",
+      "access_class_conclusion",
+      "http_status",
+      "bytes_received",
+      "expected_sha256",
+      "observed_sha256",
+      "content_validation_result"
+    ],
+    "failure_classes": [
+      "preflight_failure",
+      "local_workflow_failure",
+      "local_environment_failure",
+      "transport_failure",
+      "http_failure",
+      "authentication_or_interstitial",
+      "digest_mismatch",
+      "content_validation_failure",
+      "unclassified_retrieval_failure",
+      "success"
+    ]
+  },
+  "operators": [
+    {
+      "id": "M1",
+      "description": "Delete each frozen representative of a required report field.",
+      "cases": [
+        {
+          "id": "M1.missing-generator",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_remove",
+            "pointer": [
+              "generator"
+            ]
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "generator absent"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M1.missing-pin-retrieved-utc",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_remove",
+            "pointer": [
+              "pins",
+              0,
+              "retrieved_utc"
+            ]
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "retrieved_utc absent"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M1.missing-pin-retrieval-procedure",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_remove",
+            "pointer": [
+              "pins",
+              0,
+              "retrieval_procedure"
+            ]
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "retrieval_procedure absent"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M2",
+      "description": "Replace an integer counter with each frozen wrong JSON type.",
+      "cases": [
+        {
+          "id": "M2.counter-false",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_set",
+            "pointer": [
+              "n_failed"
+            ],
+            "old": 0,
+            "new": false
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "expected int"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M2.counter-float",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_set",
+            "pointer": [
+              "n_failed"
+            ],
+            "old": 0,
+            "new": 0.0
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "expected int"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M2.counter-string",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_set",
+            "pointer": [
+              "n_failed"
+            ],
+            "old": 0,
+            "new": "0"
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "expected int"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M3",
+      "description": "Replace a list-valued field with object and string cases.",
+      "cases": [
+        {
+          "id": "M3.list-object",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_set",
+            "pointer": [
+              "failures"
+            ],
+            "old": [],
+            "new": {}
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "expected list"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M3.list-string",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_set",
+            "pointer": [
+              "failures"
+            ],
+            "old": [],
+            "new": "none"
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "expected list"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M4",
+      "description": "Truncate, duplicate, and add a pin while keeping self-counts coherent.",
+      "cases": [
+        {
+          "id": "M4.truncate",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_array_remove",
+            "pointer": [
+              "pins"
+            ],
+            "index": -1,
+            "counter_pointer": [
+              "n_pinned"
+            ]
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "artifact(s) in the registry are absent"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M4.duplicate",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_array_duplicate",
+            "pointer": [
+              "pins"
+            ],
+            "index": 0,
+            "counter_pointer": [
+              "n_pinned"
+            ],
+            "overrides": {}
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "duplicate pins"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M4.add-rogue",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_array_duplicate",
+            "pointer": [
+              "pins"
+            ],
+            "index": 0,
+            "counter_pointer": [
+              "n_pinned"
+            ],
+            "overrides": {
+              "name": "rogue-audit-pin.sp3.Z"
+            }
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "pin(s) are not in the registry"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M5",
+      "description": "Fabricate matching actual and expected digests inside the report.",
+      "cases": [
+        {
+          "id": "M5.fabricated-digests",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "composite",
+            "operations": [
+              {
+                "kind": "json_set",
+                "pointer": [
+                  "pins",
+                  0,
+                  "sha256"
+                ],
+                "new": "0000000000000000000000000000000000000000000000000000000000000000"
+              },
+              {
+                "kind": "json_set",
+                "pointer": [
+                  "pins",
+                  0,
+                  "expected_sha256"
+                ],
+                "new": "0000000000000000000000000000000000000000000000000000000000000000"
+              }
+            ]
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "report-usable",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json",
+              "--registry",
+              "phase0/evidence/expected-digests.json",
+              "--section",
+              "igs"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED report_usable"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_REPORT_ACCEPTED"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_REPORT_REJECTED",
+              "sha256 does not match the registry digest"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M6",
+      "description": "Relabel unauthenticated semantic fields without changing authenticated filenames or digests.",
+      "cases": [
+        {
+          "id": "M6.relabel-series-and-mjd",
+          "target": "phase0/reports/igs-artifact-pins.json",
+          "target_before_sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+          "mutation": {
+            "kind": "json_bulk_set",
+            "pointer": [
+              "pins"
+            ],
+            "min_items": 57,
+            "fields": {
+              "series": "igr",
+              "mjd": 0
+            }
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "igs-support",
+              "--report",
+              "phase0/reports/igs-artifact-pins.json"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED igs_support",
+              "FTRO_IGS_SUPPORT"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "equal",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_IGS_SUPPORT",
+              "\"n_days\":10",
+              "\"support_hours\":240"
+            ],
+            "reject_exit_codes": [],
+            "reject_output": []
+          },
+          "expected_observation": "not_detected",
+          "expected_disposition": "no_effect"
+        }
+      ]
+    },
+    {
+      "id": "M7",
+      "description": "Change the one pulsar support constant and require coherent propagation.",
+      "cases": [
+        {
+          "id": "M7.single-home-pulsar-epoch",
+          "target": "src/ftro/four_domain_intersection.py",
+          "target_before_sha256": "a7a64769aa79ff03279af0de299e22ead37e12cd620abbf63966ca261d49f105",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "PULSAR_OBS_START_UTC = \"2022-02-20T10:40:59\"",
+            "new": "PULSAR_OBS_START_UTC = \"2022-02-21T10:40:59\"",
+            "count": 1
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "m7-coherence",
+              "--archive-root",
+              "tests/fixtures/mini-archive"
+            ],
+            "timeout_s": 180,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED m7_coherence",
+              "FTRO_M7_COHERENCE"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "different",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_M7_COHERENCE",
+              "\"coherent\":true",
+              "\"disagreements\":[]"
+            ],
+            "reject_exit_codes": [
+              21
+            ],
+            "reject_output": [
+              "FTRO_M7_COHERENCE",
+              "\"coherent\":false"
+            ]
+          },
+          "expected_observation": "not_detected",
+          "expected_disposition": "coherent_propagation"
+        }
+      ]
+    },
+    {
+      "id": "M8",
+      "description": "Remove the caller sort while the credit function owns sorting.",
+      "cases": [
+        {
+          "id": "M8.remove-caller-sort",
+          "target": "src/ftro/optical_sensitivity.py",
+          "target_before_sha256": "b6d51d8df9c05d8f9dc99204534e73a99d7485ea4de2b683f868dac91a546103",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "        out.sort()\n        return out\n",
+            "new": "        return out\n",
+            "count": 1
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "sample-credit",
+              "--archive-root",
+              "tests/fixtures/mini-archive"
+            ],
+            "timeout_s": 180,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED sample_credit",
+              "FTRO_SAMPLE_CREDIT"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "equal",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_SAMPLE_CREDIT",
+              "\"input_was_unsorted\":true",
+              "\"matches_sorted_oracle\":true"
+            ],
+            "reject_exit_codes": [
+              22
+            ],
+            "reject_output": [
+              "FTRO_SAMPLE_CREDIT"
+            ]
+          },
+          "expected_observation": "not_detected",
+          "expected_disposition": "no_effect"
+        }
+      ]
+    },
+    {
+      "id": "M9",
+      "description": "Exercise both frozen segmentation-boundary mutations.",
+      "cases": [
+        {
+          "id": "M9.int-to-round",
+          "target": "src/ftro/analyse_optical.py",
+          "target_before_sha256": "6139fd6b46bdb72ed7c3dd93bc291b864812da85d76e6cdff907349ef352a82d",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "tol_ticks = int(gap_tol_s / TICK_SECONDS + 1e-9)",
+            "new": "tol_ticks = round(gap_tol_s / TICK_SECONDS + 1e-9)",
+            "count": 1
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "-m",
+              "unittest",
+              "-v",
+              "tests.test_retrieval_validation.TestSegmentationOracle"
+            ],
+            "timeout_s": 300,
+            "execution_markers": [
+              "Ran 9 tests"
+            ],
+            "infrastructure_markers": [
+              "_FailedTest",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file",
+              "No module named"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "OK"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "FAILED ("
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M9.gt-to-gte",
+          "target": "src/ftro/analyse_optical.py",
+          "target_before_sha256": "6139fd6b46bdb72ed7c3dd93bc291b864812da85d76e6cdff907349ef352a82d",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "elif (tick - prev) > tol_ticks:",
+            "new": "elif (tick - prev) >= tol_ticks:",
+            "count": 1
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "-m",
+              "unittest",
+              "-v",
+              "tests.test_retrieval_validation.TestSegmentationOracle"
+            ],
+            "timeout_s": 300,
+            "execution_markers": [
+              "Ran 9 tests"
+            ],
+            "infrastructure_markers": [
+              "_FailedTest",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file",
+              "No module named"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "OK"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "FAILED ("
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M10",
+      "description": "Halve every run span while preserving topology.",
+      "cases": [
+        {
+          "id": "M10.halve-run-span",
+          "target": "src/ftro/analyse_optical.py",
+          "target_before_sha256": "6139fd6b46bdb72ed7c3dd93bc291b864812da85d76e6cdff907349ef352a82d",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "runs.append((start, prev, n))",
+            "new": "runs.append((start, start + (prev - start) // 2, n))",
+            "count": 3
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "-m",
+              "unittest",
+              "-v",
+              "tests.test_retrieval_validation.TestSegmentationOracle"
+            ],
+            "timeout_s": 300,
+            "execution_markers": [
+              "Ran 9 tests"
+            ],
+            "infrastructure_markers": [
+              "_FailedTest",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file",
+              "No module named"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "OK"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "FAILED ("
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M11",
+      "description": "Move each frozen vgosDB preflight route behind its network action.",
+      "cases": [
+        {
+          "id": "M11.explicit-digest-route",
+          "target": "src/ftro/pin_vgosdb.py",
+          "target_before_sha256": "3d03f9c037a027ddd4c7ee01d2e3950e03635df4424e6ddf763be41ef16d8d01",
+          "mutation": {
+            "kind": "text_move_after",
+            "source": "    if args.expect_sha256 is not None and not pinning.valid_digest(args.expect_sha256):\n        raise pinning.PreflightError(\n            f\"preflight: --expect-sha256 {args.expect_sha256!r} is not a 64-character hex \"\n            f\"digest. Nothing was fetched.\")\n",
+            "anchor": "        return 1\n\n",
+            "separator": ""
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "-m",
+              "unittest",
+              "-v",
+              "tests.test_retrieval_validation.TestPreflightDigestValidation.test_no_request_when_an_explicit_digest_is_malformed"
+            ],
+            "timeout_s": 180,
+            "execution_markers": [
+              "Ran 1 test"
+            ],
+            "infrastructure_markers": [
+              "_FailedTest",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file",
+              "No module named"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "OK"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "FAIL:"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        },
+        {
+          "id": "M11.registry-route",
+          "target": "src/ftro/pin_vgosdb.py",
+          "target_before_sha256": "3d03f9c037a027ddd4c7ee01d2e3950e03635df4424e6ddf763be41ef16d8d01",
+          "mutation": {
+            "kind": "text_move_after",
+            "source": "    if args.expect_sha256 is None:\n        section = pinning.load_section(args.expect, \"vgosdb\", required=not args.allow_unpinned)\n        pinning.preflight(section, [name], allow_unpinned=args.allow_unpinned,\n                          what=\"vgosDB archive\")\n        args.expect_sha256 = section.get(name)\n",
+            "anchor": "        return 1\n\n",
+            "separator": ""
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "-m",
+              "unittest",
+              "-v",
+              "tests.test_retrieval_validation.TestPreflightDigestValidation.test_no_request_is_issued_when_preflight_fails"
+            ],
+            "timeout_s": 180,
+            "execution_markers": [
+              "Ran 1 test"
+            ],
+            "infrastructure_markers": [
+              "_FailedTest",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file",
+              "No module named"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "OK"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "FAIL:"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M12",
+      "description": "Edit a versioned artifact without a version bump.",
+      "cases": [
+        {
+          "id": "M12.content-without-bump",
+          "target": "ledgers/source-ledger.md",
+          "target_before_sha256": "13e47da0575f1b662dfdae477094041227bd9d438f9c0132cd62274b7497a927",
+          "mutation": {
+            "kind": "text_append",
+            "text": "\n<!-- FTRO audit mutation M12: content changed -->\n"
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "src/ftro/check_versions.py",
+              "--check"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "versioned artifact(s) changed since HEAD"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "can't diff",
+              "No such file or directory"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "0 versioned artifact(s) changed since HEAD; 0 stale"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "STALE",
+              "content changed but version is still 0.5.0"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M12a",
+      "description": "Downgrade a declared version.",
+      "cases": [
+        {
+          "id": "M12a.version-downgrade",
+          "target": "ledgers/source-ledger.md",
+          "target_before_sha256": "13e47da0575f1b662dfdae477094041227bd9d438f9c0132cd62274b7497a927",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "**Version:** 0.5.0",
+            "new": "**Version:** 0.4.0",
+            "count": 1
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "src/ftro/check_versions.py",
+              "--check"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "versioned artifact(s) changed since HEAD"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "No such file or directory"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "0 versioned artifact(s) changed since HEAD; 0 stale"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "STALE",
+              "version went backwards"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M12b",
+      "description": "Remove a declared version.",
+      "cases": [
+        {
+          "id": "M12b.version-removed",
+          "target": "ledgers/source-ledger.md",
+          "target_before_sha256": "13e47da0575f1b662dfdae477094041227bd9d438f9c0132cd62274b7497a927",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "**Version:** 0.5.0 \u00b7 ",
+            "new": "",
+            "count": 1
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "src/ftro/check_versions.py",
+              "--check"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "versioned artifact(s) changed since HEAD"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "No such file or directory"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "0 versioned artifact(s) changed since HEAD; 0 stale"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "STALE",
+              "declared version 0.5.0 was removed"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    },
+    {
+      "id": "M12c",
+      "description": "Add a version to a previously unversioned document.",
+      "cases": [
+        {
+          "id": "M12c.version-gained",
+          "target": "README.md",
+          "target_before_sha256": "4091450f6b1be69db40718f24463b5ca881ec1f12bfc084980cba4752e6ac614",
+          "mutation": {
+            "kind": "text_replace_exact",
+            "old": "# Federated Time-Reference Observatory \u2014 Walking Skeleton\n",
+            "new": "# Federated Time-Reference Observatory \u2014 Walking Skeleton\n\n**Version:** 1.0.0\n",
+            "count": 1
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "src/ftro/check_versions.py",
+              "--check"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "versioned artifact(s) changed since HEAD"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "No such file or directory"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "different",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "ok   README.md (none) -> 1.0.0"
+            ],
+            "reject_exit_codes": [
+              1
+            ],
+            "reject_output": [
+              "STALE"
+            ]
+          },
+          "expected_observation": "not_detected",
+          "expected_disposition": "accepted"
+        }
+      ]
+    },
+    {
+      "id": "M13",
+      "description": "Put the GPS-to-UTC consumer before its documented producer.",
+      "cases": [
+        {
+          "id": "M13.consume-before-produce",
+          "target": "README.md",
+          "target_before_sha256": "4091450f6b1be69db40718f24463b5ca881ec1f12bfc084980cba4752e6ac614",
+          "mutation": {
+            "kind": "swap_exact_blocks",
+            "first": "# 1. Pin the git-hosted evidence artifacts (writes data/raw/evidence/)\npython3 src/ftro/pin_evidence_repos.py\n\n",
+            "second": "# 2. Verify the pinned GPS->UTC artifact (procedure VP-GPS2UTC-001)\npython3 src/ftro/verify_gps2utc.py \\\n  --file data/raw/evidence/pulsar-clock-corrections--gps2utc.clk \\\n  --mjd-start 59630 --mjd-end 59640 \\\n  --expect-sha256 7a1dcb60e4587e7bb9f0ab837ac0b39b54710752fa53062b7e305e5f95669a0a\n\n"
+          },
+          "detector": {
+            "argv": [
+              "python3",
+              "phase0/audit/probes.py",
+              "readme-order",
+              "--readme",
+              "README.md"
+            ],
+            "timeout_s": 120,
+            "execution_markers": [
+              "FTRO_PROBE_STARTED readme_order"
+            ],
+            "infrastructure_markers": [
+              "Traceback (most recent call last)",
+              "ModuleNotFoundError",
+              "ImportError",
+              "can't open file"
+            ],
+            "baseline_exit_codes": [
+              0
+            ],
+            "output_relation": "any",
+            "accept_exit_codes": [
+              0
+            ],
+            "accept_output": [
+              "FTRO_README_PIPELINE_OK 6"
+            ],
+            "reject_exit_codes": [
+              20
+            ],
+            "reject_output": [
+              "FTRO_README_PIPELINE_OUT_OF_ORDER",
+              "consumer_not_after_producer"
+            ]
+          },
+          "expected_observation": "detected",
+          "expected_disposition": "rejected"
+        }
+      ]
+    }
+  ],
+  "report_schema": {
+    "version": "1.0.0",
+    "observations": [
+      "detected",
+      "not_detected",
+      "not_executed"
+    ],
+    "not_executed_is_always_failure": true,
+    "atomic_create_no_overwrite": true
+  }
+}

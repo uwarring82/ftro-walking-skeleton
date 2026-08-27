@@ -91,6 +91,155 @@ def total_h(ivs):
     return round(sum(b - a for a, b in ivs) * 24, 4)
 
 
+def gnss_support_from_pins(pins):
+    """Build the production GNSS support from authenticated artifact names.
+
+    The report's ``series`` and ``mjd`` fields are depositor/tool projections and are
+    deliberately ignored.  Both the science pipeline and the M6 audit probe call this
+    function so the probe cannot drift into a second implementation of C5.
+    """
+    days = sorted({day for day in (igs_day_from_name(pin.get("name")) for pin in pins)
+                   if day is not None})
+    return merge([(float(day), float(day) + 1.0) for day in days])
+
+
+def pulsar_support():
+    """Return the sole production construction of the selected pulsar scan support."""
+    start = utc_to_mjd(PULSAR_OBS_START_UTC)
+    return [(start, start + PULSAR_TOBS_S / 86400.0)]
+
+
+def overlap_surface(domains):
+    """Compute the main report's complete overlap surface from four domain supports."""
+    clipped = {name: isect(intervals, [(W0, W1)])
+               for name, intervals in domains.items()}
+    keys = sorted(clipped)
+
+    pairwise = {}
+    for index, left in enumerate(keys):
+        for right in keys[index + 1:]:
+            intervals = isect(clipped[left], clipped[right])
+            pairwise[f"{left}|{right}"] = {
+                "n_intervals": len(intervals),
+                "total_hours": total_h(intervals),
+                "status": "overlap" if intervals else "no_common_support",
+                **({"intervals": intervals} if len(intervals) <= 24 else
+                   {"intervals_omitted_for_size": True}),
+            }
+
+    three = {}
+    for dropped in keys:
+        remaining = [name for name in keys if name != dropped]
+        intervals = clipped[remaining[0]]
+        for name in remaining[1:]:
+            intervals = isect(intervals, clipped[name])
+        three[f"without_{dropped}"] = {
+            "domains": remaining,
+            "n_intervals": len(intervals),
+            "total_hours": total_h(intervals),
+            "status": "overlap" if intervals else "no_common_support",
+            **({"intervals": intervals} if len(intervals) <= 24 else
+               {"intervals_omitted_for_size": True}),
+        }
+
+    four = clipped[keys[0]]
+    for name in keys[1:]:
+        four = isect(four, clipped[name])
+
+    gap = None
+    if clipped["pulsar"] and clipped["optical"] \
+            and not isect(clipped["pulsar"], clipped["optical"]):
+        pulsar_end = max(end for _, end in clipped["pulsar"])
+        optical_start = min(start for start, _ in clipped["optical"])
+        gap = {
+            "pulsar_support_end_mjd": pulsar_end,
+            "optical_support_start_mjd": optical_start,
+            "gap_days": round(optical_start - pulsar_end, 6),
+            "gap_hours": round((optical_start - pulsar_end) * 24, 3),
+        }
+
+    return {
+        "clipped": clipped,
+        "pairwise": pairwise,
+        "three_domain": three,
+        "four_domain": {
+            "intervals": four,
+            "n_intervals": len(four),
+            "total_hours": total_h(four),
+            "status": "overlap" if four else "no_common_support",
+        },
+        "pulsar_optical_gap": gap,
+    }
+
+
+def reconcile_surface(surface, sensitivity_row, tolerance, tolerance_h=5e-4):
+    """Reconcile every sensitivity quantity that has a main-report counterpart.
+
+    Returning the checked quantity names makes the scope inspectable.  Missing or extra
+    keys are disagreements rather than silently reducing the comparison surface.
+    """
+    disagreements = []
+    checked = []
+
+    def compare_number(label, main_value, sensitivity_value):
+        checked.append(label)
+        if not isinstance(main_value, (int, float)) \
+                or not isinstance(sensitivity_value, (int, float)) \
+                or isinstance(main_value, bool) or isinstance(sensitivity_value, bool) \
+                or abs(main_value - sensitivity_value) > tolerance_h:
+            disagreements.append(label)
+
+    expected_domains = set(surface["clipped"])
+    observed_domains = set(sensitivity_row.get("domain_h", {}))
+    if observed_domains != expected_domains:
+        disagreements.append("domain key population")
+    for name in sorted(expected_domains):
+        compare_number(f"domain {name}", total_h(surface["clipped"][name]),
+                       sensitivity_row.get("domain_h", {}).get(name))
+
+    expected_pairs = set(surface["pairwise"])
+    observed_pairs = set(sensitivity_row.get("pairwise_h", {}))
+    if observed_pairs != expected_pairs:
+        disagreements.append("pairwise key population")
+    for name in sorted(expected_pairs):
+        compare_number(f"pairwise {name}", surface["pairwise"][name]["total_hours"],
+                       sensitivity_row.get("pairwise_h", {}).get(name))
+
+    expected_three = set(surface["three_domain"])
+    observed_three = set(sensitivity_row.get("three_domain_h", {}))
+    if observed_three != expected_three:
+        disagreements.append("three-domain key population")
+    for name in sorted(expected_three):
+        compare_number(f"three-domain {name}",
+                       surface["three_domain"][name]["total_hours"],
+                       sensitivity_row.get("three_domain_h", {}).get(name))
+
+    four = surface["four_domain"]
+    compare_number("four_domain hours", four["total_hours"],
+                   sensitivity_row.get("four_domain_h"))
+    checked.extend(("four_domain n_intervals", "four_domain status"))
+    if sensitivity_row.get("four_domain_n_intervals") != four["n_intervals"]:
+        disagreements.append("four_domain n_intervals")
+    if sensitivity_row.get("four_domain_status") != four["status"]:
+        disagreements.append("four_domain status")
+
+    gap = surface["pulsar_optical_gap"]
+    sensitivity_gap = sensitivity_row.get("pulsar_optical_gap_h")
+    checked.append("pulsar_optical_gap")
+    if gap is None and sensitivity_gap is not None:
+        disagreements.append("pulsar_optical_gap")
+    elif gap is not None:
+        if sensitivity_gap is None or abs(gap["gap_hours"] - sensitivity_gap) > tolerance_h:
+            disagreements.append("pulsar_optical_gap")
+
+    return {
+        "checked": True,
+        "tolerance": tolerance,
+        "checked_quantities": checked,
+        "disagreements": disagreements,
+    }
+
+
 def main():
     ivs_sessions = json.load(open(IVS_SESSIONS, encoding="utf-8"))
     # Consumer gate: a report that is not a clean success must not become science.
@@ -120,8 +269,7 @@ def main():
 
     vlbi = merge([(s["mjd_start"], s["mjd_end"]) for s in ivs_sessions])
 
-    p0 = utc_to_mjd(PULSAR_OBS_START_UTC)
-    pulsar = [(p0, p0 + PULSAR_TOBS_S / 86400.0)]
+    pulsar = pulsar_support()
 
     # GNSS: IGS daily Final products, each covering one UTC day.
     #
@@ -130,11 +278,11 @@ def main():
     # relabelling all 57 pins as "igr" -- without touching a name or a digest -- passed
     # every gate and drove GNSS support from 240 h to 0 h (FTRO-DEF-060). A field that is
     # not stored cannot be forged.
-    days = sorted({d for d in (igs_day_from_name(p["name"]) for p in igs["pins"]) if d})
-    gnss = merge([(float(d), float(d) + 1.0) for d in days])
+    gnss = gnss_support_from_pins(igs["pins"])
 
     domains = {"optical": optical, "pulsar": pulsar, "vlbi": vlbi, "gnss": gnss}
-    clipped = {k: isect(v, [(W0, W1)]) for k, v in domains.items()}
+    surface = overlap_surface(domains)
+    clipped = surface["clipped"]
 
     # Convention sensitivity: RE-SEGMENTS from the raw records at each tolerance.
     # The earlier in-line block re-merged an inventory already segmented at 1.5 s and
@@ -147,64 +295,27 @@ def main():
     sensitivity = build_sensitivity(ARCHIVE_ROOT, ivs_sessions, igs,
                                     pulsar_support=pulsar, gnss_support=gnss,
                                     vlbi_support=vlbi)
-
-
-    pairwise = {}
-    keys = sorted(clipped)
-    for i, a in enumerate(keys):
-        for b in keys[i + 1:]:
-            iv = isect(clipped[a], clipped[b])
-            pairwise[f"{a}|{b}"] = {"n_intervals": len(iv), "total_hours": total_h(iv),
-                                    "status": "overlap" if iv else "no_common_support",
-                                    **({"intervals": iv} if len(iv) <= 24 else
-                                       {"intervals_omitted_for_size": True})}
-
-    four = clipped[keys[0]]
-    for k in keys[1:]:
-        four = isect(four, clipped[k])
-
-    three = {}
-    for drop in keys:
-        rem = [k for k in keys if k != drop]
-        acc = clipped[rem[0]]
-        for k in rem[1:]:
-            acc = isect(acc, clipped[k])
-        three[f"without_{drop}"] = {"domains": rem, "n_intervals": len(acc),
-                                    "total_hours": total_h(acc),
-                                    "status": "overlap" if acc else "no_common_support",
-                                    **({"intervals": acc} if len(acc) <= 24 else
-                                       {"intervals_omitted_for_size": True})}
-
-    gap = None
-    if not isect(clipped["pulsar"], clipped["optical"]):
-        pe = max(b for _, b in clipped["pulsar"])
-        os_ = min(a for a, _ in clipped["optical"])
-        gap = {"pulsar_support_end_mjd": pe, "optical_support_start_mjd": os_,
-               "gap_days": round(os_ - pe, 6), "gap_hours": round((os_ - pe) * 24, 3)}
+    pairwise = surface["pairwise"]
+    three = surface["three_domain"]
+    four_report = surface["four_domain"]
+    four = four_report["intervals"]
+    gap = surface["pulsar_optical_gap"]
 
     # Reconcile: the sensitivity row at the SHIPPED convention must reproduce the main
     # computation for every quantity, not just the two that used to be compared.
     shipped = sensitivity["gap_tolerance_scan"].get(str(inv.get("gap_tolerance_s")))
     recon = {"checked": False}
     if shipped:
-        recon = {"checked": True, "tolerance": inv.get("gap_tolerance_s"), "disagreements": []}
-        for k, v in clipped.items():
-            if abs(total_h(v) - shipped["domain_h"][k]) > 5e-4:
-                recon["disagreements"].append(f"domain {k}")
-        for k, v in pairwise.items():
-            if abs(v["total_hours"] - shipped["pairwise_h"][k]) > 5e-4:
-                recon["disagreements"].append(f"pairwise {k}")
-        for k, v in three.items():
-            if abs(v["total_hours"] - shipped["three_domain_h"][k]) > 5e-4:
-                recon["disagreements"].append(f"three-domain {k}")
-        if abs(total_h(four) - shipped["four_domain_h"]) > 5e-4:
-            recon["disagreements"].append("four_domain")
-        if gap and shipped.get("pulsar_optical_gap_h") is not None \
-                and abs(gap["gap_hours"] - shipped["pulsar_optical_gap_h"]) > 5e-4:
-            recon["disagreements"].append("pulsar_optical_gap")
-        if recon["disagreements"]:
+        full_reconciliation = reconcile_surface(surface, shipped, inv.get("gap_tolerance_s"))
+        if full_reconciliation["disagreements"]:
             raise SystemExit("main computation and sensitivity disagree at the shipped "
-                             f"convention: {recon['disagreements']}. One of them is wrong.")
+                             f"convention: {full_reconciliation['disagreements']}. "
+                             "One of them is wrong.")
+        # Preserve the committed report schema and byte-level deterministic output.  The
+        # audit probe consumes ``checked_quantities`` directly from the production helper;
+        # the scientific report retains its established public projection.
+        recon = {key: full_reconciliation[key]
+                 for key in ("checked", "tolerance", "disagreements")}
 
     report = {
         "generator": "src/ftro/four_domain_intersection.py",
@@ -259,8 +370,7 @@ def main():
         "pulsar_toa_mjd_range": PULSAR_TOA_MJD,
         "pairwise": pairwise,
         "three_domain": three,
-        "four_domain": {"intervals": four, "n_intervals": len(four), "total_hours": total_h(four),
-                        "status": "overlap" if four else "no_common_support"},
+        "four_domain": four_report,
         "pulsar_optical_gap": gap,
         "alignment_certificate_status": "no_common_support" if not four else "partial",
     }

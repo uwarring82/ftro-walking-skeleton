@@ -11,6 +11,8 @@
 #     python3 -m unittest discover -s tests -v
 
 import io
+import contextlib
+import importlib
 import json
 import os
 import re
@@ -22,12 +24,14 @@ import sys
 import tarfile
 import tempfile
 import unittest
+import urllib.error
+from unittest import mock
 
 REPO = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FIXTURES = os.path.join(REPO, "tests", "fixtures")
 sys.path.insert(0, os.path.join(REPO, "src", "ftro"))
 
-from pin_igs import validate_content  # noqa: E402
+from pin_igs import DEFAULT_BASE, DEFAULT_DATA_CENTRE, route_metadata, validate_content  # noqa: E402
 
 
 def fixture(name):
@@ -93,6 +97,173 @@ class TestContentShapeValidation(unittest.TestCase):
         ok, _, reason = validate_content("data.txt", b"plain text body", "text/html")
         self.assertFalse(ok)
         self.assertIn("Content-Type", reason)
+
+
+class TestIgsRouteMetadata(unittest.TestCase):
+    def test_default_route_is_labelled_as_sio(self):
+        centre, note = route_metadata(DEFAULT_BASE)
+        self.assertEqual(centre, DEFAULT_DATA_CENTRE)
+        self.assertIn("SIO/GARNER", note)
+
+    def test_base_override_cannot_inherit_default_data_centre(self):
+        centre, note = route_metadata("file:///tmp/provider-fixture")
+        self.assertNotIn("SIO", centre)
+        self.assertIn("not established", centre)
+        self.assertIn("operator-supplied", note)
+
+
+class TestIgsVariantExpectations(unittest.TestCase):
+    @staticmethod
+    def targets(module):
+        week, dow = module.mjd_to_gps(59630)
+        return [f"igs{week}{dow}.sp3.Z", f"igs{week}{dow}.clk.Z",
+                f"igs{week}7.erp.Z"]
+
+    def test_malformed_decoded_digest_stops_before_fetch(self):
+        module = importlib.import_module("pin_igs")
+        names = self.targets(module)
+        records = {name: "a" * 64 for name in names}
+        records[names[0]] = {
+            "sha256": "a" * 64,
+            "decoded_sha256": "bad",
+            "previous_retrieval_sha256": "b" * 64,
+            "change_basis": "test variant",
+        }
+        argv = ["pin_igs.py", "--mjd-start", "59630", "--mjd-end", "59630",
+                "--series", "igs", "--expect-sha256-manifest", "unused.json"]
+        with mock.patch.object(sys, "argv", argv), \
+                mock.patch.object(module.pinning, "load_section_records",
+                                  return_value=records), \
+                mock.patch.object(module, "fetch") as fetch:
+            with self.assertRaises(module.pinning.PreflightError):
+                module.main()
+        fetch.assert_not_called()
+
+    def test_decoded_digest_mismatch_rejects_that_artifact(self):
+        module = importlib.import_module("pin_igs")
+        names = self.targets(module)
+        body = fixture("synthetic_sp3.Z")
+        outer = hashlib.sha256(body).hexdigest()
+        records = {name: outer for name in names}
+        records[names[0]] = {
+            "sha256": outer,
+            "decoded_sha256": "0" * 64,
+            "previous_retrieval_sha256": "1" * 64,
+            "change_basis": "test variant",
+        }
+        with tempfile.TemporaryDirectory(prefix="ftro-igs-decoded-mismatch-") as temporary:
+            out = os.path.join(temporary, "report.json")
+            cache = os.path.join(temporary, "cache")
+            argv = ["pin_igs.py", "--mjd-start", "59630", "--mjd-end", "59630",
+                    "--series", "igs", "--cache", cache, "--out", out,
+                    "--expect-sha256-manifest", "unused.json"]
+            with mock.patch.object(sys, "argv", argv), \
+                    mock.patch.object(module.pinning, "load_section_records",
+                                      return_value=records), \
+                    mock.patch.object(module, "fetch",
+                                      side_effect=lambda url, **kwargs: (200, {}, body, url)), \
+                    mock.patch.object(module, "validate_content",
+                                      return_value=(True, "content_validated", "ok")):
+                self.assertEqual(module.main(), 1)
+            self.assertFalse(os.path.exists(out))
+            self.assertTrue(os.path.exists(out + ".rejected"))
+            self.assertFalse(os.path.exists(os.path.join(cache, names[0])))
+            with open(out + ".rejected", encoding="utf-8") as fh:
+                rejected = json.load(fh)
+            failure = next(item for item in rejected["failures"]
+                           if item["name"] == names[0])
+            self.assertIs(failure["decoded_checksum_match"], False)
+            self.assertEqual(failure["expected_decoded_sha256"], "0" * 64)
+            self.assertIn("decoded-checksum expectation rejected", failure["note"])
+            self.assertNotIn("content-shape validation rejected", failure["note"])
+
+    def test_successful_redirect_is_rejected_before_cache_or_attribution(self):
+        module = importlib.import_module("pin_igs")
+        names = self.targets(module)
+        body = fixture("synthetic_sp3.Z")
+        outer = hashlib.sha256(body).hexdigest()
+        records = {name: outer for name in names}
+        with tempfile.TemporaryDirectory(prefix="ftro-igs-redirect-") as temporary:
+            out = os.path.join(temporary, "report.json")
+            cache = os.path.join(temporary, "cache")
+            argv = ["pin_igs.py", "--mjd-start", "59630", "--mjd-end", "59630",
+                    "--series", "igs", "--cache", cache, "--out", out,
+                    "--expect-sha256-manifest", "unused.json"]
+
+            def redirected(url, **kwargs):
+                del kwargs
+                return 200, {}, body, url.replace("garner.ucsd.edu", "mirror.invalid")
+
+            with mock.patch.object(sys, "argv", argv), \
+                    mock.patch.object(module.pinning, "load_section_records",
+                                      return_value=records), \
+                    mock.patch.object(module, "fetch", side_effect=redirected), \
+                    mock.patch.object(module, "validate_content") as validate:
+                self.assertEqual(module.main(), 1)
+            validate.assert_not_called()
+            self.assertFalse(os.path.exists(out))
+            self.assertEqual(os.listdir(cache), [])
+            with open(out + ".rejected", encoding="utf-8") as fh:
+                rejected = json.load(fh)
+            self.assertEqual(rejected["n_failed"], 3)
+            failure = rejected["failures"][0]
+            self.assertNotEqual(failure["effective_url"], failure["url"])
+            self.assertIn("unexpected redirect", failure["error"])
+            self.assertIn("Route attribution failed", failure["note"])
+
+
+class TestIgsHttpErrorEvidence(unittest.TestCase):
+    def test_http_error_is_rejected_with_response_evidence_and_no_cached_bytes(self):
+        module = importlib.import_module("pin_igs")
+        body = b"provider error body"
+        expected_digest = "a" * 64
+        week, dow = module.mjd_to_gps(59630)
+        expected = {
+            f"igs{week}{dow}.sp3.Z": expected_digest,
+            f"igs{week}{dow}.clk.Z": expected_digest,
+            f"igs{week}7.erp.Z": expected_digest,
+        }
+
+        with tempfile.TemporaryDirectory(prefix="ftro-igs-http-error-") as temporary:
+            out = os.path.join(temporary, "report.json")
+            cache = os.path.join(temporary, "cache")
+
+            def reject(url, timeout=120):
+                del timeout
+                raise urllib.error.HTTPError(
+                    url, 404, "Not Found",
+                    {"Content-Type": "text/plain", "ETag": '"missing"'},
+                    io.BytesIO(body),
+                )
+
+            argv = [
+                "pin_igs.py", "--mjd-start", "59630", "--mjd-end", "59630",
+                "--series", "igs", "--cache", cache, "--out", out,
+                "--expect-sha256-manifest", "unused.json",
+            ]
+            with mock.patch.object(sys, "argv", argv), \
+                    mock.patch.object(module.pinning, "load_section_records",
+                                      return_value=expected), \
+                    mock.patch.object(module, "fetch", side_effect=reject):
+                result = module.main()
+
+            self.assertEqual(result, 1)
+            self.assertFalse(os.path.exists(out), "an HTTP error report was promoted")
+            self.assertTrue(os.path.exists(out + ".rejected"))
+            self.assertEqual(os.listdir(cache), [], "HTTP error bytes were cached")
+            with open(out + ".rejected", encoding="utf-8") as fh:
+                report = json.load(fh)
+            self.assertEqual(report["n_pinned"], 0)
+            self.assertEqual(report["n_failed"], 3)
+            failure = report["failures"][0]
+            self.assertEqual(failure["http_status"], 404)
+            self.assertEqual(failure["url"], failure["effective_url"])
+            self.assertEqual(failure["size_bytes"], len(body))
+            self.assertEqual(failure["sha256"], hashlib.sha256(body).hexdigest())
+            self.assertEqual(failure["content_type"], "text/plain")
+            self.assertEqual(failure["etag"], '"missing"')
+            self.assertEqual(failure["expected_sha256"], expected_digest)
+            self.assertEqual(failure["retrieval_validation"], "content_rejected")
 
 
 class TestUnixCompressCodec(unittest.TestCase):
@@ -569,6 +740,10 @@ class TestDigestRegistryChain(unittest.TestCase):
             self.registry = json.load(fh)
 
     @staticmethod
+    def _registry_digest(value):
+        return value.get("sha256") if isinstance(value, dict) else value
+
+    @staticmethod
     def _keyed(path, section):
         with open(os.path.join(REPO, path), encoding="utf-8") as fh:
             doc = json.load(fh)
@@ -589,7 +764,8 @@ class TestDigestRegistryChain(unittest.TestCase):
                 self.assertEqual(sorted(got), sorted(exp),
                                  "registry and report disagree on WHICH artifacts exist")
                 for name, digest in got.items():
-                    self.assertEqual(exp[name], digest, f"{section}/{name} digest disagrees")
+                    self.assertEqual(self._registry_digest(exp[name]), digest,
+                                     f"{section}/{name} digest disagrees")
             total += len(got)
         self.assertEqual(total, 65, f"expected 65 pinned artifacts, reconciled {total}")
 
@@ -612,10 +788,50 @@ class TestDigestRegistryChain(unittest.TestCase):
                                          "pinned without an expected digest: the registry "
                                          "exists but was not applied")
                     # The expectation must BE the registry value, not merely non-null.
-                    self.assertEqual(pin["expected_sha256"], exp.get(key),
+                    expected = self._registry_digest(exp.get(key))
+                    self.assertEqual(pin["expected_sha256"], expected,
                                      "report expectation does not match the registry")
                     self.assertIs(pin.get("checksum_match"), True)
-                    self.assertEqual(pin.get("sha256"), exp.get(key))
+                    self.assertEqual(pin.get("sha256"), expected)
+
+    def test_structured_igs_expectations_are_enforced_in_the_report(self):
+        with open(os.path.join(REPO, self.SECTIONS["igs"]), encoding="utf-8") as fh:
+            report = json.load(fh)
+        pins = {pin["name"]: pin for pin in report["pins"]}
+        structured = {name: value for name, value in self.registry["igs"].items()
+                      if isinstance(value, dict)}
+        self.assertEqual(len(structured), 3)
+        for name, expected in structured.items():
+            with self.subTest(name=name):
+                self.assertEqual(set(expected), {
+                    "sha256", "decoded_sha256", "previous_retrieval_sha256",
+                    "change_basis",
+                })
+                pin = pins[name]
+                self.assertEqual(pin.get("expected_decoded_sha256"),
+                                 expected["decoded_sha256"])
+                self.assertEqual(pin.get("decoded_sha256"), expected["decoded_sha256"])
+                self.assertIs(pin.get("decoded_checksum_match"), True)
+                self.assertEqual(pin.get("previous_retrieval_sha256"),
+                                 expected["previous_retrieval_sha256"])
+                self.assertEqual(pin.get("snapshot_change_basis"),
+                                 expected["change_basis"])
+                self.assertIsInstance(pin.get("decoded_size_bytes"), int)
+                self.assertGreater(pin["decoded_size_bytes"], 0)
+
+    def test_committed_igs_report_is_bound_to_the_default_live_route(self):
+        import pin_igs
+        with open(os.path.join(REPO, self.SECTIONS["igs"]), encoding="utf-8") as fh:
+            report = json.load(fh)
+        self.assertEqual(report.get("base_url"), pin_igs.DEFAULT_BASE)
+        self.assertEqual(report.get("data_centre"), pin_igs.DEFAULT_DATA_CENTRE)
+        self.assertEqual(len(report.get("pins", [])), 57)
+        prefix = pin_igs.DEFAULT_BASE.rstrip("/") + "/"
+        for pin in report["pins"]:
+            with self.subTest(name=pin.get("name")):
+                self.assertTrue(pin.get("url", "").startswith(prefix))
+                self.assertEqual(type(pin.get("http_status")), int)
+                self.assertEqual(pin["http_status"], 200)
 
     def test_no_report_declares_incomplete_validation(self):
         for section, path in self.SECTIONS.items():
@@ -1465,6 +1681,109 @@ class TestSchemaContract(unittest.TestCase):
                          "a non-conforming report was promoted")
         self.assertFalse(os.path.exists(out))
         self.assertTrue(os.path.exists(out + ".rejected"))
+
+
+class TestPinnerPromotionVerdict(unittest.TestCase):
+    """A producer success is the promotion verdict, not its pre-schema local state."""
+
+    class Response:
+        status = 200
+        headers = {}
+
+        def __init__(self, body):
+            self.body = body
+
+        def __enter__(self):
+            return self
+
+        def __exit__(self, *args):
+            return None
+
+        def read(self):
+            return self.body
+
+    def setUp(self):
+        self.tmp = tempfile.mkdtemp(prefix="ftro-promotion-verdict-")
+        self.addCleanup(shutil.rmtree, self.tmp, True)
+
+    def _assert_schema_rejection_fails(self, module, argv, patches=()):
+        out = argv[argv.index("--out") + 1]
+        with contextlib.ExitStack() as stack:
+            stack.enter_context(mock.patch.object(sys, "argv", argv))
+            stack.enter_context(mock.patch.object(
+                module.pinning.schema, "validate", return_value=["injected schema rejection"]))
+            for target, attribute, value in patches:
+                stack.enter_context(mock.patch.object(target, attribute, value))
+            result = module.main()
+
+        self.assertEqual(result, 1, "schema rejection was reported as producer success")
+        self.assertFalse(os.path.exists(out), "schema-rejected report reached the official path")
+        self.assertTrue(os.path.exists(out + ".rejected"),
+                        "schema-rejected report was not preserved")
+        with open(out + ".rejected", encoding="utf-8") as fh:
+            rejected = json.load(fh)
+        self.assertIn("injected schema rejection", rejected["schema_problems"])
+
+    def test_evidence_repo_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_evidence_repos")
+        body = b"valid evidence bytes\n"
+        digest = hashlib.sha256(body).hexdigest()
+        target = {"key": "x", "repo": "example/repo", "commit": "abc",
+                  "path": "evidence.txt", "kind": "test-kind"}
+        out = os.path.join(self.tmp, "evidence.json")
+        argv = ["pin_evidence_repos.py", "--cache", os.path.join(self.tmp, "evidence"),
+                "--out", out, "--expect", os.path.join(self.tmp, "unused.json")]
+        self._assert_schema_rejection_fails(module, argv, (
+            (module, "TARGETS", [target]),
+            (module.pinning, "load_section", lambda *args, **kwargs: {"x": digest}),
+            (module.urllib.request, "urlopen", lambda *args, **kwargs: self.Response(body)),
+        ))
+
+    def test_igs_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_igs")
+        body = b"valid IGS bytes\n"
+        digest = hashlib.sha256(body).hexdigest()
+        week, dow = module.mjd_to_gps(59630)
+        expected = {
+            f"igs{week}{dow}.sp3.Z": digest,
+            f"igs{week}{dow}.clk.Z": digest,
+            f"igs{week}7.erp.Z": digest,
+        }
+        out = os.path.join(self.tmp, "igs.json")
+        argv = ["pin_igs.py", "--mjd-start", "59630", "--mjd-end", "59630",
+                "--series", "igs", "--cache", os.path.join(self.tmp, "igs"),
+                "--out", out, "--expect-sha256-manifest", "unused.json"]
+        self._assert_schema_rejection_fails(module, argv, (
+            (module.pinning, "load_section_records", lambda *args, **kwargs: expected),
+            (module, "fetch", lambda url, **kwargs: (200, {}, body, url)),
+            (module, "validate_content",
+             lambda *args, **kwargs: (True, "content_validated", "ok")),
+        ))
+
+    def test_vgosdb_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_vgosdb")
+        archive = os.path.join(FIXTURES, "vgosdb_min.tgz")
+        digest = hashlib.sha256(fixture("vgosdb_min.tgz")).hexdigest()
+        out = os.path.join(self.tmp, "vgosdb.json")
+        argv = ["pin_vgosdb.py", "--url", "file://" + archive, "--session", "R11040",
+                "--cache", os.path.join(self.tmp, "vgosdb"), "--out", out,
+                "--expect-sha256", digest]
+        self._assert_schema_rejection_fails(module, argv)
+
+    def test_ppta_pinner_exits_from_promotion_verdict(self):
+        module = importlib.import_module("pin_ppta")
+        body = b"valid PPTA bytes\n"
+        digest = hashlib.sha256(body).hexdigest()
+        target = {"name": "x.dat", "file_id": "1", "kind": "test-kind",
+                  "concept_id": "ftro:concept:test", "snapshot_stem": "test/x"}
+        out = os.path.join(self.tmp, "ppta.json")
+        argv = ["pin_ppta.py", "--cache", os.path.join(self.tmp, "ppta"),
+                "--out", out, "--expect", os.path.join(self.tmp, "unused.json")]
+        self._assert_schema_rejection_fails(module, argv, (
+            (module, "TARGETS", [target]),
+            (module.pinning, "load_section", lambda *args, **kwargs: {"x.dat": digest}),
+            (module.urllib.request, "urlopen", lambda *args, **kwargs: self.Response(body)),
+        ))
 
 
 class TestDerivedSemantics(unittest.TestCase):
