@@ -1,16 +1,17 @@
 # FTRO Phase-0 Qualification Status
 
 **Document ID:** FTRO-P0-QUAL-001
-**Version:** 1.1.0
+**Version:** 1.2.0
 **Date:** 2026-08-27 · **Revised:** 2026-08-28
 **Status:** **Phase 0 complete**
 **Licence:** CC BY 4.0
 
-> **v1.1.0 is editorial and changes no verdict.** Condition 3's ledger totals are now labelled
-> explicitly as the state at carrier `8ddcbfa`. The ledger has since been reconciled forward on a
-> descendant (v0.21.0: 87 entries, 58 resolved, 29 open, 62 self-directed, convergence predicate
-> still 0). Descendant bookkeeping does not rebind the carrier, and the figures below are left at
-> their qualified values on purpose.
+> **v1.2.0 is editorial and changes no verdict.** Condition 3's ledger totals are labelled
+> explicitly as the state at carrier `8ddcbfa`. The ledger has since been reconciled forward on
+> descendants; current totals live in the canonical
+> [`ledgers/deficiency-log.json`](../ledgers/deficiency-log.json), rather than being copied into this
+> carrier-scoped report. Descendant bookkeeping does not rebind the carrier, and the figures below
+> are left at their qualified values on purpose.
 
 ## Qualified subject
 

@@ -257,6 +257,9 @@
         },
         {
           "@id": "ledgers/phase1-deficiency-log-at-f1837d4.json"
+        },
+        {
+          "@id": "ledgers/phase1-deficiency-log-at-6e03702.json"
         }
       ],
       "isBasedOn": [
@@ -495,7 +498,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "187010",
+      "contentSize": "192681",
       "name": "deficiency-log.json"
     },
     {
@@ -505,7 +508,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "183761",
+      "contentSize": "188401",
       "name": "deficiency-log.md"
     },
     {
@@ -1585,7 +1588,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3474"
+      "contentSize": "3538"
     },
     {
       "@id": "phase0/audit/evidence/c9-8ddcbfa-1.json",
@@ -1655,7 +1658,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7852"
+      "contentSize": "7984"
     },
     {
       "@id": "phase1/deficiency-log-phase1.json",
@@ -1828,6 +1831,16 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "26009"
+    },
+    {
+      "@id": "ledgers/phase1-deficiency-log-at-6e03702.json",
+      "@type": "File",
+      "name": "phase1-deficiency-log-at-6e03702.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "30775"
     }
   ]
 }

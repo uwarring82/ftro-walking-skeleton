@@ -15,15 +15,15 @@ files and a fingerprint of four carrier evidence inputs. Publication-only change
 checker still rejects executable or scientific-input drift outside that bounded set.
 
 **Ledger reconciliation is complete through snapshot
-[`phase1-deficiency-log-at-f1837d4.json`](../ledgers/phase1-deficiency-log-at-f1837d4.json).**
-[`ledgers/deficiency-log.json`](../ledgers/deficiency-log.json) v0.21.0 is canonical and now
-carries all eleven Phase-1 entries — 87 entries, 58 resolved, 29 open, 62 self-directed,
+[`phase1-deficiency-log-at-6e03702.json`](../ledgers/phase1-deficiency-log-at-6e03702.json).**
+[`ledgers/deficiency-log.json`](../ledgers/deficiency-log.json) v0.22.0 is canonical and now
+carries all thirteen Phase-1 entries — 89 entries, 60 resolved, 29 open, 64 self-directed,
 convergence predicate **0**. It no longer reports an open audit blocker for a phase published as
 closed.
 
-The unified ledger retains *both* reconciliation sources under `merged_sources`: the immutable
-nine-entry snapshot at `1c9bc56`, merged before qualification, and the eleven-entry snapshot at
-`f1837d4`. Earlier snapshots are never rewritten.
+The unified ledger retains all three reconciliation sources under `merged_sources`: the immutable
+nine-entry snapshot at `1c9bc56`, merged before qualification; the eleven-entry snapshot at
+`f1837d4`; and the thirteen-entry snapshot at `6e03702`. Earlier snapshots are never rewritten.
 
 `phase1/deficiency-log-phase1.json` continues as the Phase-1 working supplement under the standing
 rule stated in its own `note`: new entries open here, each reconciliation snapshots the committed
@@ -32,8 +32,8 @@ defect — as `FTRO-P1-DEF-008` was, at v2.0.0 in two files with different bodie
 
 At this checkpoint the supplement is v0.7.0 with thirteen entries: `FTRO-P1-DEF-011` is corrected
 at v2.0.0 and new resolved entries `-012` and `-013` record the crate-discovery and Gate-1
-instruction defects. They are intentionally pending the next commit's immutable snapshot and
-canonical fold.
+instruction defects. That exact committed supplement is snapshotted and folded into the canonical
+ledger; future Phase-1 entries begin the next supplement interval under the same standing rule.
 
 This is descendant bookkeeping. The qualified carrier `8ddcbfa` is not rebound, no Phase-0
 requalification is required, and Gate 1 remains bound to candidate `d0f9e37`.
