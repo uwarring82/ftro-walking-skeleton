@@ -772,7 +772,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4562",
+      "contentSize": "4690",
       "name": "README.md"
     },
     {
@@ -1440,7 +1440,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "13381"
+      "contentSize": "18005"
     },
     {
       "@id": "tests/test_phase0_audit_runner_hardening.py",
@@ -1644,7 +1644,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "21348"
+      "contentSize": "26009"
     },
     {
       "@id": "phase1/check_gate1.py",

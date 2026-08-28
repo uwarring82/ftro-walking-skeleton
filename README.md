@@ -2,7 +2,7 @@
 
 [![Licence: CC BY 4.0](https://img.shields.io/badge/docs-CC%20BY%204.0-lightgrey.svg)](LICENSES/CC-BY-4.0.txt)
 [![Licence: Apache 2.0](https://img.shields.io/badge/code-Apache%202.0-blue.svg)](LICENSES/Apache-2.0.txt)
-[![Phase](https://img.shields.io/badge/Gate%200-passed%3B%20closure%20pending-yellow.svg)](phase0/acceptance-contract-v1.0.md)
+[![Phase](https://img.shields.io/badge/Phase%200-closed%3B%20Phase%201%20in%20progress-brightgreen.svg)](phase0/phase0-qualification-v1.0.md)
 
 Implementation of task card **FTRO-WS-001 v0.3**.
 
@@ -23,14 +23,48 @@ The observatory should let a user answer:
 
 ---
 
-## Status — Gate 0 passed; Phase 0 closure pending
+## Status — Phase 0 closed; Phase 1 in progress
 
-Gate 0's scientific selection result stands. Phase 0 is not yet procedurally closed: the first
-live C9 attempt reached step 4 and failed when the BKG IGS route refused all 57 connections. A
-reachable official SIO/GARNER route is now pinned for the replacement carrier. The two historical
-mutation exercises were retrospective rather than pre-registered, so the qualifying audit count
-is still **0/2**; see the
-[acceptance contract](phase0/acceptance-contract-v1.0.md).
+**Phase 0 is procedurally closed** for the immutable carrier `8ddcbfa`. Its qualification evidence
+was committed separately as the descendant `264cf1a`, so the carrier was never rebound to the
+evidence attesting to it. All five conditions of the
+[acceptance contract](phase0/acceptance-contract-v1.0.md) hold; the full record is the
+[qualification status](phase0/phase0-qualification-v1.0.md).
+
+| Condition | Evidence |
+| --- | --- |
+| 1. Network-free contracts from a literal clean archive | 185 tests; root crate 0 stale / 0 missing |
+| 2. C9 against live providers | README steps 0–7; 66/66 provider attempts; **0** interventions; **0** route substitutions |
+| 3. Convergence predicate | 85 ledger entries at carrier `8ddcbfa`; open ∧ `changes_result` ∧ `current_defect` = **0** |
+| 4. Frozen manifest behaves as registered | 25/25 cases; 21 detected, 4 registered non-detections, 0 `not_executed`, 25 verified resets |
+| 5. Two bounded audits | **2/2** — byte-distinct reports from separate clean checkouts |
+
+Closure cost two rejected carriers, and neither failure was repaired quietly. The first live C9
+attempt reached step 4 and failed when the BKG IGS route refused all 57 connections. And the two
+2026-08-26 mutation exercises turned out to be *retrospective* rather than pre-registered — the
+first fault model was committed together with its own result, and the second added cases after
+observing the first — so the qualifying count restarted at **0/2** and both runs were retained as
+diagnostics rather than counted. The historical claims to the contrary are retracted by name in the
+contract.
+
+**Phase 1** continues on the [`phase1`](https://github.com/uwarring82/ftro-walking-skeleton/tree/phase1)
+branch, rebaselined onto the qualified carrier. Four hand-authored RO-Crate 1.3 manifests exist,
+and Gate 1's source-location clause **passes for the Gate-1 candidate `d0f9e37`**, from a clean
+committed checkout of that commit: 69/69 artifacts located and digest-matched — 66 provider
+sources plus 3 catalogs, 140,740,511 bytes, 0 failures. The result is bound to `d0f9e37`, not to
+the branch head: the commit that *publishes* the evidence is a descendant record about the
+candidate, never itself the Gate-1 subject — the same rule the Phase-0 carrier follows.
+
+Normative RO-Crate 1.3 conformance remains explicitly **`not_run`**: the obtainable validator stops
+at 1.2, so these manifests are not yet *demonstrated* to be RO-Crate 1.3. Phase 2 is held.
+
+### One provider finding, not yet in the results below
+
+Three of the 57 IGS products serve **different container bytes** at SIO/GARNER than at BKG while
+decoding to byte-identical content (`igs21982.clk.Z`, `igs21983.clk.Z`, `igr21991.clk.Z`). A
+snapshot digest for those artifacts is therefore not well defined without naming the data centre —
+snapshot identity forks where concept identity holds. The pins retain both digests and the basis
+for the change; the modelling question is open as `FTRO-P1-DEF-010`.
 
 Four pilot domains over the candidate window **MJD 59630–59640** (2022-02-20 → 2022-03-02):
 optical clocks, pulsar timing, VLBI and GNSS.
@@ -262,12 +296,17 @@ See [`CITATION.cff`](CITATION.cff). Cite the underlying sources by their own DOI
 | `5f0244f` | Eighth external review — see [session 09](labnotes/2026-08-26-session-09-review-corrections-8.md). The tests guarding the sensitivity computation **only read its output**, so restoring the broken revision left all 70 green (`FTRO-DEF-046`). There is now an executing oracle over a synthetic fixture, with both segmentation paths asserted equal run-for-run. Preflight validated presence not shape (`FTRO-DEF-042`); `isinstance(False, int)` let JSON `false` pass as zero (`FTRO-DEF-043`). **86 tests**, zero skips. |
 | `aaeae6f` | Ninth external review — see [session 10](labnotes/2026-08-26-session-10-review-corrections-9.md). The oracle constrained **topology, not extent**: halving every run's span changed optical support by 40% and passed all 86 tests (`FTRO-DEF-048`). It now uses a segmenter written independently of `src/`, and a manifest of full run tuples. **94 tests**, zero skips. |
 | `3e6face` | Tenth external review — see [session 11](labnotes/2026-08-26-session-11-review-corrections-10.md). The oracle fixture contained **no gap at a live tolerance boundary**, so `int`→`round` passed all 94 tests while changing the 5 s row by 1,883 runs (`FTRO-DEF-053`). The runtime gate read the report's own account of itself (`FTRO-DEF-054`). **99 tests**, zero skips. |
-| this | **Consolidation.** Ten review rounds had a flat discovery rate because the acceptance scope was unbounded and every gate added unverified surface. This round *shrinks* the codebase: one declarative schema retires the 8-entry absent-field family; `series`/`mjd` are derived from authenticated names; domain supports are built once; the 275-line version state machine is replaced by git (101 lines). Phase 0 now has a [frozen contract](phase0/acceptance-contract-v1.0.md), a finite semantic fault model, and a finite exit condition. The two 2026-08-26 exercises were later shown to be retrospective; neither is a qualifying pre-registered audit. |
+| `a806bba` | **Consolidation.** Ten review rounds had a flat discovery rate because the acceptance scope was unbounded and every gate added unverified surface. This round *shrinks* the codebase: one declarative schema retires the 8-entry absent-field family; `series`/`mjd` are derived from authenticated names; domain supports are built once; the 275-line version state machine is replaced by git (101 lines). Phase 0 now has a [frozen contract](phase0/acceptance-contract-v1.0.md), a finite semantic fault model, and a finite exit condition. The two 2026-08-26 exercises were later shown to be retrospective; neither is a qualifying pre-registered audit. |
+| `264cf1a` | **Phase 0 closed** — see [session 20](labnotes/2026-08-27-session-20-phase0-qualified.md). C9 executed end to end against live providers (66/66, zero interventions); the frozen mutation manifest run once as non-qualifying calibration, then twice from separate clean checkouts (2/2). Carrier `8ddcbfa`; evidence committed separately so the carrier was never rebound. The first carrier was rejected when BKG refused all 57 IGS connections ([session 19](labnotes/2026-08-27-session-19-first-live-c9-rejected.md)). |
+| `96ba9cb` | **Phase 1 rebaselined** — see [session 21](labnotes/2026-08-27-session-21-phase1-sio-rebaseline.md). Gate 1 re-run against the qualified SIO carrier from a clean committed checkout: 69/69, 140,740,511 bytes. Three IGS products differ in container bytes between data centres while decoding identically (`FTRO-P1-DEF-010`). |
 
-## Next — Phase 0 closure, then Phase 1
+## Next — Phase 1
 
-The Phase-1 deficiency entries are now merged and classified. Next execute C9 once, run the frozen
-mutation manifest once as explicitly non-qualifying calibration, and only then run it twice from
-separate clean checkouts. Phase 1 has started on an isolated branch with four hand-authored RO-Crate 1.3
-manifests; its implementation remains isolated until this closure boundary is crossed. The VLBI
-downstream analysis product and IERS EOP series remain open evidence gaps, not closure defects.
+Phase 0 is closed and its isolation boundary is lifted; work continues on the `phase1` branch.
+Next, in order: compare alternative encoded/decoded assertion models against a second packaged
+provider product; then establish RO-Crate 1.3 validation; and only then amend profile §5. Phase 2
+remains held until the profile is amended from the four real manifests.
+
+The VLBI downstream analysis product, the IERS EOP series, the four depositor question groups and
+the IPTA upstream report remain **external evidence gaps** — scientific evidence work, not closure
+defects, and typed as such in the ledger rather than repaired.

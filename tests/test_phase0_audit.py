@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 """Tests for the Phase-0 audit instrument, separate from its qualification runs."""
 
+import argparse
 import hashlib
 import importlib.util
 import json
@@ -25,8 +26,22 @@ def load_module(name, path):
 
 AUDIT = load_module("ftro_audit_runner", REPO / "phase0" / "audit" / "run.py")
 C9 = load_module("ftro_c9_runner", REPO / "phase0" / "audit" / "run_c9.py")
+PROBES = load_module("ftro_audit_probes", REPO / "phase0" / "audit" / "probes.py")
 sys.path.insert(0, str(REPO / "src" / "ftro"))
 from deficiency import result_bearing_current_defects  # noqa: E402
+
+# The qualified Phase-0 carrier.  The frozen manifest describes THIS commit, and its
+# `c9_rebinding_policy` states that evidence publication is "a descendant record about the
+# qualified carrier, not a rebound candidate".  Manifest targets must therefore be resolved
+# against the carrier's own execution evidence, never against descendant working-tree bytes.
+CARRIER_COMMIT = "8ddcbfacef2468b8988c331c30100d72f0912eb8"
+CARRIER_TREE = "c3e05bddcdb59c578cd406d28da8247d243c5c59"
+CARRIER_MANIFEST_SHA256 = "08f5db204eeafc7e9a641167314968b707705491dbd034278083ec34d1647204"
+CARRIER_EVIDENCE = (
+    "calibration-8ddcbfa-1.json",
+    "qualifying-8ddcbfa-1.json",
+    "qualifying-8ddcbfa-2.json",
+)
 
 
 class TestConvergencePredicate(unittest.TestCase):
@@ -80,6 +95,11 @@ class TestFrozenManifest(unittest.TestCase):
     def setUpClass(cls):
         cls.path = REPO / "phase0" / "audit" / "execution-manifest-v1.0.json"
         cls.manifest = json.loads(cls.path.read_text(encoding="utf-8"))
+        cls.evidence_dir = REPO / "phase0" / "audit" / "evidence"
+
+    @classmethod
+    def evidence(cls, name):
+        return json.loads((cls.evidence_dir / name).read_text(encoding="utf-8"))
 
     def test_manifest_has_exact_operator_population(self):
         cases = AUDIT.validate_manifest(self.manifest)
@@ -87,18 +107,58 @@ class TestFrozenManifest(unittest.TestCase):
         self.assertEqual({op["id"] for op in self.manifest["operators"]},
                          AUDIT.EXPECTED_OPERATORS)
 
-    def test_every_target_digest_is_current(self):
-        for operator in self.manifest["operators"]:
-            for case in operator["cases"]:
-                with self.subTest(case=case["id"]):
-                    got = hashlib.sha256((REPO / case["target"]).read_bytes()).hexdigest()
-                    self.assertEqual(got, case["target_before_sha256"])
+    def test_the_manifest_itself_is_still_the_qualified_instrument(self):
+        """The instrument is frozen; its *targets* are resolved against the carrier below."""
+        got = hashlib.sha256(self.path.read_bytes()).hexdigest()
+        self.assertEqual(got, CARRIER_MANIFEST_SHA256)
 
-    def test_bound_document_digests_are_current(self):
-        for key in ("semantic_model", "acceptance_contract"):
-            binding = self.manifest[key]
-            got = hashlib.sha256((REPO / binding["path"]).read_bytes()).hexdigest()
-            self.assertEqual(got, binding["sha256"])
+    def test_every_target_tuple_is_bound_to_the_qualified_carrier(self):
+        """Each (target, before-digest) pair must match what the carrier actually executed.
+
+        Resolving `target_before_sha256` against the working tree was wrong: after
+        qualification the tree is a descendant, and any edit to a living target -- README.md
+        is one -- would report a manifest defect that does not exist.  See FTRO-P1-DEF-011.
+        """
+        expected = {
+            case["id"]: (case["target"], case["target_before_sha256"])
+            for operator in self.manifest["operators"] for case in operator["cases"]
+        }
+        for name in CARRIER_EVIDENCE:
+            report = self.evidence(name)
+            observed = {}
+            for result in report["results"]:
+                mutation = result.get("mutation") or {}
+                observed[result["case_id"]] = (
+                    mutation.get("target"), mutation.get("before_sha256")
+                )
+            with self.subTest(report=name):
+                self.assertEqual(set(observed), set(expected))
+            for case_id, pair in sorted(expected.items()):
+                with self.subTest(report=name, case=case_id):
+                    self.assertEqual(observed[case_id], pair)
+
+    def test_bound_documents_are_bound_to_the_qualified_carrier(self):
+        """Same latent coupling: bound documents are carrier state, not working-tree state."""
+        for name in CARRIER_EVIDENCE:
+            report = self.evidence(name)
+            for key in ("semantic_model", "acceptance_contract"):
+                with self.subTest(report=name, document=key):
+                    self.assertEqual(report["bound_documents"][key], self.manifest[key])
+
+    def test_evidence_reports_bind_the_qualified_carrier(self):
+        for name in CARRIER_EVIDENCE:
+            report = self.evidence(name)
+            with self.subTest(report=name):
+                self.assertEqual(report["subject"]["commit"], CARRIER_COMMIT)
+                self.assertEqual(report["subject"]["tree"], CARRIER_TREE)
+                self.assertTrue(report["subject"]["clean"])
+                self.assertEqual(report["manifest_sha256"], CARRIER_MANIFEST_SHA256)
+                self.assertEqual(report["overall_status"], "pass")
+                self.assertEqual(report["n_not_executed"], 0)
+        self.assertEqual(
+            [self.evidence(name)["qualifying"] for name in CARRIER_EVIDENCE],
+            [False, True, True],
+        )
 
     def test_four_registered_non_detection_operators_are_explicit(self):
         observed = {
@@ -221,11 +281,6 @@ class TestAuditProbes(unittest.TestCase):
         return subprocess.run([sys.executable, "phase0/audit/probes.py", *args],
                               cwd=REPO, capture_output=True, text=True, timeout=180)
 
-    def test_readme_pipeline_baseline_is_ordered(self):
-        result = self.run_probe("readme-order", "--readme", "README.md")
-        self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertIn("FTRO_README_PIPELINE_OK", result.stdout)
-
     def test_m7_probe_is_coherent(self):
         result = self.run_probe("m7-coherence", "--archive-root",
                                 "tests/fixtures/mini-archive")
@@ -248,13 +303,47 @@ class TestAuditProbes(unittest.TestCase):
             self.assertEqual(baseline.stdout, changed.stdout)
 
 
-class TestC9Recorder(unittest.TestCase):
-    def test_extracts_exactly_eight_ordered_readme_steps(self):
-        block, steps = C9.extract_pipeline((REPO / "README.md").read_text(encoding="utf-8"))
+class TestCurrentReadmePipeline(unittest.TestCase):
+    """The live README's pipeline, checked against the working tree on purpose.
+
+    This is the correct home for a working-tree assertion about README.md.  It constrains the
+    documented pipeline as it stands today, using the same two instruments the audit uses --
+    the C9 recorder's extractor and the probe's producer-before-consumer oracle -- so a status
+    edit is free while a reordered or truncated pipeline still fails.  It deliberately reads
+    README.md itself rather than a fixture copy: a fixture would test the copy, not the
+    documented pipeline.
+    """
+
+    @classmethod
+    def setUpClass(cls):
+        cls.readme = REPO / "README.md"
+        cls.text = cls.readme.read_text(encoding="utf-8")
+
+    def test_recorder_extracts_exactly_eight_ordered_readme_steps(self):
+        block, steps = C9.extract_pipeline(self.text)
         self.assertTrue(block.startswith("# 0. Regression suite"))
         self.assertEqual([step["step"] for step in steps], list(range(8)))
         self.assertIn("mkdir -p data/raw/zenodo-17107693", steps[3]["script"])
 
+    def test_producer_before_consumer_oracle_accepts_the_current_readme(self):
+        arguments = argparse.Namespace(readme=str(self.readme))
+        self.assertEqual(PROBES.readme_order(arguments), 0)
+
+    def test_the_oracle_still_rejects_a_reordered_pipeline(self):
+        producer = "python3 src/ftro/pin_evidence_repos.py"
+        consumer = "python3 src/ftro/verify_gps2utc.py"
+        self.assertLess(self.text.find(producer), self.text.find(consumer),
+                        "precondition: the live README orders producer before consumer")
+        swapped = self.text.replace(producer, "\x00MARK\x00", 1)
+        swapped = swapped.replace(consumer, producer, 1).replace("\x00MARK\x00", consumer, 1)
+        with tempfile.TemporaryDirectory(prefix="ftro-readme-order-") as temporary:
+            path = Path(temporary, "README.md")
+            path.write_text(swapped, encoding="utf-8")
+            arguments = argparse.Namespace(readme=str(path))
+            self.assertEqual(PROBES.readme_order(arguments), 20)
+
+
+class TestC9Recorder(unittest.TestCase):
     def test_provider_failures_do_not_imply_an_access_class(self):
         for text, expected, reachability in (
                 ("Could not resolve host: x", "transport_failure", "dns_failed"),

@@ -1,10 +1,10 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
-  "note": "Entries 001-009 were merged into the unified Phase-0 ledger from the immutable 1c9bc56 snapshot before carrier qualification. This file now resumes as the Phase-1 working supplement on the integrated branch; later integration must reconcile new entries into the unified ledger without rewriting that historical snapshot.",
+  "note": "Standing rule, not a one-off: this file is the Phase-1 working supplement to the unified ledger at ledgers/deficiency-log.json, which is canonical. New Phase-1 entries are opened here first. At each reconciliation the committed state of this file is snapshotted to ledgers/phase1-deficiency-log-at-<commit>.json, that snapshot is recorded in the unified ledger's merged_sources, and its entries are folded in. Earlier snapshots are never rewritten, so every reconciliation source stays retrievable. Where a body diverges between the two files, reconciliation bumps the entry's major version and writes one canonical body into both; a divergence under an unchanged version label is itself a defect.",
   "triage_axes_note": "Same axes as the Phase-0 ledger.",
   "entries": [
     {
@@ -202,7 +202,7 @@
     },
     {
       "id": "FTRO-P1-DEF-008",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "README Phase-0 pipeline",
@@ -213,19 +213,22 @@
       "title": "Phase-0 C9 fails at the documented unzip command in a clean checkout",
       "failed_step": "C9: every documented README command runs to completion from a clean export.",
       "known_fact": "The README downloads the optical archive at repository root, then unzips into data/raw/zenodo-17107693/extracted without creating its parent.",
-      "observed": "The exact live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but cannot make the documented sequence a C9 pass. The failure reproduced in a second data-free clone. CORRECTION v2.0.0: the repaired README command landed before qualified carrier 8ddcbfa; its clean live C9 completed all eight steps with 66/66 provider attempts and no intervention.",
+      "observed": "The exact Phase-1 live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but could not make the documented sequence a C9 pass; the failure reproduced in a second data-free clone. CORRECTION v2.0.0: the README now creates the parent with mkdir -p before unzip. The first closure C9 run, against the later-rejected carrier 354868a, completed README step 3 without intervention and stopped independently at the BKG route in step 4. CORRECTION v3.0.0: the repaired command landed before qualified carrier 8ddcbfa, whose clean live C9 completed all eight documented steps with 66/66 provider attempts, zero manual interventions and zero route substitutions.",
       "evidence": [
         "phase1/reports/phase0-c9-attempt-2026-08-26.json",
+        "README.md",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md",
         "phase0/audit/evidence/c9-8ddcbfa-1.json"
       ],
       "severity": "high",
-      "impact": "Historical Phase-1 witness remains a valid C9 failure. The current Phase-0 carrier closes exit condition 2; this entry no longer blocks work.",
-      "workaround": "Manual `mkdir -p data/raw/zenodo-17107693` before unzip; recorded as intervention, not a pass.",
-      "proposed_response": "Resolved by the README directory-creation step and live C9 report phase0/audit/evidence/c9-8ddcbfa-1.json.",
+      "impact": "The original workflow defect blocked C9. It is resolved: Phase-0 exit condition 2 is satisfied by carrier 8ddcbfa. The historical Phase-1 witness remains a valid record of the failure. The BKG-route and recorder problems that stopped the 354868a run are separate entries (FTRO-DEF-074, FTRO-DEF-075) and were closed with that carrier's rejection.",
+      "workaround": "None required after the README repair.",
+      "proposed_response": "Resolved: the documented pipeline creates data/raw/zenodo-17107693 before unzip, and the qualified live execution completed the extraction and both optical analysis commands without intervention. Evidence: phase0/audit/evidence/c9-8ddcbfa-1.json.",
       "disposition": "resolved",
       "links": {
         "contract": "C9"
-      }
+      },
+      "reconciliation_note": "v3.0.0 supersedes two divergent bodies that were both labelled 2.0.0: the unified ledger's copy, written while carrier 354868a was current, and this supplement's copy, written after qualification. This single body is canonical in both files."
     },
     {
       "id": "FTRO-P1-DEF-009",
@@ -296,8 +299,41 @@
           "§11.3"
         ]
       }
+    },
+    {
+      "id": "FTRO-P1-DEF-011",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "tests/test_phase0_audit.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "A post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes",
+      "failed_step": "Keep the qualified Phase-0 audit instrument verifiable from a descendant commit without re-qualification.",
+      "known_fact": "execution-manifest-v1.0.json freezes a (target, target_before_sha256) tuple per case for carrier 8ddcbfa. Its own c9_rebinding_policy states that evidence publication is 'a descendant record about the qualified carrier, not a rebound candidate', so descendant commits are expected and permitted.",
+      "observed": "test_every_target_digest_is_current hashed the WORKING TREE copy of each target and compared it to the carrier's frozen digest. Any edit to a living target therefore reported a manifest defect that does not exist. A status-note edit to README.md -- the pinned target of M12c.version-gained and M13.consume-before-produce -- failed both cases (4091450f... expected, aaeb781d... observed) while the manifest, the runner and every qualification report remained correct and unchanged. test_bound_document_digests_are_current carried the identical latent coupling for the semantic model and acceptance contract.",
+      "evidence": [
+        "phase0/audit/execution-manifest-v1.0.json",
+        "phase0/audit/evidence/calibration-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-2.json",
+        "tests/test_phase0_audit.py"
+      ],
+      "severity": "medium",
+      "impact": "Workflow only. The qualified instrument, its runner and the published Phase-0 qualification evidence were never wrong and are unchanged; no Phase-0 requalification is needed and the convergence predicate is unaffected. The defect made routine documentation maintenance appear to require re-freezing a pre-registered manifest -- the move that made the 2026-08-26 exercises non-qualifying.",
+      "workaround": "None needed; the test was corrected in place.",
+      "proposed_response": "Resolve every frozen (target, before-digest) tuple against the carrier's own calibration and two qualifying reports, and assert those reports bind commit 8ddcbfa, tree c3e05bdd and manifest digest 08f5db20. Freeze the manifest FILE by digest so the instrument itself still cannot drift. Constrain the live README separately, against the working tree, using run_c9.extract_pipeline() and the producer-before-consumer oracle probes.readme_order() -- reading README.md itself, since a fixture copy would test the copy and not the documented pipeline.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "exit-condition-4",
+        "related": [
+          "FTRO-P1-DEF-007"
+        ]
+      }
     }
   ],
-  "revised": "2026-08-27",
-  "revision_note": "Integrated the qualified Phase-0 outcome, resolved the two imported closure blockers, and added the representation-level identity fork discovered by the SIO rebaseline. Gate 1 source location passes; the normative profile question remains open."
+  "revised": "2026-08-28",
+  "revision_note": "Integrated the qualified Phase-0 outcome and resolved the two imported closure blockers; added the representation-level identity fork found by the SIO rebaseline (010) and the post-qualification integrity-test defect found while writing the README status note (011). Reconciled FTRO-P1-DEF-008 to v3.0.0 after canonical and supplement copies were found to carry different bodies under the same 2.0.0 label. Gate 1 source location passes for candidate d0f9e37; the normative RO-Crate 1.3 and profile questions remain open."
 }
