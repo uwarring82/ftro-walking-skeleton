@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.20.0",
+  "version": "0.21.0",
   "opened": "2026-08-25",
   "phase": "Phase 0",
   "card": "FTRO-WS-001 v0.3",
@@ -2131,7 +2131,7 @@
     },
     {
       "id": "FTRO-P1-DEF-008",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "README Phase-0 pipeline",
@@ -2142,30 +2142,32 @@
       "title": "Phase-0 C9 fails at the documented unzip command in a clean checkout",
       "failed_step": "C9: every documented README command runs to completion from a clean export.",
       "known_fact": "The README downloads the optical archive at repository root, then unzips into data/raw/zenodo-17107693/extracted without creating its parent.",
-      "observed": "The exact Phase-1 live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. CORRECTION v2.0.0: README now creates the parent with mkdir -p before unzip. The first actual closure C9 run against carrier 354868a completed README step 3 without intervention; it later stopped at the BKG route in step 4. That independently demonstrates that the documented extraction defect is closed.",
+      "observed": "The exact Phase-1 live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but could not make the documented sequence a C9 pass; the failure reproduced in a second data-free clone. CORRECTION v2.0.0: the README now creates the parent with mkdir -p before unzip. The first closure C9 run, against the later-rejected carrier 354868a, completed README step 3 without intervention and stopped independently at the BKG route in step 4. CORRECTION v3.0.0: the repaired command landed before qualified carrier 8ddcbfa, whose clean live C9 completed all eight documented steps with 66/66 provider attempts, zero manual interventions and zero route substitutions.",
       "evidence": [
         "phase1/reports/phase0-c9-attempt-2026-08-26.json",
         "README.md",
-        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md"
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md",
+        "phase0/audit/evidence/c9-8ddcbfa-1.json"
       ],
       "severity": "high",
-      "impact": "The original workflow defect blocked C9. It is now resolved; Phase-0 exit condition 2 remains open for the replacement carrier for independent reasons recorded in FTRO-DEF-074 and FTRO-DEF-075.",
+      "impact": "The original workflow defect blocked C9. It is resolved: Phase-0 exit condition 2 is satisfied by carrier 8ddcbfa. The historical Phase-1 witness remains a valid record of the failure. The BKG-route and recorder problems that stopped the 354868a run are separate entries (FTRO-DEF-074, FTRO-DEF-075) and were closed with that carrier's rejection.",
       "workaround": "None required after the README repair.",
-      "proposed_response": "Resolved: the documented pipeline creates data/raw/zenodo-17107693 before unzip, and a later clean live execution completed the extraction and both optical analysis commands without intervention.",
+      "proposed_response": "Resolved: the documented pipeline creates data/raw/zenodo-17107693 before unzip, and the qualified live execution completed the extraction and both optical analysis commands without intervention. Evidence: phase0/audit/evidence/c9-8ddcbfa-1.json.",
       "disposition": "resolved",
       "links": {
         "contract": "C9"
       },
+      "reconciliation_note": "v3.0.0 supersedes two divergent bodies that were both labelled 2.0.0: the unified ledger's copy, written while carrier 354868a was current, and this supplement's copy, written after qualification. This single body is canonical in both files.",
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
+        "version": "0.6.0",
+        "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
+        "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8"
       }
     },
     {
       "id": "FTRO-P1-DEF-009",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "phase0/audit-fault-model-v1.0.md",
@@ -2176,18 +2178,22 @@
       "title": "Neither historical bounded audit qualifies as pre-registered",
       "failed_step": "Phase-0 exit conditions 4 and 5: demonstrate the pre-registered fault model and obtain two clean bounded audits against frozen scope.",
       "known_fact": "A pre-registered fault injection needs a concrete target, mutation, expected detecting command, isolation/reset rule and result destination selected before execution.",
-      "observed": "CORRECTION v2.0.0: qualifying count is 0/2, not 1/2. Commit f767457 introduced the fault model and completed run-1 report together; 97553a2 amended both; a806bba introduced the corrected acceptance scope, fixes, run-2 result and its 'first clean audit' claim together. Run 2 added M1b/M1c, absent from every fault-model version, and selected the explicit-digest M11 route after run 1 exposed it. No version freezes exact targets, mutations, detecting commands, reset boundaries or destination. Both runs are useful retrospective diagnostics, not pre-registered audits.",
+      "observed": "CORRECTION v2.0.0: qualifying count is 0/2, not 1/2. Commit f767457 introduced the fault model and completed run-1 report together; 97553a2 amended both; a806bba introduced the corrected acceptance scope, fixes, run-2 result and its 'first clean audit' claim together. Run 2 added M1b/M1c, absent from every fault-model version, and selected the explicit-digest M11 route after run 1 exposed it. No version freezes exact targets, mutations, detecting commands, reset boundaries or destination. Both runs are useful retrospective diagnostics, not pre-registered audits. CORRECTION v3.0.0: carrier 8ddcbfa froze an executable 25-case manifest, ran one non-qualifying calibration, then two qualifying runs in distinct clean checkouts; a fifth checkout deeply revalidated the tuple and returned PASS (2/2).",
       "evidence": [
         "phase0/audit-fault-model-v1.0.md",
         "phase0/reports/audit-2026-08-26.md",
         "phase0/acceptance-contract-v1.0.md",
-        "phase1/reports/phase0-c9-attempt-2026-08-26.json"
+        "phase1/reports/phase0-c9-attempt-2026-08-26.json",
+        "phase0/audit/evidence/calibration-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-2.json",
+        "phase0/audit/evidence/qualification-8ddcbfa.json"
       ],
       "severity": "high",
-      "impact": "The qualifying audit count is 0/2. Exit condition 4 is not yet demonstrated, and exit condition 5 needs two clean qualifying runs rather than one.",
+      "impact": "The historical count correction remains necessary, but Phase-0 exit conditions 4 and 5 are now demonstrated for carrier 8ddcbfa.",
       "workaround": "None; stopping before choosing concrete mutations is the fail-closed action. The historical runs remain diagnostic evidence but do not count.",
-      "proposed_response": "Freeze one finite execution recipe per operator in a new audit-run manifest, then execute that unchanged manifest twice in separately isolated copies, report every result and stop after each run.",
-      "disposition": "open",
+      "proposed_response": "Resolved by phase0/audit/execution-manifest-v1.0.json and the immutable calibration, two qualifying reports and qualification report under phase0/audit/evidence/.",
+      "disposition": "resolved",
       "links": {
         "contract": [
           "exit-condition-4",
@@ -2195,10 +2201,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
+        "version": "0.6.0",
+        "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
+        "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8"
       }
     },
     {
@@ -2411,10 +2417,89 @@
         "contract": "C1",
         "software": "src/ftro/pin_igs.py"
       }
+    },
+    {
+      "id": "FTRO-P1-DEF-010",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile §5 and Phase-1 GNSS manifest",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Snapshot identity does not distinguish encoded retrieval bytes from decoded product state",
+      "failed_step": "Representing the immutable state actually consumed while preserving exact retrieval provenance across data centres.",
+      "known_fact": "Task-card §§10 and 11.3 require snapshot identity to bind immutable consumed state, retrieval procedure and checksum. A compressed distribution exposes both encoded container bytes and decoded product bytes.",
+      "observed": "Three IGS clock products have byte-distinct BKG and SIO/GARNER .Z containers but one decoded SHA-256 per filename. Phase 0 correctly retains distinct outer snapshot IDs and decoded equality. Profile §5 and the first GNSS crate define no normative node roles, relation, evidence requirements or cardinalities for encoded representation versus decoded content.",
+      "evidence": [
+        "phase0/reports/igs-artifact-pins.json",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md",
+        "phase1/manifests/gnss/ro-crate-metadata.json",
+        "phase1/reports/vocabulary-pressure-v1.2.md",
+        "phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json"
+      ],
+      "severity": "high",
+      "impact": "Merging by filename or decoded hash loses exact-retrieval provenance; splitting only by outer hash hides content identity. Equal source counts can conceal a changed immutable population. The Phase-0 null is unchanged, but profile §5 cannot be frozen on the current underspecified model.",
+      "workaround": "Keep old and new outer snapshot identifiers distinct, preserve the verified decoded digest and decoding procedure, and never infer owl:sameAs from filename, codec or decoded equality.",
+      "proposed_response": "The GNSS crate now exercises provisional evidence assertions checked against the pin report. Next compare encoded-node/decoded-node and assertion-only mappings, define consumed-state and cardinality semantics, test a second packaged product, then amend §5 if warranted.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3",
+        "task_card": [
+          "§10",
+          "§11.3"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
+        "version": "0.6.0",
+        "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
+        "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-011",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "tests/test_phase0_audit.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "A post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes",
+      "failed_step": "Keep the qualified Phase-0 audit instrument verifiable from a descendant commit without re-qualification.",
+      "known_fact": "execution-manifest-v1.0.json freezes a (target, target_before_sha256) tuple per case for carrier 8ddcbfa. Its own c9_rebinding_policy states that evidence publication is 'a descendant record about the qualified carrier, not a rebound candidate', so descendant commits are expected and permitted.",
+      "observed": "test_every_target_digest_is_current hashed the WORKING TREE copy of each target and compared it to the carrier's frozen digest. Any edit to a living target therefore reported a manifest defect that does not exist. A status-note edit to README.md -- the pinned target of M12c.version-gained and M13.consume-before-produce -- failed both cases (4091450f... expected, aaeb781d... observed) while the manifest, the runner and every qualification report remained correct and unchanged. test_bound_document_digests_are_current carried the identical latent coupling for the semantic model and acceptance contract.",
+      "evidence": [
+        "phase0/audit/execution-manifest-v1.0.json",
+        "phase0/audit/evidence/calibration-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-2.json",
+        "tests/test_phase0_audit.py"
+      ],
+      "severity": "medium",
+      "impact": "Workflow only. The qualified instrument, its runner and the published Phase-0 qualification evidence were never wrong and are unchanged; no Phase-0 requalification is needed and the convergence predicate is unaffected. The defect made routine documentation maintenance appear to require re-freezing a pre-registered manifest -- the move that made the 2026-08-26 exercises non-qualifying.",
+      "workaround": "None needed; the test was corrected in place.",
+      "proposed_response": "Resolve every frozen (target, before-digest) tuple against the carrier's own calibration and two qualifying reports, and assert those reports bind commit 8ddcbfa, tree c3e05bdd and manifest digest 08f5db20. Freeze the manifest FILE by digest so the instrument itself still cannot drift. Constrain the live README separately, against the working tree, using run_c9.extract_pipeline() and the producer-before-consumer oracle probes.readme_order() -- reading README.md itself, since a fixture copy would test the copy and not the documented pipeline.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "exit-condition-4",
+        "related": [
+          "FTRO-P1-DEF-007"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
+        "version": "0.6.0",
+        "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
+        "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8"
+      }
     }
   ],
-  "revised": "2026-08-27",
-  "revision_note": "Rejected carrier 354868a after its first live C9 run exposed one recorder defect and an unavailable BKG route; adopted the reachable official SIO/GARNER route as three explicit new container snapshots after proving all 57 decoded payloads byte-identical. Removed hard-coded BKG metadata, made decoded-content and effective-route expectations executable rather than inert, and preserved HTTPError response evidence for C9 classification. Corrected DEF-019 and DEF-020 to distinguish historical BKG observations from current SIO evidence, and resolved imported FTRO-P1-DEF-008 after the live run completed the repaired extraction step. Corrected six historical version-gate entries whose resolution text still described the deleted registry/update/register machinery instead of the current read-only Git gate. The frozen 57-target selection is unchanged. The merged convergence predicate remains exact: open + changes_result + current_defect. Qualification status remains pending.",
+  "revised": "2026-08-28",
+  "revision_note": "Reconciled the Phase-1 supplement through snapshot ledgers/phase1-deficiency-log-at-f1837d4.json (f1837d4). FTRO-P1-DEF-009 closes: the qualified carrier 8ddcbfa executed a frozen manifest twice from separate clean checkouts, so this canonical ledger no longer reports an open audit blocker for a phase published as closed. FTRO-P1-DEF-008 advances to 3.0.0, superseding two divergent bodies that were both labelled 2.0.0. FTRO-P1-DEF-010 (encoded container vs decoded product identity, open) and FTRO-P1-DEF-011 (a post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes, resolved) are folded in. Descendant bookkeeping only: no Phase-0 requalification and no Gate-1 rerun. The qualification report's 85-entry figure is the carrier 8ddcbfa state and is left unchanged.",
   "triage_axes": {
     "finding_type": {
       "current_defect": "today's committed behaviour is wrong or a documented workflow fails",
@@ -2436,9 +2521,17 @@
       "ledger": "FTRO Phase-1 Deficiency Log",
       "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
       "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
+      "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
       "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26",
       "n_entries": 9
+    },
+    {
+      "ledger": "FTRO Phase-1 Deficiency Log",
+      "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
+      "version": "0.6.0",
+      "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
+      "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8",
+      "n_entries": 11
     }
   ]
 }

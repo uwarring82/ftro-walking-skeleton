@@ -1,10 +1,16 @@
 # FTRO Phase-0 Qualification Status
 
 **Document ID:** FTRO-P0-QUAL-001
-**Version:** 1.0.0
-**Date:** 2026-08-27
+**Version:** 1.1.0
+**Date:** 2026-08-27 · **Revised:** 2026-08-28
 **Status:** **Phase 0 complete**
 **Licence:** CC BY 4.0
+
+> **v1.1.0 is editorial and changes no verdict.** Condition 3's ledger totals are now labelled
+> explicitly as the state at carrier `8ddcbfa`. The ledger has since been reconciled forward on a
+> descendant (v0.21.0: 87 entries, 58 resolved, 29 open, 62 self-directed, convergence predicate
+> still 0). Descendant bookkeeping does not rebind the carrier, and the figures below are left at
+> their qualified values on purpose.
 
 ## Qualified subject
 
@@ -23,7 +29,7 @@ unchanged.
 | --- | --- | --- |
 | 1. Network-free contracts from a literal clean archive | `git archive` of the carrier; 185 tests; root crate 0 stale/0 missing | **pass** |
 | 2. C9 against live providers | README steps 0–7; 66/66 provider attempts; 0 interventions; 0 route substitutions | **pass** |
-| 3. Convergence predicate | 85 entries; 56 resolved; 60 self-directed; open + `changes_result` + `current_defect` = 0 | **pass** |
+| 3. Convergence predicate | 85 entries; 56 resolved; 60 self-directed; open + `changes_result` + `current_defect` = 0 — **the ledger state at carrier `8ddcbfa`**, deliberately unchanged; later descendant reconciliation does not rebind the carrier | **pass** |
 | 4. Frozen manifest behaves as registered | Calibration and both qualifiers: 25/25 cases, 21 detected, 4 registered non-detections, 0 `not_executed`, 25 resets | **pass** |
 | 5. Two bounded audits | Two byte-distinct reports from distinct clean checkouts; no failed case or new high-severity current defect | **pass (2/2)** |
 

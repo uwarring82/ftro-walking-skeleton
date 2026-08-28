@@ -14,11 +14,24 @@ files and a fingerprint of four carrier evidence inputs. Publication-only change
 `phase1/reports/`, `labnotes/`, the Phase-1 README and ledger, and the root RO-Crate metadata. The
 checker still rejects executable or scientific-input drift outside that bounded set.
 
-The unified carrier ledger retains the immutable nine-entry Phase-1 snapshot merged before
-qualification. `phase1/deficiency-log-phase1.json` v0.5.0 is the post-closure working supplement:
-it records the completed closure responses and new `FTRO-P1-DEF-010` without silently rewriting
-the qualified carrier. A later integration must reconcile that supplement into the unified ledger
-as an explicit operation.
+**Ledger reconciliation is complete through snapshot
+[`phase1-deficiency-log-at-f1837d4.json`](../ledgers/phase1-deficiency-log-at-f1837d4.json).**
+[`ledgers/deficiency-log.json`](../ledgers/deficiency-log.json) v0.21.0 is canonical and now
+carries all eleven Phase-1 entries — 87 entries, 58 resolved, 29 open, 62 self-directed,
+convergence predicate **0**. It no longer reports an open audit blocker for a phase published as
+closed.
+
+The unified ledger retains *both* reconciliation sources under `merged_sources`: the immutable
+nine-entry snapshot at `1c9bc56`, merged before qualification, and the eleven-entry snapshot at
+`f1837d4`. Earlier snapshots are never rewritten.
+
+`phase1/deficiency-log-phase1.json` continues as the Phase-1 working supplement under the standing
+rule stated in its own `note`: new entries open here, each reconciliation snapshots the committed
+state and folds it in, and a body that diverges under an unchanged version label is itself a
+defect — as `FTRO-P1-DEF-008` was, at v2.0.0 in two files with different bodies.
+
+This is descendant bookkeeping. The qualified carrier `8ddcbfa` is not rebound, no Phase-0
+requalification is required, and Gate 1 remains bound to candidate `d0f9e37`.
 
 | Track | Runs on | Status |
 | --- | --- | --- |

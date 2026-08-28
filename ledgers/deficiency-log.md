@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.20.0
+**Version:** 0.21.0
 **Opened:** 2026-08-25
 **Phase:** Phase 0
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (54), policy (1), rights (2), schema (8), source_evidence (20)
-**By severity:** critical (4), high (49), low (4), medium (28)
-**By domain:** cross-domain (43), gnss (8), optical (20), pulsar (8), vlbi (6)
-**By disposition:** open (29), resolved (56)
-**By responsible party:** ftro (60), provider (25)
-**By finding type:** assurance_gap (11), current_defect (32), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
-**By affects:** blocks_workflow (23), changes_result (12), maintenance_only (12), no_present_effect (38)
+**By class:** execution (55), policy (1), rights (2), schema (9), source_evidence (20)
+**By severity:** critical (4), high (50), low (4), medium (29)
+**By domain:** cross-domain (45), gnss (8), optical (20), pulsar (8), vlbi (6)
+**By disposition:** open (29), resolved (58)
+**By responsible party:** ftro (62), provider (25)
+**By finding type:** assurance_gap (11), current_defect (34), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
+**By affects:** blocks_workflow (25), changes_result (12), maintenance_only (12), no_present_effect (38)
 
-**Total entries:** 85 · **self-directed:** 60
+**Total entries:** 87 · **self-directed:** 62
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries with `affects == changes_result` and `finding_type == current_defect`.**
 >
@@ -78,6 +78,7 @@
 | [`FTRO-P1-DEF-007`](#ftro-p1-def-007) | execution | high | current_defect | blocks_workflow | **self** | The Gate-1 checker repeatedly substituted narrower evidence for the claim |
 | [`FTRO-P1-DEF-008`](#ftro-p1-def-008) | execution | high | current_defect | blocks_workflow | **self** | Phase-0 C9 fails at the documented unzip command in a clean checkout |
 | [`FTRO-P1-DEF-009`](#ftro-p1-def-009) | execution | high | current_defect | blocks_workflow | **self** | Neither historical bounded audit qualifies as pre-registered |
+| [`FTRO-P1-DEF-010`](#ftro-p1-def-010) | schema | high | current_defect | blocks_workflow | **self** | Snapshot identity does not distinguish encoded retrieval bytes from decoded product state |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -106,6 +107,7 @@
 | [`FTRO-DEF-069`](#ftro-def-069) | execution | medium | assurance_gap | no_present_effect | **self** | SELF-DIRECTED: two contracts were worded more broadly than the code they describe |
 | [`FTRO-P1-DEF-003`](#ftro-p1-def-003) | schema | medium | current_defect | maintenance_only | **self** | Conformance-report and TIMEEPH representations are provisional, not both logically forced |
 | [`FTRO-P1-DEF-004`](#ftro-p1-def-004) | schema | medium | assurance_gap | no_present_effect | **self** | Whole-document term frequency was presented as semantic vocabulary coverage |
+| [`FTRO-P1-DEF-011`](#ftro-p1-def-011) | execution | medium | current_defect | blocks_workflow | **self** | A post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | external_evidence_gap | changes_result | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | current_defect | no_present_effect | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | external_evidence_gap | no_present_effect | provider | CORRECTED: high-rate clock and summary products were absent only from the original BKG route |
@@ -2789,25 +2791,26 @@
 | Finding type | `current_defect` |
 | Affects | `blocks_workflow` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 2.0.0 |
+| Version | 3.0.0 |
 
 **Failed step.** C9: every documented README command runs to completion from a clean export.
 
 **Known fact or required evidence.** The README downloads the optical archive at repository root, then unzips into data/raw/zenodo-17107693/extracted without creating its parent.
 
-**Observed.** The exact Phase-1 live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. CORRECTION v2.0.0: README now creates the parent with mkdir -p before unzip. The first actual closure C9 run against carrier 354868a completed README step 3 without intervention; it later stopped at the BKG route in step 4. That independently demonstrates that the documented extraction defect is closed.
+**Observed.** The exact Phase-1 live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but could not make the documented sequence a C9 pass; the failure reproduced in a second data-free clone. CORRECTION v2.0.0: the README now creates the parent with mkdir -p before unzip. The first closure C9 run, against the later-rejected carrier 354868a, completed README step 3 without intervention and stopped independently at the BKG route in step 4. CORRECTION v3.0.0: the repaired command landed before qualified carrier 8ddcbfa, whose clean live C9 completed all eight documented steps with 66/66 provider attempts, zero manual interventions and zero route substitutions.
 
 **Evidence.**
 
 - `phase1/reports/phase0-c9-attempt-2026-08-26.json`
 - `README.md`
 - `labnotes/2026-08-27-session-19-first-live-c9-rejected.md`
+- `phase0/audit/evidence/c9-8ddcbfa-1.json`
 
-**Impact.** The original workflow defect blocked C9. It is now resolved; Phase-0 exit condition 2 remains open for the replacement carrier for independent reasons recorded in FTRO-DEF-074 and FTRO-DEF-075.
+**Impact.** The original workflow defect blocked C9. It is resolved: Phase-0 exit condition 2 is satisfied by carrier 8ddcbfa. The historical Phase-1 witness remains a valid record of the failure. The BKG-route and recorder problems that stopped the 354868a run are separate entries (FTRO-DEF-074, FTRO-DEF-075) and were closed with that carrier's rejection.
 
 **Workaround.** None required after the README repair.
 
-**Proposed response.** Resolved: the documented pipeline creates data/raw/zenodo-17107693 before unzip, and a later clean live execution completed the extraction and both optical analysis commands without intervention.
+**Proposed response.** Resolved: the documented pipeline creates data/raw/zenodo-17107693 before unzip, and the qualified live execution completed the extraction and both optical analysis commands without intervention. Evidence: phase0/audit/evidence/c9-8ddcbfa-1.json.
 
 ---
 
@@ -2821,17 +2824,17 @@
 | Severity | high |
 | Domain | cross-domain |
 | Dataset | `phase0/audit-fault-model-v1.0.md` |
-| Disposition | `open` |
+| Disposition | `resolved` |
 | Finding type | `current_defect` |
 | Affects | `blocks_workflow` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 2.0.0 |
+| Version | 3.0.0 |
 
 **Failed step.** Phase-0 exit conditions 4 and 5: demonstrate the pre-registered fault model and obtain two clean bounded audits against frozen scope.
 
 **Known fact or required evidence.** A pre-registered fault injection needs a concrete target, mutation, expected detecting command, isolation/reset rule and result destination selected before execution.
 
-**Observed.** CORRECTION v2.0.0: qualifying count is 0/2, not 1/2. Commit f767457 introduced the fault model and completed run-1 report together; 97553a2 amended both; a806bba introduced the corrected acceptance scope, fixes, run-2 result and its 'first clean audit' claim together. Run 2 added M1b/M1c, absent from every fault-model version, and selected the explicit-digest M11 route after run 1 exposed it. No version freezes exact targets, mutations, detecting commands, reset boundaries or destination. Both runs are useful retrospective diagnostics, not pre-registered audits.
+**Observed.** CORRECTION v2.0.0: qualifying count is 0/2, not 1/2. Commit f767457 introduced the fault model and completed run-1 report together; 97553a2 amended both; a806bba introduced the corrected acceptance scope, fixes, run-2 result and its 'first clean audit' claim together. Run 2 added M1b/M1c, absent from every fault-model version, and selected the explicit-digest M11 route after run 1 exposed it. No version freezes exact targets, mutations, detecting commands, reset boundaries or destination. Both runs are useful retrospective diagnostics, not pre-registered audits. CORRECTION v3.0.0: carrier 8ddcbfa froze an executable 25-case manifest, ran one non-qualifying calibration, then two qualifying runs in distinct clean checkouts; a fifth checkout deeply revalidated the tuple and returned PASS (2/2).
 
 **Evidence.**
 
@@ -2839,12 +2842,16 @@
 - `phase0/reports/audit-2026-08-26.md`
 - `phase0/acceptance-contract-v1.0.md`
 - `phase1/reports/phase0-c9-attempt-2026-08-26.json`
+- `phase0/audit/evidence/calibration-8ddcbfa-1.json`
+- `phase0/audit/evidence/qualifying-8ddcbfa-1.json`
+- `phase0/audit/evidence/qualifying-8ddcbfa-2.json`
+- `phase0/audit/evidence/qualification-8ddcbfa.json`
 
-**Impact.** The qualifying audit count is 0/2. Exit condition 4 is not yet demonstrated, and exit condition 5 needs two clean qualifying runs rather than one.
+**Impact.** The historical count correction remains necessary, but Phase-0 exit conditions 4 and 5 are now demonstrated for carrier 8ddcbfa.
 
 **Workaround.** None; stopping before choosing concrete mutations is the fail-closed action. The historical runs remain diagnostic evidence but do not count.
 
-**Proposed response.** Freeze one finite execution recipe per operator in a new audit-run manifest, then execute that unchanged manifest twice in separately isolated copies, report every result and stop after each run.
+**Proposed response.** Resolved by phase0/audit/execution-manifest-v1.0.json and the immutable calibration, two qualifying reports and qualification report under phase0/audit/evidence/.
 
 ---
 
@@ -3102,5 +3109,81 @@
 **Workaround.** None; route metadata and representation-level expectations must be coupled to the selected route and executed retrieval.
 
 **Proposed response.** Resolved in the next carrier: SIO/GARNER is the named default route, and any operator-supplied override is labelled as not established rather than inheriting SIO metadata. Structured representation-variant records are validated before retrieval; the pinner decompresses and hashes their payloads, rejects a decoded mismatch, and emits expected/observed decoded evidence plus the earlier outer digest. The v3.0.0 repair records the effective URL and refuses any unexpected redirect before cache or promotion; rejection notes distinguish route, shape, outer-checksum and decoded-checksum causes. Direct tests cover both route branches, malformed preflight with zero requests, redirect and mismatch rejection, and report-to-registry reconciliation.
+
+---
+
+### FTRO-P1-DEF-010
+
+**Snapshot identity does not distinguish encoded retrieval bytes from decoded product state**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `FTRO profile §5 and Phase-1 GNSS manifest` |
+| Disposition | `open` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Representing the immutable state actually consumed while preserving exact retrieval provenance across data centres.
+
+**Known fact or required evidence.** Task-card §§10 and 11.3 require snapshot identity to bind immutable consumed state, retrieval procedure and checksum. A compressed distribution exposes both encoded container bytes and decoded product bytes.
+
+**Observed.** Three IGS clock products have byte-distinct BKG and SIO/GARNER .Z containers but one decoded SHA-256 per filename. Phase 0 correctly retains distinct outer snapshot IDs and decoded equality. Profile §5 and the first GNSS crate define no normative node roles, relation, evidence requirements or cardinalities for encoded representation versus decoded content.
+
+**Evidence.**
+
+- `phase0/reports/igs-artifact-pins.json`
+- `labnotes/2026-08-27-session-19-first-live-c9-rejected.md`
+- `phase1/manifests/gnss/ro-crate-metadata.json`
+- `phase1/reports/vocabulary-pressure-v1.2.md`
+- `phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json`
+
+**Impact.** Merging by filename or decoded hash loses exact-retrieval provenance; splitting only by outer hash hides content identity. Equal source counts can conceal a changed immutable population. The Phase-0 null is unchanged, but profile §5 cannot be frozen on the current underspecified model.
+
+**Workaround.** Keep old and new outer snapshot identifiers distinct, preserve the verified decoded digest and decoding procedure, and never infer owl:sameAs from filename, codec or decoded equality.
+
+**Proposed response.** The GNSS crate now exercises provisional evidence assertions checked against the pin report. Next compare encoded-node/decoded-node and assertion-only mappings, define consumed-state and cardinality semantics, test a second packaged product, then amend §5 if warranted.
+
+---
+
+### FTRO-P1-DEF-011
+
+**A post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `tests/test_phase0_audit.py` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Keep the qualified Phase-0 audit instrument verifiable from a descendant commit without re-qualification.
+
+**Known fact or required evidence.** execution-manifest-v1.0.json freezes a (target, target_before_sha256) tuple per case for carrier 8ddcbfa. Its own c9_rebinding_policy states that evidence publication is 'a descendant record about the qualified carrier, not a rebound candidate', so descendant commits are expected and permitted.
+
+**Observed.** test_every_target_digest_is_current hashed the WORKING TREE copy of each target and compared it to the carrier's frozen digest. Any edit to a living target therefore reported a manifest defect that does not exist. A status-note edit to README.md -- the pinned target of M12c.version-gained and M13.consume-before-produce -- failed both cases (4091450f... expected, aaeb781d... observed) while the manifest, the runner and every qualification report remained correct and unchanged. test_bound_document_digests_are_current carried the identical latent coupling for the semantic model and acceptance contract.
+
+**Evidence.**
+
+- `phase0/audit/execution-manifest-v1.0.json`
+- `phase0/audit/evidence/calibration-8ddcbfa-1.json`
+- `phase0/audit/evidence/qualifying-8ddcbfa-1.json`
+- `phase0/audit/evidence/qualifying-8ddcbfa-2.json`
+- `tests/test_phase0_audit.py`
+
+**Impact.** Workflow only. The qualified instrument, its runner and the published Phase-0 qualification evidence were never wrong and are unchanged; no Phase-0 requalification is needed and the convergence predicate is unaffected. The defect made routine documentation maintenance appear to require re-freezing a pre-registered manifest -- the move that made the 2026-08-26 exercises non-qualifying.
+
+**Workaround.** None needed; the test was corrected in place.
+
+**Proposed response.** Resolve every frozen (target, before-digest) tuple against the carrier's own calibration and two qualifying reports, and assert those reports bind commit 8ddcbfa, tree c3e05bdd and manifest digest 08f5db20. Freeze the manifest FILE by digest so the instrument itself still cannot drift. Constrain the live README separately, against the working tree, using run_c9.extract_pipeline() and the producer-before-consumer oracle probes.readme_order() -- reading README.md itself, since a fixture copy would test the copy and not the documented pipeline.
 
 ---

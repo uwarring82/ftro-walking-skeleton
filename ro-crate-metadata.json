@@ -474,7 +474,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "179456",
+      "contentSize": "187010",
       "name": "deficiency-log.json"
     },
     {
@@ -484,7 +484,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "177290",
+      "contentSize": "183761",
       "name": "deficiency-log.md"
     },
     {
@@ -1564,7 +1564,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "2890"
+      "contentSize": "3474"
     },
     {
       "@id": "phase0/audit/evidence/c9-8ddcbfa-1.json",
@@ -1634,7 +1634,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "6582"
+      "contentSize": "7396"
     },
     {
       "@id": "phase1/deficiency-log-phase1.json",
