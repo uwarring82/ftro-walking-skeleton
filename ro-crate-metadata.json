@@ -260,6 +260,24 @@
         },
         {
           "@id": "ledgers/phase1-deficiency-log-at-6e03702.json"
+        },
+        {
+          "@id": "labnotes/2026-08-28-session-24-wp2a-preregistration.md"
+        },
+        {
+          "@id": "phase2/README.md"
+        },
+        {
+          "@id": "phase2/wp2a/contract-v1.0.md"
+        },
+        {
+          "@id": "phase2/wp2a/expected-facts-v1.0.json"
+        },
+        {
+          "@id": "phase2/wp2a/queries-v1.0.json"
+        },
+        {
+          "@id": "phase2/wp2a/mutation-population-v1.0.json"
         }
       ],
       "isBasedOn": [
@@ -796,7 +814,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4832",
+      "contentSize": "4960",
       "name": "README.md"
     },
     {
@@ -1841,6 +1859,66 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "30775"
+    },
+    {
+      "@id": "labnotes/2026-08-28-session-24-wp2a-preregistration.md",
+      "@type": "File",
+      "name": "2026-08-28-session-24-wp2a-preregistration.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3828"
+    },
+    {
+      "@id": "phase2/README.md",
+      "@type": "File",
+      "name": "README.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3115"
+    },
+    {
+      "@id": "phase2/wp2a/contract-v1.0.md",
+      "@type": "File",
+      "name": "contract-v1.0.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "9161"
+    },
+    {
+      "@id": "phase2/wp2a/expected-facts-v1.0.json",
+      "@type": "File",
+      "name": "expected-facts-v1.0.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5278"
+    },
+    {
+      "@id": "phase2/wp2a/queries-v1.0.json",
+      "@type": "File",
+      "name": "queries-v1.0.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2937"
+    },
+    {
+      "@id": "phase2/wp2a/mutation-population-v1.0.json",
+      "@type": "File",
+      "name": "mutation-population-v1.0.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3514"
     }
   ]
 }

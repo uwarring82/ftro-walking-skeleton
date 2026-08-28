@@ -1,0 +1,155 @@
+{
+  "document": "FTRO WP2A mutation population",
+  "version": "1.0.0",
+  "date": "2026-08-28",
+  "contract": "phase2/wp2a/contract-v1.0.md",
+  "freeze_stage": "population",
+  "recipes_frozen_separately": "Executable per-case recipes -- concrete target, mutation value, detecting command, reset boundary, destination -- cannot be frozen before the fixtures exist. They are frozen in phase2/wp2a/mutation-recipes-v1.0.json after step 3 and BEFORE step 4 calibration. Neither artifact may change after any result is observed.",
+  "fixtures": [
+    "M1xA",
+    "M2xA",
+    "M1xB",
+    "M2xB"
+  ],
+  "operators": [
+    {
+      "id": "R1",
+      "description": "route drift",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R2",
+      "description": "outer-digest drift",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R3",
+      "description": "output-digest drift",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R4",
+      "description": "wrong member selector",
+      "applies_to": [
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 2
+    },
+    {
+      "id": "R5",
+      "description": "wrong consumed layer",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R6",
+      "description": "collapsed container identities",
+      "applies_to": [
+        "M1xA",
+        "M2xA"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 2
+    },
+    {
+      "id": "R7",
+      "description": "missing transformation provenance",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R8",
+      "description": "missing evidence/time state",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R9",
+      "description": "dropped fixture",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R10",
+      "description": "forged result",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "detected",
+      "n_cases": 4
+    },
+    {
+      "id": "R11",
+      "description": "display-name-only change",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "expected_observation": "not_detected",
+      "n_cases": 4
+    }
+  ],
+  "n_operators": 11,
+  "n_cases": 40,
+  "registered_non_detections": [
+    "R11"
+  ],
+  "outcome_vocabulary": [
+    "detected",
+    "not_detected",
+    "not_executed"
+  ],
+  "not_executed_policy": "A case whose mutation did not change the fixture, whose evaluator did not run, or whose reset was not verified is not_executed and fails the run. It is never reported as a pass, and never as not_detected."
+}

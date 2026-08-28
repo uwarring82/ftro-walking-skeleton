@@ -1,0 +1,126 @@
+{
+  "document": "FTRO WP2A expected facts",
+  "version": "1.0.0",
+  "date": "2026-08-28",
+  "contract": "phase2/wp2a/contract-v1.0.md",
+  "status": "pre-registered; frozen before either mapping was authored",
+  "oracle_policy": "Expected facts come from independently authenticated evidence only. phase1/manifests/gnss/ro-crate-metadata.json is an input under test and is explicitly NOT an oracle.",
+  "authenticated_sources": {
+    "phase0/reports/igs-artifact-pins.json": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c",
+    "phase0/reports/optical-inventory-summary.json": "f2f8b482dedb245eaac8b56f5ed56397073a64cea448dac845bf5599df3644ea"
+  },
+  "families": {
+    "A_igs_container_variants": {
+      "family_kind": "one family, three artifacts",
+      "consumed_layer_by_science": "none — GNSS support derives from authenticated filenames",
+      "scientific_consumer": "src/ftro/four_domain_intersection.py (IGS_FINAL_NAME regex)",
+      "decoded_consumer": "src/ftro/pin_igs.py (decoded_variant_evidence; content validation)",
+      "artifacts": [
+        {
+          "name": "igs21982.clk.Z",
+          "outer_sio_sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+          "outer_sio_size_bytes": 1594709,
+          "outer_bkg_sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+          "decoded_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "decoded_size_bytes": 6037296,
+          "route_sio": "https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+          "evidence_state": {
+            "sio_decoding": "reproduced",
+            "bkg_decoded_equality": "historical_recorded_not_reexecuted"
+          }
+        },
+        {
+          "name": "igs21983.clk.Z",
+          "outer_sio_sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+          "outer_sio_size_bytes": 1603895,
+          "outer_bkg_sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+          "decoded_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "decoded_size_bytes": 6071695,
+          "route_sio": "https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+          "evidence_state": {
+            "sio_decoding": "reproduced",
+            "bkg_decoded_equality": "historical_recorded_not_reexecuted"
+          }
+        },
+        {
+          "name": "igr21991.clk.Z",
+          "outer_sio_sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+          "outer_sio_size_bytes": 1044279,
+          "outer_bkg_sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+          "decoded_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "decoded_size_bytes": 4000804,
+          "route_sio": "https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+          "evidence_state": {
+            "sio_decoding": "reproduced",
+            "bkg_decoded_equality": "historical_recorded_not_reexecuted"
+          }
+        }
+      ]
+    },
+    "B_rocit_zip_and_one_member": {
+      "family_kind": "one container, exactly one scientific member",
+      "consumed_layer_by_science": "decoded member bytes",
+      "scientific_consumer": "src/ftro/analyse_optical.py (reads .dat)",
+      "container": {
+        "concept": "https://doi.org/10.5281/zenodo.17107693",
+        "member_archive": "ROCIT campaign results.zip"
+      },
+      "member": {
+        "path": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+        "authenticated_in_repo": {
+          "source": "phase0/reports/optical-inventory-summary.json",
+          "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+          "file": "2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 16106,
+          "mjd_first": 59631.788542,
+          "mjd_last": 59631.975891,
+          "selection_basis": "corpus-wide earliest optical sample; sets the published 31.17 h pulsar-to-optical gap"
+        },
+        "predicted_not_authenticated": {
+          "size_bytes": 780292,
+          "sha256_prefix": "00cc90d8",
+          "sha256_suffix": "363c067",
+          "evidence_state": "unauthenticated_at_registration",
+          "note": "No per-member digest or size exists anywhere in the repository. Step 2 confirms or refutes this prediction. A mismatch is a trial-halting finding to be reported, never a silent update."
+        },
+        "evidence_state": {
+          "member_extraction": "reproduced",
+          "scientific_consumption": "reproduced"
+        }
+      }
+    }
+  },
+  "fact_families": {
+    "retrieval": [
+      "concept",
+      "occurrence",
+      "route",
+      "time",
+      "procedure",
+      "outer_sha256",
+      "outer_size_bytes"
+    ],
+    "transformation": [
+      "source_retrieval",
+      "decoder_or_extractor",
+      "member_selector",
+      "output_sha256",
+      "output_size_bytes"
+    ],
+    "consumption": [
+      "consumer",
+      "purpose",
+      "consumed_byte_layer"
+    ],
+    "assertion": [
+      "predicate",
+      "evidence_artifact",
+      "evidence_state",
+      "verification_result",
+      "valid_from",
+      "valid_to",
+      "known_from",
+      "known_to"
+    ]
+  }
+}

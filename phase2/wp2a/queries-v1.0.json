@@ -1,0 +1,94 @@
+{
+  "document": "FTRO WP2A registered queries",
+  "version": "1.0.0",
+  "date": "2026-08-28",
+  "contract": "phase2/wp2a/contract-v1.0.md",
+  "note": "Neutral between M1 and M2 and fixed before either mapping exists. Each query is answered from the fixture alone. A model passes only if every query returns the expected fact for every artifact in the family.",
+  "queries": [
+    {
+      "id": "Q1",
+      "family": "retrieval",
+      "question": "Which exact bytes were retrieved, from which route, at which time, by which procedure?",
+      "expects": [
+        "route",
+        "time",
+        "procedure",
+        "outer_sha256",
+        "outer_size_bytes"
+      ]
+    },
+    {
+      "id": "Q2",
+      "family": "retrieval",
+      "question": "Are two container occurrences of the same concept distinguishable as distinct byte identities?",
+      "expects": [
+        "distinct occurrence identity per outer digest, sharing one concept"
+      ],
+      "discriminating_for": "A (SIO vs BKG containers of one named product)"
+    },
+    {
+      "id": "Q3",
+      "family": "transformation",
+      "question": "Which decoder or extractor produced which output bytes from which retrieval?",
+      "expects": [
+        "source_retrieval",
+        "decoder_or_extractor",
+        "output_sha256",
+        "output_size_bytes"
+      ]
+    },
+    {
+      "id": "Q4",
+      "family": "transformation",
+      "question": "For an archive, which member was selected?",
+      "expects": [
+        "member_selector"
+      ],
+      "discriminating_for": "B"
+    },
+    {
+      "id": "Q5",
+      "family": "consumption",
+      "question": "Which byte layer did the scientific consumer actually read, and for what purpose?",
+      "expects": [
+        "consumer",
+        "purpose",
+        "consumed_byte_layer"
+      ],
+      "note": "A: filenames, decoded bytes NOT consumed by the science. B: decoded member bytes consumed. A model that cannot express this asymmetry fails Q5."
+    },
+    {
+      "id": "Q6",
+      "family": "consumption",
+      "question": "Does the answer to Q5 change if the container occurrence changes but the decoded output does not?",
+      "expects": [
+        "stable scientific answer across SIO/BKG occurrences"
+      ],
+      "discriminating_for": "A"
+    },
+    {
+      "id": "Q7",
+      "family": "assertion",
+      "question": "What is asserted, on what evidence, with what verification result and temporal bounds?",
+      "expects": [
+        "predicate",
+        "evidence_artifact",
+        "evidence_state",
+        "verification_result",
+        "valid_from",
+        "valid_to",
+        "known_from",
+        "known_to"
+      ]
+    },
+    {
+      "id": "Q8",
+      "family": "assertion",
+      "question": "Is BKG decoded equality distinguishable from SIO reproduced decoding?",
+      "expects": [
+        "historical_recorded_not_reexecuted vs reproduced"
+      ],
+      "discriminating_for": "A"
+    }
+  ]
+}
