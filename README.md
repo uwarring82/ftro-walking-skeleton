@@ -116,8 +116,9 @@ That bound is neither universal nor irreducible: the grid is undeclared, the abs
 quantisation loss. These files report fractional frequency at the 10⁻¹⁷ level, which is not
 commensurable with a time quantum.
 
-**4. 85 classified deficiencies**, 56 resolved, 60 self-directed after reconciling the nine-entry
-Phase-1 source ledger and rejecting two closure carriers: one at its clean-archive gate and one
+**4. At qualified carrier `8ddcbfa`: 85 classified deficiencies**, 56 resolved and 60
+self-directed after reconciling the nine-entry Phase-1 source ledger and rejecting two closure
+carriers: one at its clean-archive gate and one
 after its first live-provider failure report proved to misname the last rejection as the first.
 Each carries a `finding_type`
 and an `affects` axis, because an append-only count cannot show convergence. The exact measure is:
@@ -127,6 +128,10 @@ against FTRO's own tooling,
 evidence discipline, test suite and profile conformance. Every entry carries a machine-readable
 `responsible_party`. Three (`FTRO-DEF-031`, `-033`, `-035`) have been **reopened repeatedly** as
 successive fixes proved partial.
+
+Those are deliberately the carrier-state figures supporting Phase-0 qualification. The
+[canonical descendant ledger](ledgers/deficiency-log.md) is the current aggregate and may grow
+without rebinding that carrier; its generated summary is authoritative for current totals.
 
 **5. Platform conformance is separate from scientific demonstration.** The platform worked as far
 as it was exercised: each gap it encountered was located, typed and — where the bytes were

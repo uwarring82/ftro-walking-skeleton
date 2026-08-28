@@ -8,6 +8,7 @@ import importlib.util
 import json
 import os
 from pathlib import Path
+import re
 import shutil
 import subprocess
 import sys
@@ -37,6 +38,16 @@ from deficiency import result_bearing_current_defects  # noqa: E402
 CARRIER_COMMIT = "8ddcbfacef2468b8988c331c30100d72f0912eb8"
 CARRIER_TREE = "c3e05bddcdb59c578cd406d28da8247d243c5c59"
 CARRIER_MANIFEST_SHA256 = "08f5db204eeafc7e9a641167314968b707705491dbd034278083ec34d1647204"
+CARRIER_QUALIFICATION_SHA256 = (
+    "db0d5a81537d30eed89440ee7ae5dc49f15925a26917c883b517ed45126c0618"
+)
+CARRIER_QUALIFICATION = "qualification-8ddcbfa.json"
+CARRIER_CHILD_EVIDENCE = {
+    "c9-8ddcbfa-1.json",
+    "calibration-8ddcbfa-1.json",
+    "qualifying-8ddcbfa-1.json",
+    "qualifying-8ddcbfa-2.json",
+}
 CARRIER_EVIDENCE = (
     "calibration-8ddcbfa-1.json",
     "qualifying-8ddcbfa-1.json",
@@ -89,6 +100,22 @@ class TestRootCrateCompleteness(unittest.TestCase):
                 self.assertEqual(declared, paths)
                 self.assertTrue(all(path in graph for path in paths))
 
+    def test_living_document_populations_are_discovered_not_hand_enumerated(self):
+        crate = json.loads((REPO / "ro-crate-metadata.json").read_text(encoding="utf-8"))
+        graph = {entity["@id"]: entity for entity in crate["@graph"]}
+        root_parts = {row["@id"] for row in graph["./"]["hasPart"]}
+        for directory, suffixes in (("labnotes", {".md"}),
+                                    ("ledgers", {".json", ".md"})):
+            paths = sorted(
+                path.relative_to(REPO).as_posix()
+                for path in (REPO / directory).iterdir()
+                if path.is_file() and path.suffix in suffixes
+            )
+            with self.subTest(directory=directory):
+                self.assertTrue(paths)
+                self.assertTrue(all(path in graph for path in paths))
+                self.assertTrue(all(path in root_parts for path in paths))
+
 
 class TestFrozenManifest(unittest.TestCase):
     @classmethod
@@ -97,9 +124,42 @@ class TestFrozenManifest(unittest.TestCase):
         cls.manifest = json.loads(cls.path.read_text(encoding="utf-8"))
         cls.evidence_dir = REPO / "phase0" / "audit" / "evidence"
 
+        # One independent anchor authenticates the final qualification record.  Only then
+        # may its four child hashes become expectations; this avoids five hand-maintained
+        # copies that could drift together.
+        qualification_raw = (cls.evidence_dir / CARRIER_QUALIFICATION).read_bytes()
+        if hashlib.sha256(qualification_raw).hexdigest() != CARRIER_QUALIFICATION_SHA256:
+            raise AssertionError("qualified Phase-0 evidence root has changed bytes")
+        cls.qualification = json.loads(qualification_raw.decode("utf-8"))
+        if cls.qualification.get("n_qualifying_reports") != 2:
+            raise AssertionError("qualification record does not bind exactly two qualifiers")
+        child_hashes = {
+            cls.qualification["c9_evidence"]["run_id"] + ".json":
+                cls.qualification["c9_evidence"]["sha256"],
+            cls.qualification["calibration_evidence"]["run_id"] + ".json":
+                cls.qualification["calibration_evidence"]["sha256"],
+            **{
+                row["run_id"] + ".json": row["sha256"]
+                for row in cls.qualification["qualifying_evidence"]
+            },
+        }
+        if set(child_hashes) != CARRIER_CHILD_EVIDENCE:
+            raise AssertionError("qualification record binds the wrong evidence population")
+        cls.evidence_sha256 = {
+            CARRIER_QUALIFICATION: CARRIER_QUALIFICATION_SHA256,
+            **child_hashes,
+        }
+
     @classmethod
     def evidence(cls, name):
-        return json.loads((cls.evidence_dir / name).read_text(encoding="utf-8"))
+        raw = (cls.evidence_dir / name).read_bytes()
+        return cls.authenticated_evidence(name, raw)
+
+    @classmethod
+    def authenticated_evidence(cls, name, body):
+        if hashlib.sha256(body).hexdigest() != cls.evidence_sha256[name]:
+            raise AssertionError(f"qualified evidence digest mismatch: {name}")
+        return json.loads(body.decode("utf-8"))
 
     def test_manifest_has_exact_operator_population(self):
         cases = AUDIT.validate_manifest(self.manifest)
@@ -111,6 +171,41 @@ class TestFrozenManifest(unittest.TestCase):
         """The instrument is frozen; its *targets* are resolved against the carrier below."""
         got = hashlib.sha256(self.path.read_bytes()).hexdigest()
         self.assertEqual(got, CARRIER_MANIFEST_SHA256)
+
+    def test_qualified_evidence_bytes_match_the_published_digest_chain(self):
+        """Authenticate bytes before trusting any field projected from the reports."""
+        for name in self.evidence_sha256:
+            with self.subTest(report=name):
+                self.evidence(name)
+
+        qualification = self.evidence(CARRIER_QUALIFICATION)
+        self.assertEqual(qualification["manifest"]["sha256"], CARRIER_MANIFEST_SHA256)
+
+        status = (REPO / "phase0" / "phase0-qualification-v1.0.md").read_text(
+            encoding="utf-8"
+        )
+        published = {
+            name: digest
+            for name, digest in re.findall(
+                r"\| \[`([^`]+\.json)`\]\(audit/evidence/[^)]+\) "
+                r"\| `([0-9a-f]{64})` \|",
+                status,
+            )
+        }
+        self.assertEqual(published, self.evidence_sha256)
+
+    def test_same_size_evidence_mutation_breaks_the_digest_binding(self):
+        name = "calibration-8ddcbfa-1.json"
+        original = (self.evidence_dir / name).read_bytes()
+        mutated = original.replace(b'"n_detected": 21', b'"n_detected": 20', 1)
+        self.assertNotEqual(mutated, original)
+        self.assertEqual(len(mutated), len(original))
+        self.assertEqual(
+            [row["mutation"] for row in json.loads(original)["results"]],
+            [row["mutation"] for row in json.loads(mutated)["results"]],
+        )
+        with self.assertRaisesRegex(AssertionError, "qualified evidence digest mismatch"):
+            self.authenticated_evidence(name, mutated)
 
     def test_every_target_tuple_is_bound_to_the_qualified_carrier(self):
         """Each (target, before-digest) pair must match what the carrier actually executed.
@@ -341,6 +436,16 @@ class TestCurrentReadmePipeline(unittest.TestCase):
             path.write_text(swapped, encoding="utf-8")
             arguments = argparse.Namespace(readme=str(path))
             self.assertEqual(PROBES.readme_order(arguments), 20)
+
+
+class TestGate1PublicationInstructions(unittest.TestCase):
+    def test_live_retrieval_names_the_exact_eligible_candidate(self):
+        text = (REPO / "phase1" / "README.md").read_text(encoding="utf-8")
+        checkout = "git switch --detach d0f9e3728e26fff423237b896e9b8ce79feca5bd"
+        retrieval = "python3 phase1/check_gate1.py --retrieve --source-state committed_checkout"
+        self.assertIn(checkout, text)
+        self.assertIn(retrieval, text)
+        self.assertLess(text.index(checkout), text.index(retrieval))
 
 
 class TestC9Recorder(unittest.TestCase):

@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
@@ -302,7 +302,7 @@
     },
     {
       "id": "FTRO-P1-DEF-011",
-      "version": "1.0.0",
+      "version": "2.0.0",
       "class": "execution",
       "domain": "cross-domain",
       "dataset": "tests/test_phase0_audit.py",
@@ -313,27 +313,95 @@
       "title": "A post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes",
       "failed_step": "Keep the qualified Phase-0 audit instrument verifiable from a descendant commit without re-qualification.",
       "known_fact": "execution-manifest-v1.0.json freezes a (target, target_before_sha256) tuple per case for carrier 8ddcbfa. Its own c9_rebinding_policy states that evidence publication is 'a descendant record about the qualified carrier, not a rebound candidate', so descendant commits are expected and permitted.",
-      "observed": "test_every_target_digest_is_current hashed the WORKING TREE copy of each target and compared it to the carrier's frozen digest. Any edit to a living target therefore reported a manifest defect that does not exist. A status-note edit to README.md -- the pinned target of M12c.version-gained and M13.consume-before-produce -- failed both cases (4091450f... expected, aaeb781d... observed) while the manifest, the runner and every qualification report remained correct and unchanged. test_bound_document_digests_are_current carried the identical latent coupling for the semantic model and acceptance contract.",
+      "observed": "test_every_target_digest_is_current hashed the WORKING TREE copy of each target and compared it to the carrier's frozen digest. Any edit to a living target therefore reported a manifest defect that does not exist. A status-note edit to README.md -- the pinned target of M12c.version-gained and M13.consume-before-produce -- failed both cases (4091450f... expected, aaeb781d... observed) while the manifest, runner and qualification evidence remained unchanged. test_bound_document_digests_are_current carried the identical latent coupling for the semantic model and acceptance contract. CORRECTION v2.0.0: the first carrier-relative repair then trusted selected fields projected from the calibration and qualifying reports without authenticating their bytes. A same-size unchecked-field mutation passed the focused tests and crate-size check while changing the qualified report digest. An unchanged version would make the version-policy gate reject a dirty edit, but a permitted forward version declaration can satisfy that policy without restoring byte identity. The carrier evidence hop was therefore still projection-only.",
       "evidence": [
         "phase0/audit/execution-manifest-v1.0.json",
         "phase0/audit/evidence/calibration-8ddcbfa-1.json",
         "phase0/audit/evidence/qualifying-8ddcbfa-1.json",
         "phase0/audit/evidence/qualifying-8ddcbfa-2.json",
+        "phase0/audit/evidence/c9-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualification-8ddcbfa.json",
+        "phase0/phase0-qualification-v1.0.md",
         "tests/test_phase0_audit.py"
       ],
       "severity": "medium",
-      "impact": "Workflow only. The qualified instrument, its runner and the published Phase-0 qualification evidence were never wrong and are unchanged; no Phase-0 requalification is needed and the convergence predicate is unaffected. The defect made routine documentation maintenance appear to require re-freezing a pre-registered manifest -- the move that made the 2026-08-26 exercises non-qualifying.",
+      "impact": "Workflow only. The qualified instrument, runner and evidence bytes were never wrong and remain unchanged; no Phase-0 requalification is needed and the convergence predicate is unaffected. The v1 repair removed the false coupling to descendant targets but did not prove that the reports used as its historical oracle were the exact qualified reports.",
       "workaround": "None needed; the test was corrected in place.",
-      "proposed_response": "Resolve every frozen (target, before-digest) tuple against the carrier's own calibration and two qualifying reports, and assert those reports bind commit 8ddcbfa, tree c3e05bdd and manifest digest 08f5db20. Freeze the manifest FILE by digest so the instrument itself still cannot drift. Constrain the live README separately, against the working tree, using run_c9.extract_pipeline() and the producer-before-consumer oracle probes.readme_order() -- reading README.md itself, since a fixture copy would test the copy and not the documented pipeline.",
+      "proposed_response": "Freeze the manifest file by digest; authenticate all five published Phase-0 evidence files by their immutable SHA-256 values before parsing any fields; cross-check the authenticated qualification record and the Markdown digest table; then resolve every frozen target tuple against those authenticated reports. Retain a same-size mutation test. Constrain the live README separately against the working tree.",
       "disposition": "resolved",
       "links": {
         "contract": "exit-condition-4",
         "related": [
           "FTRO-P1-DEF-007"
         ]
+      },
+      "reconciliation_note": "v2.0.0 reopens and closes the incomplete v1 repair: carrier-relative field checks are not evidence identity until the report bytes are authenticated."
+    },
+    {
+      "id": "FTRO-P1-DEF-012",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "ro-crate-metadata.json and src/ftro/refresh_crate.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "The root-crate freshness check could not discover new provenance documents",
+      "failed_step": "Keep the repository-level RO-Crate complete as new ledger snapshots and append-only lab notes are published.",
+      "known_fact": "A completeness check over a bounded collection must discover the collection independently; checking only entities already declared in the graph cannot detect an omitted entity.",
+      "observed": "refresh_crate.py --check reported 0 stale and 0 missing while ro-crate-metadata.json omitted ledgers/phase1-deficiency-log-at-f1837d4.json and labnotes/2026-08-28-session-22-ledger-reconciliation.md, and retained dateModified 2026-08-27. The script refreshed contentSize only for graph entities it had already been told about.",
+      "evidence": [
+        "ro-crate-metadata.json",
+        "src/ftro/refresh_crate.py",
+        "ledgers/phase1-deficiency-log-at-f1837d4.json",
+        "labnotes/2026-08-28-session-22-ledger-reconciliation.md",
+        "tests/test_phase0_audit.py"
+      ],
+      "severity": "medium",
+      "impact": "The scientific result and qualified carrier are unchanged, but the repository package omitted current provenance artifacts while its maintenance gate asserted completeness.",
+      "workaround": "The omitted files remained directly retrievable from Git and were named elsewhere in the repository.",
+      "proposed_response": "Discover every Markdown lab note and every JSON/Markdown ledger file independently of the crate graph, require each as both a graph entity and root Dataset hasPart, add missing declarations deterministically, and test the same bounded populations independently.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-DEF-040",
+          "FTRO-DEF-045"
+        ]
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-013",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "phase1/README.md and phase1/check_gate1.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The live Gate-1 reproduction instruction selected an ineligible publication descendant",
+      "failed_step": "Re-run the published Gate-1 retrieval procedure from the source state named by its evidence.",
+      "known_fact": "The SIO Gate-1 report is bound to candidate d0f9e37. The committed-checkout preflight permits only that six-file candidate over parent 12b119a plus a bounded set of publication outputs.",
+      "observed": "phase1/README.md instructed a reader to run --retrieve --source-state committed_checkout after publication without checking out d0f9e37. Current branch head bb76154 is correctly rejected because descendant bookkeeping changed root README, tests, phase0 qualification status and canonical ledgers outside the publication allowlist. The historical 69/69 report remains valid; the reproduction command named the wrong checkout implicitly.",
+      "evidence": [
+        "phase1/README.md",
+        "phase1/check_gate1.py",
+        "phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json"
+      ],
+      "severity": "medium",
+      "impact": "A reader following the documented live reproduction from branch head receives a preflight refusal. No source identity, report content or Gate-1 result is changed.",
+      "workaround": "Check out d0f9e37 manually before running the retrieval.",
+      "proposed_response": "Name the full d0f9e37 commit in the command block, require a clean data-free detached checkout of that exact candidate, and keep report verification at descendant HEAD separate from live reproduction.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-007",
+          "FTRO-P1-DEF-011"
+        ]
       }
     }
   ],
   "revised": "2026-08-28",
-  "revision_note": "Integrated the qualified Phase-0 outcome and resolved the two imported closure blockers; added the representation-level identity fork found by the SIO rebaseline (010) and the post-qualification integrity-test defect found while writing the README status note (011). Reconciled FTRO-P1-DEF-008 to v3.0.0 after canonical and supplement copies were found to carry different bodies under the same 2.0.0 label. Gate 1 source location passes for candidate d0f9e37; the normative RO-Crate 1.3 and profile questions remain open."
+  "revision_note": "Reopened and corrected FTRO-P1-DEF-011 at v2.0.0 after the first carrier-relative repair was shown to trust unauthenticated report projections. Added the root-crate discovery defect (012) and the ineligible Gate-1 reproduction instruction (013), both resolved without changing the qualified carrier or Gate-1 candidate. Gate 1 remains bound to d0f9e37; normative RO-Crate 1.3 and profile questions remain open."
 }

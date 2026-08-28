@@ -19,7 +19,7 @@
       "name": "Federated Time-Reference Observatory — Walking Skeleton",
       "description": "Qualified Phase-0 evidence lock and Phase-1 reality-first manifests for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Carrier 8ddcbfa passed live C9 and two qualifying bounded audits; Gate-1 candidate d0f9e37 located and digest-matched the current SIO-backed source population. Normative RO-Crate 1.3 and FTRO-profile conformance remain unclaimed.",
       "datePublished": "2026-08-25",
-      "dateModified": "2026-08-27",
+      "dateModified": "2026-08-28",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
@@ -236,6 +236,27 @@
         },
         {
           "@id": "phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-13-phase1-manifests.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-14-boundaries-executed.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-15-independent-verification-corrections.md"
+        },
+        {
+          "@id": "labnotes/2026-08-26-session-16-committed-gate1-witness.md"
+        },
+        {
+          "@id": "labnotes/2026-08-28-session-22-ledger-reconciliation.md"
+        },
+        {
+          "@id": "labnotes/2026-08-28-session-23-publication-integrity-corrections.md"
+        },
+        {
+          "@id": "ledgers/phase1-deficiency-log-at-f1837d4.json"
         }
       ],
       "isBasedOn": [
@@ -772,7 +793,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4690",
+      "contentSize": "4832",
       "name": "README.md"
     },
     {
@@ -977,7 +998,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "2573"
+      "contentSize": "4964"
     },
     {
       "@id": "src/ftro/unixz.py",
@@ -1440,7 +1461,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "18005"
+      "contentSize": "23049"
     },
     {
       "@id": "tests/test_phase0_audit_runner_hardening.py",
@@ -1634,7 +1655,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7396"
+      "contentSize": "7852"
     },
     {
       "@id": "phase1/deficiency-log-phase1.json",
@@ -1644,7 +1665,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "26009"
+      "contentSize": "30775"
     },
     {
       "@id": "phase1/check_gate1.py",
@@ -1737,6 +1758,76 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "51057"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-13-phase1-manifests.md",
+      "@type": "File",
+      "name": "2026-08-26-session-13-phase1-manifests.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "6177"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-14-boundaries-executed.md",
+      "@type": "File",
+      "name": "2026-08-26-session-14-boundaries-executed.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "12420"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-15-independent-verification-corrections.md",
+      "@type": "File",
+      "name": "2026-08-26-session-15-independent-verification-corrections.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "8347"
+    },
+    {
+      "@id": "labnotes/2026-08-26-session-16-committed-gate1-witness.md",
+      "@type": "File",
+      "name": "2026-08-26-session-16-committed-gate1-witness.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "4806"
+    },
+    {
+      "@id": "labnotes/2026-08-28-session-22-ledger-reconciliation.md",
+      "@type": "File",
+      "name": "2026-08-28-session-22-ledger-reconciliation.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5299"
+    },
+    {
+      "@id": "labnotes/2026-08-28-session-23-publication-integrity-corrections.md",
+      "@type": "File",
+      "name": "2026-08-28-session-23-publication-integrity-corrections.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "4922"
+    },
+    {
+      "@id": "ledgers/phase1-deficiency-log-at-f1837d4.json",
+      "@type": "File",
+      "name": "phase1-deficiency-log-at-f1837d4.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "26009"
     }
   ]
 }

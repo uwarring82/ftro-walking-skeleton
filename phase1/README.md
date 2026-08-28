@@ -30,6 +30,11 @@ rule stated in its own `note`: new entries open here, each reconciliation snapsh
 state and folds it in, and a body that diverges under an unchanged version label is itself a
 defect — as `FTRO-P1-DEF-008` was, at v2.0.0 in two files with different bodies.
 
+At this checkpoint the supplement is v0.7.0 with thirteen entries: `FTRO-P1-DEF-011` is corrected
+at v2.0.0 and new resolved entries `-012` and `-013` record the crate-discovery and Gate-1
+instruction defects. They are intentionally pending the next commit's immutable snapshot and
+canonical fold.
+
 This is descendant bookkeeping. The qualified carrier `8ddcbfa` is not rebound, no Phase-0
 requalification is required, and Gate 1 remains bound to candidate `d0f9e37`.
 
@@ -63,7 +68,9 @@ python3 -m unittest discover -s phase1/tests -v
 python3 phase1/check_gate1.py
 python3 phase1/check_gate1.py \
   --check-report phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json
-# After publication, from a clean checkout; write outside the tree to preserve cleanliness:
+# Live reproduction must use the exact candidate, not the publication descendant at branch HEAD:
+git switch --detach d0f9e3728e26fff423237b896e9b8ce79feca5bd
+# Run from that clean, data-free checkout; write outside the tree to preserve cleanliness:
 python3 phase1/check_gate1.py --retrieve --source-state committed_checkout \
   --out /tmp/gate1-clean-retrieval.json
 ```

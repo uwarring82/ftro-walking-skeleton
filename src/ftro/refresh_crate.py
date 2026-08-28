@@ -25,11 +25,66 @@ VOLATILE_CONTENT_SIZE = {
     "phase0/reports/vlbi-vgosdb-pin.json",
 }
 
+# These are living, bounded document populations.  Checking only entities already in the
+# graph made a newly added ledger snapshot and lab note invisible while `--check` reported
+# "0 missing" (FTRO-P1-DEF-012).  Discovery is deliberately narrow: it does not turn the
+# crate into an indiscriminate repository dump.
+DISCOVERED_DOCUMENTS = {
+    "labnotes": {".md"},
+    "ledgers": {".json", ".md"},
+}
+
+
+def discovered_documents():
+    paths = []
+    for directory, suffixes in DISCOVERED_DOCUMENTS.items():
+        if not os.path.isdir(directory):
+            continue
+        for name in os.listdir(directory):
+            path = os.path.join(directory, name)
+            if os.path.isfile(path) and os.path.splitext(name)[1] in suffixes:
+                paths.append(path)
+    return sorted(paths)
+
+
+def document_entity(path):
+    suffix = os.path.splitext(path)[1]
+    return {
+        "@id": path,
+        "@type": "File",
+        "name": os.path.basename(path),
+        "encodingFormat": "application/json" if suffix == ".json" else "text/markdown",
+        "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"},
+    }
+
 
 def main():
     check_only = "--check" in sys.argv
     crate = json.load(open(CRATE, encoding="utf-8"))
-    stale, missing = [], []
+    stale, missing, undeclared, added = [], [], [], []
+    graph = {row.get("@id"): row for row in crate["@graph"]}
+    discovered = discovered_documents()
+    root = graph.get("./")
+    root_parts = {row.get("@id") for row in root.get("hasPart", [])} if root else set()
+    for path in discovered:
+        if path not in graph:
+            if check_only:
+                undeclared.append(f"graph entity {path}")
+            else:
+                entity = document_entity(path)
+                crate["@graph"].append(entity)
+                graph[path] = entity
+                added.append(f"graph entity {path}")
+        if root is None:
+            undeclared.append(f"root Dataset for discovered document {path}")
+        elif path not in root_parts:
+            if check_only:
+                undeclared.append(f"root hasPart {path}")
+            else:
+                root.setdefault("hasPart", []).append({"@id": path})
+                root_parts.add(path)
+                added.append(f"root hasPart {path}")
+
     for e in crate["@graph"]:
         i = e.get("@id", "")
         if i.startswith(("http", "#")) or i.endswith("/") or i == "./":
@@ -55,14 +110,19 @@ def main():
         print(f"{'STALE' if check_only else 'updated'}: {i} {was} -> {now}")
     for i in missing:
         print(f"MISSING FILE for graph entity: {i}", file=sys.stderr)
+    for item in undeclared:
+        print(f"UNDECLARED BOUNDED DOCUMENT: {item}", file=sys.stderr)
+    for item in added:
+        print(f"added: {item}")
 
     if check_only:
-        print(f"{len(stale)} stale, {len(missing)} missing")
-        return 1 if (stale or missing) else 0
+        print(f"{len(stale)} stale, {len(missing) + len(undeclared)} missing")
+        return 1 if (stale or missing or undeclared) else 0
 
     json.dump(crate, open(CRATE, "w", encoding="utf-8"), indent=2, ensure_ascii=False)
-    print(f"refreshed {len(stale)} contentSize values; {len(missing)} missing files")
-    return 1 if missing else 0
+    print(f"refreshed {len(stale)} contentSize values; {len(added)} declarations added; "
+          f"{len(missing) + len(undeclared)} missing")
+    return 1 if (missing or undeclared) else 0
 
 
 if __name__ == "__main__":

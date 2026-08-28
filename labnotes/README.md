@@ -57,3 +57,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-27 | 20 | [Phase 0 qualified and closed](2026-08-27-session-20-phase0-qualified.md) |
 | 2026-08-27 | 21 | [Phase 1 rebased to the qualified SIO carrier](2026-08-27-session-21-phase1-sio-rebaseline.md) |
 | 2026-08-28 | 22 | [One ledger again — reconciling the Phase-1 supplement](2026-08-28-session-22-ledger-reconciliation.md) |
+| 2026-08-28 | 23 | [Authenticating carrier evidence and its publication views](2026-08-28-session-23-publication-integrity-corrections.md) |
