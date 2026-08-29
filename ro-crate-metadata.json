@@ -317,6 +317,9 @@
         },
         {
           "@id": "phase2/wp2a/queries-v1.1.json"
+        },
+        {
+          "@id": "ledgers/phase1-deficiency-log-at-7585135.json"
         }
       ],
       "isBasedOn": [
@@ -555,7 +558,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "192681",
+      "contentSize": "199025",
       "name": "deficiency-log.json"
     },
     {
@@ -565,7 +568,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "188401",
+      "contentSize": "194071",
       "name": "deficiency-log.md"
     },
     {
@@ -1715,7 +1718,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "7984"
+      "contentSize": "7975"
     },
     {
       "@id": "phase1/deficiency-log-phase1.json",
@@ -2088,6 +2091,16 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "7387"
+    },
+    {
+      "@id": "ledgers/phase1-deficiency-log-at-7585135.json",
+      "@type": "File",
+      "name": "phase1-deficiency-log-at-7585135.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "36306"
     }
   ]
 }

@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.22.0
+**Version:** 0.23.0
 **Opened:** 2026-08-25
 **Phase:** Phases 0–1
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (57), policy (1), rights (2), schema (9), source_evidence (20)
-**By severity:** critical (4), high (50), low (4), medium (31)
-**By domain:** cross-domain (47), gnss (8), optical (20), pulsar (8), vlbi (6)
-**By disposition:** open (29), resolved (60)
-**By responsible party:** ftro (64), provider (25)
-**By finding type:** assurance_gap (11), current_defect (36), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
-**By affects:** blocks_workflow (26), changes_result (12), maintenance_only (13), no_present_effect (38)
+**By class:** execution (58), policy (1), rights (2), schema (10), source_evidence (20)
+**By severity:** critical (4), high (51), low (4), medium (32)
+**By domain:** cross-domain (49), gnss (8), optical (20), pulsar (8), vlbi (6)
+**By disposition:** open (29), resolved (62)
+**By responsible party:** ftro (66), provider (25)
+**By finding type:** assurance_gap (11), current_defect (38), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
+**By affects:** blocks_workflow (27), changes_result (12), maintenance_only (14), no_present_effect (38)
 
-**Total entries:** 89 · **self-directed:** 64
+**Total entries:** 91 · **self-directed:** 66
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries with `affects == changes_result` and `finding_type == current_defect`.**
 >
@@ -79,6 +79,7 @@
 | [`FTRO-P1-DEF-008`](#ftro-p1-def-008) | execution | high | current_defect | blocks_workflow | **self** | Phase-0 C9 fails at the documented unzip command in a clean checkout |
 | [`FTRO-P1-DEF-009`](#ftro-p1-def-009) | execution | high | current_defect | blocks_workflow | **self** | Neither historical bounded audit qualifies as pre-registered |
 | [`FTRO-P1-DEF-010`](#ftro-p1-def-010) | schema | high | current_defect | blocks_workflow | **self** | Snapshot identity does not distinguish encoded retrieval bytes from decoded product state |
+| [`FTRO-P1-DEF-015`](#ftro-p1-def-015) | schema | high | current_defect | blocks_workflow | **self** | The WP2A v1.0 pre-registration could not execute or answer its own requirements |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -110,6 +111,7 @@
 | [`FTRO-P1-DEF-011`](#ftro-p1-def-011) | execution | medium | current_defect | blocks_workflow | **self** | A post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes |
 | [`FTRO-P1-DEF-012`](#ftro-p1-def-012) | execution | medium | current_defect | maintenance_only | **self** | The root-crate freshness check could not discover new provenance documents |
 | [`FTRO-P1-DEF-013`](#ftro-p1-def-013) | execution | medium | current_defect | blocks_workflow | **self** | The live Gate-1 reproduction instruction selected an ineligible publication descendant |
+| [`FTRO-P1-DEF-014`](#ftro-p1-def-014) | execution | medium | current_defect | maintenance_only | **self** | Bounded crate discovery was flat, so nested phase-tree documents could not be discovered |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | external_evidence_gap | changes_result | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | current_defect | no_present_effect | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | external_evidence_gap | no_present_effect | provider | CORRECTED: high-rate clock and summary products were absent only from the original BKG route |
@@ -3264,5 +3266,78 @@
 **Workaround.** Check out d0f9e37 manually before running the retrieval.
 
 **Proposed response.** Name the full d0f9e37 commit in the command block, require a clean data-free detached checkout of that exact candidate, and keep report verification at descendant HEAD separate from live reproduction.
+
+---
+
+### FTRO-P1-DEF-014
+
+**Bounded crate discovery was flat, so nested phase-tree documents could not be discovered**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `src/ftro/refresh_crate.py` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Keep ro-crate-metadata.json a complete declaration of the repository's provenance documents.
+
+**Known fact or required evidence.** FTRO-P1-DEF-012 added bounded discovery for labnotes/ and ledgers/. Both are flat directories. The phase working trees are not: phase1/reports/, phase1/manifests/<domain>/ and phase2/wp2a/ are nested.
+
+**Observed.** os.listdir could not reach nested paths, so SEVEN Phase-1 reports were undeclared (gate1-clean-retrieval-committed-d31a70c.json, gate1-clean-retrieval-v1.0.json, phase0-c9-attempt-2026-08-26.json, ro-crate-validation-v1.0.json, vocabulary-pressure-v1.0.md, vocabulary-pressure-v1.1.md, vocabulary-usage.json) while refresh_crate.py --check reported 0 stale and 0 missing. Phase 2 was complete only because its five entities were added by hand at 100b0e8; a Step-2 report could have been omitted with the gate still green.
+
+**Evidence.**
+
+- `src/ftro/refresh_crate.py`
+- `ro-crate-metadata.json`
+
+**Impact.** FAIR completeness only; no scientific claim depended on it. A stated rule that nothing enforces gets violated silently -- here by the same check that reported compliance.
+
+**Workaround.** None needed; fixed in place.
+
+**Proposed response.** Bounded recursive discovery over phase1/ and phase2/, limited by an explicit suffix set, a fixed MAX_DISCOVERY_DEPTH and an excluded-directory set, so the crate does not become an indiscriminate repository dump. Verified by the check failing on all 14 missing declarations before the fix and reporting 0 undeclared after.
+
+---
+
+### FTRO-P1-DEF-015
+
+**The WP2A v1.0 pre-registration could not execute or answer its own requirements**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `phase2/wp2a/ v1.0.0 registration` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** WP2A step 1: freeze a registration that step 2 onward can actually execute.
+
+**Known fact or required evidence.** A pre-registration is only useful if every registered question is answerable from its own oracle and every registered mutation is executable against its own fixture requirements.
+
+**Observed.** v1.0 was mechanically sound -- valid JSON, 40 cases recomputing exactly, the optical values correctly labelled a prediction -- and structurally unable to run. Ten defects: (1) evidence_state conflated accessibility, verification result and execution status, and Q7 required temporal bounds the oracle never supplied; (2) the oracle omitted every BKG route, size, retrieval time and procedure -- which exist only at a806bba -- and the optical container's retrieval identity in identities.json; (3) Q5 collapsed three distinct IGS consumption facts into one; (4) NO query tested addressability, so M2 could return a digest literal and pass Q1-Q8 without giving the consumed state an addressable identity -- the very question the trial exists to answer; (5) no outcome existed for an executed R1-R10 going undetected or a detected R11; (6) 'applies to fixture' left recipes free to mutate whichever of three products, six retrieval occurrences or three outputs was easiest, i.e. post-hoc selection at the branch level; (7) R11 mutated a display name fixtures were not required to carry; (8) query applicability was prose while the header implied universality, leaving model-pass aggregation undefined; (9) a refuted optical prediction halted the trial with no typed outcome; (10) the root crate omitted seven Phase-1 reports while its check reported green.
+
+**Evidence.**
+
+- `phase2/wp2a/contract-v1.0.md`
+- `phase2/wp2a/expected-facts-v1.0.json`
+- `phase2/wp2a/queries-v1.0.json`
+- `phase2/wp2a/mutation-population-v1.0.json`
+- `phase2/wp2a/REGISTRATION-STATUS.md`
+
+**Impact.** Caught before step 2, so NO step was executed under v1.0 and no result is contaminated. Had step 2 begun, the trial would have produced a verdict on an identity question it never asked.
+
+**Workaround.** None; the registration was rejected rather than amended.
+
+**Proposed response.** Retain v1.0 byte-unchanged as a rejected registration with an explicit REGISTRATION-STATUS.md, and issue v1.1: three separated axes; temporal values plus bound states; a four-source pinned oracle including a806bba for BKG; Q5a/Q5b/Q5c; new Q9 addressability; assurance_failed and mutation_assurance_failed outcomes; 76 exhaustive mutation cases over counted target populations; F-REQ-4 mandatory ftro:display_name; machine-readable applicability, cardinality and model-pass rule; prediction_refuted; and bounded recursive crate discovery (FTRO-P1-DEF-014). Standing rule: a registration is amended only before execution begins; afterwards a defect yields a new version and a restarted trial.
 
 ---
