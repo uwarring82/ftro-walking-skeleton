@@ -34,6 +34,19 @@ DISCOVERED_DOCUMENTS = {
     "ledgers": {".json", ".md"},
 }
 
+# The phase working trees are living populations too, but nested: phase1/reports/,
+# phase1/manifests/<domain>/, phase2/wp2a/.  Flat discovery could not see them, so seven
+# Phase-1 reports stayed undeclared while `--check` reported "0 missing", and Phase 2 was
+# complete only because entities were added by hand (FTRO-P1-DEF-014).  A rule nothing
+# enforces is not a rule.  Recursion is bounded by an explicit suffix set and a fixed
+# depth so the crate does not become an indiscriminate repository dump.
+DISCOVERED_TREES = {
+    "phase1": {".md", ".json", ".py"},
+    "phase2": {".md", ".json", ".py"},
+}
+MAX_DISCOVERY_DEPTH = 3
+EXCLUDED_DIRECTORY_NAMES = {"__pycache__", ".ipynb_checkpoints"}
+
 
 def discovered_documents():
     paths = []
@@ -44,7 +57,29 @@ def discovered_documents():
             path = os.path.join(directory, name)
             if os.path.isfile(path) and os.path.splitext(name)[1] in suffixes:
                 paths.append(path)
-    return sorted(paths)
+    for directory, suffixes in DISCOVERED_TREES.items():
+        paths.extend(discovered_tree(directory, suffixes))
+    return sorted(set(paths))
+
+
+def discovered_tree(root, suffixes):
+    """Walk one bounded phase tree.  Depth and suffixes are both explicit limits."""
+    paths = []
+    if not os.path.isdir(root):
+        return paths
+    for current, directories, names in os.walk(root):
+        directories[:] = sorted(
+            name for name in directories if name not in EXCLUDED_DIRECTORY_NAMES
+        )
+        depth = len(os.path.relpath(current, root).split(os.sep)) if current != root else 0
+        if depth >= MAX_DISCOVERY_DEPTH:
+            directories[:] = []
+        for name in sorted(names):
+            if os.path.splitext(name)[1] not in suffixes:
+                continue
+            path = os.path.join(current, name).replace(os.sep, "/")
+            paths.append(path)
+    return paths
 
 
 def document_entity(path):

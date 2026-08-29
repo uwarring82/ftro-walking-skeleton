@@ -1,0 +1,257 @@
+{
+  "document": "FTRO WP2A mutation population",
+  "version": "1.1.0",
+  "date": "2026-08-29",
+  "supersedes": "phase2/wp2a/mutation-population-v1.0.json (rejected pre-registration)",
+  "contract": "phase2/wp2a/contract-v1.1.md",
+  "freeze_stage": "population and target selection",
+  "determinism_note": "v1.0 froze only 'applies to fixture', so a later recipe could have mutated whichever of a fixture's three products, six retrieval occurrences or three outputs was easiest -- post-hoc selection at the branch level. Target selection is now EXHAUSTIVE over an explicitly counted population, so the recipe author has no remaining choice.",
+  "fixtures": [
+    "M1xA",
+    "M2xA",
+    "M1xB",
+    "M2xB"
+  ],
+  "target_populations": {
+    "retrieval_occurrence": {
+      "M1xA": 6,
+      "M2xA": 6,
+      "M1xB": 1,
+      "M2xB": 1
+    },
+    "output": {
+      "M1xA": 3,
+      "M2xA": 3,
+      "M1xB": 1,
+      "M2xB": 1
+    },
+    "product": {
+      "M1xA": 3,
+      "M2xA": 3,
+      "M1xB": 1,
+      "M2xB": 1
+    },
+    "fixture": {
+      "M1xA": 1,
+      "M2xA": 1,
+      "M1xB": 1,
+      "M2xB": 1
+    }
+  },
+  "operators": [
+    {
+      "id": "R1",
+      "description": "route drift",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "retrieval_occurrence",
+      "expected_observation": "detected",
+      "n_cases": 14,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R2",
+      "description": "outer-digest drift",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "retrieval_occurrence",
+      "expected_observation": "detected",
+      "n_cases": 14,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R3",
+      "description": "output-digest drift",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "output",
+      "expected_observation": "detected",
+      "n_cases": 8,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R4",
+      "description": "wrong member selector",
+      "applies_to": [
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "output",
+      "expected_observation": "detected",
+      "n_cases": 2,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R5",
+      "description": "wrong consumed layer",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "fixture",
+      "expected_observation": "detected",
+      "n_cases": 4,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R6",
+      "description": "collapsed container identities",
+      "applies_to": [
+        "M1xA",
+        "M2xA"
+      ],
+      "target_scope": "product",
+      "expected_observation": "detected",
+      "n_cases": 6,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R7",
+      "description": "missing transformation provenance",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "output",
+      "expected_observation": "detected",
+      "n_cases": 8,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R8",
+      "description": "missing evidence/time state",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "output",
+      "expected_observation": "detected",
+      "n_cases": 8,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R9",
+      "description": "dropped fixture",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "fixture",
+      "expected_observation": "detected",
+      "n_cases": 4,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R10",
+      "description": "forged result",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "fixture",
+      "expected_observation": "detected",
+      "n_cases": 4,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    },
+    {
+      "id": "R11",
+      "description": "presentation-only change",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "target_scope": "fixture",
+      "expected_observation": "not_detected",
+      "n_cases": 4,
+      "target_selection": "EXHAUSTIVE over the scope population. Every target is mutated in its own case; no case may select a representative subset."
+    }
+  ],
+  "n_operators": 11,
+  "n_cases": 76,
+  "registered_non_detections": [
+    "R11"
+  ],
+  "outcome_vocabulary": [
+    "detected",
+    "not_detected",
+    "not_executed",
+    "assurance_failed"
+  ],
+  "outcome_rules": [
+    {
+      "when": "mutation did not change the fixture, evaluator did not run, or reset unverified",
+      "outcome": "not_executed",
+      "run_verdict": "fail"
+    },
+    {
+      "when": "expected detected AND observed detected",
+      "outcome": "detected",
+      "run_verdict": "pass"
+    },
+    {
+      "when": "expected not_detected AND observed not_detected",
+      "outcome": "not_detected",
+      "run_verdict": "pass"
+    },
+    {
+      "when": "expected detected AND observed not_detected",
+      "outcome": "assurance_failed",
+      "run_verdict": "fail",
+      "note": "ADDED IN v1.1. A registered fault the fixtures do not detect. v1.0 had no outcome for this."
+    },
+    {
+      "when": "expected not_detected AND observed detected",
+      "outcome": "assurance_failed",
+      "run_verdict": "fail",
+      "note": "ADDED IN v1.1. R11 must be inert; detecting it means the evaluator reads presentation."
+    }
+  ],
+  "trial_level_consequence": "Any assurance_failed in a qualifying run yields trial outcome mutation_assurance_failed. NO model verdict may be issued from a run whose evaluator does not detect its registered faults.",
+  "fixture_requirements": [
+    {
+      "id": "F-REQ-1",
+      "requirement": "Every entity carries an addressable @id.",
+      "tested_by": "Q9"
+    },
+    {
+      "id": "F-REQ-2",
+      "requirement": "Every fixture declares all four temporal bounds with an explicit value and bound_state.",
+      "tested_by": "Q7, R8"
+    },
+    {
+      "id": "F-REQ-3",
+      "requirement": "Every fixture reports evidence_state, verification_result and execution_status as three separate fields.",
+      "tested_by": "Q7, Q8"
+    },
+    {
+      "id": "F-REQ-4",
+      "requirement": "MANDATORY presentation-only field ftro:display_name on every entity, read by NO query.",
+      "tested_by": "R11",
+      "note": "ADDED IN v1.1. v1.0 registered R11 as a display-name mutation without requiring fixtures to contain a display name, so R11 was not guaranteed executable. Absence of this field makes R11 not_executed, which fails the run."
+    }
+  ]
+}

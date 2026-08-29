@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.7.0",
+  "version": "0.8.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
@@ -400,8 +400,71 @@
           "FTRO-P1-DEF-011"
         ]
       }
+    },
+    {
+      "id": "FTRO-P1-DEF-014",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "src/ftro/refresh_crate.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "Bounded crate discovery was flat, so nested phase-tree documents could not be discovered",
+      "failed_step": "Keep ro-crate-metadata.json a complete declaration of the repository's provenance documents.",
+      "known_fact": "FTRO-P1-DEF-012 added bounded discovery for labnotes/ and ledgers/. Both are flat directories. The phase working trees are not: phase1/reports/, phase1/manifests/<domain>/ and phase2/wp2a/ are nested.",
+      "observed": "os.listdir could not reach nested paths, so SEVEN Phase-1 reports were undeclared (gate1-clean-retrieval-committed-d31a70c.json, gate1-clean-retrieval-v1.0.json, phase0-c9-attempt-2026-08-26.json, ro-crate-validation-v1.0.json, vocabulary-pressure-v1.0.md, vocabulary-pressure-v1.1.md, vocabulary-usage.json) while refresh_crate.py --check reported 0 stale and 0 missing. Phase 2 was complete only because its five entities were added by hand at 100b0e8; a Step-2 report could have been omitted with the gate still green.",
+      "evidence": [
+        "src/ftro/refresh_crate.py",
+        "ro-crate-metadata.json"
+      ],
+      "severity": "medium",
+      "impact": "FAIR completeness only; no scientific claim depended on it. A stated rule that nothing enforces gets violated silently -- here by the same check that reported compliance.",
+      "workaround": "None needed; fixed in place.",
+      "proposed_response": "Bounded recursive discovery over phase1/ and phase2/, limited by an explicit suffix set, a fixed MAX_DISCOVERY_DEPTH and an excluded-directory set, so the crate does not become an indiscriminate repository dump. Verified by the check failing on all 14 missing declarations before the fix and reporting 0 undeclared after.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-012"
+        ]
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-015",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "phase2/wp2a/ v1.0.0 registration",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The WP2A v1.0 pre-registration could not execute or answer its own requirements",
+      "failed_step": "WP2A step 1: freeze a registration that step 2 onward can actually execute.",
+      "known_fact": "A pre-registration is only useful if every registered question is answerable from its own oracle and every registered mutation is executable against its own fixture requirements.",
+      "observed": "v1.0 was mechanically sound -- valid JSON, 40 cases recomputing exactly, the optical values correctly labelled a prediction -- and structurally unable to run. Ten defects: (1) evidence_state conflated accessibility, verification result and execution status, and Q7 required temporal bounds the oracle never supplied; (2) the oracle omitted every BKG route, size, retrieval time and procedure -- which exist only at a806bba -- and the optical container's retrieval identity in identities.json; (3) Q5 collapsed three distinct IGS consumption facts into one; (4) NO query tested addressability, so M2 could return a digest literal and pass Q1-Q8 without giving the consumed state an addressable identity -- the very question the trial exists to answer; (5) no outcome existed for an executed R1-R10 going undetected or a detected R11; (6) 'applies to fixture' left recipes free to mutate whichever of three products, six retrieval occurrences or three outputs was easiest, i.e. post-hoc selection at the branch level; (7) R11 mutated a display name fixtures were not required to carry; (8) query applicability was prose while the header implied universality, leaving model-pass aggregation undefined; (9) a refuted optical prediction halted the trial with no typed outcome; (10) the root crate omitted seven Phase-1 reports while its check reported green.",
+      "evidence": [
+        "phase2/wp2a/contract-v1.0.md",
+        "phase2/wp2a/expected-facts-v1.0.json",
+        "phase2/wp2a/queries-v1.0.json",
+        "phase2/wp2a/mutation-population-v1.0.json",
+        "phase2/wp2a/REGISTRATION-STATUS.md"
+      ],
+      "severity": "high",
+      "impact": "Caught before step 2, so NO step was executed under v1.0 and no result is contaminated. Had step 2 begun, the trial would have produced a verdict on an identity question it never asked.",
+      "workaround": "None; the registration was rejected rather than amended.",
+      "proposed_response": "Retain v1.0 byte-unchanged as a rejected registration with an explicit REGISTRATION-STATUS.md, and issue v1.1: three separated axes; temporal values plus bound states; a four-source pinned oracle including a806bba for BKG; Q5a/Q5b/Q5c; new Q9 addressability; assurance_failed and mutation_assurance_failed outcomes; 76 exhaustive mutation cases over counted target populations; F-REQ-4 mandatory ftro:display_name; machine-readable applicability, cardinality and model-pass rule; prediction_refuted; and bounded recursive crate discovery (FTRO-P1-DEF-014). Standing rule: a registration is amended only before execution begins; afterwards a defect yields a new version and a restarted trial.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-010",
+          "FTRO-P1-DEF-002",
+          "FTRO-P1-DEF-009"
+        ]
+      }
     }
   ],
-  "revised": "2026-08-28",
-  "revision_note": "Reopened and corrected FTRO-P1-DEF-011 at v2.0.0 after the first carrier-relative repair was shown to trust unauthenticated report projections. Added the root-crate discovery defect (012) and the ineligible Gate-1 reproduction instruction (013), both resolved without changing the qualified carrier or Gate-1 candidate. Gate 1 remains bound to d0f9e37; normative RO-Crate 1.3 and profile questions remain open."
+  "revised": "2026-08-29",
+  "revision_note": "Rejected the WP2A v1.0 pre-registration before step 2 and issued v1.1 (FTRO-P1-DEF-015); extended bounded crate discovery to the nested phase trees, which had left seven Phase-1 reports undeclared behind a green check (FTRO-P1-DEF-014)."
 }

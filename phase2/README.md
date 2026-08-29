@@ -16,10 +16,22 @@ product families, using neutral questions fixed before either mapping exists. It
 either, a registered requirement separates — and reports **equivalence** rather than choosing
 aesthetically when both pass.
 
-- [`contract-v1.0.md`](wp2a/contract-v1.0.md) — frozen scope, models, fact families, decision table
-- [`expected-facts-v1.0.json`](wp2a/expected-facts-v1.0.json) — from authenticated evidence only
-- [`queries-v1.0.json`](wp2a/queries-v1.0.json) — 8 neutral queries
-- [`mutation-population-v1.0.json`](wp2a/mutation-population-v1.0.json) — 11 operators, 40 cases
+> **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Version **1.0.0 was
+> rejected before step 2** and is retained byte-unchanged; **1.1.0 is current**. No step of the
+> trial was ever executed under v1.0.
+
+- [`contract-v1.1.md`](wp2a/contract-v1.1.md) — scope, three axes, oracle, decision tables; §0 tabulates all ten v1.0 defects
+- [`expected-facts-v1.1.json`](wp2a/expected-facts-v1.1.json) — **derived** from four pinned oracle sources
+- [`queries-v1.1.json`](wp2a/queries-v1.1.json) — 11 queries with machine-readable applicability, cardinality and pass rule
+- [`mutation-population-v1.1.json`](wp2a/mutation-population-v1.1.json) — 11 operators, **76 exhaustive cases**, 4 fixture requirements
+
+## What v1.1 changed
+
+v1.0 was mechanically sound and structurally unable to run. The decisive one: **no query tested
+addressability**, so M2 could return an output digest as a literal and pass every other query
+without ever giving the consumed state an addressable identity — the question the trial exists to
+answer. **Q9** now asks it directly. The other nine defects and their repairs are tabulated in
+[`contract-v1.1.md`](wp2a/contract-v1.1.md) §0 and recorded as `FTRO-P1-DEF-015`.
 
 ## Two things the contract records that were not obvious
 
@@ -37,7 +49,7 @@ to confirm or refute, not as an expected fact.
 
 ## Execution order
 
-1. **Freeze contract, expected facts, queries, decision table, mutation population** ✅
+1. **Freeze contract, expected facts, queries, decision tables, mutation population** ✅ *(v1.1; v1.0 rejected)*
 2. Durable input-evidence report — independent `zipfile` / `unzip -p` / Unix-compress cross-checks
 3. Hand-author four fixtures — 2 models × 2 families
 4. One explicitly **non-qualifying** calibration

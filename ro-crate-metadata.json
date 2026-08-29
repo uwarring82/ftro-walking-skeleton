@@ -278,6 +278,45 @@
         },
         {
           "@id": "phase2/wp2a/mutation-population-v1.0.json"
+        },
+        {
+          "@id": "phase1/reports/gate1-clean-retrieval-committed-d31a70c.json"
+        },
+        {
+          "@id": "phase1/reports/gate1-clean-retrieval-v1.0.json"
+        },
+        {
+          "@id": "phase1/reports/phase0-c9-attempt-2026-08-26.json"
+        },
+        {
+          "@id": "phase1/reports/ro-crate-validation-v1.0.json"
+        },
+        {
+          "@id": "phase1/reports/vocabulary-pressure-v1.0.md"
+        },
+        {
+          "@id": "phase1/reports/vocabulary-pressure-v1.1.md"
+        },
+        {
+          "@id": "phase1/reports/vocabulary-usage.json"
+        },
+        {
+          "@id": "labnotes/2026-08-29-session-25-wp2a-v1-rejected.md"
+        },
+        {
+          "@id": "phase2/wp2a/REGISTRATION-STATUS.md"
+        },
+        {
+          "@id": "phase2/wp2a/contract-v1.1.md"
+        },
+        {
+          "@id": "phase2/wp2a/expected-facts-v1.1.json"
+        },
+        {
+          "@id": "phase2/wp2a/mutation-population-v1.1.json"
+        },
+        {
+          "@id": "phase2/wp2a/queries-v1.1.json"
         }
       ],
       "isBasedOn": [
@@ -814,7 +853,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4960",
+      "contentSize": "5073",
       "name": "README.md"
     },
     {
@@ -1019,7 +1058,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "4964"
+      "contentSize": "6552"
     },
     {
       "@id": "src/ftro/unixz.py",
@@ -1686,7 +1725,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "30775"
+      "contentSize": "36306"
     },
     {
       "@id": "phase1/check_gate1.py",
@@ -1878,7 +1917,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3115"
+      "contentSize": "3993"
     },
     {
       "@id": "phase2/wp2a/contract-v1.0.md",
@@ -1919,6 +1958,136 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "3514"
+    },
+    {
+      "@id": "phase1/reports/gate1-clean-retrieval-committed-d31a70c.json",
+      "@type": "File",
+      "name": "gate1-clean-retrieval-committed-d31a70c.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "52884"
+    },
+    {
+      "@id": "phase1/reports/gate1-clean-retrieval-v1.0.json",
+      "@type": "File",
+      "name": "gate1-clean-retrieval-v1.0.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "51837"
+    },
+    {
+      "@id": "phase1/reports/phase0-c9-attempt-2026-08-26.json",
+      "@type": "File",
+      "name": "phase0-c9-attempt-2026-08-26.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5167"
+    },
+    {
+      "@id": "phase1/reports/ro-crate-validation-v1.0.json",
+      "@type": "File",
+      "name": "ro-crate-validation-v1.0.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3211"
+    },
+    {
+      "@id": "phase1/reports/vocabulary-pressure-v1.0.md",
+      "@type": "File",
+      "name": "vocabulary-pressure-v1.0.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5611"
+    },
+    {
+      "@id": "phase1/reports/vocabulary-pressure-v1.1.md",
+      "@type": "File",
+      "name": "vocabulary-pressure-v1.1.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5945"
+    },
+    {
+      "@id": "phase1/reports/vocabulary-usage.json",
+      "@type": "File",
+      "name": "vocabulary-usage.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "6852"
+    },
+    {
+      "@id": "labnotes/2026-08-29-session-25-wp2a-v1-rejected.md",
+      "@type": "File",
+      "name": "2026-08-29-session-25-wp2a-v1-rejected.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "4887"
+    },
+    {
+      "@id": "phase2/wp2a/REGISTRATION-STATUS.md",
+      "@type": "File",
+      "name": "REGISTRATION-STATUS.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "1726"
+    },
+    {
+      "@id": "phase2/wp2a/contract-v1.1.md",
+      "@type": "File",
+      "name": "contract-v1.1.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "10134"
+    },
+    {
+      "@id": "phase2/wp2a/expected-facts-v1.1.json",
+      "@type": "File",
+      "name": "expected-facts-v1.1.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "19864"
+    },
+    {
+      "@id": "phase2/wp2a/mutation-population-v1.1.json",
+      "@type": "File",
+      "name": "mutation-population-v1.1.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "7994"
+    },
+    {
+      "@id": "phase2/wp2a/queries-v1.1.json",
+      "@type": "File",
+      "name": "queries-v1.1.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "7387"
     }
   ]
 }

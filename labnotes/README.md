@@ -59,3 +59,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-28 | 22 | [One ledger again — reconciling the Phase-1 supplement](2026-08-28-session-22-ledger-reconciliation.md) |
 | 2026-08-28 | 23 | [Authenticating carrier evidence and its publication views](2026-08-28-session-23-publication-integrity-corrections.md) |
 | 2026-08-28 | 24 | [Phase 2 opens — WP2A pre-registered before any mapping](2026-08-28-session-24-wp2a-preregistration.md) |
+| 2026-08-29 | 25 | [WP2A v1.0 rejected before step 2; v1.1 issued](2026-08-29-session-25-wp2a-v1-rejected.md) |
