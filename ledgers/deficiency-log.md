@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.23.0
+**Version:** 0.24.0
 **Opened:** 2026-08-25
 **Phase:** Phases 0–1
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (58), policy (1), rights (2), schema (10), source_evidence (20)
-**By severity:** critical (4), high (51), low (4), medium (32)
-**By domain:** cross-domain (49), gnss (8), optical (20), pulsar (8), vlbi (6)
-**By disposition:** open (29), resolved (62)
-**By responsible party:** ftro (66), provider (25)
-**By finding type:** assurance_gap (11), current_defect (38), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
-**By affects:** blocks_workflow (27), changes_result (12), maintenance_only (14), no_present_effect (38)
+**By class:** execution (61), policy (1), rights (2), schema (11), source_evidence (20)
+**By severity:** critical (4), high (52), low (5), medium (34)
+**By domain:** cross-domain (53), gnss (8), optical (20), pulsar (8), vlbi (6)
+**By disposition:** open (29), resolved (66)
+**By responsible party:** ftro (70), provider (25)
+**By finding type:** assurance_gap (12), current_defect (41), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
+**By affects:** blocks_workflow (28), changes_result (12), maintenance_only (17), no_present_effect (38)
 
-**Total entries:** 91 · **self-directed:** 66
+**Total entries:** 95 · **self-directed:** 70
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries with `affects == changes_result` and `finding_type == current_defect`.**
 >
@@ -80,6 +80,7 @@
 | [`FTRO-P1-DEF-009`](#ftro-p1-def-009) | execution | high | current_defect | blocks_workflow | **self** | Neither historical bounded audit qualifies as pre-registered |
 | [`FTRO-P1-DEF-010`](#ftro-p1-def-010) | schema | high | current_defect | blocks_workflow | **self** | Snapshot identity does not distinguish encoded retrieval bytes from decoded product state |
 | [`FTRO-P1-DEF-015`](#ftro-p1-def-015) | schema | high | current_defect | blocks_workflow | **self** | The WP2A v1.0 pre-registration could not execute or answer its own requirements |
+| [`FTRO-P1-DEF-016`](#ftro-p1-def-016) | schema | high | current_defect | blocks_workflow | **self** | WP2A v1.1 named a generator that did not exist and presented curated semantics as source derivation |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -112,10 +113,13 @@
 | [`FTRO-P1-DEF-012`](#ftro-p1-def-012) | execution | medium | current_defect | maintenance_only | **self** | The root-crate freshness check could not discover new provenance documents |
 | [`FTRO-P1-DEF-013`](#ftro-p1-def-013) | execution | medium | current_defect | blocks_workflow | **self** | The live Gate-1 reproduction instruction selected an ineligible publication descendant |
 | [`FTRO-P1-DEF-014`](#ftro-p1-def-014) | execution | medium | current_defect | maintenance_only | **self** | Bounded crate discovery was flat, so nested phase-tree documents could not be discovered |
+| [`FTRO-P1-DEF-017`](#ftro-p1-def-017) | execution | medium | current_defect | maintenance_only | **self** | Bounded discovery declared every discovered file as CC BY Markdown, including Python |
+| [`FTRO-P1-DEF-019`](#ftro-p1-def-019) | execution | medium | assurance_gap | maintenance_only | **self** | Bounded recursive discovery shipped with no regression test |
 | [`FTRO-DEF-009`](#ftro-def-009) | source_evidence | low | external_evidence_gap | changes_result | provider | Declared coverage begins 1.8 days before the first actual sample |
 | [`FTRO-DEF-010`](#ftro-def-010) | schema | low | current_defect | no_present_effect | provider | Arbitrary-precision nominal ratios carry float64 round-trip artifacts |
 | [`FTRO-DEF-020`](#ftro-def-020) | source_evidence | low | external_evidence_gap | no_present_effect | provider | CORRECTED: high-rate clock and summary products were absent only from the original BKG route |
 | [`FTRO-P1-DEF-005`](#ftro-p1-def-005) | schema | low | assurance_gap | no_present_effect | **self** | The profile assumes every domain is a chain; the GNSS leg is only ever consumed |
+| [`FTRO-P1-DEF-018`](#ftro-p1-def-018) | execution | low | current_defect | maintenance_only | **self** | The root crate's dateModified never advanced |
 
 ## Entries
 
@@ -3339,5 +3343,148 @@
 **Workaround.** None; the registration was rejected rather than amended.
 
 **Proposed response.** Retain v1.0 byte-unchanged as a rejected registration with an explicit REGISTRATION-STATUS.md, and issue v1.1: three separated axes; temporal values plus bound states; a four-source pinned oracle including a806bba for BKG; Q5a/Q5b/Q5c; new Q9 addressability; assurance_failed and mutation_assurance_failed outcomes; 76 exhaustive mutation cases over counted target populations; F-REQ-4 mandatory ftro:display_name; machine-readable applicability, cardinality and model-pass rule; prediction_refuted; and bounded recursive crate discovery (FTRO-P1-DEF-014). Standing rule: a registration is amended only before execution begins; afterwards a defect yields a new version and a restarted trial.
+
+---
+
+### FTRO-P1-DEF-016
+
+**WP2A v1.1 named a generator that did not exist and presented curated semantics as source derivation**
+
+| Field | Value |
+| --- | --- |
+| Class | `schema` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `phase2/wp2a/ v1.1.0 registration` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** WP2A step 1: freeze a registration whose facts are traceable to their stated origin.
+
+**Known fact or required evidence.** contract-v1.1.md said expected facts were 'derived from these four sources by a committed generator, not hand-transcribed'.
+
+**Observed.** No generator was committed in either commit. The claim was false in a second and worse way: predicates, temporal interpretations, code-consumption claims and WP2A execution states are not present in, and not derivable from, those four sources. They are curated judgements presented as source derivation. Seven further registration defects rode on that confusion: BKG containers and the optical member labelled `unresolved` where profile v0.0.3:212 reserves that for NO identified artifact and both are identified (hence `opaque`), with Q8 freezing the false contrast; Q5b naming the member-path date as the optical support key when analyse_optical.py never parses the filename and reads MJD tokens from row content; Q7 scored per_output (A=3) against six Family-A assertions with M2 implying six more; 76 cases freezing counts but not target identities, so R8 could still choose among assertions and fields; Q9 requiring the output state to BE an RDF subject or object, which M2 forbids, making assertion_only_supported unreachable by definition; retrieval-start timestamps used as exact valid_from and BKG known_to closed at the SIO re-pin; and Step 2 frozen with no schema, generator, target population, trusted base or disagreement outcome, registering 60 of 256 digest bits.
+
+**Evidence.**
+
+- `phase2/wp2a/contract-v1.1.md`
+- `phase2/wp2a/expected-facts-v1.1.json`
+- `phase2/wp2a/queries-v1.1.json`
+- `phase2/wp2a/mutation-population-v1.1.json`
+- `phase2/wp2a/REGISTRATION-STATUS.md`
+
+**Impact.** Caught before step 2, so nothing was executed under v1.1 and no result is contaminated. Had step 2 begun, the trial would have run on evidence states the profile does not license, a false claim about which bytes production reads, and a discriminating query whose answer was fixed by construction.
+
+**Workaround.** None; rejected rather than amended.
+
+**Proposed response.** Issue v1.2: split generated source facts (build_source_facts.py, digest-pinned, --check, tested) from registered interpretations (basis per item); correct evidence states to opaque; correct Q5b to the MJD token in member content; declare cardinalities; enumerate 134 mutation cases with exact target identities; reframe Q9 as an identifier DENOTING the output state, satisfiable without an output entity; set valid_from unknown with not_later_than and leave known_to open; freeze step2-schema-v1.2.json with evidence_assurance_failed and all 256 digest bits; add split_by_family.
+
+---
+
+### FTRO-P1-DEF-017
+
+**Bounded discovery declared every discovered file as CC BY Markdown, including Python**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `src/ftro/refresh_crate.py` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Declare each provenance document with its actual format and licence.
+
+**Known fact or required evidence.** Repository code is Apache-2.0; documents are CC BY 4.0. The two are not interchangeable.
+
+**Observed.** document_entity() hard-coded encodingFormat to application/json or text/markdown and license to CC BY. Harmless while discovery ran only over labnotes/ and ledgers/; wrong the moment FTRO-P1-DEF-014 widened it to the phase trees, which hold .py. The next auto-declared Python file would have been published as a CC BY Markdown document. Latent at the time of widening: no .py had yet been auto-declared, because the two existing ones were declared by hand.
+
+**Evidence.**
+
+- `src/ftro/refresh_crate.py`
+- `ro-crate-metadata.json`
+
+**Impact.** Licence and format misstatement in the published FAIR record; no scientific claim affected.
+
+**Workaround.** None needed.
+
+**Proposed response.** Per-suffix SUFFIX_DECLARATION giving .py text/x-python, Apache-2.0, SoftwareSourceCode and programmingLanguage; unknown suffixes RAISE rather than defaulting. Verified by phase2/wp2a/build_source_facts.py being auto-declared correctly.
+
+---
+
+### FTRO-P1-DEF-018
+
+**The root crate's dateModified never advanced**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | low |
+| Domain | cross-domain |
+| Dataset | `ro-crate-metadata.json` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Keep the root provenance record's own metadata true.
+
+**Known fact or required evidence.** refresh_crate.py updated contentSize and declarations but never touched dateModified.
+
+**Observed.** The root Dataset advertised 2026-08-28 across commits that changed declared content, through 2026-08-30. A provenance record whose own modification date is wrong misdescribes every claim it carries.
+
+**Evidence.**
+
+- `ro-crate-metadata.json`
+- `src/ftro/refresh_crate.py`
+
+**Impact.** FAIR metadata accuracy only.
+
+**Workaround.** None needed.
+
+**Proposed response.** Advance dateModified on any write that changes the crate; --check reports the staleness without mutating, so the check stays deterministic.
+
+---
+
+### FTRO-P1-DEF-019
+
+**Bounded recursive discovery shipped with no regression test**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | medium |
+| Domain | cross-domain |
+| Dataset | `src/ftro/refresh_crate.py` |
+| Disposition | `resolved` |
+| Finding type | `assurance_gap` |
+| Affects | `maintenance_only` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Land no rule without an executable check.
+
+**Known fact or required evidence.** FTRO-P1-DEF-014 added recursion, depth bounding, suffix filtering and directory exclusion. The only evidence any of it worked was that it found seven known files once.
+
+**Observed.** No committed test exercised discovered_tree, MAX_DISCOVERY_DEPTH, the exclusion set or document_entity. A depth regression, a suffix regression or the .py mislabelling of FTRO-P1-DEF-017 would all have passed the suite silently.
+
+**Evidence.**
+
+- `tests/test_phase0_audit.py`
+- `src/ftro/refresh_crate.py`
+
+**Impact.** Assurance only; the fix happened to be correct except for FTRO-P1-DEF-017.
+
+**Workaround.** None needed.
+
+**Proposed response.** TestCrateDiscovery: nested reach, suffix filtering, __pycache__ exclusion, depth bound, missing-tree tolerance, per-suffix declaration rules, unknown-suffix raise, and zero undeclared phase documents. Plus TestWp2aSourceFacts asserting the committed source facts equal regenerated output and carry no interpretation fields.
 
 ---

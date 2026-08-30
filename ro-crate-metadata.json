@@ -344,6 +344,9 @@
         },
         {
           "@id": "phase2/wp2a/contract-v1.2.md"
+        },
+        {
+          "@id": "ledgers/phase1-deficiency-log-at-ccd1534.json"
         }
       ],
       "isBasedOn": [
@@ -582,7 +585,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "199025",
+      "contentSize": "208562",
       "name": "deficiency-log.json"
     },
     {
@@ -592,7 +595,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "194071",
+      "contentSize": "202139",
       "name": "deficiency-log.md"
     },
     {
@@ -1742,7 +1745,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "8065"
+      "contentSize": "8089"
     },
     {
       "@id": "phase1/deficiency-log-phase1.json",
@@ -2211,6 +2214,16 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "9603"
+    },
+    {
+      "@id": "ledgers/phase1-deficiency-log-at-ccd1534.json",
+      "@type": "File",
+      "name": "phase1-deficiency-log-at-ccd1534.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "44420"
     }
   ]
 }

@@ -15,15 +15,15 @@ files and a fingerprint of four carrier evidence inputs. Publication-only change
 checker still rejects executable or scientific-input drift outside that bounded set.
 
 **Ledger reconciliation is complete through snapshot
-[`phase1-deficiency-log-at-7585135.json`](../ledgers/phase1-deficiency-log-at-7585135.json).**
-[`ledgers/deficiency-log.json`](../ledgers/deficiency-log.json) v0.23.0 is canonical and now
-carries all fifteen Phase-1 entries — 91 entries, 62 resolved, 29 open, 66 self-directed,
+[`phase1-deficiency-log-at-ccd1534.json`](../ledgers/phase1-deficiency-log-at-ccd1534.json).**
+[`ledgers/deficiency-log.json`](../ledgers/deficiency-log.json) v0.24.0 is canonical and now
+carries all nineteen Phase-1 entries — 95 entries, 66 resolved, 29 open, 70 self-directed,
 convergence predicate **0**. It no longer reports an open audit blocker for a phase published as
 closed.
 
-The unified ledger retains **all four** reconciliation sources under `merged_sources`: the
+The unified ledger retains **all five** reconciliation sources under `merged_sources`: the
 immutable nine-entry snapshot at `1c9bc56`, merged before qualification; then eleven at `f1837d4`,
-thirteen at `6e03702`, and fifteen at `7585135`. Earlier snapshots are never rewritten.
+thirteen at `6e03702`, fifteen at `7585135`, and nineteen at `ccd1534`. Earlier snapshots are never rewritten.
 
 `phase1/deficiency-log-phase1.json` continues as the Phase-1 working supplement under the standing
 rule stated in its own `note`: new entries open here, each reconciliation snapshots the committed

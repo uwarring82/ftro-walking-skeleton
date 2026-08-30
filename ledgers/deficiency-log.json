@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.23.0",
+  "version": "0.24.0",
   "opened": "2026-08-25",
   "phase": "Phases 0–1",
   "card": "FTRO-WS-001 v0.3",
@@ -2651,10 +2651,151 @@
         "source_commit": "75851350cef6a1312989d01a73e5080bafbfef7a",
         "sha256": "4741a7692c11160bb7177105fd95745596a6e3e19a81f400ce4099a2d0be3218"
       }
+    },
+    {
+      "class": "schema",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-016",
+      "dataset": "phase2/wp2a/ v1.1.0 registration",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "WP2A v1.1 named a generator that did not exist and presented curated semantics as source derivation",
+      "failed_step": "WP2A step 1: freeze a registration whose facts are traceable to their stated origin.",
+      "known_fact": "contract-v1.1.md said expected facts were 'derived from these four sources by a committed generator, not hand-transcribed'.",
+      "observed": "No generator was committed in either commit. The claim was false in a second and worse way: predicates, temporal interpretations, code-consumption claims and WP2A execution states are not present in, and not derivable from, those four sources. They are curated judgements presented as source derivation. Seven further registration defects rode on that confusion: BKG containers and the optical member labelled `unresolved` where profile v0.0.3:212 reserves that for NO identified artifact and both are identified (hence `opaque`), with Q8 freezing the false contrast; Q5b naming the member-path date as the optical support key when analyse_optical.py never parses the filename and reads MJD tokens from row content; Q7 scored per_output (A=3) against six Family-A assertions with M2 implying six more; 76 cases freezing counts but not target identities, so R8 could still choose among assertions and fields; Q9 requiring the output state to BE an RDF subject or object, which M2 forbids, making assertion_only_supported unreachable by definition; retrieval-start timestamps used as exact valid_from and BKG known_to closed at the SIO re-pin; and Step 2 frozen with no schema, generator, target population, trusted base or disagreement outcome, registering 60 of 256 digest bits.",
+      "evidence": [
+        "phase2/wp2a/contract-v1.1.md",
+        "phase2/wp2a/expected-facts-v1.1.json",
+        "phase2/wp2a/queries-v1.1.json",
+        "phase2/wp2a/mutation-population-v1.1.json",
+        "phase2/wp2a/REGISTRATION-STATUS.md"
+      ],
+      "severity": "high",
+      "impact": "Caught before step 2, so nothing was executed under v1.1 and no result is contaminated. Had step 2 begun, the trial would have run on evidence states the profile does not license, a false claim about which bytes production reads, and a discriminating query whose answer was fixed by construction.",
+      "workaround": "None; rejected rather than amended.",
+      "proposed_response": "Issue v1.2: split generated source facts (build_source_facts.py, digest-pinned, --check, tested) from registered interpretations (basis per item); correct evidence states to opaque; correct Q5b to the MJD token in member content; declare cardinalities; enumerate 134 mutation cases with exact target identities; reframe Q9 as an identifier DENOTING the output state, satisfiable without an output entity; set valid_from unknown with not_later_than and leave known_to open; freeze step2-schema-v1.2.json with evidence_assurance_failed and all 256 digest bits; add split_by_family.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-015",
+          "FTRO-P1-DEF-010",
+          "FTRO-P1-DEF-002"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
+        "version": "0.9.0",
+        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
+        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-017",
+      "dataset": "src/ftro/refresh_crate.py",
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "Bounded discovery declared every discovered file as CC BY Markdown, including Python",
+      "failed_step": "Declare each provenance document with its actual format and licence.",
+      "known_fact": "Repository code is Apache-2.0; documents are CC BY 4.0. The two are not interchangeable.",
+      "observed": "document_entity() hard-coded encodingFormat to application/json or text/markdown and license to CC BY. Harmless while discovery ran only over labnotes/ and ledgers/; wrong the moment FTRO-P1-DEF-014 widened it to the phase trees, which hold .py. The next auto-declared Python file would have been published as a CC BY Markdown document. Latent at the time of widening: no .py had yet been auto-declared, because the two existing ones were declared by hand.",
+      "evidence": [
+        "src/ftro/refresh_crate.py",
+        "ro-crate-metadata.json"
+      ],
+      "severity": "medium",
+      "impact": "Licence and format misstatement in the published FAIR record; no scientific claim affected.",
+      "workaround": "None needed.",
+      "proposed_response": "Per-suffix SUFFIX_DECLARATION giving .py text/x-python, Apache-2.0, SoftwareSourceCode and programmingLanguage; unknown suffixes RAISE rather than defaulting. Verified by phase2/wp2a/build_source_facts.py being auto-declared correctly.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-014"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
+        "version": "0.9.0",
+        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
+        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-018",
+      "dataset": "ro-crate-metadata.json",
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "The root crate's dateModified never advanced",
+      "failed_step": "Keep the root provenance record's own metadata true.",
+      "known_fact": "refresh_crate.py updated contentSize and declarations but never touched dateModified.",
+      "observed": "The root Dataset advertised 2026-08-28 across commits that changed declared content, through 2026-08-30. A provenance record whose own modification date is wrong misdescribes every claim it carries.",
+      "evidence": [
+        "ro-crate-metadata.json",
+        "src/ftro/refresh_crate.py"
+      ],
+      "severity": "low",
+      "impact": "FAIR metadata accuracy only.",
+      "workaround": "None needed.",
+      "proposed_response": "Advance dateModified on any write that changes the crate; --check reports the staleness without mutating, so the check stays deterministic.",
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
+        "version": "0.9.0",
+        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
+        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-019",
+      "dataset": "src/ftro/refresh_crate.py",
+      "finding_type": "assurance_gap",
+      "affects": "maintenance_only",
+      "title": "Bounded recursive discovery shipped with no regression test",
+      "failed_step": "Land no rule without an executable check.",
+      "known_fact": "FTRO-P1-DEF-014 added recursion, depth bounding, suffix filtering and directory exclusion. The only evidence any of it worked was that it found seven known files once.",
+      "observed": "No committed test exercised discovered_tree, MAX_DISCOVERY_DEPTH, the exclusion set or document_entity. A depth regression, a suffix regression or the .py mislabelling of FTRO-P1-DEF-017 would all have passed the suite silently.",
+      "evidence": [
+        "tests/test_phase0_audit.py",
+        "src/ftro/refresh_crate.py"
+      ],
+      "severity": "medium",
+      "impact": "Assurance only; the fix happened to be correct except for FTRO-P1-DEF-017.",
+      "workaround": "None needed.",
+      "proposed_response": "TestCrateDiscovery: nested reach, suffix filtering, __pycache__ exclusion, depth bound, missing-tree tolerance, per-suffix declaration rules, unknown-suffix raise, and zero undeclared phase documents. Plus TestWp2aSourceFacts asserting the committed source facts equal regenerated output and carry no interpretation fields.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-014",
+          "FTRO-P1-DEF-017"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
+        "version": "0.9.0",
+        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
+        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+      }
     }
   ],
-  "revised": "2026-08-29",
-  "revision_note": "Reconciled the Phase-1 supplement through snapshot ledgers/phase1-deficiency-log-at-7585135.json (7585135). FTRO-P1-DEF-014 (bounded crate discovery was flat, leaving seven Phase-1 reports undeclared behind a green check) and FTRO-P1-DEF-015 (the WP2A v1.0 pre-registration could not execute or answer its own requirements; rejected before step 2 and reissued as v1.1) are folded in, both resolved. Descendant bookkeeping only: no Phase-0 requalification and no Gate-1 rerun.",
+  "revised": "2026-08-30",
+  "revision_note": "Reconciled through snapshot ledgers/phase1-deficiency-log-at-ccd1534.json (ccd1534). FTRO-P1-DEF-016 (the WP2A v1.1 registration named a generator that did not exist and presented curated semantics as source derivation; rejected before step 2 and reissued as v1.2) and three publication defects the widened crate discovery exposed or left untested: -017 .py declared as CC BY Markdown, -018 root dateModified never advanced, -019 recursion shipped with no regression test. All resolved. Descendant bookkeeping only.",
   "triage_axes": {
     "finding_type": {
       "current_defect": "today's committed behaviour is wrong or a documented workflow fails",
@@ -2703,6 +2844,14 @@
       "source_commit": "75851350cef6a1312989d01a73e5080bafbfef7a",
       "sha256": "4741a7692c11160bb7177105fd95745596a6e3e19a81f400ce4099a2d0be3218",
       "n_entries": 15
+    },
+    {
+      "ledger": "FTRO Phase-1 Deficiency Log",
+      "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
+      "version": "0.9.0",
+      "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
+      "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1",
+      "n_entries": 19
     }
   ]
 }
