@@ -16,22 +16,28 @@ product families, using neutral questions fixed before either mapping exists. It
 either, a registered requirement separates — and reports **equivalence** rather than choosing
 aesthetically when both pass.
 
-> **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Version **1.0.0 was
-> rejected before step 2** and is retained byte-unchanged; **1.1.0 is current**. No step of the
-> trial was ever executed under v1.0.
+> **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Versions **1.0.0 and
+> 1.1.0 were both rejected before Step 2** and are retained byte-unchanged; **1.2.0 is current**.
+> No step of the trial has been executed under any version.
 
-- [`contract-v1.1.md`](wp2a/contract-v1.1.md) — scope, three axes, oracle, decision tables; §0 tabulates all ten v1.0 defects
-- [`expected-facts-v1.1.json`](wp2a/expected-facts-v1.1.json) — **derived** from four pinned oracle sources
-- [`queries-v1.1.json`](wp2a/queries-v1.1.json) — 11 queries with machine-readable applicability, cardinality and pass rule
-- [`mutation-population-v1.1.json`](wp2a/mutation-population-v1.1.json) — 11 operators, **76 exhaustive cases**, 4 fixture requirements
+- [`contract-v1.2.md`](wp2a/contract-v1.2.md) — scope, corrected states, oracle, decision tables; §0 tabulates the eight v1.1 defects
+- [`source-facts-v1.2.json`](wp2a/source-facts-v1.2.json) — **generated** by [`build_source_facts.py`](wp2a/build_source_facts.py); literal source content only
+- [`interpretations-v1.2.json`](wp2a/interpretations-v1.2.json) — every curated judgement, with a stated basis
+- [`queries-v1.2.json`](wp2a/queries-v1.2.json) — 11 queries, declared cardinality, split-family rule
+- [`mutation-cases-v1.2.json`](wp2a/mutation-cases-v1.2.json) — **134 enumerated cases** with exact target identities, plus R11
+- [`step2-schema-v1.2.json`](wp2a/step2-schema-v1.2.json) — four outcomes, exhaustive targets, trusted base, all 256 digest bits
 
-## What v1.1 changed
+## What v1.2 changed
 
-v1.0 was mechanically sound and structurally unable to run. The decisive one: **no query tested
-addressability**, so M2 could return an output digest as a literal and pass every other query
-without ever giving the consumed state an addressable identity — the question the trial exists to
-answer. **Q9** now asks it directly. The other nine defects and their repairs are tabulated in
-[`contract-v1.1.md`](wp2a/contract-v1.1.md) §0 and recorded as `FTRO-P1-DEF-015`.
+v1.1 claimed expected facts came from "a committed generator" — **none existed** — and the
+predicates, temporal semantics, consumption claims and execution states it presented as source
+derivation are not derivable from those sources at all. v1.2 splits **generated source facts** from
+**registered interpretations**, and commits the generator with `--check` and tests.
+
+Three corrections are substantive, not editorial: BKG containers and the optical member are
+`opaque` (identified but not inspectable), not `unresolved`; the optical support key is the **MJD
+token inside the member content**, not the filename date; and Q9 no longer makes
+`assertion_only_supported` unreachable by construction.
 
 ## Two things the contract records that were not obvious
 
@@ -49,8 +55,8 @@ to confirm or refute, not as an expected fact.
 
 ## Execution order
 
-1. **Freeze contract, expected facts, queries, decision tables, mutation population** ✅ *(v1.1; v1.0 rejected)*
-2. Durable input-evidence report — independent `zipfile` / `unzip -p` / Unix-compress cross-checks
+1. **Freeze contract, source facts, interpretations, queries, decision tables, mutation cases, Step-2 schema** ✅ *(v1.2; v1.0 and v1.1 rejected)*
+2. Write and freeze `run_step2.py`; run Step 2 once from a clean published commit
 3. Hand-author four fixtures — 2 models × 2 families
 4. One explicitly **non-qualifying** calibration
 5. Freeze any repairs in a new candidate

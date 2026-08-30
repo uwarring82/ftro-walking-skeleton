@@ -30,10 +30,11 @@ rule stated in its own `note`: new entries open here, each reconciliation snapsh
 state and folds it in, and a body that diverges under an unchanged version label is itself a
 defect — as `FTRO-P1-DEF-008` was, at v2.0.0 in two files with different bodies.
 
-At this checkpoint the supplement is v0.7.0 with thirteen entries: `FTRO-P1-DEF-011` is corrected
-at v2.0.0 and new resolved entries `-012` and `-013` record the crate-discovery and Gate-1
-instruction defects. That exact committed supplement is snapshotted and folded into the canonical
-ledger; future Phase-1 entries begin the next supplement interval under the same standing rule.
+The supplement version and entry count advance every reconciliation, so this README states the
+**rule** rather than a snapshot count that goes stale between commits: the exact committed
+supplement is snapshotted, recorded in `merged_sources`, and folded into the canonical ledger;
+later Phase-1 entries begin the next supplement interval under the same rule. The current totals
+are the ones stated above, and `ledgers/deficiency-log.json` is always authoritative for them.
 
 This is descendant bookkeeping. The qualified carrier `8ddcbfa` is not rebound, no Phase-0
 requalification is required, and Gate 1 remains bound to candidate `d0f9e37`.

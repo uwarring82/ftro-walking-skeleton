@@ -8,6 +8,7 @@
 # Hand-maintained size metadata drifts silently: a review reported one stale value and
 # fifteen existed. Enumerate, never patch the reported one.
 
+import datetime as dt
 import json
 import os
 import sys
@@ -82,15 +83,36 @@ def discovered_tree(root, suffixes):
     return paths
 
 
+CC_BY = "https://creativecommons.org/licenses/by/4.0/"
+APACHE = "https://www.apache.org/licenses/LICENSE-2.0"
+
+# Discovery originally declared every file as Markdown under CC BY, because it only ever ran
+# over labnotes/ and ledgers/.  Extending it to the phase trees made that wrong: those trees
+# hold .py, which is code under Apache-2.0, not a CC BY document (FTRO-P1-DEF-017).  A default
+# that was merely narrow became a mislabelling as soon as the population widened.
+SUFFIX_DECLARATION = {
+    ".md": {"encodingFormat": "text/markdown", "license": CC_BY, "types": ["File"]},
+    ".json": {"encodingFormat": "application/json", "license": CC_BY, "types": ["File"]},
+    ".py": {"encodingFormat": "text/x-python", "license": APACHE,
+            "types": ["File", "SoftwareSourceCode"]},
+}
+
+
 def document_entity(path):
     suffix = os.path.splitext(path)[1]
-    return {
+    if suffix not in SUFFIX_DECLARATION:
+        raise ValueError(f"no declaration rule for suffix {suffix!r} ({path})")
+    rule = SUFFIX_DECLARATION[suffix]
+    entity = {
         "@id": path,
-        "@type": "File",
+        "@type": rule["types"] if len(rule["types"]) > 1 else rule["types"][0],
         "name": os.path.basename(path),
-        "encodingFormat": "application/json" if suffix == ".json" else "text/markdown",
-        "license": {"@id": "https://creativecommons.org/licenses/by/4.0/"},
+        "encodingFormat": rule["encodingFormat"],
+        "license": {"@id": rule["license"]},
     }
+    if suffix == ".py":
+        entity["programmingLanguage"] = {"@id": "#python-3.13"}
+    return entity
 
 
 def main():
@@ -149,6 +171,20 @@ def main():
         print(f"UNDECLARED BOUNDED DOCUMENT: {item}", file=sys.stderr)
     for item in added:
         print(f"added: {item}")
+
+    # The root Dataset advertised 2026-08-28 through commits that changed declared content,
+    # because nothing ever advanced it (FTRO-P1-DEF-018).  A provenance record whose own
+    # modification date is wrong misdescribes every claim it carries.  --check reports the
+    # staleness; only a write advances it, so the check stays deterministic.
+    if root is not None and (stale or missing or undeclared or added):
+        today = dt.datetime.now(dt.timezone.utc).date().isoformat()
+        if root.get("dateModified") != today:
+            if check_only:
+                stale.append(("./ dateModified", root.get("dateModified"), f"{today} (on next write)"))
+                print(f"STALE: ./ dateModified {root.get('dateModified')} -> {today} (on next write)")
+            else:
+                print(f"updated: ./ dateModified {root.get('dateModified')} -> {today}")
+                root["dateModified"] = today
 
     if check_only:
         print(f"{len(stale)} stale, {len(missing) + len(undeclared)} missing")

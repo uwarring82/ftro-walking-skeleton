@@ -1,0 +1,1156 @@
+{
+  "document": "FTRO WP2A mutation cases",
+  "version": "1.2.0",
+  "date": "2026-08-30",
+  "supersedes": "phase2/wp2a/mutation-population-v1.1.json (rejected)",
+  "contract": "phase2/wp2a/contract-v1.2.md",
+  "freeze_stage": "population, target IDENTITIES and expected observations",
+  "determinism_correction": "v1.1 froze COUNTS, not target identities: R8 could still choose among six assertions and four temporal fields, so post-hoc target choice was reduced, not removed. Every case below names its exact target_id (and target_field where the operator has one). The recipe author has no remaining selection.",
+  "target_populations": {
+    "retrieval_occurrences": {
+      "A": [
+        "igs21982.clk.Z@SIO",
+        "igs21982.clk.Z@BKG",
+        "igs21983.clk.Z@SIO",
+        "igs21983.clk.Z@BKG",
+        "igr21991.clk.Z@SIO",
+        "igr21991.clk.Z@BKG"
+      ],
+      "B": [
+        "rocit-zip@zenodo"
+      ]
+    },
+    "outputs": {
+      "A": [
+        "igs21982.clk.Z#decoded",
+        "igs21983.clk.Z#decoded",
+        "igr21991.clk.Z#decoded"
+      ],
+      "B": [
+        "rocit-zip#member"
+      ]
+    },
+    "products": {
+      "A": [
+        "igs21982.clk.Z",
+        "igs21983.clk.Z",
+        "igr21991.clk.Z"
+      ],
+      "B": [
+        "rocit-zip"
+      ]
+    },
+    "assertions": {
+      "A": [
+        "igs21982.clk.Z#decodes_to",
+        "igs21982.clk.Z#decodes_to_same_output_as",
+        "igs21983.clk.Z#decodes_to",
+        "igs21983.clk.Z#decodes_to_same_output_as",
+        "igr21991.clk.Z#decodes_to",
+        "igr21991.clk.Z#decodes_to_same_output_as"
+      ],
+      "B": [
+        "rocit-zip#extracts_to"
+      ]
+    },
+    "temporal_fields": [
+      "valid_from",
+      "valid_to",
+      "known_from",
+      "known_to"
+    ]
+  },
+  "enumerated_cases": [
+    {
+      "case_id": "R1.M1xA.igs21982.clk.Z@SIO",
+      "operator": "R1",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M1xA.igs21982.clk.Z@SIO",
+      "operator": "R2",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M1xA.igs21982.clk.Z@BKG",
+      "operator": "R1",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M1xA.igs21982.clk.Z@BKG",
+      "operator": "R2",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M1xA.igs21983.clk.Z@SIO",
+      "operator": "R1",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M1xA.igs21983.clk.Z@SIO",
+      "operator": "R2",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M1xA.igs21983.clk.Z@BKG",
+      "operator": "R1",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M1xA.igs21983.clk.Z@BKG",
+      "operator": "R2",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M1xA.igr21991.clk.Z@SIO",
+      "operator": "R1",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M1xA.igr21991.clk.Z@SIO",
+      "operator": "R2",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M1xA.igr21991.clk.Z@BKG",
+      "operator": "R1",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M1xA.igr21991.clk.Z@BKG",
+      "operator": "R2",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M1xA.igs21982.clk.Z#decoded",
+      "operator": "R3",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M1xA.igs21982.clk.Z#decoded",
+      "operator": "R7",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M1xA.igs21983.clk.Z#decoded",
+      "operator": "R3",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M1xA.igs21983.clk.Z#decoded",
+      "operator": "R7",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M1xA.igr21991.clk.Z#decoded",
+      "operator": "R3",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M1xA.igr21991.clk.Z#decoded",
+      "operator": "R7",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R5.M1xA.M1xA",
+      "operator": "R5",
+      "fixture": "M1xA",
+      "target_id": "M1xA",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R6.M1xA.igs21982.clk.Z",
+      "operator": "R6",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R6.M1xA.igs21983.clk.Z",
+      "operator": "R6",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R6.M1xA.igr21991.clk.Z",
+      "operator": "R6",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to.valid_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to.valid_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to.known_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to.known_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to_same_output_as.evidence_state",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to_same_output_as.valid_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to_same_output_as.valid_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to_same_output_as.known_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21982.clk.Z#decodes_to_same_output_as.known_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to.valid_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to.valid_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to.known_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to.known_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to_same_output_as.evidence_state",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to_same_output_as.valid_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to_same_output_as.valid_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to_same_output_as.known_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igs21983.clk.Z#decodes_to_same_output_as.known_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to.valid_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to.valid_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to.known_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to.known_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to_same_output_as.evidence_state",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to_same_output_as.valid_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to_same_output_as.valid_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to_same_output_as.known_from",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xA.igr21991.clk.Z#decodes_to_same_output_as.known_to",
+      "operator": "R8",
+      "fixture": "M1xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R9.M1xA.M1xA",
+      "operator": "R9",
+      "fixture": "M1xA",
+      "target_id": "M1xA",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R10.M1xA.M1xA",
+      "operator": "R10",
+      "fixture": "M1xA",
+      "target_id": "M1xA",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M2xA.igs21982.clk.Z@SIO",
+      "operator": "R1",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M2xA.igs21982.clk.Z@SIO",
+      "operator": "R2",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M2xA.igs21982.clk.Z@BKG",
+      "operator": "R1",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M2xA.igs21982.clk.Z@BKG",
+      "operator": "R2",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M2xA.igs21983.clk.Z@SIO",
+      "operator": "R1",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M2xA.igs21983.clk.Z@SIO",
+      "operator": "R2",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M2xA.igs21983.clk.Z@BKG",
+      "operator": "R1",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M2xA.igs21983.clk.Z@BKG",
+      "operator": "R2",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M2xA.igr21991.clk.Z@SIO",
+      "operator": "R1",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M2xA.igr21991.clk.Z@SIO",
+      "operator": "R2",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z@SIO",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M2xA.igr21991.clk.Z@BKG",
+      "operator": "R1",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M2xA.igr21991.clk.Z@BKG",
+      "operator": "R2",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z@BKG",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M2xA.igs21982.clk.Z#decoded",
+      "operator": "R3",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M2xA.igs21982.clk.Z#decoded",
+      "operator": "R7",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M2xA.igs21983.clk.Z#decoded",
+      "operator": "R3",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M2xA.igs21983.clk.Z#decoded",
+      "operator": "R7",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M2xA.igr21991.clk.Z#decoded",
+      "operator": "R3",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M2xA.igr21991.clk.Z#decoded",
+      "operator": "R7",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decoded",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R5.M2xA.M2xA",
+      "operator": "R5",
+      "fixture": "M2xA",
+      "target_id": "M2xA",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R6.M2xA.igs21982.clk.Z",
+      "operator": "R6",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R6.M2xA.igs21983.clk.Z",
+      "operator": "R6",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R6.M2xA.igr21991.clk.Z",
+      "operator": "R6",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to.valid_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to.valid_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to.known_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to.known_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to_same_output_as.evidence_state",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to_same_output_as.valid_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to_same_output_as.valid_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to_same_output_as.known_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21982.clk.Z#decodes_to_same_output_as.known_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21982.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to.valid_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to.valid_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to.known_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to.known_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to_same_output_as.evidence_state",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to_same_output_as.valid_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to_same_output_as.valid_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to_same_output_as.known_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igs21983.clk.Z#decodes_to_same_output_as.known_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igs21983.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to.valid_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to.valid_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to.known_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to.known_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to_same_output_as.evidence_state",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to_same_output_as.valid_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to_same_output_as.valid_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to_same_output_as.known_from",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xA.igr21991.clk.Z#decodes_to_same_output_as.known_to",
+      "operator": "R8",
+      "fixture": "M2xA",
+      "target_id": "igr21991.clk.Z#decodes_to_same_output_as",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R9.M2xA.M2xA",
+      "operator": "R9",
+      "fixture": "M2xA",
+      "target_id": "M2xA",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R10.M2xA.M2xA",
+      "operator": "R10",
+      "fixture": "M2xA",
+      "target_id": "M2xA",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M1xB.rocit-zip@zenodo",
+      "operator": "R1",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip@zenodo",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M1xB.rocit-zip@zenodo",
+      "operator": "R2",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip@zenodo",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M1xB.rocit-zip#member",
+      "operator": "R3",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#member",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M1xB.rocit-zip#member",
+      "operator": "R7",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#member",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R4.M1xB.rocit-zip#member",
+      "operator": "R4",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#member",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R5.M1xB.M1xB",
+      "operator": "R5",
+      "fixture": "M1xB",
+      "target_id": "M1xB",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xB.rocit-zip#extracts_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xB.rocit-zip#extracts_to.valid_from",
+      "operator": "R8",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xB.rocit-zip#extracts_to.valid_to",
+      "operator": "R8",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xB.rocit-zip#extracts_to.known_from",
+      "operator": "R8",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M1xB.rocit-zip#extracts_to.known_to",
+      "operator": "R8",
+      "fixture": "M1xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R9.M1xB.M1xB",
+      "operator": "R9",
+      "fixture": "M1xB",
+      "target_id": "M1xB",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R10.M1xB.M1xB",
+      "operator": "R10",
+      "fixture": "M1xB",
+      "target_id": "M1xB",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R1.M2xB.rocit-zip@zenodo",
+      "operator": "R1",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip@zenodo",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R2.M2xB.rocit-zip@zenodo",
+      "operator": "R2",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip@zenodo",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R3.M2xB.rocit-zip#member",
+      "operator": "R3",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#member",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R7.M2xB.rocit-zip#member",
+      "operator": "R7",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#member",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R4.M2xB.rocit-zip#member",
+      "operator": "R4",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#member",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R5.M2xB.M2xB",
+      "operator": "R5",
+      "fixture": "M2xB",
+      "target_id": "M2xB",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xB.rocit-zip#extracts_to.evidence_state",
+      "operator": "R8",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "evidence_state",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xB.rocit-zip#extracts_to.valid_from",
+      "operator": "R8",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "valid_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xB.rocit-zip#extracts_to.valid_to",
+      "operator": "R8",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "valid_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xB.rocit-zip#extracts_to.known_from",
+      "operator": "R8",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "known_from",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R8.M2xB.rocit-zip#extracts_to.known_to",
+      "operator": "R8",
+      "fixture": "M2xB",
+      "target_id": "rocit-zip#extracts_to",
+      "target_field": "known_to",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R9.M2xB.M2xB",
+      "operator": "R9",
+      "fixture": "M2xB",
+      "target_id": "M2xB",
+      "expected_observation": "detected"
+    },
+    {
+      "case_id": "R10.M2xB.M2xB",
+      "operator": "R10",
+      "fixture": "M2xB",
+      "target_id": "M2xB",
+      "expected_observation": "detected"
+    }
+  ],
+  "n_enumerated_cases": 134,
+  "cases_per_operator": {
+    "R1": 14,
+    "R10": 4,
+    "R2": 14,
+    "R3": 8,
+    "R4": 2,
+    "R5": 4,
+    "R6": 6,
+    "R7": 8,
+    "R8": 70,
+    "R9": 4
+  },
+  "R11": {
+    "operator": "R11",
+    "expected_observation": "not_detected",
+    "target_scope": "every entity in the fixture",
+    "enumerated_at": "recipe freeze (step 4), because fixture entity counts do not exist until step 3",
+    "correction": "v1.1 required ftro:display_name on EVERY entity but registered only ONE mutation per fixture, so most entities were never shown to be presentation-inert.",
+    "validation_rule": "mutation-recipes-v1.2.json MUST contain exactly one R11 case per entity in each fixture, and the recipe checker MUST assert that count equals the fixture's entity count. A shortfall is not_executed for the whole operator, which fails the run.",
+    "n_cases": "determined_at_recipe_freeze"
+  },
+  "outcome_vocabulary": [
+    "detected",
+    "not_detected",
+    "not_executed",
+    "assurance_failed"
+  ],
+  "outcome_rules": [
+    {
+      "when": "mutation did not change the fixture, evaluator did not run, or reset unverified",
+      "outcome": "not_executed",
+      "run_verdict": "fail"
+    },
+    {
+      "when": "expected detected AND observed detected",
+      "outcome": "detected",
+      "run_verdict": "pass"
+    },
+    {
+      "when": "expected not_detected AND observed not_detected",
+      "outcome": "not_detected",
+      "run_verdict": "pass"
+    },
+    {
+      "when": "expected detected AND observed not_detected",
+      "outcome": "assurance_failed",
+      "run_verdict": "fail"
+    },
+    {
+      "when": "expected not_detected AND observed detected",
+      "outcome": "assurance_failed",
+      "run_verdict": "fail"
+    }
+  ],
+  "trial_level_consequence": "Any assurance_failed in a qualifying run yields trial outcome mutation_assurance_failed and BLOCKS every model verdict.",
+  "fixture_requirements": [
+    {
+      "id": "F-REQ-1",
+      "requirement": "Every entity carries an addressable @id.",
+      "tested_by": "Q9"
+    },
+    {
+      "id": "F-REQ-2",
+      "requirement": "Every assertion declares all four temporal bounds as {value, bound_state}.",
+      "tested_by": "Q7, R8"
+    },
+    {
+      "id": "F-REQ-3",
+      "requirement": "evidence_state, verification_result and execution_status are three separate fields.",
+      "tested_by": "Q7, Q8"
+    },
+    {
+      "id": "F-REQ-4",
+      "requirement": "MANDATORY ftro:display_name on every entity, read by no query.",
+      "tested_by": "R11"
+    },
+    {
+      "id": "F-REQ-5",
+      "requirement": "Entity count is declared in the fixture so R11's enumeration can be checked against it.",
+      "tested_by": "R11 validation_rule"
+    }
+  ]
+}

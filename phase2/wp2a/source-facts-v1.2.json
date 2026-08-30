@@ -1,0 +1,170 @@
+{
+  "document": "FTRO WP2A source facts",
+  "version": "1.2.0",
+  "generator": "phase2/wp2a/build_source_facts.py",
+  "generated_content_only": "Every value here is copied verbatim from a pinned source. Predicates, evidence states, execution states, temporal semantics and code-consumption claims are NOT here -- they are registered interpretations and live in interpretations-v1.2.json.",
+  "sources": {
+    "igs_sio": {
+      "path": "phase0/reports/igs-artifact-pins.json",
+      "git_rev": null,
+      "role": "IGS SIO retrieval occurrences and decoded outputs",
+      "sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c"
+    },
+    "igs_bkg": {
+      "path": "phase0/reports/igs-artifact-pins.json",
+      "git_rev": "a806bba",
+      "role": "IGS BKG retrieval occurrences: route, size, retrieval time, procedure",
+      "sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201"
+    },
+    "identities": {
+      "path": "phase0/evidence/identities.json",
+      "git_rev": null,
+      "role": "optical container complete retrieval identity",
+      "sha256": "a4a27e7e6dd0fd3ae75fd36acd9cfb9dfde51576724b8fecd21cae66cae3ac45"
+    },
+    "optical_inventory": {
+      "path": "phase0/reports/optical-inventory-summary.json",
+      "git_rev": null,
+      "role": "optical member path, sample count and MJD extent",
+      "sha256": "f2f8b482dedb245eaac8b56f5ed56397073a64cea448dac845bf5599df3644ea"
+    }
+  },
+  "family_A": {
+    "products": [
+      {
+        "product_name": "igs21982.clk.Z",
+        "concept_id": "ftro:concept:igs/igs/clock",
+        "name_field_value": "igs21982.clk.Z",
+        "retrieval_occurrences": [
+          {
+            "occurrence_id": "igs21982.clk.Z@SIO",
+            "origin": "SIO",
+            "source_key": "igs_sio",
+            "url": "https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+            "retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+            "retrieved_utc": "2026-08-27T14:44:21.157515+00:00",
+            "sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+            "size_bytes": 1594709
+          },
+          {
+            "occurrence_id": "igs21982.clk.Z@BKG",
+            "origin": "BKG",
+            "source_key": "igs_bkg",
+            "url": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+            "retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+            "retrieved_utc": "2026-08-26T11:16:52.028689+00:00",
+            "sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+            "size_bytes": 1593885
+          }
+        ],
+        "decoded_output": {
+          "output_id": "igs21982.clk.Z#decoded",
+          "sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "size_bytes": 6037296,
+          "source_key": "igs_sio",
+          "snapshot_change_basis": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval."
+        }
+      },
+      {
+        "product_name": "igs21983.clk.Z",
+        "concept_id": "ftro:concept:igs/igs/clock",
+        "name_field_value": "igs21983.clk.Z",
+        "retrieval_occurrences": [
+          {
+            "occurrence_id": "igs21983.clk.Z@SIO",
+            "origin": "SIO",
+            "source_key": "igs_sio",
+            "url": "https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+            "retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+            "retrieved_utc": "2026-08-27T14:44:29.741200+00:00",
+            "sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+            "size_bytes": 1603895
+          },
+          {
+            "occurrence_id": "igs21983.clk.Z@BKG",
+            "origin": "BKG",
+            "source_key": "igs_bkg",
+            "url": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+            "retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+            "retrieved_utc": "2026-08-26T11:16:54.443432+00:00",
+            "sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+            "size_bytes": 1604221
+          }
+        ],
+        "decoded_output": {
+          "output_id": "igs21983.clk.Z#decoded",
+          "sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "size_bytes": 6071695,
+          "source_key": "igs_sio",
+          "snapshot_change_basis": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval."
+        }
+      },
+      {
+        "product_name": "igr21991.clk.Z",
+        "concept_id": "ftro:concept:igs/igr/clock",
+        "name_field_value": "igr21991.clk.Z",
+        "retrieval_occurrences": [
+          {
+            "occurrence_id": "igr21991.clk.Z@SIO",
+            "origin": "SIO",
+            "source_key": "igs_sio",
+            "url": "https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+            "retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+            "retrieved_utc": "2026-08-27T14:45:14.772363+00:00",
+            "sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+            "size_bytes": 1044279
+          },
+          {
+            "occurrence_id": "igr21991.clk.Z@BKG",
+            "origin": "BKG",
+            "source_key": "igs_bkg",
+            "url": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+            "retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+            "retrieved_utc": "2026-08-26T11:17:07.822793+00:00",
+            "sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+            "size_bytes": 1044897
+          }
+        ],
+        "decoded_output": {
+          "output_id": "igr21991.clk.Z#decoded",
+          "sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "size_bytes": 4000804,
+          "source_key": "igs_sio",
+          "snapshot_change_basis": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval."
+        }
+      }
+    ],
+    "n_products": 3,
+    "n_retrieval_occurrences": 6,
+    "n_outputs": 3
+  },
+  "family_B": {
+    "container_occurrence": {
+      "occurrence_id": "rocit-zip@zenodo",
+      "origin": "Zenodo",
+      "source_key": "identities",
+      "concept_id": "https://doi.org/10.5281/zenodo.17107692",
+      "version_id": "https://doi.org/10.5281/zenodo.17107693",
+      "retrieval_procedure": "GET https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+      "retrieved_utc": "2026-08-25T13:45Z",
+      "sha256": "6168e24a0c29ce0929e9651460f11ea77f151176e1ba3d0fe3428e1e08bd56bd",
+      "size_bytes": 83530540,
+      "evidence_state_in_source": "resolvable"
+    },
+    "member": {
+      "output_id": "rocit-zip#member",
+      "source_key": "optical_inventory",
+      "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+      "file": "2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+      "member_path": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+      "n_samples": 16106,
+      "mjd_first": 59631.788542,
+      "mjd_last": 59631.975891,
+      "sha256": null,
+      "size_bytes": null,
+      "absent_from_all_sources": "No per-member digest or size exists in any pinned source, or anywhere in the repository. Step 2 establishes them."
+    },
+    "n_retrieval_occurrences": 1,
+    "n_outputs": 1
+  }
+}

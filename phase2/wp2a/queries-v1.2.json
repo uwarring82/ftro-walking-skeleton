@@ -1,0 +1,221 @@
+{
+  "document": "FTRO WP2A registered queries",
+  "version": "1.2.0",
+  "date": "2026-08-30",
+  "supersedes": "phase2/wp2a/queries-v1.1.json (rejected)",
+  "contract": "phase2/wp2a/contract-v1.2.md",
+  "cardinality_vocabulary": {
+    "per_retrieval_occurrence": "A: 6, B: 1",
+    "per_product": "A: 3, B: 1",
+    "per_output": "A: 3, B: 1",
+    "per_assertion": "A: 6, B: 1",
+    "per_family": "A: 1, B: 1"
+  },
+  "model_pass_rule": {
+    "definition": "A model M passes family F when every query applicable to F returns every expected fact at its registered cardinality, with no extra and no missing answer.",
+    "cardinality_is_declared_not_inferred": true,
+    "split_family_outcomes": {
+      "correction": "v1.1 said a split was 'recorded as such and is not a pass' but gave the trial no outcome for it, so the decision table could not be applied.",
+      "rule": "Per-family verdicts are always reported. A model passes overall only by passing both families. Any split produces trial outcome `split_by_family`, DEF-010 does NOT close, and the per-family verdicts are the result."
+    }
+  },
+  "queries": [
+    {
+      "id": "Q1",
+      "family": "retrieval",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_retrieval_occurrence",
+      "question": "Which exact bytes were retrieved, from which route, at which time, by which procedure?",
+      "expects": [
+        "route",
+        "procedure",
+        "retrieved_utc",
+        "outer_sha256",
+        "outer_size_bytes"
+      ],
+      "oracle": "source-facts-v1.2.json"
+    },
+    {
+      "id": "Q2",
+      "family": "retrieval",
+      "applies_to": [
+        "M1xA",
+        "M2xA"
+      ],
+      "cardinality": "per_product",
+      "question": "Are two container occurrences of one concept distinguishable as distinct byte identities?",
+      "expects": [
+        "two distinct occurrence identities sharing one concept_id"
+      ]
+    },
+    {
+      "id": "Q3",
+      "family": "transformation",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_output",
+      "question": "Which decoder or extractor produced which output bytes from which retrieval?",
+      "expects": [
+        "source_retrieval",
+        "decoder_or_extractor",
+        "output_sha256",
+        "output_size_bytes"
+      ]
+    },
+    {
+      "id": "Q4",
+      "family": "transformation",
+      "applies_to": [
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_output",
+      "question": "For an archive, which member was selected?",
+      "expects": [
+        "member_selector"
+      ]
+    },
+    {
+      "id": "Q5a",
+      "family": "consumption",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_family",
+      "question": "What is the direct scientific input artifact, and which consumer reads it?",
+      "expects": [
+        "direct_scientific_input.artifact",
+        "direct_scientific_input.consumer"
+      ]
+    },
+    {
+      "id": "Q5b",
+      "family": "consumption",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_family",
+      "question": "Where does the logical support key live, and which consumer reads it?",
+      "expects": [
+        "logical_support_key.field",
+        "logical_support_key.consumer"
+      ],
+      "expected_A": "the pin record's `name` field, read by igs_day_from_name() via IGS_FINAL_NAME",
+      "expected_B": "the MJD token and flag column INSIDE the member content, read by parse_dat()",
+      "correction": "v1.1 answered B as 'the member path date component'. analyse_optical.py never parses the filename date -- the filename is a .dat selector and a label. Every temporal fact comes from the row content."
+    },
+    {
+      "id": "Q5c",
+      "family": "consumption",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_family",
+      "question": "Which provider payload bytes are consumed by the science, if any?",
+      "expects": [
+        "provider_payload_bytes_consumed_by_science"
+      ],
+      "expected_A": "none -- decoded IGS bytes are consumed by pin_igs.py for content validation only",
+      "expected_B": "the member bytes"
+    },
+    {
+      "id": "Q6",
+      "family": "consumption",
+      "applies_to": [
+        "M1xA",
+        "M2xA"
+      ],
+      "cardinality": "per_product",
+      "question": "Does the scientific answer change when the container occurrence changes but the decoded output does not?",
+      "expects": [
+        "stable scientific answer across the SIO and BKG occurrences"
+      ]
+    },
+    {
+      "id": "Q7",
+      "family": "assertion",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_assertion",
+      "question": "What is asserted, on what evidence, with what verification result, execution status and temporal bounds?",
+      "expects": [
+        "predicate",
+        "subject",
+        "object",
+        "evidence_artifact",
+        "evidence_state",
+        "verification_result",
+        "execution_status",
+        "valid_from.value",
+        "valid_from.bound_state",
+        "valid_to.value",
+        "valid_to.bound_state",
+        "known_from.value",
+        "known_from.bound_state",
+        "known_to.value",
+        "known_to.bound_state"
+      ],
+      "correction": "v1.1 scored per_output (A=3) against six Family-A assertions."
+    },
+    {
+      "id": "Q8",
+      "family": "assertion",
+      "applies_to": [
+        "M1xA",
+        "M2xA"
+      ],
+      "cardinality": "per_product",
+      "question": "Does the model distinguish (i) the SIO container, retrievable here; (ii) the BKG container, identified exactly but not retrievable here; and (iii) the historical pin report about the BKG container, which IS retrievable -- and separately record that FTRO re-executed the SIO decode but not the BKG one?",
+      "expects": [
+        "SIO container evidence_state resolvable",
+        "BKG container evidence_state opaque",
+        "historical pin report evidence_state resolvable",
+        "execution_status reproduced vs historical_recorded_not_reexecuted"
+      ],
+      "correction": "v1.1 asked for a resolvable/unresolved contrast. Profile v0.0.3 line 212 defines unresolved as NO identified artifact; BKG's artifacts are identified exactly, so they are opaque. v1.1 froze a false contrast into the discriminating query."
+    },
+    {
+      "id": "Q9",
+      "family": "identity",
+      "applies_to": [
+        "M1xA",
+        "M2xA",
+        "M1xB",
+        "M2xB"
+      ],
+      "cardinality": "per_output",
+      "question": "Does the model supply an addressable identifier DENOTING the transformation output byte-state -- not merely a literal digest value -- that can occupy the subject or object position of a further statement?",
+      "expects": [
+        "an identifier denoting the output byte-state",
+        "that identifier occupies subject or object position in at least one further statement"
+      ],
+      "rejects": [
+        "a bare digest literal with no identifier denoting the state"
+      ],
+      "explicitly_satisfiable_without_an_output_entity": true,
+      "correction": "v1.1 required the output state to BE an RDF subject or object, which M2 forbids by construction -- making assertion_only_supported unreachable by definition and the trial unable to fail its own hypothesis in the other direction. M2 may satisfy Q9 by minting an identifier for the output state ON the assertion node, without a separate output entity. v1.1 also said 'consumed state', but for Family A the decoded output is NOT consumed by the science -- the contract says so itself."
+    }
+  ]
+}

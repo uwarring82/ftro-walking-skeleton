@@ -1,0 +1,136 @@
+{
+  "document": "FTRO WP2A step-2 input-evidence schema",
+  "version": "1.2.0",
+  "date": "2026-08-30",
+  "contract": "phase2/wp2a/contract-v1.2.md",
+  "purpose": "Establish the ROCIT member's byte identity, and re-establish the three IGS decoded outputs, by two independent methods each. On success this report becomes the FIFTH immutable oracle source and the member's evidence_state moves opaque -> resolvable.",
+  "framing_correction": "This is AUTHENTICATION AND REPRODUCTION of a prior observation, not a prospective prediction: the claimed member values were supplied before registration. A confirmation here carries the evidential weight of an independent reproduction, not of a successful blind prediction.",
+  "generator": "phase2/wp2a/run_step2.py (frozen before execution; not yet written)",
+  "trusted_base": {
+    "trusted_not_reverified": [
+      "Python 3.13 standard library",
+      "git",
+      "the four pinned oracle sources"
+    ],
+    "explicitly_under_test": [
+      "src/ftro/unixz.py",
+      "python zipfile",
+      "system unzip"
+    ],
+    "note": "unixz.py was verified byte-identical to gzip -dc in Phase 0. Step 2 does NOT inherit that: each decode is cross-checked against an independent implementation here."
+  },
+  "target_population": {
+    "unix_compress": {
+      "exhaustive_over": "all three Family-A decoded outputs",
+      "targets": [
+        "igs21982.clk.Z",
+        "igs21983.clk.Z",
+        "igr21991.clk.Z"
+      ],
+      "n": 3,
+      "methods": [
+        "src/ftro/unixz.py decompress",
+        "system gzip -dc"
+      ],
+      "note": "v1.1 named no Unix-compress target population at all."
+    },
+    "zip_member": {
+      "exhaustive_over": "the single registered member",
+      "n": 1,
+      "targets": [
+        "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat"
+      ],
+      "methods": [
+        "python zipfile.ZipFile.read",
+        "system unzip -p"
+      ]
+    }
+  },
+  "required_report_fields": {
+    "per_target": [
+      "target_id",
+      "method_a",
+      "method_b",
+      "method_a_sha256",
+      "method_a_size_bytes",
+      "method_b_sha256",
+      "method_b_size_bytes",
+      "methods_agree",
+      "expected_sha256",
+      "expected_source",
+      "matches_expected",
+      "outcome"
+    ],
+    "digest_form": {
+      "algorithm": "sha256",
+      "hex_chars": 64,
+      "bits": 256,
+      "partial_digests_rejected": true,
+      "note": "The registration carried only 60 of 256 bits (8-char prefix + 7-char suffix)."
+    },
+    "run_level": [
+      "run_id",
+      "subject_commit",
+      "subject_tree",
+      "started_utc",
+      "ended_utc",
+      "trusted_base",
+      "target_population",
+      "n_targets",
+      "n_supports",
+      "n_contradicts",
+      "n_evidence_assurance_failed",
+      "n_not_executed",
+      "overall_outcome"
+    ]
+  },
+  "outcome_vocabulary": [
+    "supports",
+    "contradicts",
+    "evidence_assurance_failed",
+    "not_executed"
+  ],
+  "outcome_rules": [
+    {
+      "when": "both methods executed, agreed with each other, and matched the expected digest",
+      "outcome": "supports"
+    },
+    {
+      "when": "both methods executed and agreed with each other, but differed from the expected digest",
+      "outcome": "contradicts",
+      "note": "The claimed value is refuted. A typed, reportable result -- the trial halts and says so."
+    },
+    {
+      "when": "both methods executed but DISAGREED WITH EACH OTHER",
+      "outcome": "evidence_assurance_failed",
+      "note": "ADDED IN v1.2. v1.1 had no outcome for this and would have had to pick a winner. Two extractors disagreeing means neither reading is trustworthy; no digest may be adopted."
+    },
+    {
+      "when": "a method did not run, or produced no output",
+      "outcome": "not_executed"
+    }
+  ],
+  "run_outcome_rules": [
+    {
+      "when": "every target supports",
+      "run_outcome": "step2_supports",
+      "consequence": "report becomes the fifth oracle source; member evidence_state opaque -> resolvable"
+    },
+    {
+      "when": "any target contradicts",
+      "run_outcome": "step2_contradicts",
+      "consequence": "trial halts; the refuted claim is reported as a finding about the evidence"
+    },
+    {
+      "when": "any target evidence_assurance_failed",
+      "run_outcome": "step2_evidence_assurance_failed",
+      "consequence": "trial halts; NO digest is adopted from a disagreeing pair"
+    },
+    {
+      "when": "any target not_executed",
+      "run_outcome": "step2_not_executed",
+      "consequence": "trial halts; step 2 is re-run, never partially adopted"
+    }
+  ],
+  "immutability": "On step2_supports the report is pinned by digest into contract v1.2 §4 as source five and never regenerated. A later re-run produces a NEW report; it does not overwrite this one."
+}

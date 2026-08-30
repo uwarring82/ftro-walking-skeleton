@@ -1,0 +1,387 @@
+{
+  "document": "FTRO WP2A registered interpretations",
+  "version": "1.2.0",
+  "date": "2026-08-30",
+  "contract": "phase2/wp2a/contract-v1.2.md",
+  "companion": "phase2/wp2a/source-facts-v1.2.json (generated; contains no interpretation)",
+  "why_separate": "v1.1 presented these as 'derived from the four pinned oracle sources'. They are not derivable from those sources: no source states a predicate, an evidence state, a WP2A execution status, a temporal semantics or which line of code consumes which byte layer. They are curated judgements and are now labelled, with a basis each (FTRO-P1-DEF-016).",
+  "basis_vocabulary": {
+    "profile_term": "fixed by profile v0.0.3 and not open to WP2A",
+    "code_reading": "established by reading committed production code, with file and line",
+    "registered_convention": "a WP2A choice, defensible but not forced; frozen here so it cannot drift"
+  },
+  "evidence_state_assignments": {
+    "basis": "profile_term",
+    "profile_definitions": {
+      "resolvable": "an identified evidence artifact can be retrieved and inspected under the recorded access conditions",
+      "opaque": "an artifact is identified but cannot be inspected sufficiently",
+      "unresolved": "no specific evidence artifact has been identified"
+    },
+    "correction": "v1.1 labelled the BKG containers and the optical member `unresolved`. Both are SPECIFICALLY IDENTIFIED -- BKG by name, digest, size, route and retrieval time at a806bba; the member by authenticated path. Identified-but-inaccessible is `opaque`. v1.1's Q8 froze a false resolvable/unresolved contrast.",
+    "assignments": [
+      {
+        "subject": "IGS container occurrence @SIO",
+        "evidence_state": "resolvable",
+        "basis_note": "retrieved and content-validated from this environment"
+      },
+      {
+        "subject": "IGS container occurrence @BKG",
+        "evidence_state": "opaque",
+        "basis_note": "identified exactly; BKG refused all connections from this environment (session 19)"
+      },
+      {
+        "subject": "historical pin report a806bba:phase0/reports/igs-artifact-pins.json",
+        "evidence_state": "resolvable",
+        "basis_note": "the REPORT is retrievable even though the container it describes is not"
+      },
+      {
+        "subject": "ROCIT container occurrence",
+        "evidence_state": "resolvable"
+      },
+      {
+        "subject": "ROCIT member (before step 2)",
+        "evidence_state": "opaque",
+        "basis_note": "path identified; bytes not yet inspected. Becomes resolvable if step 2 succeeds."
+      }
+    ]
+  },
+  "execution_status_axis": {
+    "basis": "registered_convention",
+    "note": "Not a profile term. Records whether THIS package re-executed the check.",
+    "enum": [
+      "reproduced",
+      "historical_recorded_not_reexecuted",
+      "not_attempted"
+    ]
+  },
+  "temporal_semantics": {
+    "basis": "registered_convention",
+    "correction": "v1.1 used retrieval-start timestamps as EXACT valid_from and known_from, and closed BKG's known_to at the SIO re-pin. Neither is supported. Retrieval time bounds when the bytes existed, not when they became valid; and knowledge of decoded equality did not end when route preference changed.",
+    "rules": [
+      {
+        "bound": "valid_from",
+        "state": "unknown",
+        "carries": "not_later_than = retrieved_utc"
+      },
+      {
+        "bound": "valid_to",
+        "state": "open"
+      },
+      {
+        "bound": "known_from",
+        "state": "exact",
+        "value": "retrieved_utc"
+      },
+      {
+        "bound": "known_to",
+        "state": "open"
+      }
+    ]
+  },
+  "consumption_claims": {
+    "basis": "code_reading",
+    "family_A": {
+      "direct_scientific_input": {
+        "artifact": "phase0/reports/igs-artifact-pins.json",
+        "kind": "authenticated pin-report JSON",
+        "consumer": "src/ftro/four_domain_intersection.py"
+      },
+      "logical_support_key": {
+        "field": "name (of the pin record)",
+        "consumer": "igs_day_from_name() via IGS_FINAL_NAME",
+        "code_reference": "src/ftro/four_domain_intersection.py:38,41,101"
+      },
+      "provider_payload_bytes_consumed_by_science": null,
+      "decoded_bytes_consumer": {
+        "consumer": "src/ftro/pin_igs.py",
+        "purpose": "content validation only",
+        "code_reference": "src/ftro/pin_igs.py:143"
+      }
+    },
+    "family_B": {
+      "direct_scientific_input": {
+        "artifact": "the extracted .dat member bytes",
+        "kind": "provider payload",
+        "consumer": "src/ftro/analyse_optical.py"
+      },
+      "logical_support_key": {
+        "field": "the MJD token and flag column INSIDE the member content",
+        "consumer": "parse_dat()",
+        "code_reference": "src/ftro/analyse_optical.py:50",
+        "correction": "v1.1 named the member-path date component. That is WRONG. analyse_optical.py uses the filename only as a `.dat` selector and as a display label; it never parses the date. Every temporal fact comes from the MJD token in the row content, retained as a decimal string so the tick-quantisation test avoids a float round-trip."
+      },
+      "filename_role": {
+        "role": "selector and label only",
+        "code_reference": "src/ftro/analyse_optical.py:155"
+      },
+      "provider_payload_bytes_consumed_by_science": "the member bytes"
+    }
+  },
+  "assertions": {
+    "basis": "registered_convention",
+    "cardinality_declaration": {
+      "correction": "v1.1 scored Q7 per_output (A=3) while the oracle carried six Family-A assertions, and M2 is defined per container implying six transformation assertions. The no-extra/no-missing rule could not be applied. Cardinality is now declared explicitly.",
+      "family_A": {
+        "assertions": 6,
+        "outputs": 3,
+        "retrieval_occurrences": 6,
+        "M1_output_entities": 3,
+        "M2_transformation_assertions": 6
+      },
+      "family_B": {
+        "assertions": 1,
+        "outputs": 1,
+        "retrieval_occurrences": 1,
+        "M1_output_entities": 1,
+        "M2_transformation_assertions": 1
+      }
+    },
+    "family_A": [
+      {
+        "assertion_id": "igs21982.clk.Z#decodes_to",
+        "subject": "igs21982.clk.Z@SIO",
+        "object": "igs21982.clk.Z#decoded",
+        "predicate": "ftro:decodes_to",
+        "evidence_artifact": "phase0/reports/igs-artifact-pins.json",
+        "evidence_state": "resolvable",
+        "verification_result": "supports",
+        "execution_status": "reproduced",
+        "temporal": {
+          "valid_from": {
+            "value": null,
+            "bound_state": "unknown",
+            "not_later_than": "2026-08-27T14:44:21.157515+00:00",
+            "basis": "Our retrieval time is not the provider's production or publication time. v1.1 used retrieval start as an EXACT valid_from, which the sources do not support. The bytes existed no later than retrieval; when they began to be valid is unknown."
+          },
+          "valid_to": {
+            "value": null,
+            "bound_state": "open"
+          },
+          "known_from": {
+            "value": "2026-08-27T14:44:21.157515+00:00",
+            "bound_state": "exact",
+            "basis": "FTRO knew the assertion from the moment of the recorded retrieval."
+          },
+          "known_to": {
+            "value": null,
+            "bound_state": "open",
+            "basis": "Still known. v1.1 closed BKG's known_to at the SIO re-pin; a change of route preference does not end knowledge of a decoded-equality assertion."
+          }
+        }
+      },
+      {
+        "assertion_id": "igs21982.clk.Z#decodes_to_same_output_as",
+        "subject": "igs21982.clk.Z@BKG",
+        "object": "igs21982.clk.Z@SIO",
+        "predicate": "ftro:decodes_to_same_output_as",
+        "evidence_artifact": "a806bba:phase0/reports/igs-artifact-pins.json",
+        "evidence_state": "resolvable",
+        "evidence_state_basis": "The EVIDENCE ARTIFACT is the historical pin report, which is retrievable. Do not confuse it with the BKG container's own state below.",
+        "verification_result": "supports",
+        "execution_status": "historical_recorded_not_reexecuted",
+        "temporal": {
+          "valid_from": {
+            "value": null,
+            "bound_state": "unknown",
+            "not_later_than": "2026-08-26T11:16:52.028689+00:00",
+            "basis": "Our retrieval time is not the provider's production or publication time. v1.1 used retrieval start as an EXACT valid_from, which the sources do not support. The bytes existed no later than retrieval; when they began to be valid is unknown."
+          },
+          "valid_to": {
+            "value": null,
+            "bound_state": "open"
+          },
+          "known_from": {
+            "value": "2026-08-26T11:16:52.028689+00:00",
+            "bound_state": "exact",
+            "basis": "FTRO knew the assertion from the moment of the recorded retrieval."
+          },
+          "known_to": {
+            "value": null,
+            "bound_state": "open",
+            "basis": "Still known. v1.1 closed BKG's known_to at the SIO re-pin; a change of route preference does not end knowledge of a decoded-equality assertion."
+          }
+        }
+      },
+      {
+        "assertion_id": "igs21983.clk.Z#decodes_to",
+        "subject": "igs21983.clk.Z@SIO",
+        "object": "igs21983.clk.Z#decoded",
+        "predicate": "ftro:decodes_to",
+        "evidence_artifact": "phase0/reports/igs-artifact-pins.json",
+        "evidence_state": "resolvable",
+        "verification_result": "supports",
+        "execution_status": "reproduced",
+        "temporal": {
+          "valid_from": {
+            "value": null,
+            "bound_state": "unknown",
+            "not_later_than": "2026-08-27T14:44:29.741200+00:00",
+            "basis": "Our retrieval time is not the provider's production or publication time. v1.1 used retrieval start as an EXACT valid_from, which the sources do not support. The bytes existed no later than retrieval; when they began to be valid is unknown."
+          },
+          "valid_to": {
+            "value": null,
+            "bound_state": "open"
+          },
+          "known_from": {
+            "value": "2026-08-27T14:44:29.741200+00:00",
+            "bound_state": "exact",
+            "basis": "FTRO knew the assertion from the moment of the recorded retrieval."
+          },
+          "known_to": {
+            "value": null,
+            "bound_state": "open",
+            "basis": "Still known. v1.1 closed BKG's known_to at the SIO re-pin; a change of route preference does not end knowledge of a decoded-equality assertion."
+          }
+        }
+      },
+      {
+        "assertion_id": "igs21983.clk.Z#decodes_to_same_output_as",
+        "subject": "igs21983.clk.Z@BKG",
+        "object": "igs21983.clk.Z@SIO",
+        "predicate": "ftro:decodes_to_same_output_as",
+        "evidence_artifact": "a806bba:phase0/reports/igs-artifact-pins.json",
+        "evidence_state": "resolvable",
+        "evidence_state_basis": "The EVIDENCE ARTIFACT is the historical pin report, which is retrievable. Do not confuse it with the BKG container's own state below.",
+        "verification_result": "supports",
+        "execution_status": "historical_recorded_not_reexecuted",
+        "temporal": {
+          "valid_from": {
+            "value": null,
+            "bound_state": "unknown",
+            "not_later_than": "2026-08-26T11:16:54.443432+00:00",
+            "basis": "Our retrieval time is not the provider's production or publication time. v1.1 used retrieval start as an EXACT valid_from, which the sources do not support. The bytes existed no later than retrieval; when they began to be valid is unknown."
+          },
+          "valid_to": {
+            "value": null,
+            "bound_state": "open"
+          },
+          "known_from": {
+            "value": "2026-08-26T11:16:54.443432+00:00",
+            "bound_state": "exact",
+            "basis": "FTRO knew the assertion from the moment of the recorded retrieval."
+          },
+          "known_to": {
+            "value": null,
+            "bound_state": "open",
+            "basis": "Still known. v1.1 closed BKG's known_to at the SIO re-pin; a change of route preference does not end knowledge of a decoded-equality assertion."
+          }
+        }
+      },
+      {
+        "assertion_id": "igr21991.clk.Z#decodes_to",
+        "subject": "igr21991.clk.Z@SIO",
+        "object": "igr21991.clk.Z#decoded",
+        "predicate": "ftro:decodes_to",
+        "evidence_artifact": "phase0/reports/igs-artifact-pins.json",
+        "evidence_state": "resolvable",
+        "verification_result": "supports",
+        "execution_status": "reproduced",
+        "temporal": {
+          "valid_from": {
+            "value": null,
+            "bound_state": "unknown",
+            "not_later_than": "2026-08-27T14:45:14.772363+00:00",
+            "basis": "Our retrieval time is not the provider's production or publication time. v1.1 used retrieval start as an EXACT valid_from, which the sources do not support. The bytes existed no later than retrieval; when they began to be valid is unknown."
+          },
+          "valid_to": {
+            "value": null,
+            "bound_state": "open"
+          },
+          "known_from": {
+            "value": "2026-08-27T14:45:14.772363+00:00",
+            "bound_state": "exact",
+            "basis": "FTRO knew the assertion from the moment of the recorded retrieval."
+          },
+          "known_to": {
+            "value": null,
+            "bound_state": "open",
+            "basis": "Still known. v1.1 closed BKG's known_to at the SIO re-pin; a change of route preference does not end knowledge of a decoded-equality assertion."
+          }
+        }
+      },
+      {
+        "assertion_id": "igr21991.clk.Z#decodes_to_same_output_as",
+        "subject": "igr21991.clk.Z@BKG",
+        "object": "igr21991.clk.Z@SIO",
+        "predicate": "ftro:decodes_to_same_output_as",
+        "evidence_artifact": "a806bba:phase0/reports/igs-artifact-pins.json",
+        "evidence_state": "resolvable",
+        "evidence_state_basis": "The EVIDENCE ARTIFACT is the historical pin report, which is retrievable. Do not confuse it with the BKG container's own state below.",
+        "verification_result": "supports",
+        "execution_status": "historical_recorded_not_reexecuted",
+        "temporal": {
+          "valid_from": {
+            "value": null,
+            "bound_state": "unknown",
+            "not_later_than": "2026-08-26T11:17:07.822793+00:00",
+            "basis": "Our retrieval time is not the provider's production or publication time. v1.1 used retrieval start as an EXACT valid_from, which the sources do not support. The bytes existed no later than retrieval; when they began to be valid is unknown."
+          },
+          "valid_to": {
+            "value": null,
+            "bound_state": "open"
+          },
+          "known_from": {
+            "value": "2026-08-26T11:17:07.822793+00:00",
+            "bound_state": "exact",
+            "basis": "FTRO knew the assertion from the moment of the recorded retrieval."
+          },
+          "known_to": {
+            "value": null,
+            "bound_state": "open",
+            "basis": "Still known. v1.1 closed BKG's known_to at the SIO re-pin; a change of route preference does not end knowledge of a decoded-equality assertion."
+          }
+        }
+      }
+    ],
+    "family_B": [
+      {
+        "assertion_id": "rocit-zip#extracts_to",
+        "subject": "rocit-zip@zenodo",
+        "object": "rocit-zip#member",
+        "predicate": "ftro:extracts_to",
+        "evidence_artifact": "phase0/reports/optical-inventory-summary.json",
+        "evidence_state": "resolvable",
+        "verification_result": "indeterminate",
+        "verification_result_basis": "member path authenticated; member bytes not yet inspected",
+        "execution_status": "not_attempted",
+        "temporal": {
+          "valid_from": {
+            "value": null,
+            "bound_state": "unknown",
+            "not_later_than": "2026-08-25T13:45Z",
+            "basis": "Our retrieval time is not the provider's production or publication time. v1.1 used retrieval start as an EXACT valid_from, which the sources do not support. The bytes existed no later than retrieval; when they began to be valid is unknown."
+          },
+          "valid_to": {
+            "value": null,
+            "bound_state": "open"
+          },
+          "known_from": {
+            "value": "2026-08-25T13:45Z",
+            "bound_state": "exact",
+            "basis": "FTRO knew the assertion from the moment of the recorded retrieval."
+          },
+          "known_to": {
+            "value": null,
+            "bound_state": "open",
+            "basis": "Still known. v1.1 closed BKG's known_to at the SIO re-pin; a change of route preference does not end knowledge of a decoded-equality assertion."
+          }
+        }
+      }
+    ]
+  },
+  "step_2_dependency": {
+    "member_digest_and_size": {
+      "status": "not_established_in_any_source",
+      "registered_as": "authentication_target",
+      "correction": "v1.1 called this a prospective PREDICTION. It is not: the value was supplied from a prior diagnostic observation before registration, so step 2 REPRODUCES and AUTHENTICATES a known observation. Calling it a prediction overstates the evidential standing of a confirmation.",
+      "claimed_value": {
+        "size_bytes": 780292,
+        "sha256_prefix": "00cc90d8",
+        "sha256_suffix": "363c067",
+        "bits_registered": 60,
+        "bits_total": 256,
+        "note": "Only 60 of 256 digest bits were registered. Step 2 must record all 256."
+      }
+    }
+  }
+}
