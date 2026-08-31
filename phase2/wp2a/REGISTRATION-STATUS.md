@@ -9,7 +9,19 @@ Read this before reading any other WP2A document.
 | **1.2.0** | **REJECTED pre-registration — never executed** | `contract-v1.2.md`, `source-facts-v1.2.json` + `build_source_facts.py`, `interpretations-v1.2.json`, `queries-v1.2.json`, `mutation-cases-v1.2.json`, `step2-schema-v1.2.json` |
 | **1.3.0** | **SUPERSEDED pre-execution — never executed** | Git carrier `734ba0f`; superseded because the imported prior claim omitted a pre-existing ignored member and stated uncheckable process provenance as bare facts |
 | **1.3.1** | **SUPERSEDED pre-execution — never executed** | Git carrier `1b9e056`; its optical ZIP path was incompatible with its clean published-subject precondition |
-| **1.3.2** | **CURRENT — instrument bound, Step 2 not executed** | `contract-v1.3.md`, `source-facts-v1.3.json`, `prior-observation-v1.3.json`, `interpretations-v1.3.json`, `queries-v1.3.json`, `expected-answers-v1.3.json`, `mutation-cases-v1.3.json`, `step2-schema-v1.3.json`, `registration-manifest-v1.3.json`, generators, checker and runner |
+| **1.3.2** | **CURRENT — Step 2 `supports`; evaluator not frozen** | Instrument files listed below; immutable report `reports/step2-input-evidence-v1.3.json`, subject `1d4bc31`, manifest `703b6550…5868c` |
+
+## v1.3.2 Step 2 executed once
+
+The single execution at published clean carrier `1d4bc31` authenticated all four outer inputs,
+observed no post-authentication path change, and produced four supporting target rows with direct
+byte equality between each registered method pair. The report SHA-256 is
+`67111c699372237192588771332ff14704279a6dd8fbaf0f60ee356f63bf725c`.
+
+For `member:rocit-zip`, both extractors reproduced
+`00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067`, 780,292 bytes. The report's
+required `outcome_interpretation_bound` says exactly what this establishes and does not establish.
+No fixture, evaluator or mutation execution exists yet.
 
 ## v1.3.1 and v1.3.2 are pre-execution amendments
 

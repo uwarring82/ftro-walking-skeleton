@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.25.0
+**Version:** 0.26.0
 **Opened:** 2026-08-25
 **Phase:** Phases 0–1
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (62), policy (1), rights (2), schema (12), source_evidence (20)
-**By severity:** critical (4), high (54), low (5), medium (34)
-**By domain:** cross-domain (55), gnss (8), optical (20), pulsar (8), vlbi (6)
-**By disposition:** open (29), resolved (68)
-**By responsible party:** ftro (72), provider (25)
-**By finding type:** assurance_gap (12), current_defect (43), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
-**By affects:** blocks_workflow (30), changes_result (12), maintenance_only (17), no_present_effect (38)
+**By class:** execution (63), policy (1), rights (2), schema (12), source_evidence (20)
+**By severity:** critical (4), high (55), low (5), medium (34)
+**By domain:** cross-domain (55), gnss (8), optical (21), pulsar (8), vlbi (6)
+**By disposition:** open (29), resolved (69)
+**By responsible party:** ftro (73), provider (25)
+**By finding type:** assurance_gap (12), current_defect (44), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
+**By affects:** blocks_workflow (31), changes_result (12), maintenance_only (17), no_present_effect (38)
 
-**Total entries:** 97 · **self-directed:** 72
+**Total entries:** 98 · **self-directed:** 73
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries with `affects == changes_result` and `finding_type == current_defect`.**
 >
@@ -81,8 +81,9 @@
 | [`FTRO-P1-DEF-010`](#ftro-p1-def-010) | schema | high | current_defect | blocks_workflow | **self** | Snapshot identity does not distinguish encoded retrieval bytes from decoded product state |
 | [`FTRO-P1-DEF-015`](#ftro-p1-def-015) | schema | high | current_defect | blocks_workflow | **self** | The WP2A v1.0 pre-registration could not execute or answer its own requirements |
 | [`FTRO-P1-DEF-016`](#ftro-p1-def-016) | schema | high | current_defect | blocks_workflow | **self** | WP2A registrations repeatedly presented constructed identity and judgement as source derivation |
-| [`FTRO-P1-DEF-020`](#ftro-p1-def-020) | schema | high | current_defect | blocks_workflow | **self** | WP2A v1.2 left result-bearing scientific and assurance choices to the future runner and evaluator |
+| [`FTRO-P1-DEF-020`](#ftro-p1-def-020) | schema | high | current_defect | blocks_workflow | **self** | WP2A registrations left result-bearing scientific, assurance and provenance choices outside the frozen evidence |
 | [`FTRO-P1-DEF-021`](#ftro-p1-def-021) | execution | high | current_defect | blocks_workflow | **self** | The pre-freeze WP2A runner could publish evidence its controls had not established |
+| [`FTRO-P1-DEF-022`](#ftro-p1-def-022) | execution | high | current_defect | blocks_workflow | **self** | The registered optical input path made the required clean published subject impossible |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -3498,25 +3499,25 @@
 
 ### FTRO-P1-DEF-020
 
-**WP2A v1.2 left result-bearing scientific and assurance choices to the future runner and evaluator**
+**WP2A registrations left result-bearing scientific, assurance and provenance choices outside the frozen evidence**
 
 | Field | Value |
 | --- | --- |
 | Class | `schema` |
 | Severity | high |
 | Domain | cross-domain |
-| Dataset | `phase2/wp2a/ v1.2.0 representation-identity registration` |
+| Dataset | `phase2/wp2a/ v1.2.0–v1.3.0 representation-identity registrations` |
 | Disposition | `resolved` |
 | Finding type | `current_defect` |
 | Affects | `blocks_workflow` |
 | Responsible party | `ftro` — **self-directed** |
-| Version | 1.0.0 |
+| Version | 2.0.0 |
 
 **Failed step.** Freeze a representation trial that can be implemented without selecting evidence, semantics, mutations or outcome precedence after registration.
 
 **Known fact or required evidence.** A pre-registration must contain every choice capable of changing whether Step 2 supports, which model passes, or whether the mutation assurance is accepted.
 
-**Observed.** The claimed 256-bit optical target contained only a 60-bit prefix/suffix; expected size was not compared; the selected optical member was misclassified opaque despite having been parsed; known_from preceded verification and one cross-origin object; Q3 omitted complete transformation records; M2 and Q9 remained semantically contradictory; the model decision rows overlapped; the mutation file omitted operator definitions and exact fields and R11 compared fixture-authored counts; and the Step-2 prose schema omitted exact input authentication, tool execution evidence, outcome precedence, atomic publication and an immutable report binding. Pre-freeze v1.3 drafts exposed two further layers: R7 still targeted outputs and used mismatched IDs; then expected-answer pointers left joins, renames and derivations to the future evaluator, Q3's field list contradicted the contract, F-REQ-6 required fixtures to expose the very answers used to judge them, and M1's strict-superset relation made seven Boolean tuples assurance violations rather than substantive model outcomes.
+**Observed.** The claimed 256-bit optical target contained only a 60-bit prefix/suffix; expected size was not compared; the selected optical member was misclassified opaque despite having been parsed; known_from preceded verification and one cross-origin object; Q3 omitted complete transformation records; M2 and Q9 remained semantically contradictory; the model decision rows overlapped; the mutation file omitted operator definitions and exact fields and R11 compared fixture-authored counts; and the Step-2 prose schema omitted exact input authentication, tool execution evidence, outcome precedence, atomic publication and an immutable report binding. Pre-freeze v1.3 drafts exposed two further layers: R7 still targeted outputs and used mismatched IDs; then expected-answer pointers left joins, renames and derivations to the future evaluator, Q3's field list contradicted the contract, F-REQ-6 required fixtures to expose the very answers used to judge them, and M1's strict-superset relation made seven Boolean tuples assurance violations rather than substantive model outcomes. CORRECTION v2.0.0: frozen v1.3.0 registered the complete optical digest and size but omitted that the same member was already present at a gitignored path. It also stated three uncheckable process-provenance claims as bare booleans and gave future Step-2 reports no field in which to carry the resulting interpretation bound. Qualified C9 extracted the same selector in a separate checkout and explicitly deleted its data, so it cannot establish the current copy's origin.
 
 **Evidence.**
 
@@ -3529,11 +3530,11 @@
 - `phase2/wp2a/registration-manifest-v1.3.json`
 - `tests/test_wp2a_v13.py`
 
-**Impact.** Caught before any provider payload was opened by WP2A and before any mapping, evaluator or mutation result existed. v1.2 could not produce a non-circular Step-2 verdict or an assured model comparison; no scientific result is contaminated.
+**Impact.** Every occurrence was caught before Step 2 and before any mapping, evaluator or mutation result existed, so no scientific result is contaminated. Without the v1.3.1 correction, a supporting report would have overstated reproduction of an imported value as evidence independent of a pre-existing local copy.
 
-**Workaround.** None; v1.2 is retained byte-unchanged as rejected and never executed.
+**Workaround.** None; v1.2 is retained byte-unchanged as rejected, and the unexecuted v1.3.0 state remains recoverable at carrier 734ba0f.
 
-**Proposed response.** Resolved by v1.3: disclosed imported prior target; corrected state and temporal axes; complete transformations and assertions; coherent M2/Q9 semantics; exact generated normalized answers before fixtures; raw-graph-only fixtures; a machine M1-superset invariant with seven illegal tuples gated as assurance failure and nine legal decision rows; evaluator freeze before fixtures; 168 exact pre-fixture cases plus exact R11 set equality; and a manifest binding the entire registration and instrument. Equivalence for the bounded queries is now a legitimate closing result, not permission for an aesthetic choice.
+**Proposed response.** Resolved by v1.3.1: the current ignored member and its unestablished lineage are disclosed; the three process claims are labelled attestations; qualified C9 is accurately limited to an isolated extraction that retained no bytes; and every report must carry a manifest-bound object stating that support establishes cross-extractor byte agreement and reproduction, not independent derivation, external chronology or provider attestation. The v1.3 scientific registration, exact answers, mutation population and outcome precedence are otherwise unchanged.
 
 ---
 
@@ -3571,5 +3572,43 @@
 **Workaround.** None; Step 2 remained prohibited until the instrument and manifest were regenerated.
 
 **Proposed response.** Resolved before freeze by executing the complete standard-library schema subset; requiring the subject's schema and containment in a remote-tracking ref before any input access; proving the POSIX inherited-descriptor transport with an FTRO-synthetic sentinel before any provider pathname opens; preserving every malformed/non-supporting candidate atomically; reading each input path once into an authenticated byte snapshot; making both methods consume only anonymous seekable descriptors populated from that snapshot; recording snapshot/start failures as typed non-execution; treating the later pathname rehash solely as mutation evidence with a run-level change outcome; exercising the actual global permission fold; and independently pinning the optical literal and resolving every recorded RFC-6901 source pointer.
+
+---
+
+### FTRO-P1-DEF-022
+
+**The registered optical input path made the required clean published subject impossible**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | optical |
+| Dataset | `phase2/wp2a/ v1.3.1 Step-2 input registration` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Satisfy the declared local-input prerequisite before the one allowed Step-2 execution.
+
+**Known fact or required evidence.** The runner must establish a clean published worktree before opening any provider input, while all four registered local inputs must already exist.
+
+**Observed.** v1.3.1 registered `ROCIT campaign results.zip` at repository root. That path was neither tracked nor ignored, so placing the required provider container there made `git status --porcelain --untracked-files=all` non-empty and `clean_published_subject()` rejected the carrier before input authentication. The authenticated local copy already existed at the ignored `data/raw/zenodo-17107693/ROCIT campaign results.zip` path. This was found by the acquisition-readiness check; the Step-2 `run` command was not invoked and no report was minted.
+
+**Evidence.**
+
+- `phase2/wp2a/build_step2_schema_v1_3.py`
+- `phase2/wp2a/run_step2_v1_3.py`
+- `.gitignore`
+- `tests/test_wp2a_v13.py`
+- `labnotes/2026-08-31-session-30-wp2a-v132-clean-input-path.md`
+
+**Impact.** The v1.3.1 carrier was unexecutable under its own preconditions. No evidence result was produced and no registered target value, provider byte, extraction method or scientific interpretation was wrong.
+
+**Workaround.** No local exclude rule or dirty-tree exception was used; either would make the published procedure depend on unregistered local state.
+
+**Proposed response.** Resolved before Step 2 by v1.3.2: register the existing ignored data/raw container path and assert in a committed test that every provider-input path is covered by Git's ignore policy, so the complete input population can coexist with the clean-subject gate.
 
 ---

@@ -605,15 +605,18 @@ class TestWp2aV13ReportContract(unittest.TestCase):
             "published": True, "published_ref": "origin/phase2",
         }
         target_row = {"outcome": "not_executed"}
-        with mock.patch.object(runner, "schema_registration", return_value=({}, self.registration)), \
-             mock.patch.object(runner, "clean_published_subject", return_value=subject), \
-             mock.patch.object(runner, "authenticated_manifest", return_value=({}, "a" * 64)), \
-             mock.patch.object(runner, "require_anonymous_fd_transport"), \
-             mock.patch.object(runner, "capture_authenticated_input", side_effect=capture), \
-             mock.patch.object(runner, "authenticate_input", side_effect=authentication), \
-             mock.patch.object(runner, "method_metadata", return_value={}), \
-             mock.patch.object(runner, "target_result", return_value=target_row) as target:
-            report = runner.build_report()
+        with tempfile.TemporaryDirectory() as directory:
+            registration = copy.deepcopy(self.registration)
+            registration["report_output_path"] = str(Path(directory) / "official.json")
+            with mock.patch.object(runner, "schema_registration", return_value=({}, registration)), \
+                 mock.patch.object(runner, "clean_published_subject", return_value=subject), \
+                 mock.patch.object(runner, "authenticated_manifest", return_value=({}, "a" * 64)), \
+                 mock.patch.object(runner, "require_anonymous_fd_transport"), \
+                 mock.patch.object(runner, "capture_authenticated_input", side_effect=capture), \
+                 mock.patch.object(runner, "authenticate_input", side_effect=authentication), \
+                 mock.patch.object(runner, "method_metadata", return_value={}), \
+                 mock.patch.object(runner, "target_result", return_value=target_row) as target:
+                report = runner.build_report()
         self.assertEqual(target.call_count, 4)
         self.assertTrue(all(call.kwargs["permitted"] is False for call in target.call_args_list))
         self.assertEqual(report["overall_outcome"], "step2_not_executed")
@@ -636,15 +639,18 @@ class TestWp2aV13ReportContract(unittest.TestCase):
         capture.assert_not_called()
 
     def test_build_report_rejects_unpublished_subject_before_input_capture(self):
-        with mock.patch.object(runner, "schema_registration", return_value=({}, self.registration)), \
-             mock.patch.object(
-                 runner, "clean_published_subject",
-                 side_effect=checker.CheckError("synthetic unpublished subject"),
-             ), \
-             mock.patch.object(runner, "authenticated_manifest") as manifest, \
-             mock.patch.object(runner, "capture_authenticated_input") as capture:
-            with self.assertRaises(checker.CheckError):
-                runner.build_report()
+        with tempfile.TemporaryDirectory() as directory:
+            registration = copy.deepcopy(self.registration)
+            registration["report_output_path"] = str(Path(directory) / "official.json")
+            with mock.patch.object(runner, "schema_registration", return_value=({}, registration)), \
+                 mock.patch.object(
+                     runner, "clean_published_subject",
+                     side_effect=checker.CheckError("synthetic unpublished subject"),
+                 ), \
+                 mock.patch.object(runner, "authenticated_manifest") as manifest, \
+                 mock.patch.object(runner, "capture_authenticated_input") as capture:
+                with self.assertRaisesRegex(checker.CheckError, "synthetic unpublished subject"):
+                    runner.build_report()
         manifest.assert_not_called()
         capture.assert_not_called()
 
@@ -653,17 +659,34 @@ class TestWp2aV13ReportContract(unittest.TestCase):
             "commit": "0" * 40, "tree": "1" * 40, "worktree_clean": True,
             "published": True, "published_ref": "origin/phase2",
         }
-        with mock.patch.object(runner, "schema_registration", return_value=({}, self.registration)), \
-             mock.patch.object(runner, "clean_published_subject", return_value=subject), \
-             mock.patch.object(runner, "authenticated_manifest", return_value=({}, "a" * 64)), \
-             mock.patch.object(
-                 runner, "require_anonymous_fd_transport",
-                 side_effect=checker.CheckError("synthetic transport failure"),
-             ), \
-             mock.patch.object(runner, "capture_authenticated_input") as capture:
-            with self.assertRaises(checker.CheckError):
-                runner.build_report()
+        with tempfile.TemporaryDirectory() as directory:
+            registration = copy.deepcopy(self.registration)
+            registration["report_output_path"] = str(Path(directory) / "official.json")
+            with mock.patch.object(runner, "schema_registration", return_value=({}, registration)), \
+                 mock.patch.object(runner, "clean_published_subject", return_value=subject), \
+                 mock.patch.object(runner, "authenticated_manifest", return_value=({}, "a" * 64)), \
+                 mock.patch.object(
+                     runner, "require_anonymous_fd_transport",
+                     side_effect=checker.CheckError("synthetic transport failure"),
+                 ), \
+                 mock.patch.object(runner, "capture_authenticated_input") as capture:
+                with self.assertRaisesRegex(checker.CheckError, "synthetic transport failure"):
+                    runner.build_report()
         capture.assert_not_called()
+
+    def test_existing_official_report_stops_before_subject_or_input_access(self):
+        with tempfile.TemporaryDirectory() as directory:
+            official = Path(directory) / "official.json"
+            official.write_text("immutable synthetic evidence\n", encoding="utf-8")
+            registration = copy.deepcopy(self.registration)
+            registration["report_output_path"] = str(official)
+            with mock.patch.object(runner, "schema_registration", return_value=({}, registration)), \
+                 mock.patch.object(runner, "clean_published_subject") as subject, \
+                 mock.patch.object(runner, "capture_authenticated_input") as capture:
+                with self.assertRaisesRegex(checker.CheckError, "immutable official report already exists"):
+                    runner.build_report()
+            subject.assert_not_called()
+            capture.assert_not_called()
 
     def test_registered_descriptor_transport_works_on_this_execution_host(self):
         runner.require_anonymous_fd_transport()

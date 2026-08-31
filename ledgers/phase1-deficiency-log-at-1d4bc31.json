@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.13.0",
+  "version": "0.12.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
@@ -689,39 +689,8 @@
           "FTRO-P1-DEF-021"
         ]
       }
-    },
-    {
-      "class": "execution",
-      "domain": "cross-domain",
-      "responsible_party": "ftro",
-      "self_directed": true,
-      "version": "1.0.0",
-      "disposition": "resolved",
-      "id": "FTRO-P1-DEF-023",
-      "dataset": "tests/test_wp2a_v13.py after Step-2 publication",
-      "finding_type": "current_defect",
-      "affects": "blocks_workflow",
-      "title": "Three pre-publication runner tests shared the official report path and changed meaning after publication",
-      "failed_step": "Run the full regression suite after publishing the immutable Step-2 report.",
-      "known_fact": "A test of a downstream build_report branch must isolate the earlier immutable-output guard and must assert the diagnostic produced by the branch it names.",
-      "observed": "After the official Step-2 report existed, `test_failed_global_preflight_never_permits_any_method` errored at the immutable-output guard before reaching its target branch. The unpublished-subject and descriptor-preflight tests still passed because both asserted only a broad CheckError and therefore accepted the same wrong guard. The three tests had depended silently on the official report being absent.",
-      "evidence": [
-        "tests/test_wp2a_v13.py",
-        "phase2/wp2a/reports/step2-input-evidence-v1.3.json",
-        "labnotes/2026-08-31-session-31-wp2a-step2-supports.md"
-      ],
-      "severity": "high",
-      "impact": "Descendant test and publication workflow only. The report validates against the subject-bound v1.3.2 schema and checker, and neither the instrument carrier nor provider result changed. One test blocked the full gate; two had become false passes.",
-      "workaround": "None; deleting or moving the immutable official report would invalidate the evidence publication model.",
-      "proposed_response": "Resolved by giving each branch test a temporary synthetic official path, asserting the branch-specific diagnostic, and adding a separate test that an existing official report stops before subject or input access. The real report remains untouched and no Step-2 rerun occurs.",
-      "links": {
-        "related": [
-          "FTRO-P1-DEF-021",
-          "FTRO-P1-DEF-022"
-        ]
-      }
     }
   ],
   "revised": "2026-08-31",
-  "revision_note": "Opened a new supplement interval after the immutable 1d4bc31 snapshot. FTRO-P1-DEF-023 records and closes three tests whose shared official path made one fail and two pass for the wrong reason after the Step-2 report was published. The subject-bound report and instrument are unchanged and Step 2 is not rerun."
+  "revision_note": "Amended the still-unexecuted WP2A registration to v1.3.2. FTRO-P1-DEF-020 v2.0.0 records the v1.3.1 provenance bound; FTRO-P1-DEF-022 records and closes the clean-subject/input-path contradiction found during acquisition readiness. No Step-2 run occurred under v1.3.0 or v1.3.1."
 }

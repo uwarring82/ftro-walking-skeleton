@@ -65,3 +65,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-31 | 28 | [WP2A v1.3 frozen and reconciled before Step 2](2026-08-31-session-28-wp2a-v13-ledger-reconciliation.md) |
 | 2026-08-31 | 29 | [WP2A v1.3.1 — binding the imported claim to its evidential limit](2026-08-31-session-29-wp2a-v131-provenance-bound.md) |
 | 2026-08-31 | 30 | [WP2A v1.3.2 — the input that made its clean carrier dirty](2026-08-31-session-30-wp2a-v132-clean-input-path.md) |
+| 2026-08-31 | 31 | [WP2A Step 2 supports, within its registered provenance bound](2026-08-31-session-31-wp2a-step2-supports.md) |

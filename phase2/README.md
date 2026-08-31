@@ -4,7 +4,7 @@ Branch `phase2`, from `main` @ `e123a81` (Phase 0 closed, Phase 1 Gate 1 passed)
 
 | Work package | Status |
 | --- | --- |
-| **2A — Representation Identity Trial** | **v1.3.2 pre-registered; runner bound; Step 2 not executed** |
+| **2A — Representation Identity Trial** | **v1.3.2 Step 2 `supports` at carrier `1d4bc31`; evaluator not frozen** |
 | 2B+ — profile amendment, ancestry materialisation, query fixtures | not started; held behind 2A |
 
 ## WP2A in one paragraph
@@ -18,7 +18,8 @@ aesthetically when both pass.
 
 > **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Versions **1.0.0–1.2.0
 > were rejected before Step 2** and remain byte-unchanged; **1.3.2 is current**. Its instrument is
-> bound, but no Step-2 extraction, mapping, evaluator or mutation run has occurred.
+> bound, and its single Step-2 execution supports all four registered targets. No mapping,
+> evaluator or mutation run has occurred.
 
 - [`contract-v1.3.md`](wp2a/contract-v1.3.md) — scope, model semantics, total decision function and execution order
 - [`source-facts-v1.3.json`](wp2a/source-facts-v1.3.json) — authenticated source projection; constructed join keys are explicitly separate
@@ -29,6 +30,7 @@ aesthetically when both pass.
 - [`mutation-cases-v1.3.json`](wp2a/mutation-cases-v1.3.json) — **168 enumerated pre-fixture cases**, exact fields, plus exact-set R11
 - [`step2-schema-v1.3.json`](wp2a/step2-schema-v1.3.json) — executed report schema, four authenticated byte snapshots, postflight pathname-mutation evidence and ordered outcomes
 - [`registration-manifest-v1.3.json`](wp2a/registration-manifest-v1.3.json) — immutable digest binding for the registration, checker and runner
+- [`step2-input-evidence-v1.3.json`](wp2a/reports/step2-input-evidence-v1.3.json) — immutable supporting report bound to carrier `1d4bc31` and manifest SHA-256 `703b6550…5868c`
 
 ## Why v1.3 exists
 
@@ -66,12 +68,17 @@ then deleted it. Every Step-2 report therefore carries an explicit bound: suppor
 cross-extractor byte agreement and reproduction, not an independent origin for the expected digest
 or size.
 
+The single Step-2 execution authenticated all four outer inputs, observed no post-authentication
+path change, and returned four supporting target rows. For the optical member, Python `zipfile` and
+system `unzip -p` agreed byte-for-byte and reproduced `00cc90d8…5363c067`, 780,292 bytes. The report
+itself carries the limitation above; `step2_supports` is not a stronger provenance claim.
+
 ## Execution order
 
 1. Freeze the v1.3 scientific and execution registration ✅
 2. Write, test and bind `run_step2_v1_3.py` without opening provider payloads ✅
-3. Publish the bound candidate; run Step 2 once from that clean published commit **next**
-4. If and only if Step 2 supports, freeze the evaluator before any fixture exists
+3. Publish the bound candidate; run Step 2 once from that clean published commit ✅ (`supports`)
+4. Freeze the evaluator before any fixture exists **next**
 5. Hand-author four fixtures — 2 models × 2 families
 6. Freeze exact mutation recipes; run one explicitly **non-qualifying** calibration
 7. Freeze any repairs as a new candidate/version where required
