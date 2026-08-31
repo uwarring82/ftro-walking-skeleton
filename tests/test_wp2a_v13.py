@@ -328,7 +328,10 @@ class TestWp2aV13ReportContract(unittest.TestCase):
                 "matches_expected": True,
                 "outcome": "supports",
             })
-        commit = git("rev-parse", "HEAD")
+        # This is a shape-only synthetic report (`authenticate_manifest=False` in its
+        # consumers), but its publication assertion must still be true even when local
+        # HEAD is legitimately ahead of the remote-tracking branch.
+        commit = git("rev-parse", "@{upstream}")
         return {
             "document": "FTRO WP2A Step-2 input-evidence report",
             "schema_version": "1.3.0",

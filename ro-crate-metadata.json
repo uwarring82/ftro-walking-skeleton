@@ -425,6 +425,12 @@
         },
         {
           "@id": "tests/test_wp2a_scientific_registration_v13.py"
+        },
+        {
+          "@id": "labnotes/2026-08-31-session-28-wp2a-v13-ledger-reconciliation.md"
+        },
+        {
+          "@id": "ledgers/phase1-deficiency-log-at-734ba0f.json"
         }
       ],
       "isBasedOn": [
@@ -666,7 +672,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "208562",
+      "contentSize": "217141",
       "name": "deficiency-log.json"
     },
     {
@@ -676,7 +682,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "202139",
+      "contentSize": "209731",
       "name": "deficiency-log.md"
     },
     {
@@ -964,7 +970,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5340",
+      "contentSize": "5467",
       "name": "README.md"
     },
     {
@@ -1835,7 +1841,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "8089"
+      "contentSize": "8115"
     },
     {
       "@id": "phase1/deficiency-log-phase1.json",
@@ -2531,14 +2537,14 @@
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
-      "contentSize": "38058"
+      "contentSize": "38306"
     },
     {
       "@id": "#ftro-root-crate-publication-control",
       "@type": "CreativeWork",
       "name": "FTRO root-crate publication control",
       "description": "Deterministic SHA-256 over the root-crate graph (excluding only this node's self-referential identifier field) and every non-volatile local file entity. It detects same-size content drift and semantic edits to ro-crate-metadata.json.",
-      "identifier": "sha256:ce1a1d16cbd947c2b47907c19a6887e405bcfc87c492a2e75a5d3ff9574c2fcb",
+      "identifier": "sha256:0d64ac44c1102b02d5918d126a9293e256018eae3eb52178c0a03f2f8cfdbfb2",
       "dateModified": "2026-08-31"
     },
     {
@@ -2582,6 +2588,26 @@
         "@id": "#python-3.13"
       },
       "contentSize": "7146"
+    },
+    {
+      "@id": "labnotes/2026-08-31-session-28-wp2a-v13-ledger-reconciliation.md",
+      "@type": "File",
+      "name": "2026-08-31-session-28-wp2a-v13-ledger-reconciliation.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "2800"
+    },
+    {
+      "@id": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+      "@type": "File",
+      "name": "phase1-deficiency-log-at-734ba0f.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "52289"
     }
   ]
 }

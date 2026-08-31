@@ -62,3 +62,4 @@ with a stable ID. The lab note keeps the reasoning; the ledger keeps the claim.
 | 2026-08-29 | 25 | [WP2A v1.0 rejected before step 2; v1.1 issued](2026-08-29-session-25-wp2a-v1-rejected.md) |
 | 2026-08-30 | 26 | [WP2A v1.1 rejected — generated facts split from registered judgement](2026-08-30-session-26-wp2a-v11-rejected.md) |
 | 2026-08-31 | 27 | [WP2A v1.2 rejected — the runner's choices moved into v1.3](2026-08-31-session-27-wp2a-v12-rejected.md) |
+| 2026-08-31 | 28 | [WP2A v1.3 frozen and reconciled before Step 2](2026-08-31-session-28-wp2a-v13-ledger-reconciliation.md) |

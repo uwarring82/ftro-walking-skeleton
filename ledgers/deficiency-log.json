@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.24.0",
+  "version": "0.25.0",
   "opened": "2026-08-25",
   "phase": "Phases 0–1",
   "card": "FTRO-WS-001 v0.3",
@@ -1921,10 +1921,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -1954,10 +1954,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -1986,10 +1986,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2019,10 +2019,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2052,10 +2052,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2088,10 +2088,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2123,10 +2123,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1c9bc56.json",
-        "version": "0.4.0",
-        "source_commit": "1c9bc56d51b8b9c1655a95abbe93e0c3b26a39fc",
-        "sha256": "1a2653a34aca27cb3c0ff9aedde1bf059b3b1d1408f9940db44d82d46ae78b26"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2159,10 +2159,10 @@
       },
       "reconciliation_note": "v3.0.0 supersedes two divergent bodies that were both labelled 2.0.0: the unified ledger's copy, written while carrier 354868a was current, and this supplement's copy, written after qualification. This single body is canonical in both files.",
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
-        "version": "0.6.0",
-        "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
-        "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2201,10 +2201,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
-        "version": "0.6.0",
-        "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
-        "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2452,10 +2452,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-f1837d4.json",
-        "version": "0.6.0",
-        "source_commit": "f1837d4bc808c6dd985d91bcf25a0a03169bdab2",
-        "sha256": "1ad2abf0d1e867f1601b11a6190ee9017718be791cad2aff8173793b677f9ef8"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2495,10 +2495,10 @@
       },
       "reconciliation_note": "v2.0.0 reopens and closes the incomplete v1 repair: carrier-relative field checks are not evidence identity until the report bytes are authenticated.",
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-6e03702.json",
-        "version": "0.7.0",
-        "source_commit": "6e0370261eea77ca0f6f80897e077064041f8cb1",
-        "sha256": "06452ac2736d1ff34815643231ced6fd53a7673cacc2d7bf68b336355419b328"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2534,10 +2534,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-6e03702.json",
-        "version": "0.7.0",
-        "source_commit": "6e0370261eea77ca0f6f80897e077064041f8cb1",
-        "sha256": "06452ac2736d1ff34815643231ced6fd53a7673cacc2d7bf68b336355419b328"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2571,10 +2571,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-6e03702.json",
-        "version": "0.7.0",
-        "source_commit": "6e0370261eea77ca0f6f80897e077064041f8cb1",
-        "sha256": "06452ac2736d1ff34815643231ced6fd53a7673cacc2d7bf68b336355419b328"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2606,10 +2606,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-7585135.json",
-        "version": "0.8.0",
-        "source_commit": "75851350cef6a1312989d01a73e5080bafbfef7a",
-        "sha256": "4741a7692c11160bb7177105fd95745596a6e3e19a81f400ce4099a2d0be3218"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2646,10 +2646,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-7585135.json",
-        "version": "0.8.0",
-        "source_commit": "75851350cef6a1312989d01a73e5080bafbfef7a",
-        "sha256": "4741a7692c11160bb7177105fd95745596a6e3e19a81f400ce4099a2d0be3218"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2657,27 +2657,30 @@
       "domain": "cross-domain",
       "responsible_party": "ftro",
       "self_directed": true,
-      "version": "1.0.0",
+      "version": "2.0.0",
       "disposition": "resolved",
       "id": "FTRO-P1-DEF-016",
-      "dataset": "phase2/wp2a/ v1.1.0 registration",
+      "dataset": "phase2/wp2a/ v1.1.0 and v1.2.0 registrations",
       "finding_type": "current_defect",
       "affects": "blocks_workflow",
-      "title": "WP2A v1.1 named a generator that did not exist and presented curated semantics as source derivation",
+      "title": "WP2A registrations repeatedly presented constructed identity and judgement as source derivation",
       "failed_step": "WP2A step 1: freeze a registration whose facts are traceable to their stated origin.",
       "known_fact": "contract-v1.1.md said expected facts were 'derived from these four sources by a committed generator, not hand-transcribed'.",
-      "observed": "No generator was committed in either commit. The claim was false in a second and worse way: predicates, temporal interpretations, code-consumption claims and WP2A execution states are not present in, and not derivable from, those four sources. They are curated judgements presented as source derivation. Seven further registration defects rode on that confusion: BKG containers and the optical member labelled `unresolved` where profile v0.0.3:212 reserves that for NO identified artifact and both are identified (hence `opaque`), with Q8 freezing the false contrast; Q5b naming the member-path date as the optical support key when analyse_optical.py never parses the filename and reads MJD tokens from row content; Q7 scored per_output (A=3) against six Family-A assertions with M2 implying six more; 76 cases freezing counts but not target identities, so R8 could still choose among assertions and fields; Q9 requiring the output state to BE an RDF subject or object, which M2 forbids, making assertion_only_supported unreachable by definition; retrieval-start timestamps used as exact valid_from and BKG known_to closed at the SIO re-pin; and Step 2 frozen with no schema, generator, target population, trusted base or disagreement outcome, registering 60 of 256 digest bits.",
+      "observed": "v1.1 named a generator that did not exist and presented predicates, temporal interpretations, consumption claims and execution states as derived from four sources that do not contain them. CORRECTION v2.0.0: v1.2 committed a generator but called its whole output verbatim source content while synthesising occurrence/output IDs, origins, roles, counts, a composed member selector and a repository-wide absence claim. Its test searched only Family A for a short forbidden-word list, so it could not detect the constructions or the Family-B judgement. Pre-minting output identity in source facts was especially material in a representation-identity trial.",
       "evidence": [
         "phase2/wp2a/contract-v1.1.md",
         "phase2/wp2a/expected-facts-v1.1.json",
         "phase2/wp2a/queries-v1.1.json",
         "phase2/wp2a/mutation-population-v1.1.json",
+        "phase2/wp2a/build_source_facts.py",
+        "phase2/wp2a/source-facts-v1.2.json",
+        "tests/test_phase0_audit.py",
         "phase2/wp2a/REGISTRATION-STATUS.md"
       ],
       "severity": "high",
-      "impact": "Caught before step 2, so nothing was executed under v1.1 and no result is contaminated. Had step 2 begun, the trial would have run on evidence states the profile does not license, a false claim about which bytes production reads, and a discriminating query whose answer was fixed by construction.",
+      "impact": "Both occurrences were caught before Step 2, so no evidence result or mapping is contaminated. The second repair moved the same provenance error into executable-looking machinery and could have biased Q9 by making an FTRO-constructed output identity appear source-supplied.",
       "workaround": "None; rejected rather than amended.",
-      "proposed_response": "Issue v1.2: split generated source facts (build_source_facts.py, digest-pinned, --check, tested) from registered interpretations (basis per item); correct evidence states to opaque; correct Q5b to the MJD token in member content; declare cardinalities; enumerate 134 mutation cases with exact target identities; reframe Q9 as an identifier DENOTING the output state, satisfiable without an output entity; set valid_from unknown with not_later_than and leave known_to open; freeze step2-schema-v1.2.json with evidence_assurance_failed and all 256 digest bits; add split_by_family.",
+      "proposed_response": "Resolved in v1.3 by an authenticated source projection in which every copied value carries an exact source pointer, while registered selection and constructed join keys are separately labelled and no scientific output identity is minted. Curated predicates, states, transformations, temporal semantics and code readings remain in interpretations-v1.3.json with typed bases.",
       "links": {
         "related": [
           "FTRO-P1-DEF-015",
@@ -2686,10 +2689,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
-        "version": "0.9.0",
-        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
-        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2721,10 +2724,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
-        "version": "0.9.0",
-        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
-        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2732,7 +2735,7 @@
       "domain": "cross-domain",
       "responsible_party": "ftro",
       "self_directed": true,
-      "version": "1.0.0",
+      "version": "2.0.0",
       "disposition": "resolved",
       "id": "FTRO-P1-DEF-018",
       "dataset": "ro-crate-metadata.json",
@@ -2741,20 +2744,102 @@
       "title": "The root crate's dateModified never advanced",
       "failed_step": "Keep the root provenance record's own metadata true.",
       "known_fact": "refresh_crate.py updated contentSize and declarations but never touched dateModified.",
-      "observed": "The root Dataset advertised 2026-08-28 across commits that changed declared content, through 2026-08-30. A provenance record whose own modification date is wrong misdescribes every claim it carries.",
+      "observed": "The root Dataset advertised 2026-08-28 across commits that changed declared content, through 2026-08-30. CORRECTION v2.0.0: the first repair advanced dateModified only when contentSize, declaration or missing-file drift had already fired. A same-size declared-file edit or equal-length root-descriptor semantic edit still passed, and no committed test exercised dateModified. The next draft excluded the entire publication-control node from its fingerprint, so equal-length edits to that node passed, and write mode rewrote the official descriptor even when a missing declared file made publication fail. Its first atomic replacement then changed the descriptor mode from 0644 to mkstemp's 0600. The final draft hashed the control node except its identifier but did not enforce the canonical control declaration, so it could re-sign the legacy description claiming the whole node was excluded.",
       "evidence": [
         "ro-crate-metadata.json",
-        "src/ftro/refresh_crate.py"
+        "src/ftro/refresh_crate.py",
+        "tests/test_crate_controls.py"
       ],
       "severity": "low",
       "impact": "FAIR metadata accuracy only.",
       "workaround": "None needed.",
-      "proposed_response": "Advance dateModified on any write that changes the crate; --check reports the staleness without mutating, so the check stays deterministic.",
+      "proposed_response": "Resolved with an enforced canonical publication-control declaration whose SHA-256 covers canonical crate semantics—including every control field except its self-referential identifier—and every non-volatile declared local file. Check mode rejects stale or extra control fields even if a prior implementation re-signed them; write mode repairs them before fingerprinting. Same-size file, root and control-node mutations make --check fail. Failed completeness or atomic-replace operations leave the official descriptor byte-identical; successful writes use same-directory atomic promotion, preserve the existing permission mode and advance the root/control dates. Independent negative tests constrain all paths.",
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
-        "version": "0.9.0",
-        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
-        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "2.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-019",
+      "dataset": "src/ftro/refresh_crate.py",
+      "finding_type": "assurance_gap",
+      "affects": "maintenance_only",
+      "title": "Bounded recursive discovery shipped with no regression test",
+      "failed_step": "Land no rule without an executable check.",
+      "known_fact": "FTRO-P1-DEF-014 added recursion, depth bounding, suffix filtering and directory exclusion. The only evidence any of it worked was that it found seven known files once.",
+      "observed": "No committed test initially exercised discovered_tree, MAX_DISCOVERY_DEPTH, the exclusion set or document_entity. CORRECTION v2.0.0: the first added tests read the production depth/scope/exclusion constants as their own oracle and created no boundary or excluded-directory fixtures. Setting depth to 99, emptying exclusions or removing Phase 2 from discovery left the named tests green; root hasPart was not checked. The replacement initially repeated the gap for flat tests: removing every tests/ path from the producer left its scope test green, production's tests/*.py population disagreed with a legacy test*.py oracle, and newly discovered tests were added to the root but not the tests/ collection.",
+      "evidence": [
+        "tests/test_phase0_audit.py",
+        "tests/test_crate_controls.py",
+        "src/ftro/refresh_crate.py"
+      ],
+      "severity": "medium",
+      "impact": "Maintenance assurance only. The controls were narrower than their names and could silently stop enumerating a phase tree or cross the registered depth boundary.",
+      "workaround": "None needed.",
+      "proposed_response": "Resolved with independent fixed phase1/phase2 and flat-test scopes, real T/T+1, excluded-directory and newly-added-test fixtures, graph plus root and tests/-collection membership assertions, and a fail-closed unknown-suffix policy. The projection-only class was deleted rather than retained beside the replacement.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-014",
+          "FTRO-P1-DEF-017"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
+      }
+    },
+    {
+      "class": "schema",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-020",
+      "dataset": "phase2/wp2a/ v1.2.0 representation-identity registration",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "WP2A v1.2 left result-bearing scientific and assurance choices to the future runner and evaluator",
+      "failed_step": "Freeze a representation trial that can be implemented without selecting evidence, semantics, mutations or outcome precedence after registration.",
+      "known_fact": "A pre-registration must contain every choice capable of changing whether Step 2 supports, which model passes, or whether the mutation assurance is accepted.",
+      "observed": "The claimed 256-bit optical target contained only a 60-bit prefix/suffix; expected size was not compared; the selected optical member was misclassified opaque despite having been parsed; known_from preceded verification and one cross-origin object; Q3 omitted complete transformation records; M2 and Q9 remained semantically contradictory; the model decision rows overlapped; the mutation file omitted operator definitions and exact fields and R11 compared fixture-authored counts; and the Step-2 prose schema omitted exact input authentication, tool execution evidence, outcome precedence, atomic publication and an immutable report binding. Pre-freeze v1.3 drafts exposed two further layers: R7 still targeted outputs and used mismatched IDs; then expected-answer pointers left joins, renames and derivations to the future evaluator, Q3's field list contradicted the contract, F-REQ-6 required fixtures to expose the very answers used to judge them, and M1's strict-superset relation made seven Boolean tuples assurance violations rather than substantive model outcomes.",
+      "evidence": [
+        "phase2/wp2a/contract-v1.2.md",
+        "phase2/wp2a/interpretations-v1.2.json",
+        "phase2/wp2a/queries-v1.2.json",
+        "phase2/wp2a/mutation-cases-v1.2.json",
+        "phase2/wp2a/step2-schema-v1.2.json",
+        "phase2/wp2a/contract-v1.3.md",
+        "phase2/wp2a/registration-manifest-v1.3.json",
+        "tests/test_wp2a_v13.py"
+      ],
+      "severity": "high",
+      "impact": "Caught before any provider payload was opened by WP2A and before any mapping, evaluator or mutation result existed. v1.2 could not produce a non-circular Step-2 verdict or an assured model comparison; no scientific result is contaminated.",
+      "workaround": "None; v1.2 is retained byte-unchanged as rejected and never executed.",
+      "proposed_response": "Resolved by v1.3: disclosed imported prior target; corrected state and temporal axes; complete transformations and assertions; coherent M2/Q9 semantics; exact generated normalized answers before fixtures; raw-graph-only fixtures; a machine M1-superset invariant with seven illegal tuples gated as assurance failure and nine legal decision rows; evaluator freeze before fixtures; 168 exact pre-fixture cases plus exact R11 set equality; and a manifest binding the entire registration and instrument. Equivalence for the bounded queries is now a legitimate closing result, not permission for an aesthetic choice.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-002",
+          "FTRO-P1-DEF-009",
+          "FTRO-P1-DEF-010",
+          "FTRO-P1-DEF-016"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     },
     {
@@ -2764,38 +2849,41 @@
       "self_directed": true,
       "version": "1.0.0",
       "disposition": "resolved",
-      "id": "FTRO-P1-DEF-019",
-      "dataset": "src/ftro/refresh_crate.py",
-      "finding_type": "assurance_gap",
-      "affects": "maintenance_only",
-      "title": "Bounded recursive discovery shipped with no regression test",
-      "failed_step": "Land no rule without an executable check.",
-      "known_fact": "FTRO-P1-DEF-014 added recursion, depth bounding, suffix filtering and directory exclusion. The only evidence any of it worked was that it found seven known files once.",
-      "observed": "No committed test exercised discovered_tree, MAX_DISCOVERY_DEPTH, the exclusion set or document_entity. A depth regression, a suffix regression or the .py mislabelling of FTRO-P1-DEF-017 would all have passed the suite silently.",
+      "id": "FTRO-P1-DEF-021",
+      "dataset": "phase2/wp2a/ v1.3.0 Step-2 instrument before publication",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The pre-freeze WP2A runner could publish evidence its controls had not established",
+      "failed_step": "Bind a Step-2 instrument whose declared schema, publication state and authenticated inputs govern every accepted report.",
+      "known_fact": "The runner and standalone promoter are part of the pre-registration trusted boundary; a green report must be derivable from the subject-bound instrument and the exact bytes consumed.",
+      "observed": "The published JSON Schema was inert while the hand checker accepted values it rejected; an unknown method_id raised before malformed bytes could be preserved as .rejected; published_ref accepted HEAD; decoders and extractors reopened named input paths after authentication, so consumed bytes were not bound to the authenticated capture, and no post-consumption path-mutation check existed; historical reports were checked against the descendant working-tree schema rather than their subject-bound schema; and the global-preflight test bypassed build_report, so changing its permission fold left the test green. The exact imported optical digest and source projections also lacked independent literal/pointer reconciliation tests.",
       "evidence": [
-        "tests/test_phase0_audit.py",
-        "src/ftro/refresh_crate.py"
+        "phase2/wp2a/build_step2_schema_v1_3.py",
+        "phase2/wp2a/check_step2_v1_3.py",
+        "phase2/wp2a/run_step2_v1_3.py",
+        "tests/test_wp2a_v13.py"
       ],
-      "severity": "medium",
-      "impact": "Assurance only; the fix happened to be correct except for FTRO-P1-DEF-017.",
-      "workaround": "None needed.",
-      "proposed_response": "TestCrateDiscovery: nested reach, suffix filtering, __pycache__ exclusion, depth bound, missing-tree tolerance, per-suffix declaration rules, unknown-suffix raise, and zero undeclared phase documents. Plus TestWp2aSourceFacts asserting the committed source facts equal regenerated output and carry no interpretation fields.",
+      "severity": "high",
+      "impact": "Caught before v1.3 publication and before any provider input was opened by WP2A. No report, model fixture or scientific result was produced under the defective draft.",
+      "workaround": "None; Step 2 remained prohibited until the instrument and manifest were regenerated.",
+      "proposed_response": "Resolved before freeze by executing the complete standard-library schema subset; requiring the subject's schema and containment in a remote-tracking ref before any input access; proving the POSIX inherited-descriptor transport with an FTRO-synthetic sentinel before any provider pathname opens; preserving every malformed/non-supporting candidate atomically; reading each input path once into an authenticated byte snapshot; making both methods consume only anonymous seekable descriptors populated from that snapshot; recording snapshot/start failures as typed non-execution; treating the later pathname rehash solely as mutation evidence with a run-level change outcome; exercising the actual global permission fold; and independently pinning the optical literal and resolving every recorded RFC-6901 source pointer.",
       "links": {
         "related": [
-          "FTRO-P1-DEF-014",
-          "FTRO-P1-DEF-017"
+          "FTRO-P1-DEF-009",
+          "FTRO-P1-DEF-018",
+          "FTRO-P1-DEF-020"
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-ccd1534.json",
-        "version": "0.9.0",
-        "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
-        "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1"
+        "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+        "version": "0.10.0",
+        "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+        "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472"
       }
     }
   ],
-  "revised": "2026-08-30",
-  "revision_note": "Reconciled through snapshot ledgers/phase1-deficiency-log-at-ccd1534.json (ccd1534). FTRO-P1-DEF-016 (the WP2A v1.1 registration named a generator that did not exist and presented curated semantics as source derivation; rejected before step 2 and reissued as v1.2) and three publication defects the widened crate discovery exposed or left untested: -017 .py declared as CC BY Markdown, -018 root dateModified never advanced, -019 recursion shipped with no regression test. All resolved. Descendant bookkeeping only.",
+  "revised": "2026-08-31",
+  "revision_note": "Reconciled through snapshot ledgers/phase1-deficiency-log-at-734ba0f.json (734ba0f). WP2A v1.2 was rejected before Step 2 and v1.3 was frozen with exact pre-fixture answers and a subject-bound, fail-closed Step-2 instrument (FTRO-P1-DEF-020 and -021). FTRO-P1-DEF-016, -018 and -019 were reopened at v2.0.0 and resolved before publication. No provider payload was opened by WP2A; descendant bookkeeping only.",
   "triage_axes": {
     "finding_type": {
       "current_defect": "today's committed behaviour is wrong or a documented workflow fails",
@@ -2852,6 +2940,14 @@
       "source_commit": "ccd1534c906a3b64351784b9fc0e00c4686b3905",
       "sha256": "b4a278cb45fc4db277fb1732fa4c4466b97123db798a194e8b8a27b4c96b3af1",
       "n_entries": 19
+    },
+    {
+      "ledger": "FTRO Phase-1 Deficiency Log",
+      "path": "ledgers/phase1-deficiency-log-at-734ba0f.json",
+      "version": "0.10.0",
+      "source_commit": "734ba0f68c48adcd6609a8cc2cb604cb68077a54",
+      "sha256": "3ae9ec050bb8196a4117123bf550a377bf98444d32d1dbb063165d1077ea8472",
+      "n_entries": 21
     }
   ]
 }
