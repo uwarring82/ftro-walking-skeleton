@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.10.0",
+  "version": "0.11.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
@@ -591,16 +591,16 @@
       "domain": "cross-domain",
       "responsible_party": "ftro",
       "self_directed": true,
-      "version": "1.0.0",
+      "version": "2.0.0",
       "disposition": "resolved",
       "id": "FTRO-P1-DEF-020",
-      "dataset": "phase2/wp2a/ v1.2.0 representation-identity registration",
+      "dataset": "phase2/wp2a/ v1.2.0–v1.3.0 representation-identity registrations",
       "finding_type": "current_defect",
       "affects": "blocks_workflow",
-      "title": "WP2A v1.2 left result-bearing scientific and assurance choices to the future runner and evaluator",
+      "title": "WP2A registrations left result-bearing scientific, assurance and provenance choices outside the frozen evidence",
       "failed_step": "Freeze a representation trial that can be implemented without selecting evidence, semantics, mutations or outcome precedence after registration.",
       "known_fact": "A pre-registration must contain every choice capable of changing whether Step 2 supports, which model passes, or whether the mutation assurance is accepted.",
-      "observed": "The claimed 256-bit optical target contained only a 60-bit prefix/suffix; expected size was not compared; the selected optical member was misclassified opaque despite having been parsed; known_from preceded verification and one cross-origin object; Q3 omitted complete transformation records; M2 and Q9 remained semantically contradictory; the model decision rows overlapped; the mutation file omitted operator definitions and exact fields and R11 compared fixture-authored counts; and the Step-2 prose schema omitted exact input authentication, tool execution evidence, outcome precedence, atomic publication and an immutable report binding. Pre-freeze v1.3 drafts exposed two further layers: R7 still targeted outputs and used mismatched IDs; then expected-answer pointers left joins, renames and derivations to the future evaluator, Q3's field list contradicted the contract, F-REQ-6 required fixtures to expose the very answers used to judge them, and M1's strict-superset relation made seven Boolean tuples assurance violations rather than substantive model outcomes.",
+      "observed": "The claimed 256-bit optical target contained only a 60-bit prefix/suffix; expected size was not compared; the selected optical member was misclassified opaque despite having been parsed; known_from preceded verification and one cross-origin object; Q3 omitted complete transformation records; M2 and Q9 remained semantically contradictory; the model decision rows overlapped; the mutation file omitted operator definitions and exact fields and R11 compared fixture-authored counts; and the Step-2 prose schema omitted exact input authentication, tool execution evidence, outcome precedence, atomic publication and an immutable report binding. Pre-freeze v1.3 drafts exposed two further layers: R7 still targeted outputs and used mismatched IDs; then expected-answer pointers left joins, renames and derivations to the future evaluator, Q3's field list contradicted the contract, F-REQ-6 required fixtures to expose the very answers used to judge them, and M1's strict-superset relation made seven Boolean tuples assurance violations rather than substantive model outcomes. CORRECTION v2.0.0: frozen v1.3.0 registered the complete optical digest and size but omitted that the same member was already present at a gitignored path. It also stated three uncheckable process-provenance claims as bare booleans and gave future Step-2 reports no field in which to carry the resulting interpretation bound. Qualified C9 extracted the same selector in a separate checkout and explicitly deleted its data, so it cannot establish the current copy's origin.",
       "evidence": [
         "phase2/wp2a/contract-v1.2.md",
         "phase2/wp2a/interpretations-v1.2.json",
@@ -612,9 +612,9 @@
         "tests/test_wp2a_v13.py"
       ],
       "severity": "high",
-      "impact": "Caught before any provider payload was opened by WP2A and before any mapping, evaluator or mutation result existed. v1.2 could not produce a non-circular Step-2 verdict or an assured model comparison; no scientific result is contaminated.",
-      "workaround": "None; v1.2 is retained byte-unchanged as rejected and never executed.",
-      "proposed_response": "Resolved by v1.3: disclosed imported prior target; corrected state and temporal axes; complete transformations and assertions; coherent M2/Q9 semantics; exact generated normalized answers before fixtures; raw-graph-only fixtures; a machine M1-superset invariant with seven illegal tuples gated as assurance failure and nine legal decision rows; evaluator freeze before fixtures; 168 exact pre-fixture cases plus exact R11 set equality; and a manifest binding the entire registration and instrument. Equivalence for the bounded queries is now a legitimate closing result, not permission for an aesthetic choice.",
+      "impact": "Every occurrence was caught before Step 2 and before any mapping, evaluator or mutation result existed, so no scientific result is contaminated. Without the v1.3.1 correction, a supporting report would have overstated reproduction of an imported value as evidence independent of a pre-existing local copy.",
+      "workaround": "None; v1.2 is retained byte-unchanged as rejected, and the unexecuted v1.3.0 state remains recoverable at carrier 734ba0f.",
+      "proposed_response": "Resolved by v1.3.1: the current ignored member and its unestablished lineage are disclosed; the three process claims are labelled attestations; qualified C9 is accurately limited to an isolated extraction that retained no bytes; and every report must carry a manifest-bound object stating that support establishes cross-extractor byte agreement and reproduction, not independent derivation, external chronology or provider attestation. The v1.3 scientific registration, exact answers, mutation population and outcome precedence are otherwise unchanged.",
       "links": {
         "related": [
           "FTRO-P1-DEF-002",
@@ -659,5 +659,5 @@
     }
   ],
   "revised": "2026-08-31",
-  "revision_note": "Rejected WP2A v1.2 before Step 2 and issued v1.3 with exact pre-fixture answers (FTRO-P1-DEF-020); repaired the pre-freeze Step-2 instrument (FTRO-P1-DEF-021); reopened and resolved the source-projection claim (FTRO-P1-DEF-016 v2.0.0), root publication control (FTRO-P1-DEF-018 v2.0.0) and projection-only discovery tests (FTRO-P1-DEF-019 v2.0.0). No provider payload was opened by WP2A."
+  "revision_note": "Amended the still-unexecuted WP2A registration to v1.3.1 and reopened/resolved FTRO-P1-DEF-020 v2.0.0: disclosed the pre-existing ignored optical member, downgraded uncheckable process provenance to attestations, corrected the qualified-C9 relationship and bound the limitation into every Step-2 report. No provider payload was opened during the repair."
 }

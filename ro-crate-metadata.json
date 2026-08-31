@@ -431,6 +431,9 @@
         },
         {
           "@id": "ledgers/phase1-deficiency-log-at-734ba0f.json"
+        },
+        {
+          "@id": "labnotes/2026-08-31-session-29-wp2a-v131-provenance-bound.md"
         }
       ],
       "isBasedOn": [
@@ -970,7 +973,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5467",
+      "contentSize": "5611",
       "name": "README.md"
     },
     {
@@ -1851,7 +1854,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "52289"
+      "contentSize": "52814"
     },
     {
       "@id": "phase1/check_gate1.py",
@@ -2043,7 +2046,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5718"
+      "contentSize": "6168"
     },
     {
       "@id": "phase2/wp2a/contract-v1.0.md",
@@ -2173,7 +2176,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5071"
+      "contentSize": "5962"
     },
     {
       "@id": "phase2/wp2a/contract-v1.1.md",
@@ -2393,7 +2396,7 @@
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
-      "contentSize": "18712"
+      "contentSize": "19170"
     },
     {
       "@id": "phase2/wp2a/check_step2_v1_3.py",
@@ -2409,7 +2412,7 @@
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
-      "contentSize": "46997"
+      "contentSize": "47281"
     },
     {
       "@id": "phase2/wp2a/contract-v1.3.md",
@@ -2419,7 +2422,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "15183"
+      "contentSize": "16040"
     },
     {
       "@id": "phase2/wp2a/interpretations-v1.3.json",
@@ -2449,7 +2452,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "1734"
+      "contentSize": "4643"
     },
     {
       "@id": "phase2/wp2a/queries-v1.3.json",
@@ -2485,7 +2488,7 @@
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
-      "contentSize": "23245"
+      "contentSize": "23347"
     },
     {
       "@id": "phase2/wp2a/source-facts-v1.3.json",
@@ -2505,7 +2508,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "23939"
+      "contentSize": "26408"
     },
     {
       "@id": "tests/test_crate_controls.py",
@@ -2537,14 +2540,14 @@
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
-      "contentSize": "38306"
+      "contentSize": "41100"
     },
     {
       "@id": "#ftro-root-crate-publication-control",
       "@type": "CreativeWork",
       "name": "FTRO root-crate publication control",
       "description": "Deterministic SHA-256 over the root-crate graph (excluding only this node's self-referential identifier field) and every non-volatile local file entity. It detects same-size content drift and semantic edits to ro-crate-metadata.json.",
-      "identifier": "sha256:0d64ac44c1102b02d5918d126a9293e256018eae3eb52178c0a03f2f8cfdbfb2",
+      "identifier": "sha256:44dc50603f765b4fd919baca1eba436e7621c421109d95631f4ab6054e495a31",
       "dateModified": "2026-08-31"
     },
     {
@@ -2608,6 +2611,16 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "52289"
+    },
+    {
+      "@id": "labnotes/2026-08-31-session-29-wp2a-v131-provenance-bound.md",
+      "@type": "File",
+      "name": "2026-08-31-session-29-wp2a-v131-provenance-bound.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "5138"
     }
   ]
 }

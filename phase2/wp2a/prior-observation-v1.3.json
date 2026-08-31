@@ -1,6 +1,6 @@
 {
   "document": "FTRO WP2A imported prior claim",
-  "version": "1.3.0",
+  "version": "1.3.1",
   "date_imported": "2026-08-31",
   "status": "registered authentication target; not provider-authenticated",
   "target": {
@@ -13,12 +13,72 @@
   "provenance": {
     "source_kind": "review claim communicated before any WP2A Step-2 execution",
     "source_locator": "external review exchange without an immutable third-party locator or signature; exact value imported here to make the previously non-durable claim checkable inside the registered Git history",
-    "observed_before_step2": true,
+    "source_verifiability": "attested_not_repository_checkable",
     "provider_authenticated": false,
-    "derived_or_recomputed_by_v1_3": false,
-    "provider_payload_read_by_registration": false,
+    "process_attestations": {
+      "observed_before_step2": {
+        "value": true,
+        "verifiability": "attested_not_repository_checkable"
+      },
+      "derived_or_recomputed_by_v1_3": {
+        "value": false,
+        "verifiability": "attested_not_repository_checkable"
+      },
+      "provider_payload_read_by_registration": {
+        "value": false,
+        "verifiability": "attested_not_repository_checkable"
+      }
+    },
     "relationship_to_v1_2": "The first eight and last seven hex characters equal the 60 bits recorded by v1.2; v1.3 durably registers the complete 256-bit value supplied by the same prior observation.",
-    "evidential_weight": "The pre-registration chronology becomes independently auditable only after this file is published. A Step-2 match is a reproduction of the imported claim, not proof of its earlier external timestamp and not provider attestation."
+    "evidential_weight": "Git establishes that this registration preceded any committed Step-2 report. It cannot establish the earlier external observation, non-derivation from a local extracted copy, or absence of provider-payload reading during registration. Those process claims are attestations. A Step-2 match is a reproduction of the imported claim, not proof of its earlier external timestamp and not provider attestation."
+  },
+  "registration_environment": {
+    "preexisting_extracted_member": {
+      "path": "data/raw/zenodo-17107693/extracted/PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+      "presence_at_registration": {
+        "value": true,
+        "verifiability": "attested_not_repository_checkable"
+      },
+      "git_tracking": {
+        "state": "ignored_if_present",
+        "verifiability": "repository_checkable",
+        "basis_pointers": [
+          ".gitignore:4",
+          ".gitignore:10"
+        ]
+      },
+      "current_copy_origin": {
+        "state": "not_established_by_repository_evidence",
+        "session_01_attestation": "labnotes/2026-08-25-session-01-phase0.md#02--optical-leg-first-look-and-the-first-surprise"
+      },
+      "qualified_phase0_c9_relationship": {
+        "state": "same_relative_path_extracted_in_isolated_c9_checkout_then_removed",
+        "verifiability": "repository_checkable",
+        "basis_pointers": [
+          "phase0/audit/evidence/c9-8ddcbfa-1.json#/subject/checkout_realpath",
+          "phase0/audit/evidence/c9-8ddcbfa-1.json#/step_results/3",
+          "phase0/audit/evidence/c9-8ddcbfa-1.json#/cleanup"
+        ]
+      }
+    }
+  },
+  "report_interpretation_bound": {
+    "applies_to_target_id": "member:rocit-zip",
+    "expected_value_provenance": "attested_not_repository_checkable",
+    "preexisting_extracted_member": {
+      "path": "data/raw/zenodo-17107693/extracted/PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+      "presence_at_registration": "attested_present_not_repository_checkable",
+      "git_tracking_policy": "repository_checkable_ignored_if_present",
+      "current_copy_origin": "not_established_by_repository_evidence",
+      "qualified_phase0_c9_relationship": "same_relative_path_extracted_in_isolated_c9_checkout_then_removed"
+    },
+    "step2_supports_establishes": "two_registered_extractors_consumed_the_same_authenticated_container_bytes_agreed_byte_for_byte_and_reproduced_the_committed_expectation",
+    "step2_supports_does_not_establish": [
+      "independent_derivation_of_the_expected_member_digest_or_size",
+      "external_timestamp_of_the_prior_observation",
+      "provider_attestation_of_the_member_digest_or_size"
+    ],
+    "source": "phase2/wp2a/prior-observation-v1.3.json#/report_interpretation_bound"
   },
   "anti_circularity_rule": "The expected SHA-256 and size are read only from this committed artifact before any provider input is opened. No observed Step-2 value may populate or amend an expected field. A mismatch is `contradicts`; extractor disagreement is `evidence_assurance_failed`."
 }

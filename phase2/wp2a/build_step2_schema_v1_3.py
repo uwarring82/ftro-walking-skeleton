@@ -12,6 +12,7 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[2]
+REGISTRATION_VERSION = "1.3.1"
 OUT = ROOT / "phase2/wp2a/step2-schema-v1.3.json"
 FACTS_PATH = ROOT / "phase2/wp2a/source-facts-v1.3.json"
 PRIOR_PATH = ROOT / "phase2/wp2a/prior-observation-v1.3.json"
@@ -137,6 +138,9 @@ def build() -> dict:
     prior_target = prior["target"]
     if prior_target["member_selector"] != MEMBER:
         raise ValueError("prior observation member differs from registered member")
+    interpretation_bound = prior["report_interpretation_bound"]
+    if interpretation_bound.get("applies_to_target_id") != "member:rocit-zip":
+        raise ValueError("prior observation report bound differs from optical target")
     targets.append({
         "target_id": "member:rocit-zip",
         "input_id": optical_input_id,
@@ -149,7 +153,7 @@ def build() -> dict:
     })
 
     registration = {
-        "version": "1.3.0",
+        "version": REGISTRATION_VERSION,
         "registration_manifest": MANIFEST_PATH,
         "report_output_path": OUTPUT_PATH,
         "rejected_output_rule": OUTPUT_PATH + ".<run_id>.rejected",
@@ -166,6 +170,7 @@ def build() -> dict:
             "network_during_step2": "forbidden; acquisition is a documented prerequisite outside the Step-2 run",
         },
         "target_population": targets,
+        "outcome_interpretation_bound": interpretation_bound,
         "method_contracts": {
             "ftro_unixz": {
                 "implementation": "src/ftro/unixz.py:decompress",
@@ -278,11 +283,11 @@ def build() -> dict:
         "required": [
             "document", "schema_version", "run_id", "subject", "registration_manifest",
             "started_utc", "ended_utc", "input_authentication", "targets", "counters",
-            "overall_outcome", "output_path",
+            "overall_outcome", "outcome_interpretation_bound", "output_path",
         ],
         "properties": {
             "document": {"const": "FTRO WP2A Step-2 input-evidence report"},
-            "schema_version": {"const": "1.3.0"},
+            "schema_version": {"const": REGISTRATION_VERSION},
             "run_id": {"type": "string", "pattern": "^[A-Za-z0-9._:-]+$"},
             "subject": const_object({
                 "commit": {"type": "string", "pattern": "^[0-9a-f]{40}$"},
@@ -311,6 +316,7 @@ def build() -> dict:
                 "n_not_executed", "n_inputs_changed_during_run",
             ]),
             "overall_outcome": {"enum": ["step2_supports", "step2_contradicts", "step2_evidence_assurance_failed", "step2_not_executed"]},
+            "outcome_interpretation_bound": {"const": interpretation_bound},
             "output_path": {"const": OUTPUT_PATH},
         },
         "$defs": {"sha256": sha, "method_result": method_schema()},

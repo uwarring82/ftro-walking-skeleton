@@ -111,7 +111,29 @@ class TestWp2aV13Registration(unittest.TestCase):
         self.assertEqual(prior["target"]["sha256"], registered_sha)
         self.assertEqual(prior["target"]["size_bytes"], 780292)
         self.assertFalse(prior["provenance"]["provider_authenticated"])
-        self.assertFalse(prior["provenance"]["derived_or_recomputed_by_v1_3"])
+        self.assertEqual(
+            prior["provenance"]["source_verifiability"],
+            "attested_not_repository_checkable",
+        )
+        attestations = prior["provenance"]["process_attestations"]
+        self.assertEqual(
+            {name: claim["verifiability"] for name, claim in attestations.items()},
+            {
+                "observed_before_step2": "attested_not_repository_checkable",
+                "derived_or_recomputed_by_v1_3": "attested_not_repository_checkable",
+                "provider_payload_read_by_registration": "attested_not_repository_checkable",
+            },
+        )
+        self.assertIs(attestations["observed_before_step2"]["value"], True)
+        self.assertIs(attestations["derived_or_recomputed_by_v1_3"]["value"], False)
+        self.assertIs(attestations["provider_payload_read_by_registration"]["value"], False)
+        environment = prior["registration_environment"]["preexisting_extracted_member"]
+        self.assertEqual(environment["presence_at_registration"]["verifiability"], "attested_not_repository_checkable")
+        self.assertEqual(environment["current_copy_origin"]["state"], "not_established_by_repository_evidence")
+        self.assertEqual(
+            environment["qualified_phase0_c9_relationship"]["state"],
+            "same_relative_path_extracted_in_isolated_c9_checkout_then_removed",
+        )
         self.assertIn("No observed Step-2 value may populate", prior["anti_circularity_rule"])
         interpretations = load("interpretations-v1.3.json")
         self.assertEqual(interpretations["transformations"]["records"][-1]["output_sha256"], registered_sha)
@@ -195,6 +217,14 @@ class TestWp2aV13Registration(unittest.TestCase):
         optical = registration["target_population"][-1]
         self.assertEqual(optical["expected_sha256"], load("prior-observation-v1.3.json")["target"]["sha256"])
         self.assertEqual(optical["expected_size_bytes"], 780292)
+        self.assertEqual(
+            registration["outcome_interpretation_bound"],
+            load("prior-observation-v1.3.json")["report_interpretation_bound"],
+        )
+        self.assertEqual(
+            registration["outcome_interpretation_bound"]["expected_value_provenance"],
+            "attested_not_repository_checkable",
+        )
         self.assertIn("gzip", registration["trusted_computing_base"]["required_tools"])
         self.assertEqual(
             [row["outcome"] for row in registration["run_outcome_precedence"]],
@@ -334,7 +364,7 @@ class TestWp2aV13ReportContract(unittest.TestCase):
         commit = git("rev-parse", "@{upstream}")
         return {
             "document": "FTRO WP2A Step-2 input-evidence report",
-            "schema_version": "1.3.0",
+            "schema_version": self.registration["version"],
             "run_id": "synthetic-v1.3",
             "subject": {
                 "commit": commit,
@@ -360,11 +390,31 @@ class TestWp2aV13ReportContract(unittest.TestCase):
                 "n_inputs_changed_during_run": 0,
             },
             "overall_outcome": "step2_supports",
+            "outcome_interpretation_bound": copy.deepcopy(
+                self.registration["outcome_interpretation_bound"]
+            ),
             "output_path": self.registration["report_output_path"],
         }
 
     def test_synthetic_baseline_is_valid_without_manifest_io(self):
         self.assertEqual(checker.validate_report(self.baseline_report(), authenticate_manifest=False), [])
+
+    def test_outcome_interpretation_bound_is_required_and_immutable(self):
+        variants = []
+        missing = self.baseline_report()
+        del missing["outcome_interpretation_bound"]
+        variants.append(missing)
+        changed_provenance = self.baseline_report()
+        changed_provenance["outcome_interpretation_bound"]["expected_value_provenance"] = "independent"
+        variants.append(changed_provenance)
+        weakened_limit = self.baseline_report()
+        weakened_limit["outcome_interpretation_bound"]["step2_supports_does_not_establish"].pop()
+        variants.append(weakened_limit)
+        for index, changed in enumerate(variants):
+            with self.subTest(index=index):
+                self.assertTrue(
+                    checker.validate_report(changed, authenticate_manifest=False)
+                )
 
     def test_checker_rejects_expected_population_counter_and_method_drift(self):
         mutations_to_try = []
@@ -550,6 +600,10 @@ class TestWp2aV13ReportContract(unittest.TestCase):
         self.assertEqual(target.call_count, 4)
         self.assertTrue(all(call.kwargs["permitted"] is False for call in target.call_args_list))
         self.assertEqual(report["overall_outcome"], "step2_not_executed")
+        self.assertEqual(
+            report["outcome_interpretation_bound"],
+            self.registration["outcome_interpretation_bound"],
+        )
 
     def test_local_upstream_is_rejected_before_any_input_capture(self):
         clean = subprocess.CompletedProcess(args=[], returncode=0, stdout=b"", stderr=b"")

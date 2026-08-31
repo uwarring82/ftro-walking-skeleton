@@ -17,6 +17,7 @@
     "targets",
     "counters",
     "overall_outcome",
+    "outcome_interpretation_bound",
     "output_path"
   ],
   "properties": {
@@ -24,7 +25,7 @@
       "const": "FTRO WP2A Step-2 input-evidence report"
     },
     "schema_version": {
-      "const": "1.3.0"
+      "const": "1.3.1"
     },
     "run_id": {
       "type": "string",
@@ -362,6 +363,26 @@
         "step2_not_executed"
       ]
     },
+    "outcome_interpretation_bound": {
+      "const": {
+        "applies_to_target_id": "member:rocit-zip",
+        "expected_value_provenance": "attested_not_repository_checkable",
+        "preexisting_extracted_member": {
+          "path": "data/raw/zenodo-17107693/extracted/PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "presence_at_registration": "attested_present_not_repository_checkable",
+          "git_tracking_policy": "repository_checkable_ignored_if_present",
+          "current_copy_origin": "not_established_by_repository_evidence",
+          "qualified_phase0_c9_relationship": "same_relative_path_extracted_in_isolated_c9_checkout_then_removed"
+        },
+        "step2_supports_establishes": "two_registered_extractors_consumed_the_same_authenticated_container_bytes_agreed_byte_for_byte_and_reproduced_the_committed_expectation",
+        "step2_supports_does_not_establish": [
+          "independent_derivation_of_the_expected_member_digest_or_size",
+          "external_timestamp_of_the_prior_observation",
+          "provider_attestation_of_the_member_digest_or_size"
+        ],
+        "source": "phase2/wp2a/prior-observation-v1.3.json#/report_interpretation_bound"
+      }
+    },
     "output_path": {
       "const": "phase2/wp2a/reports/step2-input-evidence-v1.3.json"
     }
@@ -585,7 +606,7 @@
     }
   },
   "x-ftro-registration": {
-    "version": "1.3.0",
+    "version": "1.3.1",
     "registration_manifest": "phase2/wp2a/registration-manifest-v1.3.json",
     "report_output_path": "phase2/wp2a/reports/step2-input-evidence-v1.3.json",
     "rejected_output_rule": "phase2/wp2a/reports/step2-input-evidence-v1.3.json.<run_id>.rejected",
@@ -596,7 +617,7 @@
       },
       "prior_observation": {
         "path": "phase2/wp2a/prior-observation-v1.3.json",
-        "sha256": "b3483e841610333a66a1d3d0724d4e8f655de95a8f52f283bfd921462fd7ac54"
+        "sha256": "a2e7329ce5289a749513492d743194505649e73846f5e9dc077e434554431466"
       }
     },
     "input_policy": {
@@ -683,6 +704,24 @@
         "method_b": "system_unzip"
       }
     ],
+    "outcome_interpretation_bound": {
+      "applies_to_target_id": "member:rocit-zip",
+      "expected_value_provenance": "attested_not_repository_checkable",
+      "preexisting_extracted_member": {
+        "path": "data/raw/zenodo-17107693/extracted/PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+        "presence_at_registration": "attested_present_not_repository_checkable",
+        "git_tracking_policy": "repository_checkable_ignored_if_present",
+        "current_copy_origin": "not_established_by_repository_evidence",
+        "qualified_phase0_c9_relationship": "same_relative_path_extracted_in_isolated_c9_checkout_then_removed"
+      },
+      "step2_supports_establishes": "two_registered_extractors_consumed_the_same_authenticated_container_bytes_agreed_byte_for_byte_and_reproduced_the_committed_expectation",
+      "step2_supports_does_not_establish": [
+        "independent_derivation_of_the_expected_member_digest_or_size",
+        "external_timestamp_of_the_prior_observation",
+        "provider_attestation_of_the_member_digest_or_size"
+      ],
+      "source": "phase2/wp2a/prior-observation-v1.3.json#/report_interpretation_bound"
+    },
     "method_contracts": {
       "ftro_unixz": {
         "implementation": "src/ftro/unixz.py:decompress",

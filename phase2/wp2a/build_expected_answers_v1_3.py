@@ -365,7 +365,7 @@ def build() -> dict:
     inputs = [SOURCE_FACTS, INTERPRETATIONS, QUERIES, PRIOR_OBSERVATION]
     return {
         "document": "FTRO WP2A v1.3 exact normalized expected answers",
-        "version": "1.3.0",
+        "version": "1.3.1",
         "generator": "phase2/wp2a/build_expected_answers_v1_3.py",
         "status": "pre-fixture oracle; Step-2 timestamps unresolved",
         "input_sha256": {

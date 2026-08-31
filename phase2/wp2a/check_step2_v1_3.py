@@ -317,7 +317,7 @@ def validate_registration_manifest(body: bytes, commit: str) -> list[str]:
         )
     if manifest.get("document") != "FTRO WP2A v1.3 registration manifest":
         errors.append("registration manifest: wrong document")
-    if manifest.get("version") != "1.3.0":
+    if manifest.get("version") != "1.3.1":
         errors.append("registration manifest: wrong version")
     if manifest.get("ready_for_step2") is not True:
         errors.append("registration manifest: ready_for_step2 is not true")
@@ -570,11 +570,14 @@ def validate_report(report: dict[str, Any], *, authenticate_manifest: bool = Tru
     top_keys = {
         "document", "schema_version", "run_id", "subject", "registration_manifest",
         "started_utc", "ended_utc", "input_authentication", "targets", "counters",
-        "overall_outcome", "output_path",
+        "overall_outcome", "outcome_interpretation_bound", "output_path",
     }
     if not exact_keys(report, top_keys, "report", errors):
         return errors
-    if report["document"] != "FTRO WP2A Step-2 input-evidence report" or report["schema_version"] != "1.3.0":
+    if (
+        report["document"] != "FTRO WP2A Step-2 input-evidence report"
+        or report["schema_version"] != registration["version"]
+    ):
         errors.append("report document/schema_version differs")
     if not isinstance(report["run_id"], str) or not re.fullmatch(r"[A-Za-z0-9._:-]+", report["run_id"]):
         errors.append("run_id: malformed")
@@ -582,6 +585,11 @@ def validate_report(report: dict[str, Any], *, authenticate_manifest: bool = Tru
         errors.append("run timestamps must be timezone-aware ISO-8601")
     if report["output_path"] != registration["report_output_path"]:
         errors.append("output_path differs from registration")
+    if not json_equal(
+        report["outcome_interpretation_bound"],
+        registration["outcome_interpretation_bound"],
+    ):
+        errors.append("outcome_interpretation_bound differs from registration")
 
     subject_keys = {"commit", "tree", "worktree_clean", "published", "published_ref"}
     subject_ok = exact_keys(report["subject"], subject_keys, "subject", errors)

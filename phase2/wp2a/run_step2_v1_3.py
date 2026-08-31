@@ -478,7 +478,7 @@ def build_report() -> dict[str, Any]:
     )
     report = {
         "document": "FTRO WP2A Step-2 input-evidence report",
-        "schema_version": "1.3.0",
+        "schema_version": registration["version"],
         "run_id": dt.datetime.now(dt.timezone.utc).strftime("%Y%m%dT%H%M%S.%fZ-") + subject["commit"][:12],
         "subject": subject,
         "registration_manifest": {"path": MANIFEST_REL, "sha256": manifest_sha},
@@ -495,6 +495,7 @@ def build_report() -> dict[str, Any]:
             "n_inputs_changed_during_run": n_inputs_changed,
         },
         "overall_outcome": derive_run_outcome(outcomes, n_inputs_changed=n_inputs_changed),
+        "outcome_interpretation_bound": registration["outcome_interpretation_bound"],
         "output_path": registration["report_output_path"],
     }
     return report

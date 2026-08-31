@@ -4,7 +4,7 @@ Branch `phase2`, from `main` @ `e123a81` (Phase 0 closed, Phase 1 Gate 1 passed)
 
 | Work package | Status |
 | --- | --- |
-| **2A — Representation Identity Trial** | **v1.3 pre-registered; runner bound; Step 2 not executed** |
+| **2A — Representation Identity Trial** | **v1.3.1 pre-registered; runner bound; Step 2 not executed** |
 | 2B+ — profile amendment, ancestry materialisation, query fixtures | not started; held behind 2A |
 
 ## WP2A in one paragraph
@@ -17,7 +17,7 @@ either, a registered requirement separates — and reports **equivalence** rathe
 aesthetically when both pass.
 
 > **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Versions **1.0.0–1.2.0
-> were rejected before Step 2** and remain byte-unchanged; **1.3.0 is current**. Its instrument is
+> were rejected before Step 2** and remain byte-unchanged; **1.3.1 is current**. Its instrument is
 > bound, but no Step-2 extraction, mapping, evaluator or mutation run has occurred.
 
 - [`contract-v1.3.md`](wp2a/contract-v1.3.md) — scope, model semantics, total decision function and execution order
@@ -59,7 +59,12 @@ path is authenticated by the inventory (16,106 samples, `mjd_first` 59631.788542
 earlier claim—780,292 bytes and full SHA-256—is now durably registered inside Git as an
 authentication/reproduction target. The external exchange has no immutable locator or signature,
 so its earlier chronology cannot be independently audited. Step 2 may support or contradict the
-value; a match is not provider attestation.
+value; a match is not provider attestation. The same member was already present at a gitignored
+path when v1.3.1 was registered. Repository evidence does not bind the present copy to its original
+extraction; the qualified C9 independently extracted the same selector in an isolated checkout and
+then deleted it. Every Step-2 report therefore carries an explicit bound: support proves
+cross-extractor byte agreement and reproduction, not an independent origin for the expected digest
+or size.
 
 ## Execution order
 
