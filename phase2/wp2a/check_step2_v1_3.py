@@ -317,7 +317,7 @@ def validate_registration_manifest(body: bytes, commit: str) -> list[str]:
         )
     if manifest.get("document") != "FTRO WP2A v1.3 registration manifest":
         errors.append("registration manifest: wrong document")
-    if manifest.get("version") != "1.3.1":
+    if manifest.get("version") != "1.3.2":
         errors.append("registration manifest: wrong version")
     if manifest.get("ready_for_step2") is not True:
         errors.append("registration manifest: ready_for_step2 is not true")

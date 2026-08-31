@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.11.0",
+  "version": "0.12.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
@@ -656,8 +656,41 @@
           "FTRO-P1-DEF-020"
         ]
       }
+    },
+    {
+      "class": "execution",
+      "domain": "optical",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-022",
+      "dataset": "phase2/wp2a/ v1.3.1 Step-2 input registration",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The registered optical input path made the required clean published subject impossible",
+      "failed_step": "Satisfy the declared local-input prerequisite before the one allowed Step-2 execution.",
+      "known_fact": "The runner must establish a clean published worktree before opening any provider input, while all four registered local inputs must already exist.",
+      "observed": "v1.3.1 registered `ROCIT campaign results.zip` at repository root. That path was neither tracked nor ignored, so placing the required provider container there made `git status --porcelain --untracked-files=all` non-empty and `clean_published_subject()` rejected the carrier before input authentication. The authenticated local copy already existed at the ignored `data/raw/zenodo-17107693/ROCIT campaign results.zip` path. This was found by the acquisition-readiness check; the Step-2 `run` command was not invoked and no report was minted.",
+      "evidence": [
+        "phase2/wp2a/build_step2_schema_v1_3.py",
+        "phase2/wp2a/run_step2_v1_3.py",
+        ".gitignore",
+        "tests/test_wp2a_v13.py",
+        "labnotes/2026-08-31-session-30-wp2a-v132-clean-input-path.md"
+      ],
+      "severity": "high",
+      "impact": "The v1.3.1 carrier was unexecutable under its own preconditions. No evidence result was produced and no registered target value, provider byte, extraction method or scientific interpretation was wrong.",
+      "workaround": "No local exclude rule or dirty-tree exception was used; either would make the published procedure depend on unregistered local state.",
+      "proposed_response": "Resolved before Step 2 by v1.3.2: register the existing ignored data/raw container path and assert in a committed test that every provider-input path is covered by Git's ignore policy, so the complete input population can coexist with the clean-subject gate.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-020",
+          "FTRO-P1-DEF-021"
+        ]
+      }
     }
   ],
   "revised": "2026-08-31",
-  "revision_note": "Amended the still-unexecuted WP2A registration to v1.3.1 and reopened/resolved FTRO-P1-DEF-020 v2.0.0: disclosed the pre-existing ignored optical member, downgraded uncheckable process provenance to attestations, corrected the qualified-C9 relationship and bound the limitation into every Step-2 report. No provider payload was opened during the repair."
+  "revision_note": "Amended the still-unexecuted WP2A registration to v1.3.2. FTRO-P1-DEF-020 v2.0.0 records the v1.3.1 provenance bound; FTRO-P1-DEF-022 records and closes the clean-subject/input-path contradiction found during acquisition readiness. No Step-2 run occurred under v1.3.0 or v1.3.1."
 }

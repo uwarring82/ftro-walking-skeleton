@@ -60,7 +60,7 @@ def build() -> dict:
     ]
     return {
         "document": "FTRO WP2A v1.3 registration manifest",
-        "version": "1.3.1",
+        "version": "1.3.2",
         "ready_for_step2": True,
         "runner": {
             "path": "phase2/wp2a/run_step2_v1_3.py",

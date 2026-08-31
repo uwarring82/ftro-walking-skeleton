@@ -434,6 +434,9 @@
         },
         {
           "@id": "labnotes/2026-08-31-session-29-wp2a-v131-provenance-bound.md"
+        },
+        {
+          "@id": "labnotes/2026-08-31-session-30-wp2a-v132-clean-input-path.md"
         }
       ],
       "isBasedOn": [
@@ -973,7 +976,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5611",
+      "contentSize": "5748",
       "name": "README.md"
     },
     {
@@ -1854,7 +1857,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "52814"
+      "contentSize": "55104"
     },
     {
       "@id": "phase1/check_gate1.py",
@@ -2176,7 +2179,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5962"
+      "contentSize": "6479"
     },
     {
       "@id": "phase2/wp2a/contract-v1.1.md",
@@ -2396,7 +2399,7 @@
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
-      "contentSize": "19170"
+      "contentSize": "19195"
     },
     {
       "@id": "phase2/wp2a/check_step2_v1_3.py",
@@ -2422,7 +2425,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "16040"
+      "contentSize": "16427"
     },
     {
       "@id": "phase2/wp2a/interpretations-v1.3.json",
@@ -2508,7 +2511,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "26408"
+      "contentSize": "26433"
     },
     {
       "@id": "tests/test_crate_controls.py",
@@ -2540,14 +2543,14 @@
       "programmingLanguage": {
         "@id": "#python-3.13"
       },
-      "contentSize": "41100"
+      "contentSize": "41856"
     },
     {
       "@id": "#ftro-root-crate-publication-control",
       "@type": "CreativeWork",
       "name": "FTRO root-crate publication control",
       "description": "Deterministic SHA-256 over the root-crate graph (excluding only this node's self-referential identifier field) and every non-volatile local file entity. It detects same-size content drift and semantic edits to ro-crate-metadata.json.",
-      "identifier": "sha256:44dc50603f765b4fd919baca1eba436e7621c421109d95631f4ab6054e495a31",
+      "identifier": "sha256:722acea7f97d59156f67d3024b823739dbd94db2d159e9aa78cc6b9742687b5c",
       "dateModified": "2026-08-31"
     },
     {
@@ -2621,6 +2624,16 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "5138"
+    },
+    {
+      "@id": "labnotes/2026-08-31-session-30-wp2a-v132-clean-input-path.md",
+      "@type": "File",
+      "name": "2026-08-31-session-30-wp2a-v132-clean-input-path.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3511"
     }
   ]
 }

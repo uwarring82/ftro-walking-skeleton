@@ -12,7 +12,7 @@ import sys
 
 
 ROOT = Path(__file__).resolve().parents[2]
-REGISTRATION_VERSION = "1.3.1"
+REGISTRATION_VERSION = "1.3.2"
 OUT = ROOT / "phase2/wp2a/step2-schema-v1.3.json"
 FACTS_PATH = ROOT / "phase2/wp2a/source-facts-v1.3.json"
 PRIOR_PATH = ROOT / "phase2/wp2a/prior-observation-v1.3.json"
@@ -128,7 +128,7 @@ def build() -> dict:
     optical_input_id = "input:rocit-zip@zenodo"
     input_artifacts.append({
         "input_id": optical_input_id,
-        "path": "ROCIT campaign results.zip",
+        "path": "data/raw/zenodo-17107693/ROCIT campaign results.zip",
         "acquisition_mode": "preexisting_local_copy_authenticated_before_any_extraction",
         "registered_route": container["retrieval_procedure"].removeprefix("GET "),
         "expected_outer_sha256": container["sha256"],

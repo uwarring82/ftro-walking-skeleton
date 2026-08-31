@@ -231,6 +231,23 @@ class TestWp2aV13Registration(unittest.TestCase):
             ["step2_not_executed", "step2_evidence_assurance_failed", "step2_contradicts", "step2_supports"],
         )
 
+    def test_every_provider_input_path_is_compatible_with_the_clean_subject_gate(self):
+        registration = load("step2-schema-v1.3.json")["x-ftro-registration"]
+        self.assertEqual(
+            registration["input_policy"]["population"][-1]["path"],
+            "data/raw/zenodo-17107693/ROCIT campaign results.zip",
+        )
+        for row in registration["input_policy"]["population"]:
+            result = subprocess.run(
+                ["git", "check-ignore", "--no-index", "--quiet", "--", row["path"]],
+                cwd=REPO,
+            )
+            self.assertEqual(
+                result.returncode,
+                0,
+                f"registered provider input would make the clean subject dirty: {row['path']}",
+            )
+
     def test_manifest_pins_every_instrument_file_and_not_itself(self):
         manifest = load("registration-manifest-v1.3.json")
         paths = manifest["required_artifact_paths"]

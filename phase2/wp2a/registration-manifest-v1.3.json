@@ -1,6 +1,6 @@
 {
   "document": "FTRO WP2A v1.3 registration manifest",
-  "version": "1.3.1",
+  "version": "1.3.2",
   "ready_for_step2": true,
   "runner": {
     "path": "phase2/wp2a/run_step2_v1_3.py",
@@ -31,7 +31,7 @@
   "artifacts": [
     {
       "path": "phase2/wp2a/contract-v1.3.md",
-      "sha256": "6b5a1f6b9ec62d5849db9f37496d5799aa9b5eefa311f15926a765bdefee3005"
+      "sha256": "5ead651128453c9c86bfd92381861439f7610fb332e13d94dc7fd2fe741d856e"
     },
     {
       "path": "phase2/wp2a/source-facts-v1.3.json",
@@ -59,7 +59,7 @@
     },
     {
       "path": "phase2/wp2a/step2-schema-v1.3.json",
-      "sha256": "120c8b98a3395f241483f087820dc5bd574f1f2eead3b0f9ea2b855d0700da3f"
+      "sha256": "e3009cbedd0aa224092aecf1785cb693c7d31e51a5f415f93116d34a55b40c77"
     },
     {
       "path": "phase2/wp2a/build_source_facts_v1_3.py",
@@ -75,15 +75,15 @@
     },
     {
       "path": "phase2/wp2a/build_step2_schema_v1_3.py",
-      "sha256": "2b4d0c5b930367eb87540e044103668f6e46beca5f58986ea838ed67abbe79ba"
+      "sha256": "88a76f7cb61b80020914cf156cacb2061696cbc020d92ae75a7548d5387e4688"
     },
     {
       "path": "phase2/wp2a/build_registration_manifest_v1_3.py",
-      "sha256": "b3b279742fa9777e5a13c40cbfc844e9acdc4bcd9078a47a4310e3372b374d0a"
+      "sha256": "5c3a6b631ec28d38f3ea87a39be1ca190344b9a86d90c1a9769308e3004b914b"
     },
     {
       "path": "phase2/wp2a/check_step2_v1_3.py",
-      "sha256": "57052e36efb2e9cb81c7cd533f1d7ad789672b26aecb92688122c8151f7cc7d0"
+      "sha256": "4cff36640e0a335bc01945c5a6c6aa67edcdc5edc52cb8dca2a690ae826ac6f9"
     },
     {
       "path": "phase2/wp2a/run_step2_v1_3.py",

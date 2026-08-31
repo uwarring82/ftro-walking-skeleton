@@ -4,7 +4,7 @@ Branch `phase2`, from `main` @ `e123a81` (Phase 0 closed, Phase 1 Gate 1 passed)
 
 | Work package | Status |
 | --- | --- |
-| **2A — Representation Identity Trial** | **v1.3.1 pre-registered; runner bound; Step 2 not executed** |
+| **2A — Representation Identity Trial** | **v1.3.2 pre-registered; runner bound; Step 2 not executed** |
 | 2B+ — profile amendment, ancestry materialisation, query fixtures | not started; held behind 2A |
 
 ## WP2A in one paragraph
@@ -17,7 +17,7 @@ either, a registered requirement separates — and reports **equivalence** rathe
 aesthetically when both pass.
 
 > **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Versions **1.0.0–1.2.0
-> were rejected before Step 2** and remain byte-unchanged; **1.3.1 is current**. Its instrument is
+> were rejected before Step 2** and remain byte-unchanged; **1.3.2 is current**. Its instrument is
 > bound, but no Step-2 extraction, mapping, evaluator or mutation run has occurred.
 
 - [`contract-v1.3.md`](wp2a/contract-v1.3.md) — scope, model semantics, total decision function and execution order

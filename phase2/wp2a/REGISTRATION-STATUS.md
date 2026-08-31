@@ -8,9 +8,10 @@ Read this before reading any other WP2A document.
 | **1.1.0** | **REJECTED pre-registration — never executed** | `contract-v1.1.md`, `expected-facts-v1.1.json`, `queries-v1.1.json`, `mutation-population-v1.1.json` |
 | **1.2.0** | **REJECTED pre-registration — never executed** | `contract-v1.2.md`, `source-facts-v1.2.json` + `build_source_facts.py`, `interpretations-v1.2.json`, `queries-v1.2.json`, `mutation-cases-v1.2.json`, `step2-schema-v1.2.json` |
 | **1.3.0** | **SUPERSEDED pre-execution — never executed** | Git carrier `734ba0f`; superseded because the imported prior claim omitted a pre-existing ignored member and stated uncheckable process provenance as bare facts |
-| **1.3.1** | **CURRENT — instrument bound, Step 2 not executed** | `contract-v1.3.md`, `source-facts-v1.3.json`, `prior-observation-v1.3.json`, `interpretations-v1.3.json`, `queries-v1.3.json`, `expected-answers-v1.3.json`, `mutation-cases-v1.3.json`, `step2-schema-v1.3.json`, `registration-manifest-v1.3.json`, generators, checker and runner |
+| **1.3.1** | **SUPERSEDED pre-execution — never executed** | Git carrier `1b9e056`; its optical ZIP path was incompatible with its clean published-subject precondition |
+| **1.3.2** | **CURRENT — instrument bound, Step 2 not executed** | `contract-v1.3.md`, `source-facts-v1.3.json`, `prior-observation-v1.3.json`, `interpretations-v1.3.json`, `queries-v1.3.json`, `expected-answers-v1.3.json`, `mutation-cases-v1.3.json`, `step2-schema-v1.3.json`, `registration-manifest-v1.3.json`, generators, checker and runner |
 
-## v1.3.1 is a pre-execution provenance amendment
+## v1.3.1 and v1.3.2 are pre-execution amendments
 
 No Step-2 extraction or fixture existed under 1.3.0. Patch 1.3.1 discloses the ignored optical
 member already present in the registration environment, labels three process-history claims as
@@ -20,6 +21,11 @@ no target value, method, outcome precedence, query, expected record or mutation 
 The qualified C9 is not asserted as the origin of the present ignored copy: it extracted the same
 selector in a separate checkout and then deleted its provider bytes. The present copy's origin is
 not established by repository evidence.
+
+Patch 1.3.2 moves the registered optical container from the unignored repository root into the
+existing ignored `data/raw/zenodo-17107693/` location. The root path could not be populated while
+also satisfying the runner's clean-worktree precondition. The registered container digest, size,
+route and all extraction semantics remain unchanged.
 
 ## v1.2 is rejected and retained unchanged
 

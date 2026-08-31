@@ -1,6 +1,6 @@
 # Phase 2 · Work Package 2A — Representation Identity Trial
 
-**Document ID:** FTRO-P2-WP2A-001 · **Version:** 1.3.1 · **Date:** 2026-08-31
+**Document ID:** FTRO-P2-WP2A-001 · **Version:** 1.3.2 · **Date:** 2026-08-31
 **Status:** **Pre-registered; instrument bound; not executed.** Frozen before any v1.3 fixture,
 evaluator or Step-2 result exists. Step 2 may run only from the clean published subject whose
 `registration-manifest-v1.3.json` reports the exact runner as `ready`.
@@ -15,6 +15,11 @@ Patch 1.3.1 was issued before Step 2. It discloses the pre-existing ignored opti
 registration environment, labels the imported claim's process history as attestation rather than
 repository-checkable provenance, and binds that limitation into every Step-2 report. No fixture,
 evaluator or Step-2 result existed under 1.3.0.
+
+Patch 1.3.2 was also issued before Step 2. The registered optical container path moved from the
+unignored repository root to its existing ignored `data/raw/zenodo-17107693/` location. Supplying
+the root-path input made the worktree dirty and therefore contradicted the instrument's own clean
+published-subject precondition. No target bytes, expected value or extraction method changed.
 
 ---
 
