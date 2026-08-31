@@ -4,7 +4,7 @@ Branch `phase2`, from `main` @ `e123a81` (Phase 0 closed, Phase 1 Gate 1 passed)
 
 | Work package | Status |
 | --- | --- |
-| **2A — Representation Identity Trial** | **pre-registered**; step 1 of 6 complete |
+| **2A — Representation Identity Trial** | **v1.3 pre-registered; runner bound; Step 2 not executed** |
 | 2B+ — profile amendment, ancestry materialisation, query fixtures | not started; held behind 2A |
 
 ## WP2A in one paragraph
@@ -16,28 +16,35 @@ product families, using neutral questions fixed before either mapping exists. It
 either, a registered requirement separates — and reports **equivalence** rather than choosing
 aesthetically when both pass.
 
-> **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Versions **1.0.0 and
-> 1.1.0 were both rejected before Step 2** and are retained byte-unchanged; **1.2.0 is current**.
-> No step of the trial has been executed under any version.
+> **Read [`REGISTRATION-STATUS.md`](wp2a/REGISTRATION-STATUS.md) first.** Versions **1.0.0–1.2.0
+> were rejected before Step 2** and remain byte-unchanged; **1.3.0 is current**. Its instrument is
+> bound, but no Step-2 extraction, mapping, evaluator or mutation run has occurred.
 
-- [`contract-v1.2.md`](wp2a/contract-v1.2.md) — scope, corrected states, oracle, decision tables; §0 tabulates the eight v1.1 defects
-- [`source-facts-v1.2.json`](wp2a/source-facts-v1.2.json) — **generated** by [`build_source_facts.py`](wp2a/build_source_facts.py); literal source content only
-- [`interpretations-v1.2.json`](wp2a/interpretations-v1.2.json) — every curated judgement, with a stated basis
-- [`queries-v1.2.json`](wp2a/queries-v1.2.json) — 11 queries, declared cardinality, split-family rule
-- [`mutation-cases-v1.2.json`](wp2a/mutation-cases-v1.2.json) — **134 enumerated cases** with exact target identities, plus R11
-- [`step2-schema-v1.2.json`](wp2a/step2-schema-v1.2.json) — four outcomes, exhaustive targets, trusted base, all 256 digest bits
+- [`contract-v1.3.md`](wp2a/contract-v1.3.md) — scope, model semantics, total decision function and execution order
+- [`source-facts-v1.3.json`](wp2a/source-facts-v1.3.json) — authenticated source projection; constructed join keys are explicitly separate
+- [`prior-observation-v1.3.json`](wp2a/prior-observation-v1.3.json) — imported optical digest/size claim, without an immutable external locator
+- [`interpretations-v1.3.json`](wp2a/interpretations-v1.3.json) — curated states, transformations, assertions, temporal bounds and code readings
+- [`queries-v1.3.json`](wp2a/queries-v1.3.json) — 11 queries, direct answer pointers and a model-relation-aware decision function
+- [`expected-answers-v1.3.json`](wp2a/expected-answers-v1.3.json) — exact normalized records generated before fixtures, with only two bound Step-2 time tokens unresolved
+- [`mutation-cases-v1.3.json`](wp2a/mutation-cases-v1.3.json) — **168 enumerated pre-fixture cases**, exact fields, plus exact-set R11
+- [`step2-schema-v1.3.json`](wp2a/step2-schema-v1.3.json) — executed report schema, four authenticated byte snapshots, postflight pathname-mutation evidence and ordered outcomes
+- [`registration-manifest-v1.3.json`](wp2a/registration-manifest-v1.3.json) — immutable digest binding for the registration, checker and runner
 
-## What v1.2 changed
+## Why v1.3 exists
 
-v1.1 claimed expected facts came from "a committed generator" — **none existed** — and the
-predicates, temporal semantics, consumption claims and execution states it presented as source
-derivation are not derivable from those sources at all. v1.2 splits **generated source facts** from
-**registered interpretations**, and commits the generator with `--check` and tests.
+v1.2 passed its mechanical checks but still left the future runner to supply scientific and
+assurance choices. It registered only 60 digest bits for the optical member, called an already
+parsed member `opaque`, dated knowledge before verification, described M2 in a way Q9 could not
+satisfy honestly, omitted complete transformation records, and left mutation and outcome choices
+in prose. Its “verbatim” generator also minted identities and conclusions that were not source
+values.
 
-Three corrections are substantive, not editorial: BKG containers and the optical member are
-`opaque` (identified but not inspectable), not `unresolved`; the optical support key is the **MJD
-token inside the member content**, not the filename date; and Q9 no longer makes
-`assertion_only_supported` unreachable by construction.
+v1.3 makes those boundaries executable. Literal source values carry exact pointers; constructed
+keys and curated interpretations identify themselves. The optical member is `resolvable` while its
+verification remains `indeterminate` and the new procedure `not_attempted`. The complete imported
+digest claim is a reproduction target—not provider attestation or an independently timestamped
+external record—and observed bytes can never populate an expected field. Exact normalized answers
+are frozen before any fixture; fixtures may contain only raw graph data.
 
 ## Two things the contract records that were not obvious
 
@@ -47,20 +54,23 @@ token inside the member content**, not the filename date; and Q9 no longer makes
 scientific input. Treating both as analysis-consumed would have baked a false premise into the
 trial. Query Q5 tests exactly this asymmetry.
 
-**The optical member digest is not authenticated here.** The member *path* is
-(`optical-inventory-summary.json`: 16,106 samples, `mjd_first` 59631.788542 — the corpus-wide
-earliest optical sample, which sets the published 31.17 h gap). No per-member digest or size exists
-anywhere in the repository, so `780,292 B / 00cc90d8…` is registered as a **prediction** for step 2
-to confirm or refute, not as an expected fact.
+**The optical member digest is an imported claim, not provider-authenticated evidence here.** The
+path is authenticated by the inventory (16,106 samples, `mjd_first` 59631.788542). A complete
+earlier claim—780,292 bytes and full SHA-256—is now durably registered inside Git as an
+authentication/reproduction target. The external exchange has no immutable locator or signature,
+so its earlier chronology cannot be independently audited. Step 2 may support or contradict the
+value; a match is not provider attestation.
 
 ## Execution order
 
-1. **Freeze contract, source facts, interpretations, queries, decision tables, mutation cases, Step-2 schema** ✅ *(v1.2; v1.0 and v1.1 rejected)*
-2. Write and freeze `run_step2.py`; run Step 2 once from a clean published commit
-3. Hand-author four fixtures — 2 models × 2 families
-4. One explicitly **non-qualifying** calibration
-5. Freeze any repairs in a new candidate
-6. One qualifying comparison from a clean checkout, then **stop**
+1. Freeze the v1.3 scientific and execution registration ✅
+2. Write, test and bind `run_step2_v1_3.py` without opening provider payloads ✅
+3. Publish the bound candidate; run Step 2 once from that clean published commit **next**
+4. If and only if Step 2 supports, freeze the evaluator before any fixture exists
+5. Hand-author four fixtures — 2 models × 2 families
+6. Freeze exact mutation recipes; run one explicitly **non-qualifying** calibration
+7. Freeze any repairs as a new candidate/version where required
+8. One qualifying comparison from a clean checkout, then **stop**
 
 The mutation freeze is two-stage on purpose: the population is frozen now, the executable per-case
 recipes after step 3 and before step 4 — because recipes chosen after inspecting the fixtures would

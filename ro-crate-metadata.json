@@ -19,7 +19,7 @@
       "name": "Federated Time-Reference Observatory — Walking Skeleton",
       "description": "Qualified Phase-0 evidence lock and Phase-1 reality-first manifests for a four-domain federated reference-ancestry pilot spanning optical clocks, pulsar timing, VLBI and GNSS over MJD 59630-59640. Carrier 8ddcbfa passed live C9 and two qualifying bounded audits; Gate-1 candidate d0f9e37 located and digest-matched the current SIO-backed source population. Normative RO-Crate 1.3 and FTRO-profile conformance remain unclaimed.",
       "datePublished": "2026-08-25",
-      "dateModified": "2026-08-30",
+      "dateModified": "2026-08-31",
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
@@ -347,6 +347,84 @@
         },
         {
           "@id": "ledgers/phase1-deficiency-log-at-ccd1534.json"
+        },
+        {
+          "@id": "labnotes/2026-08-31-session-27-wp2a-v12-rejected.md"
+        },
+        {
+          "@id": "phase2/wp2a/build_mutation_cases_v1_3.py"
+        },
+        {
+          "@id": "phase2/wp2a/build_registration_manifest_v1_3.py"
+        },
+        {
+          "@id": "phase2/wp2a/build_source_facts_v1_3.py"
+        },
+        {
+          "@id": "phase2/wp2a/build_step2_schema_v1_3.py"
+        },
+        {
+          "@id": "phase2/wp2a/check_step2_v1_3.py"
+        },
+        {
+          "@id": "phase2/wp2a/contract-v1.3.md"
+        },
+        {
+          "@id": "phase2/wp2a/interpretations-v1.3.json"
+        },
+        {
+          "@id": "phase2/wp2a/mutation-cases-v1.3.json"
+        },
+        {
+          "@id": "phase2/wp2a/prior-observation-v1.3.json"
+        },
+        {
+          "@id": "phase2/wp2a/queries-v1.3.json"
+        },
+        {
+          "@id": "phase2/wp2a/registration-manifest-v1.3.json"
+        },
+        {
+          "@id": "phase2/wp2a/run_step2_v1_3.py"
+        },
+        {
+          "@id": "phase2/wp2a/source-facts-v1.3.json"
+        },
+        {
+          "@id": "phase2/wp2a/step2-schema-v1.3.json"
+        },
+        {
+          "@id": "tests/test_crate_controls.py"
+        },
+        {
+          "@id": "tests/test_phase0_audit.py"
+        },
+        {
+          "@id": "tests/test_phase0_audit_probes_hardening.py"
+        },
+        {
+          "@id": "tests/test_phase0_audit_runner_hardening.py"
+        },
+        {
+          "@id": "tests/test_phase0_c9_contract.py"
+        },
+        {
+          "@id": "tests/test_phase0_c9_hardening.py"
+        },
+        {
+          "@id": "tests/test_retrieval_validation.py"
+        },
+        {
+          "@id": "tests/test_wp2a_v13.py"
+        },
+        {
+          "@id": "phase2/wp2a/build_expected_answers_v1_3.py"
+        },
+        {
+          "@id": "phase2/wp2a/expected-answers-v1.3.json"
+        },
+        {
+          "@id": "tests/test_wp2a_scientific_registration_v13.py"
         }
       ],
       "isBasedOn": [
@@ -362,6 +440,9 @@
       ],
       "publisher": {
         "@id": "#ulrich-warring"
+      },
+      "subjectOf": {
+        "@id": "#ftro-root-crate-publication-control"
       }
     },
     {
@@ -883,7 +964,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5212",
+      "contentSize": "5340",
       "name": "README.md"
     },
     {
@@ -954,6 +1035,15 @@
         },
         {
           "@id": "tests/fixtures/wrong_magic.sp3.Z"
+        },
+        {
+          "@id": "tests/test_crate_controls.py"
+        },
+        {
+          "@id": "tests/test_wp2a_v13.py"
+        },
+        {
+          "@id": "tests/test_wp2a_scientific_registration_v13.py"
         }
       ]
     },
@@ -1088,7 +1178,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "8544"
+      "contentSize": "19027"
     },
     {
       "@id": "src/ftro/unixz.py",
@@ -1551,7 +1641,7 @@
       "license": {
         "@id": "https://www.apache.org/licenses/LICENSE-2.0"
       },
-      "contentSize": "29896"
+      "contentSize": "26757"
     },
     {
       "@id": "tests/test_phase0_audit_runner_hardening.py",
@@ -1755,7 +1845,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "44420"
+      "contentSize": "52289"
     },
     {
       "@id": "phase1/check_gate1.py",
@@ -1947,7 +2037,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "4541"
+      "contentSize": "5718"
     },
     {
       "@id": "phase2/wp2a/contract-v1.0.md",
@@ -2077,7 +2167,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "3005"
+      "contentSize": "5071"
     },
     {
       "@id": "phase2/wp2a/contract-v1.1.md",
@@ -2224,6 +2314,274 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "44420"
+    },
+    {
+      "@id": "labnotes/2026-08-31-session-27-wp2a-v12-rejected.md",
+      "@type": "File",
+      "name": "2026-08-31-session-27-wp2a-v12-rejected.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "11066"
+    },
+    {
+      "@id": "phase2/wp2a/build_mutation_cases_v1_3.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "build_mutation_cases_v1_3.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "13515"
+    },
+    {
+      "@id": "phase2/wp2a/build_registration_manifest_v1_3.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "build_registration_manifest_v1_3.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "3729"
+    },
+    {
+      "@id": "phase2/wp2a/build_source_facts_v1_3.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "build_source_facts_v1_3.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "13095"
+    },
+    {
+      "@id": "phase2/wp2a/build_step2_schema_v1_3.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "build_step2_schema_v1_3.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "18712"
+    },
+    {
+      "@id": "phase2/wp2a/check_step2_v1_3.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "check_step2_v1_3.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "46997"
+    },
+    {
+      "@id": "phase2/wp2a/contract-v1.3.md",
+      "@type": "File",
+      "name": "contract-v1.3.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "15183"
+    },
+    {
+      "@id": "phase2/wp2a/interpretations-v1.3.json",
+      "@type": "File",
+      "name": "interpretations-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "39934"
+    },
+    {
+      "@id": "phase2/wp2a/mutation-cases-v1.3.json",
+      "@type": "File",
+      "name": "mutation-cases-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "70614"
+    },
+    {
+      "@id": "phase2/wp2a/prior-observation-v1.3.json",
+      "@type": "File",
+      "name": "prior-observation-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "1734"
+    },
+    {
+      "@id": "phase2/wp2a/queries-v1.3.json",
+      "@type": "File",
+      "name": "queries-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "18766"
+    },
+    {
+      "@id": "phase2/wp2a/registration-manifest-v1.3.json",
+      "@type": "File",
+      "name": "registration-manifest-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3437"
+    },
+    {
+      "@id": "phase2/wp2a/run_step2_v1_3.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "run_step2_v1_3.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "23245"
+    },
+    {
+      "@id": "phase2/wp2a/source-facts-v1.3.json",
+      "@type": "File",
+      "name": "source-facts-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "13231"
+    },
+    {
+      "@id": "phase2/wp2a/step2-schema-v1.3.json",
+      "@type": "File",
+      "name": "step2-schema-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "23939"
+    },
+    {
+      "@id": "tests/test_crate_controls.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_crate_controls.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "21200"
+    },
+    {
+      "@id": "tests/test_wp2a_v13.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_wp2a_v13.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "38058"
+    },
+    {
+      "@id": "#ftro-root-crate-publication-control",
+      "@type": "CreativeWork",
+      "name": "FTRO root-crate publication control",
+      "description": "Deterministic SHA-256 over the root-crate graph (excluding only this node's self-referential identifier field) and every non-volatile local file entity. It detects same-size content drift and semantic edits to ro-crate-metadata.json.",
+      "identifier": "sha256:ce1a1d16cbd947c2b47907c19a6887e405bcfc87c492a2e75a5d3ff9574c2fcb",
+      "dateModified": "2026-08-31"
+    },
+    {
+      "@id": "phase2/wp2a/build_expected_answers_v1_3.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "build_expected_answers_v1_3.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "19667"
+    },
+    {
+      "@id": "phase2/wp2a/expected-answers-v1.3.json",
+      "@type": "File",
+      "name": "expected-answers-v1.3.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "54136"
+    },
+    {
+      "@id": "tests/test_wp2a_scientific_registration_v13.py",
+      "@type": [
+        "File",
+        "SoftwareSourceCode"
+      ],
+      "name": "test_wp2a_scientific_registration_v13.py",
+      "encodingFormat": "text/x-python",
+      "license": {
+        "@id": "https://www.apache.org/licenses/LICENSE-2.0"
+      },
+      "programmingLanguage": {
+        "@id": "#python-3.13"
+      },
+      "contentSize": "7146"
     }
   ]
 }

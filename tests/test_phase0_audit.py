@@ -83,7 +83,7 @@ class TestRootCrateCompleteness(unittest.TestCase):
             ),
             "tests/": sorted(
                 path.relative_to(REPO).as_posix()
-                for path in (REPO / "tests").glob("test*.py")
+                for path in (REPO / "tests").glob("*.py")
             ),
             "phase0/audit/": sorted(
                 path.relative_to(REPO).as_posix()
@@ -396,76 +396,6 @@ class TestAuditProbes(unittest.TestCase):
             self.assertEqual(baseline.returncode, 0)
             self.assertEqual(changed.returncode, 0)
             self.assertEqual(baseline.stdout, changed.stdout)
-
-
-class TestCrateDiscovery(unittest.TestCase):
-    """Regression tests for bounded recursive discovery.
-
-    FTRO-P1-DEF-014 shipped the recursion with no test at all: the only evidence it worked was
-    that it happened to find seven known files once.  FTRO-P1-DEF-017 then showed the widened
-    population mislabelled .py as CC BY Markdown, which nothing would have caught either.
-    """
-
-    @classmethod
-    def setUpClass(cls):
-        sys.path.insert(0, str(REPO / "src" / "ftro"))
-        import refresh_crate
-        cls.rc = refresh_crate
-
-    def tree(self, root, suffixes):
-        cwd = os.getcwd()
-        os.chdir(REPO)
-        try:
-            return self.rc.discovered_tree(root, suffixes)
-        finally:
-            os.chdir(cwd)
-
-    def test_recursion_reaches_nested_reports(self):
-        found = self.tree("phase1", {".json"})
-        self.assertIn("phase1/reports/vocabulary-usage.json", found)
-        self.assertIn("phase1/manifests/optical/ro-crate-metadata.json", found)
-
-    def test_suffix_set_is_respected(self):
-        self.assertEqual([p for p in self.tree("phase1", {".md"}) if not p.endswith(".md")], [])
-
-    def test_pycache_is_excluded(self):
-        self.assertEqual([p for p in self.tree("phase1", {".py"}) if "__pycache__" in p], [])
-
-    def test_depth_is_bounded(self):
-        for path in self.tree("phase1", {".json", ".md", ".py"}):
-            below = path.split("/")[1:]
-            self.assertLessEqual(len(below), self.rc.MAX_DISCOVERY_DEPTH, path)
-
-    def test_missing_tree_is_not_an_error(self):
-        self.assertEqual(self.tree("phase-does-not-exist", {".md"}), [])
-
-    def test_declaration_rules_are_per_suffix(self):
-        expected = {
-            "a/b.md": ("text/markdown", "https://creativecommons.org/licenses/by/4.0/", "File"),
-            "a/b.json": ("application/json", "https://creativecommons.org/licenses/by/4.0/", "File"),
-            "a/b.py": ("text/x-python", "https://www.apache.org/licenses/LICENSE-2.0",
-                       ["File", "SoftwareSourceCode"]),
-        }
-        for path, (fmt, licence, kind) in expected.items():
-            with self.subTest(path=path):
-                entity = self.rc.document_entity(path)
-                self.assertEqual(entity["encodingFormat"], fmt)
-                self.assertEqual(entity["license"]["@id"], licence)
-                self.assertEqual(entity["@type"], kind)
-        self.assertIn("programmingLanguage", self.rc.document_entity("a/b.py"))
-        self.assertNotIn("programmingLanguage", self.rc.document_entity("a/b.md"))
-
-    def test_unknown_suffix_raises_instead_of_mislabelling(self):
-        with self.assertRaises(ValueError):
-            self.rc.document_entity("a/b.csv")
-
-    def test_no_phase_document_is_undeclared(self):
-        crate = json.loads((REPO / "ro-crate-metadata.json").read_text(encoding="utf-8"))
-        declared = {row.get("@id") for row in crate["@graph"]}
-        for root, suffixes in self.rc.DISCOVERED_TREES.items():
-            for path in self.tree(root, suffixes):
-                with self.subTest(path=path):
-                    self.assertIn(path, declared)
 
 
 class TestWp2aSourceFacts(unittest.TestCase):

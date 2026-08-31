@@ -1,0 +1,301 @@
+{
+  "document": "FTRO WP2A authenticated source projection",
+  "version": "1.3.0",
+  "generator": {
+    "path": "phase2/wp2a/build_source_facts_v1_3.py",
+    "sha256": "c18f15337dda6472985d0a98b4de4b19722424cfe4e1b06ba3b810dec4131edd"
+  },
+  "boundary": {
+    "source_projection": "Only values nested under a `values` object are copied from an authenticated source at the adjacent JSON pointer.",
+    "registered_selection": "Selectors choose the bounded WP2A population; they are trial registration, not provider facts.",
+    "constructed_join_keys": "Every constructed key is explicitly labelled and is not evidence of a provider identity.",
+    "scientific_output_identity": "No transformation-output identity is minted in this source projection."
+  },
+  "authenticated_sources": {
+    "igs_sio": {
+      "path": "phase0/reports/igs-artifact-pins.json",
+      "git_commit": null,
+      "sha256": "d97b05d23ae1adc01e62765a5f7aff41e67e539d32c015057a60418d93ad9b7c"
+    },
+    "igs_bkg": {
+      "path": "phase0/reports/igs-artifact-pins.json",
+      "git_commit": "a806bbaa573d28f1460d18110f7974189ca19213",
+      "sha256": "467d699ebfc4ac5088cb519bb5379eb5c273dc680a1cd9db053d50f26e2d6201"
+    },
+    "identities": {
+      "path": "phase0/evidence/identities.json",
+      "git_commit": null,
+      "sha256": "a4a27e7e6dd0fd3ae75fd36acd9cfb9dfde51576724b8fecd21cae66cae3ac45"
+    },
+    "optical_inventory": {
+      "path": "phase0/reports/optical-inventory-summary.json",
+      "git_commit": null,
+      "sha256": "f2f8b482dedb245eaac8b56f5ed56397073a64cea448dac845bf5599df3644ea"
+    }
+  },
+  "registered_selection": {
+    "family_A_product_names": [
+      "igs21982.clk.Z",
+      "igs21983.clk.Z",
+      "igr21991.clk.Z"
+    ],
+    "family_B_snapshot": "https://doi.org/10.5281/zenodo.17107693",
+    "family_B_comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1",
+    "family_B_member_file": "2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+    "basis": "WP2A v1.3 bounded trial selection; not copied from a source"
+  },
+  "source_projection": {
+    "family_A": {
+      "products": [
+        {
+          "registered_selector": "igs21982.clk.Z",
+          "sio_occurrence_source": {
+            "source_key": "igs_sio",
+            "source_pointer": "/pins/11",
+            "values": {
+              "name": "igs21982.clk.Z",
+              "concept_id": "ftro:concept:igs/igs/clock",
+              "url": "https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+              "effective_url": "https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+              "retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+              "retrieved_utc": "2026-08-27T14:44:21.157515+00:00",
+              "sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+              "size_bytes": 1594709,
+              "retrieval_validation": "content_validated",
+              "decoded_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+              "decoded_size_bytes": 6037296,
+              "expected_decoded_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+              "decoded_checksum_match": true,
+              "previous_retrieval_sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+              "snapshot_change_basis": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval."
+            }
+          },
+          "bkg_occurrence_source": {
+            "source_key": "igs_bkg",
+            "source_pointer": "/pins/11",
+            "values": {
+              "name": "igs21982.clk.Z",
+              "concept_id": "ftro:concept:igs/igs/clock",
+              "url": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+              "retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+              "retrieved_utc": "2026-08-26T11:16:52.028689+00:00",
+              "sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+              "size_bytes": 1593885,
+              "retrieval_validation": "content_validated"
+            }
+          }
+        },
+        {
+          "registered_selector": "igs21983.clk.Z",
+          "sio_occurrence_source": {
+            "source_key": "igs_sio",
+            "source_pointer": "/pins/16",
+            "values": {
+              "name": "igs21983.clk.Z",
+              "concept_id": "ftro:concept:igs/igs/clock",
+              "url": "https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+              "effective_url": "https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+              "retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+              "retrieved_utc": "2026-08-27T14:44:29.741200+00:00",
+              "sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+              "size_bytes": 1603895,
+              "retrieval_validation": "content_validated",
+              "decoded_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+              "decoded_size_bytes": 6071695,
+              "expected_decoded_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+              "decoded_checksum_match": true,
+              "previous_retrieval_sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+              "snapshot_change_basis": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval."
+            }
+          },
+          "bkg_occurrence_source": {
+            "source_key": "igs_bkg",
+            "source_pointer": "/pins/16",
+            "values": {
+              "name": "igs21983.clk.Z",
+              "concept_id": "ftro:concept:igs/igs/clock",
+              "url": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+              "retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+              "retrieved_utc": "2026-08-26T11:16:54.443432+00:00",
+              "sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+              "size_bytes": 1604221,
+              "retrieval_validation": "content_validated"
+            }
+          }
+        },
+        {
+          "registered_selector": "igr21991.clk.Z",
+          "sio_occurrence_source": {
+            "source_key": "igs_sio",
+            "source_pointer": "/pins/43",
+            "values": {
+              "name": "igr21991.clk.Z",
+              "concept_id": "ftro:concept:igs/igr/clock",
+              "url": "https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+              "effective_url": "https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+              "retrieval_procedure": "GET https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+              "retrieved_utc": "2026-08-27T14:45:14.772363+00:00",
+              "sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+              "size_bytes": 1044279,
+              "retrieval_validation": "content_validated",
+              "decoded_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+              "decoded_size_bytes": 4000804,
+              "expected_decoded_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+              "decoded_checksum_match": true,
+              "previous_retrieval_sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+              "snapshot_change_basis": "SIO/GARNER and IGN/WHU serve this alternate Unix-compress container; decoded bytes match the earlier BKG retrieval."
+            }
+          },
+          "bkg_occurrence_source": {
+            "source_key": "igs_bkg",
+            "source_pointer": "/pins/43",
+            "values": {
+              "name": "igr21991.clk.Z",
+              "concept_id": "ftro:concept:igs/igr/clock",
+              "url": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+              "retrieval_procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+              "retrieved_utc": "2026-08-26T11:17:07.822793+00:00",
+              "sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+              "size_bytes": 1044897,
+              "retrieval_validation": "content_validated"
+            }
+          }
+        }
+      ]
+    },
+    "family_B": {
+      "container_occurrence_source": {
+        "source_key": "identities",
+        "source_pointer": "/artifacts/0",
+        "values": {
+          "concept_id": "https://doi.org/10.5281/zenodo.17107692",
+          "snapshot_id": "https://doi.org/10.5281/zenodo.17107693",
+          "retrieval_procedure": "GET https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+          "retrieved_utc": "2026-08-25T13:45Z",
+          "sha256": "6168e24a0c29ce0929e9651460f11ea77f151176e1ba3d0fe3428e1e08bd56bd",
+          "size_bytes": 83530540,
+          "evidence_state": "resolvable",
+          "retrieval_validation": "content_validated",
+          "content_validation": "Archive expanded and fully parsed by src/ftro/analyse_optical.py: 12 comparison directories, 252 .dat and 12 .yml members, 9,018,290 records read and 9,018,290/9,018,290 MJD tokens confirmed as exact 1e-6 d multiples. Content validation here is stronger than a shape check -- the whole archive is parsed."
+        }
+      },
+      "member_inventory_source": {
+        "source_key": "optical_inventory",
+        "source_pointer": "/comparisons/9/files/0",
+        "values": {
+          "file": "2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+          "n_samples": 16106,
+          "mjd_first": 59631.788542,
+          "mjd_last": 59631.975891
+        }
+      },
+      "comparison_name_source": {
+        "source_key": "optical_inventory",
+        "source_pointer": "/comparisons/9",
+        "values": {
+          "comparison": "PTB_Yb_CombKnoten-INRIM_ITYb1"
+        }
+      }
+    }
+  },
+  "constructed_join_keys": {
+    "retrieval_occurrences": [
+      {
+        "kind": "constructed_join_key",
+        "value": "igs21982.clk.Z@SIO",
+        "construction": "registered product filename + '@' + registered source label",
+        "inputs": [
+          {
+            "source_key": "igs_sio",
+            "source_pointer": "/pins/11/name"
+          }
+        ],
+        "not_a_source_value": true
+      },
+      {
+        "kind": "constructed_join_key",
+        "value": "igs21982.clk.Z@BKG",
+        "construction": "registered product filename + '@' + registered source label",
+        "inputs": [
+          {
+            "source_key": "igs_bkg",
+            "source_pointer": "/pins/11/name"
+          }
+        ],
+        "not_a_source_value": true
+      },
+      {
+        "kind": "constructed_join_key",
+        "value": "igs21983.clk.Z@SIO",
+        "construction": "registered product filename + '@' + registered source label",
+        "inputs": [
+          {
+            "source_key": "igs_sio",
+            "source_pointer": "/pins/16/name"
+          }
+        ],
+        "not_a_source_value": true
+      },
+      {
+        "kind": "constructed_join_key",
+        "value": "igs21983.clk.Z@BKG",
+        "construction": "registered product filename + '@' + registered source label",
+        "inputs": [
+          {
+            "source_key": "igs_bkg",
+            "source_pointer": "/pins/16/name"
+          }
+        ],
+        "not_a_source_value": true
+      },
+      {
+        "kind": "constructed_join_key",
+        "value": "igr21991.clk.Z@SIO",
+        "construction": "registered product filename + '@' + registered source label",
+        "inputs": [
+          {
+            "source_key": "igs_sio",
+            "source_pointer": "/pins/43/name"
+          }
+        ],
+        "not_a_source_value": true
+      },
+      {
+        "kind": "constructed_join_key",
+        "value": "igr21991.clk.Z@BKG",
+        "construction": "registered product filename + '@' + registered source label",
+        "inputs": [
+          {
+            "source_key": "igs_bkg",
+            "source_pointer": "/pins/43/name"
+          }
+        ],
+        "not_a_source_value": true
+      }
+    ],
+    "optical_member_selector": {
+      "kind": "constructed_join_key",
+      "value": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+      "construction": "comparison + '/' + file",
+      "inputs": [
+        {
+          "source_key": "optical_inventory",
+          "source_pointer": "/comparisons/9/comparison"
+        },
+        {
+          "source_key": "optical_inventory",
+          "source_pointer": "/comparisons/9/files/0/file"
+        }
+      ],
+      "not_a_source_value": true
+    }
+  },
+  "declared_counts": {
+    "family_A_products": 3,
+    "family_A_retrieval_occurrences": 6,
+    "family_A_decoded_byte_observations": 3,
+    "family_B_retrieval_occurrences": 1,
+    "family_B_member_inventory_records": 1,
+    "basis": "count of the explicitly registered selection and projection above"
+  }
+}

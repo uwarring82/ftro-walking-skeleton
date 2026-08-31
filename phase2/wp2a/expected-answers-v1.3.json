@@ -1,0 +1,1136 @@
+{
+  "document": "FTRO WP2A v1.3 exact normalized expected answers",
+  "version": "1.3.0",
+  "generator": "phase2/wp2a/build_expected_answers_v1_3.py",
+  "status": "pre-fixture oracle; Step-2 timestamps unresolved",
+  "input_sha256": {
+    "phase2/wp2a/source-facts-v1.3.json": "6c3fcd10f1be3cc4e6b0acade37403b38d37b3740043c25e7bde9b1a768506bd",
+    "phase2/wp2a/interpretations-v1.3.json": "47677b2499527b35a8698ed44126a83f9d6fc9f71feb726d9f3e58225a5fd223",
+    "phase2/wp2a/queries-v1.3.json": "502f6487b4183ed5191458cfcb5a4722b00416aba87a0419331e91e97ae59595",
+    "phase2/wp2a/prior-observation-v1.3.json": "b3483e841610333a66a1d3d0724d4e8f655de95a8f52f283bfd921462fd7ac54"
+  },
+  "fixture_input_prohibition": "Neither this builder nor its inputs may read a trial fixture or embed normalized answers in one.",
+  "placeholder_vocabulary": {
+    "${STEP2_REPORT#/started_utc}": {
+      "report_pointer": "phase2/wp2a/reports/step2-input-evidence-v1.3.json#/started_utc",
+      "admissible_only_when": "outcome == step2_supports and registration_manifest_sha256 matches the frozen manifest"
+    },
+    "${STEP2_REPORT#/ended_utc}": {
+      "report_pointer": "phase2/wp2a/reports/step2-input-evidence-v1.3.json#/ended_utc",
+      "admissible_only_when": "outcome == step2_supports and registration_manifest_sha256 matches the frozen manifest"
+    }
+  },
+  "placeholder_resolution_rule": "Substitute only the two exact tokens as whole values after the evidence gate. No other expected value is conditional or evaluator-defined.",
+  "model_relation_oracle": {
+    "corresponding_pairs": [
+      [
+        "M1xA",
+        "M2xA"
+      ],
+      [
+        "M1xB",
+        "M2xB"
+      ]
+    ],
+    "identical_normalized_queries": [
+      "Q1",
+      "Q2",
+      "Q3",
+      "Q4",
+      "Q5a",
+      "Q5b",
+      "Q5c",
+      "Q6",
+      "Q7",
+      "Q8"
+    ],
+    "sole_model_specific_query": "Q9",
+    "rule": "For every applicable query other than Q9, corresponding M1 and M2 expected arrays are byte-for-byte equal. Q9 differs only in its two registered node-description booleans."
+  },
+  "fixtures": {
+    "M1xA": {
+      "Q1": [
+        {
+          "retrieval_id": "igr21991.clk.Z@BKG",
+          "concept_id": "ftro:concept:igs/igr/clock",
+          "route": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+          "procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+          "retrieved_utc": "2026-08-26T11:17:07.822793+00:00",
+          "outer_sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+          "outer_size_bytes": 1044897
+        },
+        {
+          "retrieval_id": "igr21991.clk.Z@SIO",
+          "concept_id": "ftro:concept:igs/igr/clock",
+          "route": "https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+          "procedure": "GET https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+          "retrieved_utc": "2026-08-27T14:45:14.772363+00:00",
+          "outer_sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+          "outer_size_bytes": 1044279
+        },
+        {
+          "retrieval_id": "igs21982.clk.Z@BKG",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+          "procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+          "retrieved_utc": "2026-08-26T11:16:52.028689+00:00",
+          "outer_sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+          "outer_size_bytes": 1593885
+        },
+        {
+          "retrieval_id": "igs21982.clk.Z@SIO",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+          "procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+          "retrieved_utc": "2026-08-27T14:44:21.157515+00:00",
+          "outer_sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+          "outer_size_bytes": 1594709
+        },
+        {
+          "retrieval_id": "igs21983.clk.Z@BKG",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+          "procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+          "retrieved_utc": "2026-08-26T11:16:54.443432+00:00",
+          "outer_sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+          "outer_size_bytes": 1604221
+        },
+        {
+          "retrieval_id": "igs21983.clk.Z@SIO",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+          "procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+          "retrieved_utc": "2026-08-27T14:44:29.741200+00:00",
+          "outer_sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+          "outer_size_bytes": 1603895
+        }
+      ],
+      "Q3": [
+        {
+          "assertion_id": "igr21991.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igr21991.clk.Z#decode@BKG",
+          "source_retrieval_id": "igr21991.clk.Z@BKG",
+          "procedure_id": "historical_bkg_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_size_bytes": 4000804,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igr21991.clk.Z#decodes_to@SIO",
+          "transformation_id": "igr21991.clk.Z#decode@SIO",
+          "source_retrieval_id": "igr21991.clk.Z@SIO",
+          "procedure_id": "phase0_igs_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_size_bytes": 4000804,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21982.clk.Z#decode@BKG",
+          "source_retrieval_id": "igs21982.clk.Z@BKG",
+          "procedure_id": "historical_bkg_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_size_bytes": 6037296,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21982.clk.Z#decode@SIO",
+          "source_retrieval_id": "igs21982.clk.Z@SIO",
+          "procedure_id": "phase0_igs_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_size_bytes": 6037296,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21983.clk.Z#decode@BKG",
+          "source_retrieval_id": "igs21983.clk.Z@BKG",
+          "procedure_id": "historical_bkg_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_size_bytes": 6071695,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21983.clk.Z#decode@SIO",
+          "source_retrieval_id": "igs21983.clk.Z@SIO",
+          "procedure_id": "phase0_igs_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_size_bytes": 6071695,
+          "member_selector": null
+        }
+      ],
+      "Q5a": [
+        {
+          "family": "A",
+          "artifact": "phase0/reports/igs-artifact-pins.json",
+          "consumer": "src/ftro/four_domain_intersection.py"
+        }
+      ],
+      "Q5b": [
+        {
+          "family": "A",
+          "field": "pin record name",
+          "consumer": "igs_day_from_name() via IGS_FINAL_NAME"
+        }
+      ],
+      "Q5c": [
+        {
+          "family": "A",
+          "provider_payload_bytes_consumed_by_science": null
+        }
+      ],
+      "Q7": [
+        {
+          "assertion_id": "igr21991.clk.Z#decodes_to@SIO",
+          "transformation_id": "igr21991.clk.Z#decode@SIO",
+          "subject": "igr21991.clk.Z@SIO",
+          "predicate": "ftro:decodesToByteState",
+          "object": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "evidence_artifacts": [
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "phase0_igs_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/4",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igr21991.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igr21991.clk.Z#decode@BKG",
+          "subject": "igr21991.clk.Z@BKG",
+          "predicate": "ftro:decodesToSameByteStateAs",
+          "object": "igr21991.clk.Z@SIO",
+          "evidence_artifacts": [
+            "igs_bkg_historical_report",
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "historical_recorded_not_reexecuted",
+          "execution_procedure": "historical_bkg_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/5",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_bkg_historical_report",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21982.clk.Z#decode@SIO",
+          "subject": "igs21982.clk.Z@SIO",
+          "predicate": "ftro:decodesToByteState",
+          "object": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "evidence_artifacts": [
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "phase0_igs_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/0",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21982.clk.Z#decode@BKG",
+          "subject": "igs21982.clk.Z@BKG",
+          "predicate": "ftro:decodesToSameByteStateAs",
+          "object": "igs21982.clk.Z@SIO",
+          "evidence_artifacts": [
+            "igs_bkg_historical_report",
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "historical_recorded_not_reexecuted",
+          "execution_procedure": "historical_bkg_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/1",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_bkg_historical_report",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21983.clk.Z#decode@SIO",
+          "subject": "igs21983.clk.Z@SIO",
+          "predicate": "ftro:decodesToByteState",
+          "object": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "evidence_artifacts": [
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "phase0_igs_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/2",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21983.clk.Z#decode@BKG",
+          "subject": "igs21983.clk.Z@BKG",
+          "predicate": "ftro:decodesToSameByteStateAs",
+          "object": "igs21983.clk.Z@SIO",
+          "evidence_artifacts": [
+            "igs_bkg_historical_report",
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "historical_recorded_not_reexecuted",
+          "execution_procedure": "historical_bkg_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/3",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_bkg_historical_report",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        }
+      ],
+      "Q9": [
+        {
+          "output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": true,
+          "transformation_output_type_present": true
+        },
+        {
+          "output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": true,
+          "transformation_output_type_present": true
+        },
+        {
+          "output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": true,
+          "transformation_output_type_present": true
+        }
+      ],
+      "Q2": [
+        {
+          "product_name": "igr21991.clk.Z",
+          "concept_id": "ftro:concept:igs/igr/clock",
+          "sio_retrieval_id": "igr21991.clk.Z@SIO",
+          "sio_outer_sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+          "bkg_retrieval_id": "igr21991.clk.Z@BKG",
+          "bkg_outer_sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+          "container_identities_distinct": true
+        },
+        {
+          "product_name": "igs21982.clk.Z",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "sio_retrieval_id": "igs21982.clk.Z@SIO",
+          "sio_outer_sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+          "bkg_retrieval_id": "igs21982.clk.Z@BKG",
+          "bkg_outer_sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+          "container_identities_distinct": true
+        },
+        {
+          "product_name": "igs21983.clk.Z",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "sio_retrieval_id": "igs21983.clk.Z@SIO",
+          "sio_outer_sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+          "bkg_retrieval_id": "igs21983.clk.Z@BKG",
+          "bkg_outer_sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+          "container_identities_distinct": true
+        }
+      ],
+      "Q6": [
+        {
+          "product_name": "igr21991.clk.Z",
+          "sio_retrieval_id": "igr21991.clk.Z@SIO",
+          "bkg_retrieval_id": "igr21991.clk.Z@BKG",
+          "shared_output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "scientific_support_key": "igr21991.clk.Z",
+          "scientific_answer_stable": true
+        },
+        {
+          "product_name": "igs21982.clk.Z",
+          "sio_retrieval_id": "igs21982.clk.Z@SIO",
+          "bkg_retrieval_id": "igs21982.clk.Z@BKG",
+          "shared_output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "scientific_support_key": "igs21982.clk.Z",
+          "scientific_answer_stable": true
+        },
+        {
+          "product_name": "igs21983.clk.Z",
+          "sio_retrieval_id": "igs21983.clk.Z@SIO",
+          "bkg_retrieval_id": "igs21983.clk.Z@BKG",
+          "shared_output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "scientific_support_key": "igs21983.clk.Z",
+          "scientific_answer_stable": true
+        }
+      ],
+      "Q8": [
+        {
+          "product_name": "igr21991.clk.Z",
+          "sio_container_evidence_state": "resolvable",
+          "bkg_container_evidence_state": "opaque",
+          "historical_bkg_report_evidence_state": "resolvable",
+          "sio_assertion_verification_result": "supports",
+          "sio_assertion_execution_status": "reproduced",
+          "bkg_assertion_verification_result": "supports",
+          "bkg_assertion_execution_status": "historical_recorded_not_reexecuted"
+        },
+        {
+          "product_name": "igs21982.clk.Z",
+          "sio_container_evidence_state": "resolvable",
+          "bkg_container_evidence_state": "opaque",
+          "historical_bkg_report_evidence_state": "resolvable",
+          "sio_assertion_verification_result": "supports",
+          "sio_assertion_execution_status": "reproduced",
+          "bkg_assertion_verification_result": "supports",
+          "bkg_assertion_execution_status": "historical_recorded_not_reexecuted"
+        },
+        {
+          "product_name": "igs21983.clk.Z",
+          "sio_container_evidence_state": "resolvable",
+          "bkg_container_evidence_state": "opaque",
+          "historical_bkg_report_evidence_state": "resolvable",
+          "sio_assertion_verification_result": "supports",
+          "sio_assertion_execution_status": "reproduced",
+          "bkg_assertion_verification_result": "supports",
+          "bkg_assertion_execution_status": "historical_recorded_not_reexecuted"
+        }
+      ]
+    },
+    "M2xA": {
+      "Q1": [
+        {
+          "retrieval_id": "igr21991.clk.Z@BKG",
+          "concept_id": "ftro:concept:igs/igr/clock",
+          "route": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+          "procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2199/igr21991.clk.Z",
+          "retrieved_utc": "2026-08-26T11:17:07.822793+00:00",
+          "outer_sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+          "outer_size_bytes": 1044897
+        },
+        {
+          "retrieval_id": "igr21991.clk.Z@SIO",
+          "concept_id": "ftro:concept:igs/igr/clock",
+          "route": "https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+          "procedure": "GET https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+          "retrieved_utc": "2026-08-27T14:45:14.772363+00:00",
+          "outer_sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+          "outer_size_bytes": 1044279
+        },
+        {
+          "retrieval_id": "igs21982.clk.Z@BKG",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+          "procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21982.clk.Z",
+          "retrieved_utc": "2026-08-26T11:16:52.028689+00:00",
+          "outer_sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+          "outer_size_bytes": 1593885
+        },
+        {
+          "retrieval_id": "igs21982.clk.Z@SIO",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+          "procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+          "retrieved_utc": "2026-08-27T14:44:21.157515+00:00",
+          "outer_sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+          "outer_size_bytes": 1594709
+        },
+        {
+          "retrieval_id": "igs21983.clk.Z@BKG",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+          "procedure": "GET https://igs.bkg.bund.de/root_ftp/IGS/products/orbits/2198/igs21983.clk.Z",
+          "retrieved_utc": "2026-08-26T11:16:54.443432+00:00",
+          "outer_sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+          "outer_size_bytes": 1604221
+        },
+        {
+          "retrieval_id": "igs21983.clk.Z@SIO",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "route": "https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+          "procedure": "GET https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+          "retrieved_utc": "2026-08-27T14:44:29.741200+00:00",
+          "outer_sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+          "outer_size_bytes": 1603895
+        }
+      ],
+      "Q3": [
+        {
+          "assertion_id": "igr21991.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igr21991.clk.Z#decode@BKG",
+          "source_retrieval_id": "igr21991.clk.Z@BKG",
+          "procedure_id": "historical_bkg_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_size_bytes": 4000804,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igr21991.clk.Z#decodes_to@SIO",
+          "transformation_id": "igr21991.clk.Z#decode@SIO",
+          "source_retrieval_id": "igr21991.clk.Z@SIO",
+          "procedure_id": "phase0_igs_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_size_bytes": 4000804,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21982.clk.Z#decode@BKG",
+          "source_retrieval_id": "igs21982.clk.Z@BKG",
+          "procedure_id": "historical_bkg_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_size_bytes": 6037296,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21982.clk.Z#decode@SIO",
+          "source_retrieval_id": "igs21982.clk.Z@SIO",
+          "procedure_id": "phase0_igs_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_size_bytes": 6037296,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21983.clk.Z#decode@BKG",
+          "source_retrieval_id": "igs21983.clk.Z@BKG",
+          "procedure_id": "historical_bkg_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_size_bytes": 6071695,
+          "member_selector": null
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21983.clk.Z#decode@SIO",
+          "source_retrieval_id": "igs21983.clk.Z@SIO",
+          "procedure_id": "phase0_igs_content_validation",
+          "procedure_implementation": "src/ftro/unixz.py",
+          "output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_size_bytes": 6071695,
+          "member_selector": null
+        }
+      ],
+      "Q5a": [
+        {
+          "family": "A",
+          "artifact": "phase0/reports/igs-artifact-pins.json",
+          "consumer": "src/ftro/four_domain_intersection.py"
+        }
+      ],
+      "Q5b": [
+        {
+          "family": "A",
+          "field": "pin record name",
+          "consumer": "igs_day_from_name() via IGS_FINAL_NAME"
+        }
+      ],
+      "Q5c": [
+        {
+          "family": "A",
+          "provider_payload_bytes_consumed_by_science": null
+        }
+      ],
+      "Q7": [
+        {
+          "assertion_id": "igr21991.clk.Z#decodes_to@SIO",
+          "transformation_id": "igr21991.clk.Z#decode@SIO",
+          "subject": "igr21991.clk.Z@SIO",
+          "predicate": "ftro:decodesToByteState",
+          "object": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "evidence_artifacts": [
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "phase0_igs_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/4",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igr21991.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igr21991.clk.Z#decode@BKG",
+          "subject": "igr21991.clk.Z@BKG",
+          "predicate": "ftro:decodesToSameByteStateAs",
+          "object": "igr21991.clk.Z@SIO",
+          "evidence_artifacts": [
+            "igs_bkg_historical_report",
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "historical_recorded_not_reexecuted",
+          "execution_procedure": "historical_bkg_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:45:14.772363Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/5",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_bkg_historical_report",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21982.clk.Z#decode@SIO",
+          "subject": "igs21982.clk.Z@SIO",
+          "predicate": "ftro:decodesToByteState",
+          "object": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "evidence_artifacts": [
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "phase0_igs_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/0",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21982.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21982.clk.Z#decode@BKG",
+          "subject": "igs21982.clk.Z@BKG",
+          "predicate": "ftro:decodesToSameByteStateAs",
+          "object": "igs21982.clk.Z@SIO",
+          "evidence_artifacts": [
+            "igs_bkg_historical_report",
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "historical_recorded_not_reexecuted",
+          "execution_procedure": "historical_bkg_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:21.157515Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/1",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_bkg_historical_report",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#decodes_to@SIO",
+          "transformation_id": "igs21983.clk.Z#decode@SIO",
+          "subject": "igs21983.clk.Z@SIO",
+          "predicate": "ftro:decodesToByteState",
+          "object": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "evidence_artifacts": [
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "phase0_igs_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/2",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        },
+        {
+          "assertion_id": "igs21983.clk.Z#same_output@BKG-SIO",
+          "transformation_id": "igs21983.clk.Z#decode@BKG",
+          "subject": "igs21983.clk.Z@BKG",
+          "predicate": "ftro:decodesToSameByteStateAs",
+          "object": "igs21983.clk.Z@SIO",
+          "evidence_artifacts": [
+            "igs_bkg_historical_report",
+            "igs_sio_report"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "historical_recorded_not_reexecuted",
+          "execution_procedure": "historical_bkg_content_validation",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "2026-08-27T14:44:29.741200Z",
+          "temporal.known_from.not_later_than": "2026-08-27T14:48:26Z",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/3",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_bkg_historical_report",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/igs_sio_report"
+          ]
+        }
+      ],
+      "Q9": [
+        {
+          "output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "output_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": false,
+          "transformation_output_type_present": false
+        },
+        {
+          "output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "output_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": false,
+          "transformation_output_type_present": false
+        },
+        {
+          "output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "output_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": false,
+          "transformation_output_type_present": false
+        }
+      ],
+      "Q2": [
+        {
+          "product_name": "igr21991.clk.Z",
+          "concept_id": "ftro:concept:igs/igr/clock",
+          "sio_retrieval_id": "igr21991.clk.Z@SIO",
+          "sio_outer_sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+          "bkg_retrieval_id": "igr21991.clk.Z@BKG",
+          "bkg_outer_sha256": "fa3ff944632ff174c2b1a1d9ebe9cbead1c3b92d9cecbaf01404d652a6f8ec1c",
+          "container_identities_distinct": true
+        },
+        {
+          "product_name": "igs21982.clk.Z",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "sio_retrieval_id": "igs21982.clk.Z@SIO",
+          "sio_outer_sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+          "bkg_retrieval_id": "igs21982.clk.Z@BKG",
+          "bkg_outer_sha256": "da4b4c4b5706324d3c376fd2fab1f3c3422b0f0ea5c83178a2ec67de8233eea1",
+          "container_identities_distinct": true
+        },
+        {
+          "product_name": "igs21983.clk.Z",
+          "concept_id": "ftro:concept:igs/igs/clock",
+          "sio_retrieval_id": "igs21983.clk.Z@SIO",
+          "sio_outer_sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+          "bkg_retrieval_id": "igs21983.clk.Z@BKG",
+          "bkg_outer_sha256": "898d8029582c8f55fc6cb8b51b1eebaa91b9aed8284e781450519c55e6d2eb40",
+          "container_identities_distinct": true
+        }
+      ],
+      "Q6": [
+        {
+          "product_name": "igr21991.clk.Z",
+          "sio_retrieval_id": "igr21991.clk.Z@SIO",
+          "bkg_retrieval_id": "igr21991.clk.Z@BKG",
+          "shared_output_identifier": "urn:sha256:aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+          "scientific_support_key": "igr21991.clk.Z",
+          "scientific_answer_stable": true
+        },
+        {
+          "product_name": "igs21982.clk.Z",
+          "sio_retrieval_id": "igs21982.clk.Z@SIO",
+          "bkg_retrieval_id": "igs21982.clk.Z@BKG",
+          "shared_output_identifier": "urn:sha256:b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+          "scientific_support_key": "igs21982.clk.Z",
+          "scientific_answer_stable": true
+        },
+        {
+          "product_name": "igs21983.clk.Z",
+          "sio_retrieval_id": "igs21983.clk.Z@SIO",
+          "bkg_retrieval_id": "igs21983.clk.Z@BKG",
+          "shared_output_identifier": "urn:sha256:8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+          "scientific_support_key": "igs21983.clk.Z",
+          "scientific_answer_stable": true
+        }
+      ],
+      "Q8": [
+        {
+          "product_name": "igr21991.clk.Z",
+          "sio_container_evidence_state": "resolvable",
+          "bkg_container_evidence_state": "opaque",
+          "historical_bkg_report_evidence_state": "resolvable",
+          "sio_assertion_verification_result": "supports",
+          "sio_assertion_execution_status": "reproduced",
+          "bkg_assertion_verification_result": "supports",
+          "bkg_assertion_execution_status": "historical_recorded_not_reexecuted"
+        },
+        {
+          "product_name": "igs21982.clk.Z",
+          "sio_container_evidence_state": "resolvable",
+          "bkg_container_evidence_state": "opaque",
+          "historical_bkg_report_evidence_state": "resolvable",
+          "sio_assertion_verification_result": "supports",
+          "sio_assertion_execution_status": "reproduced",
+          "bkg_assertion_verification_result": "supports",
+          "bkg_assertion_execution_status": "historical_recorded_not_reexecuted"
+        },
+        {
+          "product_name": "igs21983.clk.Z",
+          "sio_container_evidence_state": "resolvable",
+          "bkg_container_evidence_state": "opaque",
+          "historical_bkg_report_evidence_state": "resolvable",
+          "sio_assertion_verification_result": "supports",
+          "sio_assertion_execution_status": "reproduced",
+          "bkg_assertion_verification_result": "supports",
+          "bkg_assertion_execution_status": "historical_recorded_not_reexecuted"
+        }
+      ]
+    },
+    "M1xB": {
+      "Q1": [
+        {
+          "retrieval_id": "rocit-zip@zenodo",
+          "concept_id": "https://doi.org/10.5281/zenodo.17107692",
+          "route": "https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+          "procedure": "GET https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+          "retrieved_utc": "2026-08-25T13:45Z",
+          "outer_sha256": "6168e24a0c29ce0929e9651460f11ea77f151176e1ba3d0fe3428e1e08bd56bd",
+          "outer_size_bytes": 83530540
+        }
+      ],
+      "Q3": [
+        {
+          "assertion_id": "rocit-zip#extracts_member",
+          "transformation_id": "rocit-zip#extract-member",
+          "source_retrieval_id": "rocit-zip@zenodo",
+          "procedure_id": "wp2a_step2_independent_member_authentication",
+          "procedure_implementation": "python zipfile.ZipFile.read and system unzip -p",
+          "output_identifier": "urn:sha256:00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "output_sha256": "00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "output_size_bytes": 780292,
+          "member_selector": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat"
+        }
+      ],
+      "Q5a": [
+        {
+          "family": "B",
+          "artifact": "the selected .dat member bytes",
+          "consumer": "src/ftro/analyse_optical.py"
+        }
+      ],
+      "Q5b": [
+        {
+          "family": "B",
+          "field": "MJD token and flag column inside member content",
+          "consumer": "parse_dat()"
+        }
+      ],
+      "Q5c": [
+        {
+          "family": "B",
+          "provider_payload_bytes_consumed_by_science": "the selected member bytes"
+        }
+      ],
+      "Q7": [
+        {
+          "assertion_id": "rocit-zip#extracts_member",
+          "transformation_id": "rocit-zip#extract-member",
+          "subject": "rocit-zip@zenodo",
+          "predicate": "ftro:extractsToByteState",
+          "object": "urn:sha256:00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "evidence_artifacts": [
+            "rocit_container_identity",
+            "optical_inventory",
+            "optical_prior_observation"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "wp2a_step2_independent_member_authentication",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-25T13:45:00Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "${STEP2_REPORT#/started_utc}",
+          "temporal.known_from.not_later_than": "${STEP2_REPORT#/ended_utc}",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/6",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/rocit_container_identity",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/optical_inventory",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/optical_prior_observation"
+          ]
+        }
+      ],
+      "Q9": [
+        {
+          "output_identifier": "urn:sha256:00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "output_sha256": "00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": true,
+          "transformation_output_type_present": true
+        }
+      ],
+      "Q4": [
+        {
+          "transformation_id": "rocit-zip#extract-member",
+          "member_selector": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat"
+        }
+      ]
+    },
+    "M2xB": {
+      "Q1": [
+        {
+          "retrieval_id": "rocit-zip@zenodo",
+          "concept_id": "https://doi.org/10.5281/zenodo.17107692",
+          "route": "https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+          "procedure": "GET https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+          "retrieved_utc": "2026-08-25T13:45Z",
+          "outer_sha256": "6168e24a0c29ce0929e9651460f11ea77f151176e1ba3d0fe3428e1e08bd56bd",
+          "outer_size_bytes": 83530540
+        }
+      ],
+      "Q3": [
+        {
+          "assertion_id": "rocit-zip#extracts_member",
+          "transformation_id": "rocit-zip#extract-member",
+          "source_retrieval_id": "rocit-zip@zenodo",
+          "procedure_id": "wp2a_step2_independent_member_authentication",
+          "procedure_implementation": "python zipfile.ZipFile.read and system unzip -p",
+          "output_identifier": "urn:sha256:00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "output_sha256": "00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "output_size_bytes": 780292,
+          "member_selector": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat"
+        }
+      ],
+      "Q5a": [
+        {
+          "family": "B",
+          "artifact": "the selected .dat member bytes",
+          "consumer": "src/ftro/analyse_optical.py"
+        }
+      ],
+      "Q5b": [
+        {
+          "family": "B",
+          "field": "MJD token and flag column inside member content",
+          "consumer": "parse_dat()"
+        }
+      ],
+      "Q5c": [
+        {
+          "family": "B",
+          "provider_payload_bytes_consumed_by_science": "the selected member bytes"
+        }
+      ],
+      "Q7": [
+        {
+          "assertion_id": "rocit-zip#extracts_member",
+          "transformation_id": "rocit-zip#extract-member",
+          "subject": "rocit-zip@zenodo",
+          "predicate": "ftro:extractsToByteState",
+          "object": "urn:sha256:00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "evidence_artifacts": [
+            "rocit_container_identity",
+            "optical_inventory",
+            "optical_prior_observation"
+          ],
+          "evidence_state": "resolvable",
+          "verification_result": "supports",
+          "execution_status": "reproduced",
+          "execution_procedure": "wp2a_step2_independent_member_authentication",
+          "temporal.valid_from.value": null,
+          "temporal.valid_from.bound_state": "unknown",
+          "temporal.valid_from.not_later_than": "2026-08-25T13:45:00Z",
+          "temporal.valid_to.value": null,
+          "temporal.valid_to.bound_state": "open",
+          "temporal.known_from.value": null,
+          "temporal.known_from.bound_state": "interval",
+          "temporal.known_from.not_earlier_than": "${STEP2_REPORT#/started_utc}",
+          "temporal.known_from.not_later_than": "${STEP2_REPORT#/ended_utc}",
+          "temporal.known_to.value": null,
+          "temporal.known_to.bound_state": "open",
+          "basis_pointers": [
+            "phase2/wp2a/interpretations-v1.3.json#/transformations/records/6",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/rocit_container_identity",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/optical_inventory",
+            "phase2/wp2a/interpretations-v1.3.json#/evidence_artifacts/optical_prior_observation"
+          ]
+        }
+      ],
+      "Q9": [
+        {
+          "output_identifier": "urn:sha256:00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "output_sha256": "00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+          "denotes_exact_byte_state": true,
+          "identifier_distinct_from_assertion_id": true,
+          "occurs_in_non_presentation_statement": true,
+          "separate_node_description_present": false,
+          "transformation_output_type_present": false
+        }
+      ],
+      "Q4": [
+        {
+          "transformation_id": "rocit-zip#extract-member",
+          "member_selector": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat"
+        }
+      ]
+    }
+  }
+}

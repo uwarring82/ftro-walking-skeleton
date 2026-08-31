@@ -1,0 +1,817 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://w3id.org/ftro/schema/wp2a-step2-report-v1.3.json",
+  "title": "FTRO WP2A Step-2 input-evidence report v1.3",
+  "description": "Executable shape contract. Cross-field and Git/manifest checks are enforced by check_step2_v1_3.py.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "document",
+    "schema_version",
+    "run_id",
+    "subject",
+    "registration_manifest",
+    "started_utc",
+    "ended_utc",
+    "input_authentication",
+    "targets",
+    "counters",
+    "overall_outcome",
+    "output_path"
+  ],
+  "properties": {
+    "document": {
+      "const": "FTRO WP2A Step-2 input-evidence report"
+    },
+    "schema_version": {
+      "const": "1.3.0"
+    },
+    "run_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9._:-]+$"
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "commit",
+        "tree",
+        "worktree_clean",
+        "published",
+        "published_ref"
+      ],
+      "properties": {
+        "commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "tree": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}$"
+        },
+        "worktree_clean": {
+          "const": true
+        },
+        "published": {
+          "const": true
+        },
+        "published_ref": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "registration_manifest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "const": "phase2/wp2a/registration-manifest-v1.3.json"
+        },
+        "sha256": {
+          "$ref": "#/$defs/sha256"
+        }
+      }
+    },
+    "started_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "ended_utc": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "input_authentication": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "input_id",
+          "path",
+          "acquisition_mode",
+          "registered_route",
+          "expected_outer_sha256",
+          "expected_outer_size_bytes",
+          "observed_outer_sha256",
+          "observed_outer_size_bytes",
+          "outcome",
+          "post_observed_outer_sha256",
+          "post_observed_outer_size_bytes",
+          "postflight_path_matches_captured_snapshot"
+        ],
+        "properties": {
+          "input_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "path": {
+            "type": "string",
+            "minLength": 1
+          },
+          "acquisition_mode": {
+            "type": "string",
+            "minLength": 1
+          },
+          "registered_route": {
+            "type": "string",
+            "minLength": 1
+          },
+          "expected_outer_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_outer_size_bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "observed_outer_sha256": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/sha256"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observed_outer_size_bytes": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "post_observed_outer_sha256": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/sha256"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "post_observed_outer_size_bytes": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "postflight_path_matches_captured_snapshot": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "outcome": {
+            "enum": [
+              "authenticated",
+              "missing",
+              "digest_mismatch",
+              "size_mismatch",
+              "unreadable"
+            ]
+          }
+        }
+      }
+    },
+    "targets": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 4,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "target_id",
+          "input_id",
+          "member_selector",
+          "expected_sha256",
+          "expected_size_bytes",
+          "expected_source",
+          "method_a",
+          "method_b",
+          "byte_comparison",
+          "bytes_equal",
+          "observed_sha256",
+          "observed_size_bytes",
+          "matches_expected",
+          "outcome"
+        ],
+        "properties": {
+          "target_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "input_id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "member_selector": {
+            "oneOf": [
+              {
+                "type": "string",
+                "minLength": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "expected_sha256": {
+            "$ref": "#/$defs/sha256"
+          },
+          "expected_size_bytes": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "expected_source": {
+            "type": "string",
+            "minLength": 1
+          },
+          "method_a": {
+            "$ref": "#/$defs/method_result"
+          },
+          "method_b": {
+            "$ref": "#/$defs/method_result"
+          },
+          "byte_comparison": {
+            "enum": [
+              "direct_byte_equality",
+              "not_performed"
+            ]
+          },
+          "bytes_equal": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observed_sha256": {
+            "oneOf": [
+              {
+                "$ref": "#/$defs/sha256"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "observed_size_bytes": {
+            "oneOf": [
+              {
+                "type": "integer",
+                "minimum": 0
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "matches_expected": {
+            "oneOf": [
+              {
+                "type": "boolean"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "outcome": {
+            "enum": [
+              "supports",
+              "contradicts",
+              "evidence_assurance_failed",
+              "not_executed"
+            ]
+          }
+        }
+      }
+    },
+    "counters": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "n_targets",
+        "n_supports",
+        "n_contradicts",
+        "n_evidence_assurance_failed",
+        "n_not_executed",
+        "n_inputs_changed_during_run"
+      ],
+      "properties": {
+        "n_targets": {
+          "const": 4
+        },
+        "n_supports": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "n_contradicts": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "n_evidence_assurance_failed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "n_not_executed": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        },
+        "n_inputs_changed_during_run": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 4
+        }
+      }
+    },
+    "overall_outcome": {
+      "enum": [
+        "step2_supports",
+        "step2_contradicts",
+        "step2_evidence_assurance_failed",
+        "step2_not_executed"
+      ]
+    },
+    "output_path": {
+      "const": "phase2/wp2a/reports/step2-input-evidence-v1.3.json"
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "method_result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "method_id",
+        "implementation",
+        "implementation_sha256",
+        "executable",
+        "tool_available",
+        "executable_sha256",
+        "version_argv",
+        "version_exit_code",
+        "version_output",
+        "argv",
+        "input_handle",
+        "input_binding_sha256",
+        "input_binding_size_bytes",
+        "non_execution_reason",
+        "ran",
+        "exit_code",
+        "started_utc",
+        "ended_utc",
+        "stdout_sha256",
+        "stdout_size_bytes",
+        "stderr_sha256",
+        "stderr_size_bytes"
+      ],
+      "properties": {
+        "method_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation": {
+          "type": "string",
+          "minLength": 1
+        },
+        "implementation_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "executable": {
+          "type": "string",
+          "minLength": 1
+        },
+        "executable_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "tool_available": {
+          "type": "boolean"
+        },
+        "version_argv": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "version_exit_code": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "version_output": {
+          "type": "string"
+        },
+        "input_handle": {
+          "oneOf": [
+            {
+              "type": "string",
+              "pattern": "^/dev/fd/[0-9]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "input_binding_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "input_binding_size_bytes": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "argv": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "non_execution_reason": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ran": {
+          "type": "boolean"
+        },
+        "exit_code": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "started_utc": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "ended_utc": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stdout_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stdout_size_bytes": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stderr_sha256": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/sha256"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stderr_size_bytes": {
+          "oneOf": [
+            {
+              "type": "integer",
+              "minimum": 0
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    }
+  },
+  "x-ftro-registration": {
+    "version": "1.3.0",
+    "registration_manifest": "phase2/wp2a/registration-manifest-v1.3.json",
+    "report_output_path": "phase2/wp2a/reports/step2-input-evidence-v1.3.json",
+    "rejected_output_rule": "phase2/wp2a/reports/step2-input-evidence-v1.3.json.<run_id>.rejected",
+    "registration_sources": {
+      "source_facts": {
+        "path": "phase2/wp2a/source-facts-v1.3.json",
+        "sha256": "6c3fcd10f1be3cc4e6b0acade37403b38d37b3740043c25e7bde9b1a768506bd"
+      },
+      "prior_observation": {
+        "path": "phase2/wp2a/prior-observation-v1.3.json",
+        "sha256": "b3483e841610333a66a1d3d0724d4e8f655de95a8f52f283bfd921462fd7ac54"
+      }
+    },
+    "input_policy": {
+      "population": [
+        {
+          "input_id": "input:igs21982.clk.Z@SIO",
+          "path": "data/raw/igs/igs21982.clk.Z",
+          "acquisition_mode": "preexisting_local_copy_authenticated_before_any_decode",
+          "registered_route": "https://garner.ucsd.edu/pub/products/2198/igs21982.clk.Z",
+          "expected_outer_sha256": "7bd05ccecacfb5adf3c9eac2e0752a9fc95dd4c0b2ab9462da1df31e6ada33b5",
+          "expected_outer_size_bytes": 1594709,
+          "expected_source": "phase2/wp2a/source-facts-v1.3.json#/source_projection/family_A/products/0/sio_occurrence_source/values"
+        },
+        {
+          "input_id": "input:igs21983.clk.Z@SIO",
+          "path": "data/raw/igs/igs21983.clk.Z",
+          "acquisition_mode": "preexisting_local_copy_authenticated_before_any_decode",
+          "registered_route": "https://garner.ucsd.edu/pub/products/2198/igs21983.clk.Z",
+          "expected_outer_sha256": "9280fcd3697cf425bd3ea1fa144daf52f6622c891181b5340516e318e75975e6",
+          "expected_outer_size_bytes": 1603895,
+          "expected_source": "phase2/wp2a/source-facts-v1.3.json#/source_projection/family_A/products/1/sio_occurrence_source/values"
+        },
+        {
+          "input_id": "input:igr21991.clk.Z@SIO",
+          "path": "data/raw/igs/igr21991.clk.Z",
+          "acquisition_mode": "preexisting_local_copy_authenticated_before_any_decode",
+          "registered_route": "https://garner.ucsd.edu/pub/products/2199/igr21991.clk.Z",
+          "expected_outer_sha256": "2ead2464f8981f92bf2b6d18560ea741f17ef57f586e52590761354703c51f34",
+          "expected_outer_size_bytes": 1044279,
+          "expected_source": "phase2/wp2a/source-facts-v1.3.json#/source_projection/family_A/products/2/sio_occurrence_source/values"
+        },
+        {
+          "input_id": "input:rocit-zip@zenodo",
+          "path": "ROCIT campaign results.zip",
+          "acquisition_mode": "preexisting_local_copy_authenticated_before_any_extraction",
+          "registered_route": "https://zenodo.org/api/records/17107693/files/ROCIT%20campaign%20results.zip/content",
+          "expected_outer_sha256": "6168e24a0c29ce0929e9651460f11ea77f151176e1ba3d0fe3428e1e08bd56bd",
+          "expected_outer_size_bytes": 83530540,
+          "expected_source": "phase2/wp2a/source-facts-v1.3.json#/source_projection/family_B/container_occurrence_source/values"
+        }
+      ],
+      "transport_preflight": "Before any provider pathname opens, reproduce an FTRO-synthetic sentinel through the same POSIX anonymous seekable descriptor and pass_fds transport used by every method. Failure means Step 2 did not start.",
+      "preflight": "Read each of the four local input paths once, retain that exact byte string, and authenticate its SHA-256 and size before executing any decoder or extractor. Any missing/mismatched input prevents every method invocation and yields step2_not_executed.",
+      "consumption_binding": "Populate anonymous seekable file descriptors only from the retained authenticated byte strings. Both methods consume those descriptors and never reopen a provider pathname.",
+      "postflight": "After all registered method attempts are complete, re-read each current input pathname solely as mutation evidence. A changed or unavailable pathname yields step2_evidence_assurance_failed; it cannot validate, replace or alter the bytes already consumed.",
+      "network_during_step2": "forbidden; acquisition is a documented prerequisite outside the Step-2 run"
+    },
+    "target_population": [
+      {
+        "target_id": "decoded:igs21982.clk.Z",
+        "input_id": "input:igs21982.clk.Z@SIO",
+        "expected_sha256": "b3145e517490f6f8f4531115294ae9e52da63e656a2eb3710a64a83a5a1137ba",
+        "expected_size_bytes": 6037296,
+        "expected_source": "phase2/wp2a/source-facts-v1.3.json#/source_projection/family_A/products/0/sio_occurrence_source/values",
+        "method_a": "ftro_unixz",
+        "method_b": "system_gzip"
+      },
+      {
+        "target_id": "decoded:igs21983.clk.Z",
+        "input_id": "input:igs21983.clk.Z@SIO",
+        "expected_sha256": "8ac65974ef7615bad9b119ea5012fdddf94c425b85491bb434a697208777e3ab",
+        "expected_size_bytes": 6071695,
+        "expected_source": "phase2/wp2a/source-facts-v1.3.json#/source_projection/family_A/products/1/sio_occurrence_source/values",
+        "method_a": "ftro_unixz",
+        "method_b": "system_gzip"
+      },
+      {
+        "target_id": "decoded:igr21991.clk.Z",
+        "input_id": "input:igr21991.clk.Z@SIO",
+        "expected_sha256": "aa5e471c7e15a69bbaebcd907ac463bc3913d343c9269b5382d03f5db4f89a01",
+        "expected_size_bytes": 4000804,
+        "expected_source": "phase2/wp2a/source-facts-v1.3.json#/source_projection/family_A/products/2/sio_occurrence_source/values",
+        "method_a": "ftro_unixz",
+        "method_b": "system_gzip"
+      },
+      {
+        "target_id": "member:rocit-zip",
+        "input_id": "input:rocit-zip@zenodo",
+        "member_selector": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+        "expected_sha256": "00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+        "expected_size_bytes": 780292,
+        "expected_source": "phase2/wp2a/prior-observation-v1.3.json#/target",
+        "method_a": "python_zipfile",
+        "method_b": "system_unzip"
+      }
+    ],
+    "method_contracts": {
+      "ftro_unixz": {
+        "implementation": "src/ftro/unixz.py:decompress",
+        "argv_template": [
+          "{python_executable}",
+          "-I",
+          "phase2/wp2a/run_step2_v1_3.py",
+          "_decode-unixz",
+          "--input",
+          "{authenticated_input_handle}"
+        ],
+        "version_argv_template": [
+          "{python_executable}",
+          "--version"
+        ]
+      },
+      "system_gzip": {
+        "implementation": "system gzip -dc",
+        "argv_template": [
+          "{gzip_executable}",
+          "-dc",
+          "{authenticated_input_handle}"
+        ],
+        "version_argv_template": [
+          "{gzip_executable}",
+          "--version"
+        ]
+      },
+      "python_zipfile": {
+        "implementation": "Python standard-library zipfile.ZipFile.read after exact-one-member check",
+        "argv_template": [
+          "{python_executable}",
+          "-I",
+          "phase2/wp2a/run_step2_v1_3.py",
+          "_extract-zipfile",
+          "--input",
+          "{authenticated_input_handle}",
+          "--member",
+          "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat"
+        ],
+        "version_argv_template": [
+          "{python_executable}",
+          "--version"
+        ]
+      },
+      "system_unzip": {
+        "implementation": "system unzip -p",
+        "argv_template": [
+          "{unzip_executable}",
+          "-p",
+          "{authenticated_input_handle}",
+          "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat"
+        ],
+        "version_argv_template": [
+          "{unzip_executable}",
+          "-v"
+        ]
+      }
+    },
+    "trusted_computing_base": {
+      "trusted_not_reverified": [
+        "operating system process/filesystem primitives",
+        "Python runtime and hashlib SHA-256",
+        "git object access used to bind the clean published subject",
+        "registration-manifest-v1.3.json after report-recorded SHA-256 authentication",
+        "POSIX anonymous seekable file descriptors used to bind consumed bytes"
+      ],
+      "cross_checked": [
+        "src/ftro/unixz.py against independently invoked system gzip -dc",
+        "Python zipfile against independently invoked system unzip -p"
+      ],
+      "required_tools": [
+        "python",
+        "git",
+        "gzip",
+        "unzip"
+      ],
+      "note": "gzip is explicitly inside the recorded/cross-checked tool population; it is not inherited from Phase 0."
+    },
+    "byte_agreement_rule": "Runner compares the two captured byte strings directly (`method_a_bytes == method_b_bytes`), then records each full SHA-256 and size. Digest equality alone is insufficient.",
+    "per_target_outcome_precedence": [
+      {
+        "priority": 1,
+        "if": "either method did not run, exited nonzero, or emitted zero bytes",
+        "outcome": "not_executed"
+      },
+      {
+        "priority": 2,
+        "if": "both methods ran successfully but captured bytes differ",
+        "outcome": "evidence_assurance_failed"
+      },
+      {
+        "priority": 3,
+        "if": "bytes agree but full SHA-256 OR size differs from the committed expectation",
+        "outcome": "contradicts"
+      },
+      {
+        "priority": 4,
+        "if": "bytes agree and full SHA-256 AND size equal the committed expectation",
+        "outcome": "supports"
+      }
+    ],
+    "run_outcome_precedence": [
+      {
+        "priority": 1,
+        "if_any_target": "not_executed",
+        "outcome": "step2_not_executed"
+      },
+      {
+        "priority": 2,
+        "if_any_target_or_input": "evidence_assurance_failed or changed_during_run",
+        "outcome": "step2_evidence_assurance_failed"
+      },
+      {
+        "priority": 3,
+        "if_any_target": "contradicts",
+        "outcome": "step2_contradicts"
+      },
+      {
+        "priority": 4,
+        "if_all_targets": "supports",
+        "outcome": "step2_supports"
+      }
+    ],
+    "publication": {
+      "supports": "Atomically create the exact report_output_path; refuse to overwrite it.",
+      "other_outcomes_or_invalid_report": "Atomically preserve bytes at the run-specific .rejected path; never overwrite an existing official or rejected report.",
+      "check_mode": "--check-report authenticates the report-bound registration manifest from subject_commit, validates shape, re-derives populations, counters and outcomes, and performs no writes.",
+      "immutable_binding": "Every report records registration_manifest path and SHA-256. The manifest pins the runner, schema, checker and all v1.3 registration artifacts; the contract is never edited to bind a result."
+    }
+  }
+}

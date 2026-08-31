@@ -1,0 +1,24 @@
+{
+  "document": "FTRO WP2A imported prior claim",
+  "version": "1.3.0",
+  "date_imported": "2026-08-31",
+  "status": "registered authentication target; not provider-authenticated",
+  "target": {
+    "family": "B",
+    "container_snapshot": "https://doi.org/10.5281/zenodo.17107693",
+    "member_selector": "PTB_Yb_CombKnoten-INRIM_ITYb1/2022-02-21_PTB_Yb_CombKnoten-INRIM_ITYb1.dat",
+    "sha256": "00cc90d81c8001ca18586a9da4ca35982bde3a8c6be64e33feb8f2125363c067",
+    "size_bytes": 780292
+  },
+  "provenance": {
+    "source_kind": "review claim communicated before any WP2A Step-2 execution",
+    "source_locator": "external review exchange without an immutable third-party locator or signature; exact value imported here to make the previously non-durable claim checkable inside the registered Git history",
+    "observed_before_step2": true,
+    "provider_authenticated": false,
+    "derived_or_recomputed_by_v1_3": false,
+    "provider_payload_read_by_registration": false,
+    "relationship_to_v1_2": "The first eight and last seven hex characters equal the 60 bits recorded by v1.2; v1.3 durably registers the complete 256-bit value supplied by the same prior observation.",
+    "evidential_weight": "The pre-registration chronology becomes independently auditable only after this file is published. A Step-2 match is a reproduction of the imported claim, not proof of its earlier external timestamp and not provider attestation."
+  },
+  "anti_circularity_rule": "The expected SHA-256 and size are read only from this committed artifact before any provider input is opened. No observed Step-2 value may populate or amend an expected field. A mismatch is `contradicts`; extractor disagreement is `evidence_assurance_failed`."
+}
