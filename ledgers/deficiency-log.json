@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Classified Deficiency Log",
-  "version": "0.26.0",
+  "version": "0.27.0",
   "opened": "2026-08-25",
   "phase": "Phases 0–1",
   "card": "FTRO-WS-001 v0.3",
@@ -1921,10 +1921,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -1954,10 +1954,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -1986,10 +1986,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2019,10 +2019,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2052,10 +2052,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2088,10 +2088,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2123,10 +2123,10 @@
         "profile": "v0.0.3"
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2159,10 +2159,10 @@
       },
       "reconciliation_note": "v3.0.0 supersedes two divergent bodies that were both labelled 2.0.0: the unified ledger's copy, written while carrier 354868a was current, and this supplement's copy, written after qualification. This single body is canonical in both files.",
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2201,10 +2201,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2452,10 +2452,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2495,10 +2495,10 @@
       },
       "reconciliation_note": "v2.0.0 reopens and closes the incomplete v1 repair: carrier-relative field checks are not evidence identity until the report bytes are authenticated.",
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2534,10 +2534,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2571,10 +2571,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2606,10 +2606,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2646,10 +2646,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2689,10 +2689,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2724,10 +2724,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2755,10 +2755,10 @@
       "workaround": "None needed.",
       "proposed_response": "Resolved with an enforced canonical publication-control declaration whose SHA-256 covers canonical crate semantics—including every control field except its self-referential identifier—and every non-volatile declared local file. Check mode rejects stale or extra control fields even if a prior implementation re-signed them; write mode repairs them before fingerprinting. Same-size file, root and control-node mutations make --check fail. Failed completeness or atomic-replace operations leave the official descriptor byte-identical; successful writes use same-directory atomic promotion, preserve the existing permission mode and advance the root/control dates. Independent negative tests constrain all paths.",
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2792,10 +2792,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2836,10 +2836,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2875,10 +2875,10 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     },
     {
@@ -2914,15 +2914,52 @@
         ]
       },
       "source_ledger": {
-        "path": "ledgers/phase1-deficiency-log-at-1d4bc31.json",
-        "version": "0.12.0",
-        "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
-        "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf"
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-023",
+      "dataset": "tests/test_wp2a_v13.py after Step-2 publication",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Three pre-publication runner tests shared the official report path and changed meaning after publication",
+      "failed_step": "Run the full regression suite after publishing the immutable Step-2 report.",
+      "known_fact": "A test of a downstream build_report branch must isolate the earlier immutable-output guard and must assert the diagnostic produced by the branch it names.",
+      "observed": "After the official Step-2 report existed, `test_failed_global_preflight_never_permits_any_method` errored at the immutable-output guard before reaching its target branch. The unpublished-subject and descriptor-preflight tests still passed because both asserted only a broad CheckError and therefore accepted the same wrong guard. The three tests had depended silently on the official report being absent.",
+      "evidence": [
+        "tests/test_wp2a_v13.py",
+        "phase2/wp2a/reports/step2-input-evidence-v1.3.json",
+        "labnotes/2026-08-31-session-31-wp2a-step2-supports.md"
+      ],
+      "severity": "high",
+      "impact": "Descendant test and publication workflow only. The report validates against the subject-bound v1.3.2 schema and checker, and neither the instrument carrier nor provider result changed. One test blocked the full gate; two had become false passes.",
+      "workaround": "None; deleting or moving the immutable official report would invalidate the evidence publication model.",
+      "proposed_response": "Resolved by giving each branch test a temporary synthetic official path, asserting the branch-specific diagnostic, and adding a separate test that an existing official report stops before subject or input access. The real report remains untouched and no Step-2 rerun occurs.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-021",
+          "FTRO-P1-DEF-022"
+        ]
+      },
+      "source_ledger": {
+        "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+        "version": "0.13.0",
+        "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+        "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d"
       }
     }
   ],
   "revised": "2026-08-31",
-  "revision_note": "Reconciled through snapshot ledgers/phase1-deficiency-log-at-1d4bc31.json (1d4bc31). WP2A v1.3.1 bound the imported optical claim to its provenance limit (FTRO-P1-DEF-020 v2.0.0), and v1.3.2 removed the clean-subject/input-path contradiction (FTRO-P1-DEF-022). The single Step-2 execution is published separately and does not alter deficiency dispositions.",
+  "revision_note": "Reconciled through snapshot ledgers/phase1-deficiency-log-at-2978267.json (2978267). FTRO-P1-DEF-023 records and resolves three runner tests whose meaning changed after immutable Step-2 publication. The Step-2 subject, report, instrument and verdict are unchanged and Step 2 was not rerun.",
   "triage_axes": {
     "finding_type": {
       "current_defect": "today's committed behaviour is wrong or a documented workflow fails",
@@ -2995,6 +3032,14 @@
       "source_commit": "1d4bc31c6e73bec9e1717e64d5c09e526b75b64b",
       "sha256": "c3e6b58ef3d75b203ad6a4971f8e6a68e2c9b111aec75ed3fb0d9f735071ffcf",
       "n_entries": 22
+    },
+    {
+      "ledger": "FTRO Phase-1 Deficiency Log",
+      "path": "ledgers/phase1-deficiency-log-at-2978267.json",
+      "version": "0.13.0",
+      "source_commit": "29782674079de4e650bd4b035152ee72c8b71c37",
+      "sha256": "6ce142a7012d1821af2d6b2e7b16d3c28236a2feeab86b0798c0d3965d0a4a0d",
+      "n_entries": 23
     }
   ]
 }

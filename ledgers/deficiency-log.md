@@ -2,22 +2,22 @@
 
 > **Generated file — do not edit.** Source of truth is [`deficiency-log.json`](deficiency-log.json); regenerate with `python3 src/ftro/render_deficiencies.py`.
 
-**Version:** 0.26.0
+**Version:** 0.27.0
 **Opened:** 2026-08-25
 **Phase:** Phases 0–1
 **Task card:** FTRO-WS-001 v0.3
 
 ## Summary
 
-**By class:** execution (63), policy (1), rights (2), schema (12), source_evidence (20)
-**By severity:** critical (4), high (55), low (5), medium (34)
-**By domain:** cross-domain (55), gnss (8), optical (21), pulsar (8), vlbi (6)
-**By disposition:** open (29), resolved (69)
-**By responsible party:** ftro (73), provider (25)
-**By finding type:** assurance_gap (12), current_defect (44), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
-**By affects:** blocks_workflow (31), changes_result (12), maintenance_only (17), no_present_effect (38)
+**By class:** execution (64), policy (1), rights (2), schema (12), source_evidence (20)
+**By severity:** critical (4), high (56), low (5), medium (34)
+**By domain:** cross-domain (56), gnss (8), optical (21), pulsar (8), vlbi (6)
+**By disposition:** open (29), resolved (70)
+**By responsible party:** ftro (74), provider (25)
+**By finding type:** assurance_gap (12), current_defect (45), external_evidence_gap (18), latent_regression (23), recorded_outcome (1)
+**By affects:** blocks_workflow (32), changes_result (12), maintenance_only (17), no_present_effect (38)
 
-**Total entries:** 98 · **self-directed:** 73
+**Total entries:** 99 · **self-directed:** 74
 
 > **Convergence measure.** An append-only count can only rise, so totals cannot show progress. The measure is: **open entries with `affects == changes_result` and `finding_type == current_defect`.**
 >
@@ -84,6 +84,7 @@
 | [`FTRO-P1-DEF-020`](#ftro-p1-def-020) | schema | high | current_defect | blocks_workflow | **self** | WP2A registrations left result-bearing scientific, assurance and provenance choices outside the frozen evidence |
 | [`FTRO-P1-DEF-021`](#ftro-p1-def-021) | execution | high | current_defect | blocks_workflow | **self** | The pre-freeze WP2A runner could publish evidence its controls had not established |
 | [`FTRO-P1-DEF-022`](#ftro-p1-def-022) | execution | high | current_defect | blocks_workflow | **self** | The registered optical input path made the required clean published subject impossible |
+| [`FTRO-P1-DEF-023`](#ftro-p1-def-023) | execution | high | current_defect | blocks_workflow | **self** | Three pre-publication runner tests shared the official report path and changed meaning after publication |
 | [`FTRO-DEF-005`](#ftro-def-005) | schema | medium | current_defect | blocks_workflow | provider | A semantically significant second systematic uncertainty is carried in a column the format declares ignorable |
 | [`FTRO-DEF-006`](#ftro-def-006) | source_evidence | medium | external_evidence_gap | blocks_workflow | provider | YAML scalar uncertainties disagree with the per-sample uncertainty columns |
 | [`FTRO-DEF-008`](#ftro-def-008) | source_evidence | medium | external_evidence_gap | no_present_effect | provider | One comparison was produced by a different pipeline at a different epoch |
@@ -3610,5 +3611,41 @@
 **Workaround.** No local exclude rule or dirty-tree exception was used; either would make the published procedure depend on unregistered local state.
 
 **Proposed response.** Resolved before Step 2 by v1.3.2: register the existing ignored data/raw container path and assert in a committed test that every provider-input path is covered by Git's ignore policy, so the complete input population can coexist with the clean-subject gate.
+
+---
+
+### FTRO-P1-DEF-023
+
+**Three pre-publication runner tests shared the official report path and changed meaning after publication**
+
+| Field | Value |
+| --- | --- |
+| Class | `execution` |
+| Severity | high |
+| Domain | cross-domain |
+| Dataset | `tests/test_wp2a_v13.py after Step-2 publication` |
+| Disposition | `resolved` |
+| Finding type | `current_defect` |
+| Affects | `blocks_workflow` |
+| Responsible party | `ftro` — **self-directed** |
+| Version | 1.0.0 |
+
+**Failed step.** Run the full regression suite after publishing the immutable Step-2 report.
+
+**Known fact or required evidence.** A test of a downstream build_report branch must isolate the earlier immutable-output guard and must assert the diagnostic produced by the branch it names.
+
+**Observed.** After the official Step-2 report existed, `test_failed_global_preflight_never_permits_any_method` errored at the immutable-output guard before reaching its target branch. The unpublished-subject and descriptor-preflight tests still passed because both asserted only a broad CheckError and therefore accepted the same wrong guard. The three tests had depended silently on the official report being absent.
+
+**Evidence.**
+
+- `tests/test_wp2a_v13.py`
+- `phase2/wp2a/reports/step2-input-evidence-v1.3.json`
+- `labnotes/2026-08-31-session-31-wp2a-step2-supports.md`
+
+**Impact.** Descendant test and publication workflow only. The report validates against the subject-bound v1.3.2 schema and checker, and neither the instrument carrier nor provider result changed. One test blocked the full gate; two had become false passes.
+
+**Workaround.** None; deleting or moving the immutable official report would invalidate the evidence publication model.
+
+**Proposed response.** Resolved by giving each branch test a temporary synthetic official path, asserting the branch-specific diagnostic, and adding a separate test that an existing official report stops before subject or input access. The real report remains untouched and no Step-2 rerun occurs.
 
 ---

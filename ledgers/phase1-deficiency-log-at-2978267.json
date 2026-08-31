@@ -1,0 +1,727 @@
+{
+  "ledger": "FTRO Phase-1 Deficiency Log",
+  "version": "0.13.0",
+  "opened": "2026-08-26",
+  "phase": "Phase 1",
+  "card": "FTRO-WS-001 v0.3",
+  "note": "Standing rule, not a one-off: this file is the Phase-1 working supplement to the unified ledger at ledgers/deficiency-log.json, which is canonical. New Phase-1 entries are opened here first. At each reconciliation the committed state of this file is snapshotted to ledgers/phase1-deficiency-log-at-<commit>.json, that snapshot is recorded in the unified ledger's merged_sources, and its entries are folded in. Earlier snapshots are never rewritten, so every reconciliation source stays retrievable. Where a body diverges between the two files, reconciliation bumps the entry's major version and writes one canonical body into both; a divergence under an unchanged version label is itself a defect.",
+  "triage_axes_note": "Same axes as the Phase-0 ledger.",
+  "entries": [
+    {
+      "id": "FTRO-P1-DEF-001",
+      "version": "2.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "all four manifests",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "RO-Crate 1.3 conformance remains unverified; the obtainable validator stops at 1.2",
+      "failed_step": "Card §9.1: record the exact validator and its version in every conformance report.",
+      "known_fact": "§9.1 requires conformance to the pinned base to be validated, and the validator and version recorded.",
+      "observed": "CORRECTION v2.0.0: the claim that no validator was obtainable was false. `pip install roc-validator` succeeds in a temporary environment. Version 0.11.3 supplies RO-Crate 1.1 and 1.2 profiles, not the pinned 1.3 base. All four manifests therefore retain an explicit normative result of `not_run`. RDFLib parses the JSON-LD; a temporary, non-normative 1.2 export fails. Neither is a 1.3 verdict.",
+      "evidence": [
+        "phase1/reports/ro-crate-validation-v1.0.json",
+        "phase1/manifests/optical/ro-crate-metadata.json#conformance"
+      ],
+      "severity": "high",
+      "impact": "The manifests declare the 1.3 base and the provisional FTRO profile, but are not demonstrated conforming on the profile's own definition. Gate 1 source location can pass independently; normative conformance cannot.",
+      "workaround": "Every conformance report says `not_run` and why. The bounded Gate-1 checker and RDF parse are labelled as weaker, scoped evidence rather than a validator substitute.",
+      "proposed_response": "Obtain a validator implementing RO-Crate 1.3, or pre-register and review an explicit substitute conformance method without calling it validator evidence.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-002",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Profile §4 under-specifies how bitemporal relation assertions are serialised",
+      "failed_step": "Attaching the bitemporal quartet to every edge, as §4 requires.",
+      "known_fact": "§4 says every mutable node assertion and every edge carries valid_from, valid_to, known_from and known_to. §9.1 pins RO-Crate 1.3 JSON-LD.",
+      "observed": "CORRECTION v2.0.0: JSON-LD can satisfy the information requirement by reifying a relation as a node, so 'unsatisfiable' was too strong. The defect is that the profile declares neither that assertion class nor predicate/cardinality/direct-triple/null semantics. The manifests use provisional `ftro:Edge` and `ftro:Assertion` nodes, proving a possible encoding rather than a conforming one.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.1.md",
+        "phase1/manifests/optical/ro-crate-metadata.json"
+      ],
+      "severity": "high",
+      "impact": "Two implementations can preserve the quartet while producing incompatible graphs, and JSON null cannot preserve open or absent state at RDF level.",
+      "workaround": "Provisional named assertion nodes with explicit subject, relation, evidence state and reason; no claim that the representation is frozen.",
+      "proposed_response": "Define a relation-assertion model, direct-triple policy and RDF-level unresolved/temporal state in a later profile amendment. Do not amend while Phase-0 closure preconditions are open.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-003",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "Conformance-report and TIMEEPH representations are provisional, not both logically forced",
+      "failed_step": "Recording the validator and version in a typed conformance report.",
+      "known_fact": "§1 requires validator identity and version in every conformance report; §2 enumerates node classes. PPTA's .par declares TIMEEPH IF99.",
+      "observed": "CORRECTION v2.0.0: §1 constrains a report if present but does not unambiguously require one, although all four manifests need a report to record `not_run`. `ConformanceReport` is therefore a strong candidate, not a logically forced class. TIMEEPH is a declared timing-model parameter; one file does not establish that it belongs as an ancestry edge.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.1.md"
+      ],
+      "severity": "medium",
+      "impact": "Prematurely freezing either representation would turn an authoring convenience into an unsupported normative model.",
+      "workaround": "Use provisional `ftro:ConformanceReport`; retain TIMEEPH as a declared parameter assertion and record the vocabulary pressure.",
+      "proposed_response": "Consider ConformanceReport in the amendment; defer a TIMEEPH-specific edge until more timing products establish its provenance semantics.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-004",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "Whole-document term frequency was presented as semantic vocabulary coverage",
+      "failed_step": "Establishing which profile terms are validated by use.",
+      "known_fact": "Card §8.1: manifests must be based on real source products, not an abstract ontology exercise.",
+      "observed": "CORRECTION v2.0.0: the 13/21 and 28/41 figures are whole-document key/name counts. They do not establish that a term was semantically exercised, why another is absent, which entity kind owns a common field, or that four occurrences justify a universal MUST. The counts are a historical inventory, not a coverage oracle.",
+      "evidence": [
+        "phase1/reports/vocabulary-usage.json",
+        "phase1/reports/vocabulary-pressure-v1.1.md"
+      ],
+      "severity": "medium",
+      "impact": "The proposed `exercised` flags and promotion of 21 common fields would have frozen conclusions the comparison did not support.",
+      "workaround": "The v1.1 report explicitly treats the counts as descriptive and freezes no field or term.",
+      "proposed_response": "Build a separate coverage report classifying each term as instantiated, unresolved-but-required, inapplicable or untested; do not encode four-manifest frequency as a normative profile marker.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-005",
+      "version": "2.0.0",
+      "class": "schema",
+      "domain": "gnss",
+      "dataset": "FTRO profile v0.0.3",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "assurance_gap",
+      "affects": "no_present_effect",
+      "title": "The profile assumes every domain is a chain; the GNSS leg is only ever consumed",
+      "failed_step": "Applying one minimum record to a leg that has no ancestry of its own here.",
+      "known_fact": "§10 states one minimum record set for every dataset, product or evidence manifest.",
+      "observed": "The GNSS manifest uses zero ancestry edges. Its current role is a six-line product collection plus resolver policies consumed by other legs. CORRECTION v2.0.0: the earlier field totals were descriptive counts from a superseded manifest revision and are not evidence for role-conditioned cardinalities.",
+      "evidence": [
+        "phase1/reports/vocabulary-pressure-v1.1.md",
+        "phase1/manifests/gnss/ro-crate-metadata.json"
+      ],
+      "severity": "low",
+      "impact": "Not an error -- the GNSS manifest is complete for its role. But a leg whose role is to BE consumed plausibly needs a different minimum record from one that consumes, and the profile does not distinguish them.",
+      "workaround": "None; recorded for the Phase-6 freeze review.",
+      "proposed_response": "Consider a role-conditioned minimum record only after more legs exercise distinct roles; do not add it in the first amendment.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-006",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "initial Phase-1 manifests",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The first four manifests violated base structural requirements before any validator ran",
+      "failed_step": "Hand-author one RO-Crate 1.3 manifest per domain.",
+      "known_fact": "RO-Crate requires flattened JSON-LD entities and a typed contextual Profile entity for a declared profile.",
+      "observed": "The first manifests embedded 13 structured records as anonymous nested objects, omitted the Profile contextual entity in all four, mixed base/profile declarations on the descriptor, and linked only four of five VLBI wrapper states because one hasPart target was duplicated. The original self-check did not test these properties.",
+      "evidence": [
+        "phase1/manifests/optical/ro-crate-metadata.json",
+        "phase1/manifests/pulsar/ro-crate-metadata.json",
+        "phase1/manifests/vlbi/ro-crate-metadata.json",
+        "phase1/manifests/gnss/ro-crate-metadata.json",
+        "phase1/tests/test_gate1.py"
+      ],
+      "severity": "high",
+      "impact": "The session-13 structural PASS was false and the VLBI graph represented the wrong wrapper population.",
+      "workaround": "All anonymous records were promoted to named graph entities; each crate now describes the commit-pinned Profile; descriptor/root conformance roles and VLBI links were repaired.",
+      "proposed_response": "Closed by the bounded structural/source checker and committed mutation tests; normative 1.3 validation remains separately open in FTRO-P1-DEF-001.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-007",
+      "version": "3.1.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "phase1/check_gate1.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The Gate-1 checker repeatedly substituted narrower evidence for the claim",
+      "failed_step": "Test retrieval in a clean environment and demonstrate the exact Gate-1 source population.",
+      "known_fact": "A source-location gate must constrain identity, not just count, and retrieval must consume the inputs that were validated.",
+      "observed": "A digest-correct README could replace gps2utc while preserving the 3/6/2/58 domain counts; corrupt VLBI wrapper digest/path/size passed; JSON false passed as integer zero; and reports were reopened between validation and retrieval. CORRECTION v2.0.0: the first repair still trusted the caller's `isolated_export` label and did not apply the report verifier before publishing a newly generated PASS. CORRECTION v3.0.0: the next repair accepted only an uncommitted six-file overlay, rejecting a clean commit carrying the same candidate, and did not reconcile the three quoted aggregate counters to `results[]`.",
+      "evidence": [
+        "phase1/check_gate1.py",
+        "phase1/tests/test_gate1.py",
+        "phase1/reports/gate1-clean-retrieval-v1.0.json",
+        "phase1/reports/gate1-clean-retrieval-committed-d31a70c.json"
+      ],
+      "severity": "high",
+      "impact": "Gate 1 could have been declared on the wrong artifact population, against bytes not represented by the validated snapshot, or with false headline counts; the published repository could not rerun the supposedly clean procedure.",
+      "workaround": "The stable candidate identity is the Phase-1 parent plus a fingerprint of ten captured inputs. Execution may be witnessed either by the exact six-file overlay on that parent or by a clean descendant commit containing those six paths plus only allowlisted non-executable publication outputs under phase1/reports, labnotes, the Phase-1 README and the Phase-1 ledger. Every result-derived counter and status is recomputed, and a newly generated PASS must satisfy the same verifier before publication.",
+      "proposed_response": "Closed with 44 Phase-1 tests, including a clean committed-carrier run, permitted non-input publication outputs, rejection of executable extra paths and a clean non-descendant, every aggregate field, duplicate rows and coherent failure rows. The parent-overlay and committed-checkout executions are retained as separate reports; the latter ran at d31a70c and records its full HEAD.",
+      "disposition": "resolved",
+      "links": {
+        "profile": "v0.0.3"
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-008",
+      "version": "3.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "README Phase-0 pipeline",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Phase-0 C9 fails at the documented unzip command in a clean checkout",
+      "failed_step": "C9: every documented README command runs to completion from a clean export.",
+      "known_fact": "The README downloads the optical archive at repository root, then unzips into data/raw/zenodo-17107693/extracted without creating its parent.",
+      "observed": "The exact Phase-1 live-provider run exited 2: checkdir could not create the extraction directory because data/raw/zenodo-17107693 did not exist. A manual mkdir allowed all later steps to pass, but could not make the documented sequence a C9 pass; the failure reproduced in a second data-free clone. CORRECTION v2.0.0: the README now creates the parent with mkdir -p before unzip. The first closure C9 run, against the later-rejected carrier 354868a, completed README step 3 without intervention and stopped independently at the BKG route in step 4. CORRECTION v3.0.0: the repaired command landed before qualified carrier 8ddcbfa, whose clean live C9 completed all eight documented steps with 66/66 provider attempts, zero manual interventions and zero route substitutions.",
+      "evidence": [
+        "phase1/reports/phase0-c9-attempt-2026-08-26.json",
+        "README.md",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md",
+        "phase0/audit/evidence/c9-8ddcbfa-1.json"
+      ],
+      "severity": "high",
+      "impact": "The original workflow defect blocked C9. It is resolved: Phase-0 exit condition 2 is satisfied by carrier 8ddcbfa. The historical Phase-1 witness remains a valid record of the failure. The BKG-route and recorder problems that stopped the 354868a run are separate entries (FTRO-DEF-074, FTRO-DEF-075) and were closed with that carrier's rejection.",
+      "workaround": "None required after the README repair.",
+      "proposed_response": "Resolved: the documented pipeline creates data/raw/zenodo-17107693 before unzip, and the qualified live execution completed the extraction and both optical analysis commands without intervention. Evidence: phase0/audit/evidence/c9-8ddcbfa-1.json.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "C9"
+      },
+      "reconciliation_note": "v3.0.0 supersedes two divergent bodies that were both labelled 2.0.0: the unified ledger's copy, written while carrier 354868a was current, and this supplement's copy, written after qualification. This single body is canonical in both files."
+    },
+    {
+      "id": "FTRO-P1-DEF-009",
+      "version": "3.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "phase0/audit-fault-model-v1.0.md",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Neither historical bounded audit qualifies as pre-registered",
+      "failed_step": "Phase-0 exit conditions 4 and 5: demonstrate the pre-registered fault model and obtain two clean bounded audits against frozen scope.",
+      "known_fact": "A pre-registered fault injection needs a concrete target, mutation, expected detecting command, isolation/reset rule and result destination selected before execution.",
+      "observed": "CORRECTION v2.0.0: qualifying count is 0/2, not 1/2. Commit f767457 introduced the fault model and completed run-1 report together; 97553a2 amended both; a806bba introduced the corrected acceptance scope, fixes, run-2 result and its 'first clean audit' claim together. Run 2 added M1b/M1c, absent from every fault-model version, and selected the explicit-digest M11 route after run 1 exposed it. No version freezes exact targets, mutations, detecting commands, reset boundaries or destination. Both runs are useful retrospective diagnostics, not pre-registered audits. CORRECTION v3.0.0: carrier 8ddcbfa froze an executable 25-case manifest, ran one non-qualifying calibration, then two qualifying runs in distinct clean checkouts; a fifth checkout deeply revalidated the tuple and returned PASS (2/2).",
+      "evidence": [
+        "phase0/audit-fault-model-v1.0.md",
+        "phase0/reports/audit-2026-08-26.md",
+        "phase0/acceptance-contract-v1.0.md",
+        "phase1/reports/phase0-c9-attempt-2026-08-26.json",
+        "phase0/audit/evidence/calibration-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-2.json",
+        "phase0/audit/evidence/qualification-8ddcbfa.json"
+      ],
+      "severity": "high",
+      "impact": "The historical count correction remains necessary, but Phase-0 exit conditions 4 and 5 are now demonstrated for carrier 8ddcbfa.",
+      "workaround": "None; stopping before choosing concrete mutations is the fail-closed action. The historical runs remain diagnostic evidence but do not count.",
+      "proposed_response": "Resolved by phase0/audit/execution-manifest-v1.0.json and the immutable calibration, two qualifying reports and qualification report under phase0/audit/evidence/.",
+      "disposition": "resolved",
+      "links": {
+        "contract": [
+          "exit-condition-4",
+          "exit-condition-5"
+        ]
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-010",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "FTRO profile §5 and Phase-1 GNSS manifest",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Snapshot identity does not distinguish encoded retrieval bytes from decoded product state",
+      "failed_step": "Representing the immutable state actually consumed while preserving exact retrieval provenance across data centres.",
+      "known_fact": "Task-card §§10 and 11.3 require snapshot identity to bind immutable consumed state, retrieval procedure and checksum. A compressed distribution exposes both encoded container bytes and decoded product bytes.",
+      "observed": "Three IGS clock products have byte-distinct BKG and SIO/GARNER .Z containers but one decoded SHA-256 per filename. Phase 0 correctly retains distinct outer snapshot IDs and decoded equality. Profile §5 and the first GNSS crate define no normative node roles, relation, evidence requirements or cardinalities for encoded representation versus decoded content.",
+      "evidence": [
+        "phase0/reports/igs-artifact-pins.json",
+        "labnotes/2026-08-27-session-19-first-live-c9-rejected.md",
+        "phase1/manifests/gnss/ro-crate-metadata.json",
+        "phase1/reports/vocabulary-pressure-v1.2.md",
+        "phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json"
+      ],
+      "severity": "high",
+      "impact": "Merging by filename or decoded hash loses exact-retrieval provenance; splitting only by outer hash hides content identity. Equal source counts can conceal a changed immutable population. The Phase-0 null is unchanged, but profile §5 cannot be frozen on the current underspecified model.",
+      "workaround": "Keep old and new outer snapshot identifiers distinct, preserve the verified decoded digest and decoding procedure, and never infer owl:sameAs from filename, codec or decoded equality.",
+      "proposed_response": "The GNSS crate now exercises provisional evidence assertions checked against the pin report. Next compare encoded-node/decoded-node and assertion-only mappings, define consumed-state and cardinality semantics, test a second packaged product, then amend §5 if warranted.",
+      "disposition": "open",
+      "links": {
+        "profile": "v0.0.3",
+        "task_card": [
+          "§10",
+          "§11.3"
+        ]
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-011",
+      "version": "2.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "tests/test_phase0_audit.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "A post-qualification integrity test resolved frozen audit targets against descendant working-tree bytes",
+      "failed_step": "Keep the qualified Phase-0 audit instrument verifiable from a descendant commit without re-qualification.",
+      "known_fact": "execution-manifest-v1.0.json freezes a (target, target_before_sha256) tuple per case for carrier 8ddcbfa. Its own c9_rebinding_policy states that evidence publication is 'a descendant record about the qualified carrier, not a rebound candidate', so descendant commits are expected and permitted.",
+      "observed": "test_every_target_digest_is_current hashed the WORKING TREE copy of each target and compared it to the carrier's frozen digest. Any edit to a living target therefore reported a manifest defect that does not exist. A status-note edit to README.md -- the pinned target of M12c.version-gained and M13.consume-before-produce -- failed both cases (4091450f... expected, aaeb781d... observed) while the manifest, runner and qualification evidence remained unchanged. test_bound_document_digests_are_current carried the identical latent coupling for the semantic model and acceptance contract. CORRECTION v2.0.0: the first carrier-relative repair then trusted selected fields projected from the calibration and qualifying reports without authenticating their bytes. A same-size unchecked-field mutation passed the focused tests and crate-size check while changing the qualified report digest. An unchanged version would make the version-policy gate reject a dirty edit, but a permitted forward version declaration can satisfy that policy without restoring byte identity. The carrier evidence hop was therefore still projection-only.",
+      "evidence": [
+        "phase0/audit/execution-manifest-v1.0.json",
+        "phase0/audit/evidence/calibration-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualifying-8ddcbfa-2.json",
+        "phase0/audit/evidence/c9-8ddcbfa-1.json",
+        "phase0/audit/evidence/qualification-8ddcbfa.json",
+        "phase0/phase0-qualification-v1.0.md",
+        "tests/test_phase0_audit.py"
+      ],
+      "severity": "medium",
+      "impact": "Workflow only. The qualified instrument, runner and evidence bytes were never wrong and remain unchanged; no Phase-0 requalification is needed and the convergence predicate is unaffected. The v1 repair removed the false coupling to descendant targets but did not prove that the reports used as its historical oracle were the exact qualified reports.",
+      "workaround": "None needed; the test was corrected in place.",
+      "proposed_response": "Freeze the manifest file by digest; authenticate all five published Phase-0 evidence files by their immutable SHA-256 values before parsing any fields; cross-check the authenticated qualification record and the Markdown digest table; then resolve every frozen target tuple against those authenticated reports. Retain a same-size mutation test. Constrain the live README separately against the working tree.",
+      "disposition": "resolved",
+      "links": {
+        "contract": "exit-condition-4",
+        "related": [
+          "FTRO-P1-DEF-007"
+        ]
+      },
+      "reconciliation_note": "v2.0.0 reopens and closes the incomplete v1 repair: carrier-relative field checks are not evidence identity until the report bytes are authenticated."
+    },
+    {
+      "id": "FTRO-P1-DEF-012",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "ro-crate-metadata.json and src/ftro/refresh_crate.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "The root-crate freshness check could not discover new provenance documents",
+      "failed_step": "Keep the repository-level RO-Crate complete as new ledger snapshots and append-only lab notes are published.",
+      "known_fact": "A completeness check over a bounded collection must discover the collection independently; checking only entities already declared in the graph cannot detect an omitted entity.",
+      "observed": "refresh_crate.py --check reported 0 stale and 0 missing while ro-crate-metadata.json omitted ledgers/phase1-deficiency-log-at-f1837d4.json and labnotes/2026-08-28-session-22-ledger-reconciliation.md, and retained dateModified 2026-08-27. The script refreshed contentSize only for graph entities it had already been told about.",
+      "evidence": [
+        "ro-crate-metadata.json",
+        "src/ftro/refresh_crate.py",
+        "ledgers/phase1-deficiency-log-at-f1837d4.json",
+        "labnotes/2026-08-28-session-22-ledger-reconciliation.md",
+        "tests/test_phase0_audit.py"
+      ],
+      "severity": "medium",
+      "impact": "The scientific result and qualified carrier are unchanged, but the repository package omitted current provenance artifacts while its maintenance gate asserted completeness.",
+      "workaround": "The omitted files remained directly retrievable from Git and were named elsewhere in the repository.",
+      "proposed_response": "Discover every Markdown lab note and every JSON/Markdown ledger file independently of the crate graph, require each as both a graph entity and root Dataset hasPart, add missing declarations deterministically, and test the same bounded populations independently.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-DEF-040",
+          "FTRO-DEF-045"
+        ]
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-013",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "phase1/README.md and phase1/check_gate1.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The live Gate-1 reproduction instruction selected an ineligible publication descendant",
+      "failed_step": "Re-run the published Gate-1 retrieval procedure from the source state named by its evidence.",
+      "known_fact": "The SIO Gate-1 report is bound to candidate d0f9e37. The committed-checkout preflight permits only that six-file candidate over parent 12b119a plus a bounded set of publication outputs.",
+      "observed": "phase1/README.md instructed a reader to run --retrieve --source-state committed_checkout after publication without checking out d0f9e37. Current branch head bb76154 is correctly rejected because descendant bookkeeping changed root README, tests, phase0 qualification status and canonical ledgers outside the publication allowlist. The historical 69/69 report remains valid; the reproduction command named the wrong checkout implicitly.",
+      "evidence": [
+        "phase1/README.md",
+        "phase1/check_gate1.py",
+        "phase1/reports/gate1-clean-retrieval-sio-d0f9e37.json"
+      ],
+      "severity": "medium",
+      "impact": "A reader following the documented live reproduction from branch head receives a preflight refusal. No source identity, report content or Gate-1 result is changed.",
+      "workaround": "Check out d0f9e37 manually before running the retrieval.",
+      "proposed_response": "Name the full d0f9e37 commit in the command block, require a clean data-free detached checkout of that exact candidate, and keep report verification at descendant HEAD separate from live reproduction.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-007",
+          "FTRO-P1-DEF-011"
+        ]
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-014",
+      "version": "1.0.0",
+      "class": "execution",
+      "domain": "cross-domain",
+      "dataset": "src/ftro/refresh_crate.py",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "Bounded crate discovery was flat, so nested phase-tree documents could not be discovered",
+      "failed_step": "Keep ro-crate-metadata.json a complete declaration of the repository's provenance documents.",
+      "known_fact": "FTRO-P1-DEF-012 added bounded discovery for labnotes/ and ledgers/. Both are flat directories. The phase working trees are not: phase1/reports/, phase1/manifests/<domain>/ and phase2/wp2a/ are nested.",
+      "observed": "os.listdir could not reach nested paths, so SEVEN Phase-1 reports were undeclared (gate1-clean-retrieval-committed-d31a70c.json, gate1-clean-retrieval-v1.0.json, phase0-c9-attempt-2026-08-26.json, ro-crate-validation-v1.0.json, vocabulary-pressure-v1.0.md, vocabulary-pressure-v1.1.md, vocabulary-usage.json) while refresh_crate.py --check reported 0 stale and 0 missing. Phase 2 was complete only because its five entities were added by hand at 100b0e8; a Step-2 report could have been omitted with the gate still green.",
+      "evidence": [
+        "src/ftro/refresh_crate.py",
+        "ro-crate-metadata.json"
+      ],
+      "severity": "medium",
+      "impact": "FAIR completeness only; no scientific claim depended on it. A stated rule that nothing enforces gets violated silently -- here by the same check that reported compliance.",
+      "workaround": "None needed; fixed in place.",
+      "proposed_response": "Bounded recursive discovery over phase1/ and phase2/, limited by an explicit suffix set, a fixed MAX_DISCOVERY_DEPTH and an excluded-directory set, so the crate does not become an indiscriminate repository dump. Verified by the check failing on all 14 missing declarations before the fix and reporting 0 undeclared after.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-012"
+        ]
+      }
+    },
+    {
+      "id": "FTRO-P1-DEF-015",
+      "version": "1.0.0",
+      "class": "schema",
+      "domain": "cross-domain",
+      "dataset": "phase2/wp2a/ v1.0.0 registration",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The WP2A v1.0 pre-registration could not execute or answer its own requirements",
+      "failed_step": "WP2A step 1: freeze a registration that step 2 onward can actually execute.",
+      "known_fact": "A pre-registration is only useful if every registered question is answerable from its own oracle and every registered mutation is executable against its own fixture requirements.",
+      "observed": "v1.0 was mechanically sound -- valid JSON, 40 cases recomputing exactly, the optical values correctly labelled a prediction -- and structurally unable to run. Ten defects: (1) evidence_state conflated accessibility, verification result and execution status, and Q7 required temporal bounds the oracle never supplied; (2) the oracle omitted every BKG route, size, retrieval time and procedure -- which exist only at a806bba -- and the optical container's retrieval identity in identities.json; (3) Q5 collapsed three distinct IGS consumption facts into one; (4) NO query tested addressability, so M2 could return a digest literal and pass Q1-Q8 without giving the consumed state an addressable identity -- the very question the trial exists to answer; (5) no outcome existed for an executed R1-R10 going undetected or a detected R11; (6) 'applies to fixture' left recipes free to mutate whichever of three products, six retrieval occurrences or three outputs was easiest, i.e. post-hoc selection at the branch level; (7) R11 mutated a display name fixtures were not required to carry; (8) query applicability was prose while the header implied universality, leaving model-pass aggregation undefined; (9) a refuted optical prediction halted the trial with no typed outcome; (10) the root crate omitted seven Phase-1 reports while its check reported green.",
+      "evidence": [
+        "phase2/wp2a/contract-v1.0.md",
+        "phase2/wp2a/expected-facts-v1.0.json",
+        "phase2/wp2a/queries-v1.0.json",
+        "phase2/wp2a/mutation-population-v1.0.json",
+        "phase2/wp2a/REGISTRATION-STATUS.md"
+      ],
+      "severity": "high",
+      "impact": "Caught before step 2, so NO step was executed under v1.0 and no result is contaminated. Had step 2 begun, the trial would have produced a verdict on an identity question it never asked.",
+      "workaround": "None; the registration was rejected rather than amended.",
+      "proposed_response": "Retain v1.0 byte-unchanged as a rejected registration with an explicit REGISTRATION-STATUS.md, and issue v1.1: three separated axes; temporal values plus bound states; a four-source pinned oracle including a806bba for BKG; Q5a/Q5b/Q5c; new Q9 addressability; assurance_failed and mutation_assurance_failed outcomes; 76 exhaustive mutation cases over counted target populations; F-REQ-4 mandatory ftro:display_name; machine-readable applicability, cardinality and model-pass rule; prediction_refuted; and bounded recursive crate discovery (FTRO-P1-DEF-014). Standing rule: a registration is amended only before execution begins; afterwards a defect yields a new version and a restarted trial.",
+      "disposition": "resolved",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-010",
+          "FTRO-P1-DEF-002",
+          "FTRO-P1-DEF-009"
+        ]
+      }
+    },
+    {
+      "class": "schema",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "2.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-016",
+      "dataset": "phase2/wp2a/ v1.1.0 and v1.2.0 registrations",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "WP2A registrations repeatedly presented constructed identity and judgement as source derivation",
+      "failed_step": "WP2A step 1: freeze a registration whose facts are traceable to their stated origin.",
+      "known_fact": "contract-v1.1.md said expected facts were 'derived from these four sources by a committed generator, not hand-transcribed'.",
+      "observed": "v1.1 named a generator that did not exist and presented predicates, temporal interpretations, consumption claims and execution states as derived from four sources that do not contain them. CORRECTION v2.0.0: v1.2 committed a generator but called its whole output verbatim source content while synthesising occurrence/output IDs, origins, roles, counts, a composed member selector and a repository-wide absence claim. Its test searched only Family A for a short forbidden-word list, so it could not detect the constructions or the Family-B judgement. Pre-minting output identity in source facts was especially material in a representation-identity trial.",
+      "evidence": [
+        "phase2/wp2a/contract-v1.1.md",
+        "phase2/wp2a/expected-facts-v1.1.json",
+        "phase2/wp2a/queries-v1.1.json",
+        "phase2/wp2a/mutation-population-v1.1.json",
+        "phase2/wp2a/build_source_facts.py",
+        "phase2/wp2a/source-facts-v1.2.json",
+        "tests/test_phase0_audit.py",
+        "phase2/wp2a/REGISTRATION-STATUS.md"
+      ],
+      "severity": "high",
+      "impact": "Both occurrences were caught before Step 2, so no evidence result or mapping is contaminated. The second repair moved the same provenance error into executable-looking machinery and could have biased Q9 by making an FTRO-constructed output identity appear source-supplied.",
+      "workaround": "None; rejected rather than amended.",
+      "proposed_response": "Resolved in v1.3 by an authenticated source projection in which every copied value carries an exact source pointer, while registered selection and constructed join keys are separately labelled and no scientific output identity is minted. Curated predicates, states, transformations, temporal semantics and code readings remain in interpretations-v1.3.json with typed bases.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-015",
+          "FTRO-P1-DEF-010",
+          "FTRO-P1-DEF-002"
+        ]
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-017",
+      "dataset": "src/ftro/refresh_crate.py",
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "Bounded discovery declared every discovered file as CC BY Markdown, including Python",
+      "failed_step": "Declare each provenance document with its actual format and licence.",
+      "known_fact": "Repository code is Apache-2.0; documents are CC BY 4.0. The two are not interchangeable.",
+      "observed": "document_entity() hard-coded encodingFormat to application/json or text/markdown and license to CC BY. Harmless while discovery ran only over labnotes/ and ledgers/; wrong the moment FTRO-P1-DEF-014 widened it to the phase trees, which hold .py. The next auto-declared Python file would have been published as a CC BY Markdown document. Latent at the time of widening: no .py had yet been auto-declared, because the two existing ones were declared by hand.",
+      "evidence": [
+        "src/ftro/refresh_crate.py",
+        "ro-crate-metadata.json"
+      ],
+      "severity": "medium",
+      "impact": "Licence and format misstatement in the published FAIR record; no scientific claim affected.",
+      "workaround": "None needed.",
+      "proposed_response": "Per-suffix SUFFIX_DECLARATION giving .py text/x-python, Apache-2.0, SoftwareSourceCode and programmingLanguage; unknown suffixes RAISE rather than defaulting. Verified by phase2/wp2a/build_source_facts.py being auto-declared correctly.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-014"
+        ]
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "2.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-018",
+      "dataset": "ro-crate-metadata.json",
+      "finding_type": "current_defect",
+      "affects": "maintenance_only",
+      "title": "The root crate's dateModified never advanced",
+      "failed_step": "Keep the root provenance record's own metadata true.",
+      "known_fact": "refresh_crate.py updated contentSize and declarations but never touched dateModified.",
+      "observed": "The root Dataset advertised 2026-08-28 across commits that changed declared content, through 2026-08-30. CORRECTION v2.0.0: the first repair advanced dateModified only when contentSize, declaration or missing-file drift had already fired. A same-size declared-file edit or equal-length root-descriptor semantic edit still passed, and no committed test exercised dateModified. The next draft excluded the entire publication-control node from its fingerprint, so equal-length edits to that node passed, and write mode rewrote the official descriptor even when a missing declared file made publication fail. Its first atomic replacement then changed the descriptor mode from 0644 to mkstemp's 0600. The final draft hashed the control node except its identifier but did not enforce the canonical control declaration, so it could re-sign the legacy description claiming the whole node was excluded.",
+      "evidence": [
+        "ro-crate-metadata.json",
+        "src/ftro/refresh_crate.py",
+        "tests/test_crate_controls.py"
+      ],
+      "severity": "low",
+      "impact": "FAIR metadata accuracy only.",
+      "workaround": "None needed.",
+      "proposed_response": "Resolved with an enforced canonical publication-control declaration whose SHA-256 covers canonical crate semantics—including every control field except its self-referential identifier—and every non-volatile declared local file. Check mode rejects stale or extra control fields even if a prior implementation re-signed them; write mode repairs them before fingerprinting. Same-size file, root and control-node mutations make --check fail. Failed completeness or atomic-replace operations leave the official descriptor byte-identical; successful writes use same-directory atomic promotion, preserve the existing permission mode and advance the root/control dates. Independent negative tests constrain all paths."
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "2.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-019",
+      "dataset": "src/ftro/refresh_crate.py",
+      "finding_type": "assurance_gap",
+      "affects": "maintenance_only",
+      "title": "Bounded recursive discovery shipped with no regression test",
+      "failed_step": "Land no rule without an executable check.",
+      "known_fact": "FTRO-P1-DEF-014 added recursion, depth bounding, suffix filtering and directory exclusion. The only evidence any of it worked was that it found seven known files once.",
+      "observed": "No committed test initially exercised discovered_tree, MAX_DISCOVERY_DEPTH, the exclusion set or document_entity. CORRECTION v2.0.0: the first added tests read the production depth/scope/exclusion constants as their own oracle and created no boundary or excluded-directory fixtures. Setting depth to 99, emptying exclusions or removing Phase 2 from discovery left the named tests green; root hasPart was not checked. The replacement initially repeated the gap for flat tests: removing every tests/ path from the producer left its scope test green, production's tests/*.py population disagreed with a legacy test*.py oracle, and newly discovered tests were added to the root but not the tests/ collection.",
+      "evidence": [
+        "tests/test_phase0_audit.py",
+        "tests/test_crate_controls.py",
+        "src/ftro/refresh_crate.py"
+      ],
+      "severity": "medium",
+      "impact": "Maintenance assurance only. The controls were narrower than their names and could silently stop enumerating a phase tree or cross the registered depth boundary.",
+      "workaround": "None needed.",
+      "proposed_response": "Resolved with independent fixed phase1/phase2 and flat-test scopes, real T/T+1, excluded-directory and newly-added-test fixtures, graph plus root and tests/-collection membership assertions, and a fail-closed unknown-suffix policy. The projection-only class was deleted rather than retained beside the replacement.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-014",
+          "FTRO-P1-DEF-017"
+        ]
+      }
+    },
+    {
+      "class": "schema",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "2.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-020",
+      "dataset": "phase2/wp2a/ v1.2.0–v1.3.0 representation-identity registrations",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "WP2A registrations left result-bearing scientific, assurance and provenance choices outside the frozen evidence",
+      "failed_step": "Freeze a representation trial that can be implemented without selecting evidence, semantics, mutations or outcome precedence after registration.",
+      "known_fact": "A pre-registration must contain every choice capable of changing whether Step 2 supports, which model passes, or whether the mutation assurance is accepted.",
+      "observed": "The claimed 256-bit optical target contained only a 60-bit prefix/suffix; expected size was not compared; the selected optical member was misclassified opaque despite having been parsed; known_from preceded verification and one cross-origin object; Q3 omitted complete transformation records; M2 and Q9 remained semantically contradictory; the model decision rows overlapped; the mutation file omitted operator definitions and exact fields and R11 compared fixture-authored counts; and the Step-2 prose schema omitted exact input authentication, tool execution evidence, outcome precedence, atomic publication and an immutable report binding. Pre-freeze v1.3 drafts exposed two further layers: R7 still targeted outputs and used mismatched IDs; then expected-answer pointers left joins, renames and derivations to the future evaluator, Q3's field list contradicted the contract, F-REQ-6 required fixtures to expose the very answers used to judge them, and M1's strict-superset relation made seven Boolean tuples assurance violations rather than substantive model outcomes. CORRECTION v2.0.0: frozen v1.3.0 registered the complete optical digest and size but omitted that the same member was already present at a gitignored path. It also stated three uncheckable process-provenance claims as bare booleans and gave future Step-2 reports no field in which to carry the resulting interpretation bound. Qualified C9 extracted the same selector in a separate checkout and explicitly deleted its data, so it cannot establish the current copy's origin.",
+      "evidence": [
+        "phase2/wp2a/contract-v1.2.md",
+        "phase2/wp2a/interpretations-v1.2.json",
+        "phase2/wp2a/queries-v1.2.json",
+        "phase2/wp2a/mutation-cases-v1.2.json",
+        "phase2/wp2a/step2-schema-v1.2.json",
+        "phase2/wp2a/contract-v1.3.md",
+        "phase2/wp2a/registration-manifest-v1.3.json",
+        "tests/test_wp2a_v13.py"
+      ],
+      "severity": "high",
+      "impact": "Every occurrence was caught before Step 2 and before any mapping, evaluator or mutation result existed, so no scientific result is contaminated. Without the v1.3.1 correction, a supporting report would have overstated reproduction of an imported value as evidence independent of a pre-existing local copy.",
+      "workaround": "None; v1.2 is retained byte-unchanged as rejected, and the unexecuted v1.3.0 state remains recoverable at carrier 734ba0f.",
+      "proposed_response": "Resolved by v1.3.1: the current ignored member and its unestablished lineage are disclosed; the three process claims are labelled attestations; qualified C9 is accurately limited to an isolated extraction that retained no bytes; and every report must carry a manifest-bound object stating that support establishes cross-extractor byte agreement and reproduction, not independent derivation, external chronology or provider attestation. The v1.3 scientific registration, exact answers, mutation population and outcome precedence are otherwise unchanged.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-002",
+          "FTRO-P1-DEF-009",
+          "FTRO-P1-DEF-010",
+          "FTRO-P1-DEF-016"
+        ]
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-021",
+      "dataset": "phase2/wp2a/ v1.3.0 Step-2 instrument before publication",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The pre-freeze WP2A runner could publish evidence its controls had not established",
+      "failed_step": "Bind a Step-2 instrument whose declared schema, publication state and authenticated inputs govern every accepted report.",
+      "known_fact": "The runner and standalone promoter are part of the pre-registration trusted boundary; a green report must be derivable from the subject-bound instrument and the exact bytes consumed.",
+      "observed": "The published JSON Schema was inert while the hand checker accepted values it rejected; an unknown method_id raised before malformed bytes could be preserved as .rejected; published_ref accepted HEAD; decoders and extractors reopened named input paths after authentication, so consumed bytes were not bound to the authenticated capture, and no post-consumption path-mutation check existed; historical reports were checked against the descendant working-tree schema rather than their subject-bound schema; and the global-preflight test bypassed build_report, so changing its permission fold left the test green. The exact imported optical digest and source projections also lacked independent literal/pointer reconciliation tests.",
+      "evidence": [
+        "phase2/wp2a/build_step2_schema_v1_3.py",
+        "phase2/wp2a/check_step2_v1_3.py",
+        "phase2/wp2a/run_step2_v1_3.py",
+        "tests/test_wp2a_v13.py"
+      ],
+      "severity": "high",
+      "impact": "Caught before v1.3 publication and before any provider input was opened by WP2A. No report, model fixture or scientific result was produced under the defective draft.",
+      "workaround": "None; Step 2 remained prohibited until the instrument and manifest were regenerated.",
+      "proposed_response": "Resolved before freeze by executing the complete standard-library schema subset; requiring the subject's schema and containment in a remote-tracking ref before any input access; proving the POSIX inherited-descriptor transport with an FTRO-synthetic sentinel before any provider pathname opens; preserving every malformed/non-supporting candidate atomically; reading each input path once into an authenticated byte snapshot; making both methods consume only anonymous seekable descriptors populated from that snapshot; recording snapshot/start failures as typed non-execution; treating the later pathname rehash solely as mutation evidence with a run-level change outcome; exercising the actual global permission fold; and independently pinning the optical literal and resolving every recorded RFC-6901 source pointer.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-009",
+          "FTRO-P1-DEF-018",
+          "FTRO-P1-DEF-020"
+        ]
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "optical",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-022",
+      "dataset": "phase2/wp2a/ v1.3.1 Step-2 input registration",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The registered optical input path made the required clean published subject impossible",
+      "failed_step": "Satisfy the declared local-input prerequisite before the one allowed Step-2 execution.",
+      "known_fact": "The runner must establish a clean published worktree before opening any provider input, while all four registered local inputs must already exist.",
+      "observed": "v1.3.1 registered `ROCIT campaign results.zip` at repository root. That path was neither tracked nor ignored, so placing the required provider container there made `git status --porcelain --untracked-files=all` non-empty and `clean_published_subject()` rejected the carrier before input authentication. The authenticated local copy already existed at the ignored `data/raw/zenodo-17107693/ROCIT campaign results.zip` path. This was found by the acquisition-readiness check; the Step-2 `run` command was not invoked and no report was minted.",
+      "evidence": [
+        "phase2/wp2a/build_step2_schema_v1_3.py",
+        "phase2/wp2a/run_step2_v1_3.py",
+        ".gitignore",
+        "tests/test_wp2a_v13.py",
+        "labnotes/2026-08-31-session-30-wp2a-v132-clean-input-path.md"
+      ],
+      "severity": "high",
+      "impact": "The v1.3.1 carrier was unexecutable under its own preconditions. No evidence result was produced and no registered target value, provider byte, extraction method or scientific interpretation was wrong.",
+      "workaround": "No local exclude rule or dirty-tree exception was used; either would make the published procedure depend on unregistered local state.",
+      "proposed_response": "Resolved before Step 2 by v1.3.2: register the existing ignored data/raw container path and assert in a committed test that every provider-input path is covered by Git's ignore policy, so the complete input population can coexist with the clean-subject gate.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-020",
+          "FTRO-P1-DEF-021"
+        ]
+      }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-023",
+      "dataset": "tests/test_wp2a_v13.py after Step-2 publication",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "Three pre-publication runner tests shared the official report path and changed meaning after publication",
+      "failed_step": "Run the full regression suite after publishing the immutable Step-2 report.",
+      "known_fact": "A test of a downstream build_report branch must isolate the earlier immutable-output guard and must assert the diagnostic produced by the branch it names.",
+      "observed": "After the official Step-2 report existed, `test_failed_global_preflight_never_permits_any_method` errored at the immutable-output guard before reaching its target branch. The unpublished-subject and descriptor-preflight tests still passed because both asserted only a broad CheckError and therefore accepted the same wrong guard. The three tests had depended silently on the official report being absent.",
+      "evidence": [
+        "tests/test_wp2a_v13.py",
+        "phase2/wp2a/reports/step2-input-evidence-v1.3.json",
+        "labnotes/2026-08-31-session-31-wp2a-step2-supports.md"
+      ],
+      "severity": "high",
+      "impact": "Descendant test and publication workflow only. The report validates against the subject-bound v1.3.2 schema and checker, and neither the instrument carrier nor provider result changed. One test blocked the full gate; two had become false passes.",
+      "workaround": "None; deleting or moving the immutable official report would invalidate the evidence publication model.",
+      "proposed_response": "Resolved by giving each branch test a temporary synthetic official path, asserting the branch-specific diagnostic, and adding a separate test that an existing official report stops before subject or input access. The real report remains untouched and no Step-2 rerun occurs.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-021",
+          "FTRO-P1-DEF-022"
+        ]
+      }
+    }
+  ],
+  "revised": "2026-08-31",
+  "revision_note": "Opened a new supplement interval after the immutable 1d4bc31 snapshot. FTRO-P1-DEF-023 records and closes three tests whose shared official path made one fail and two pass for the wrong reason after the Step-2 report was published. The subject-bound report and instrument are unchanged and Step 2 is not rerun."
+}

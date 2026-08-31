@@ -446,6 +446,12 @@
         },
         {
           "@id": "phase2/wp2a/reports/step2-input-evidence-v1.3.json"
+        },
+        {
+          "@id": "labnotes/2026-08-31-session-32-post-publication-ledger-reconciliation.md"
+        },
+        {
+          "@id": "ledgers/phase1-deficiency-log-at-2978267.json"
         }
       ],
       "isBasedOn": [
@@ -687,7 +693,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "220618",
+      "contentSize": "223379",
       "name": "deficiency-log.json"
     },
     {
@@ -697,7 +703,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "212643",
+      "contentSize": "214872",
       "name": "deficiency-log.md"
     },
     {
@@ -985,7 +991,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "5879",
+      "contentSize": "6013",
       "name": "README.md"
     },
     {
@@ -1856,7 +1862,7 @@
       "license": {
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
-      "contentSize": "8142"
+      "contentSize": "8175"
     },
     {
       "@id": "phase1/deficiency-log-phase1.json",
@@ -2559,7 +2565,7 @@
       "@type": "CreativeWork",
       "name": "FTRO root-crate publication control",
       "description": "Deterministic SHA-256 over the root-crate graph (excluding only this node's self-referential identifier field) and every non-volatile local file entity. It detects same-size content drift and semantic edits to ro-crate-metadata.json.",
-      "identifier": "sha256:710fc34a7a4a1cc8b89aa8c532f3d08b7183ec5d8e9dd140f3e77f4752d6478a",
+      "identifier": "sha256:1f44303ea0ac51bf79eda11c46d70273c47b804b3f3448a71eceb70835dd71b4",
       "dateModified": "2026-08-31"
     },
     {
@@ -2673,6 +2679,26 @@
         "@id": "https://creativecommons.org/licenses/by/4.0/"
       },
       "contentSize": "20673"
+    },
+    {
+      "@id": "labnotes/2026-08-31-session-32-post-publication-ledger-reconciliation.md",
+      "@type": "File",
+      "name": "2026-08-31-session-32-post-publication-ledger-reconciliation.md",
+      "encodingFormat": "text/markdown",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "3951"
+    },
+    {
+      "@id": "ledgers/phase1-deficiency-log-at-2978267.json",
+      "@type": "File",
+      "name": "phase1-deficiency-log-at-2978267.json",
+      "encodingFormat": "application/json",
+      "license": {
+        "@id": "https://creativecommons.org/licenses/by/4.0/"
+      },
+      "contentSize": "57359"
     }
   ]
 }
