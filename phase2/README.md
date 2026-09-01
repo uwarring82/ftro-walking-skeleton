@@ -84,9 +84,11 @@ itself carries the limitation above; `step2_supports` is not a stronger provenan
 7. Freeze any repairs as a new candidate/version where required
 8. One qualifying comparison from a clean checkout, then **stop**
 
-The mutation freeze is two-stage on purpose: the population is frozen now, the executable per-case
-recipes after step 3 and before step 4 — because recipes chosen after inspecting the fixtures would
-be post-hoc, which is what disqualified the 2026-08-26 exercises.
+The mutation freeze is two-stage on purpose. R1–R10 operator semantics, target identities and
+mutation values are already frozen. After fixtures exist, step 6 may bind only their mechanical
+JSON pointers and exhaustively enumerate R11 over the fixture-declared entity set; it may not
+select new operators, targets or values. That is the minimum fixture-dependent work needed to make
+the recipes executable without reopening post-hoc choice.
 
 ## Out of scope
 

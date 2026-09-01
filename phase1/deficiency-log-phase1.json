@@ -1,6 +1,6 @@
 {
   "ledger": "FTRO Phase-1 Deficiency Log",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "opened": "2026-08-26",
   "phase": "Phase 1",
   "card": "FTRO-WS-001 v0.3",
@@ -720,8 +720,39 @@
           "FTRO-P1-DEF-022"
         ]
       }
+    },
+    {
+      "class": "execution",
+      "domain": "cross-domain",
+      "responsible_party": "ftro",
+      "self_directed": true,
+      "version": "1.0.0",
+      "disposition": "resolved",
+      "id": "FTRO-P1-DEF-024",
+      "dataset": "phase2/README.md WP2A execution order",
+      "finding_type": "current_defect",
+      "affects": "blocks_workflow",
+      "title": "The living Phase-2 README placed fixture-dependent mutation recipes before the evaluator and fixtures",
+      "failed_step": "Follow one unambiguous WP2A order from Step-2 publication through evaluator freeze, fixture authoring and mutation calibration.",
+      "known_fact": "The frozen contract §9 orders evaluator freeze at step 4, fixture authoring at step 5 and executable mutation recipes at step 6. R11's exact entity population cannot be enumerated until fixture entities exist; R1–R10 semantics, target identities and mutation values are already frozen.",
+      "observed": "The living README's numbered list matched the contract, but the paragraph immediately below said executable recipes land after step 3 and before step 4. That stale sentence came from the initial v1.0 registration and contradicted both the current list and the authoritative v1.3 contract.",
+      "evidence": [
+        "phase2/README.md",
+        "phase2/wp2a/contract-v1.3.md#9-evaluator-freeze-and-execution-order",
+        "phase2/wp2a/mutation-cases-v1.3.json"
+      ],
+      "severity": "medium",
+      "impact": "Workflow documentation only; no evaluator, binding, trial fixture or mutation recipe existed, and the Step-2 instrument and evidence are unchanged. Following the stale sentence would have required choosing fixture-specific pointers and R11 identifiers before their targets existed.",
+      "workaround": "Use the authoritative contract §9 order.",
+      "proposed_response": "Resolved in the living README: R1–R10 semantics, identities and mutation values remain frozen; after fixtures, step 6 may only bind mechanical JSON pointers and exhaustively enumerate R11 from the fixture-declared entity set, with no new operator, target or value selection.",
+      "links": {
+        "related": [
+          "FTRO-P1-DEF-009",
+          "FTRO-P1-DEF-020"
+        ]
+      }
     }
   ],
-  "revised": "2026-08-31",
-  "revision_note": "Opened a new supplement interval after the immutable 1d4bc31 snapshot. FTRO-P1-DEF-023 records and closes three tests whose shared official path made one fail and two pass for the wrong reason after the Step-2 report was published. The subject-bound report and instrument are unchanged and Step 2 is not rerun."
+  "revised": "2026-09-01",
+  "revision_note": "Opened a new supplement interval after the immutable 2978267 snapshot. FTRO-P1-DEF-024 records and closes the stale living-README sentence that placed fixture-dependent recipes before the evaluator and fixtures. The frozen contract, Step-2 report and instrument are unchanged."
 }
